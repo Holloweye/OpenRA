@@ -1,0 +1,26 @@
+WWI_TRADE:
+	Inherits: ^Vehicle
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 40
+		Prerequisite: vehicles.austria
+	Valued:
+		Cost: 700
+	Tooltip:
+		Name: Trader
+		Description: Trades with supply stations.
+	Health:
+		HP: 150
+	Armor:
+		Type: Light
+	Mobile:
+		Speed: 60
+		Crushes: mine
+	RevealsShroud:
+		Range: 5c0
+	SelectionDecorations:
+		VisualBounds: 30,30,0,-7
+	Trader:
+		DeliveryBuildings: wwi_pp
+		TradeBuildings: wwi_supply_station
+		DistanceMultiplier: 1

@@ -1,0 +1,20 @@
+wwi_adp:
+	idle:
+		Facings: 16
+	turret: wwi_adp_turret
+		Facings: 16
+	muzzle: gunfire2
+		Length: 2
+	icon: wwi_adp_icon
+
+wwi_jppa1:
+	idle:
+		Facings: 16
+	muzzle: gunfire2
+		Length: 2
+	icon: wwi_jppa1_icon
+
+wwi_trade:
+	idle: wwi_adp
+		Facings: 16
+	icon: wwi_adp_icon

@@ -1,0 +1,258 @@
+
+^GainsExperience:
+	GainsExperience:
+		Upgrades:
+			200: firepower, damage, speed, reload, inaccuracy, rank
+			400: firepower, damage, speed, reload, inaccuracy, rank
+			800: firepower, damage, speed, reload, inaccuracy, rank
+			1600: firepower, damage, speed, reload, inaccuracy, rank, eliteweapon, selfheal
+	DamageMultiplier@EXPERIENCE:
+		UpgradeTypes: damage
+		Modifier: 91, 87, 83, 65
+	FirepowerMultiplier@EXPERIENCE:
+		UpgradeTypes: firepower
+		Modifier: 110, 115, 120, 130
+	SpeedMultiplier@EXPERIENCE:
+		UpgradeTypes: speed
+		Modifier: 110, 115, 120, 150
+	ReloadDelayMultiplier@EXPERIENCE:
+		UpgradeTypes: reload
+		Modifier: 95, 90, 85, 75
+	InaccuracyMultiplier@EXPERIENCE:
+		UpgradeTypes: inaccuracy
+		Modifier: 90, 80, 70, 50
+	SelfHealing@ELITE:
+		Step: 2
+		Ticks: 100
+		HealIfBelow: 1
+		DamageCooldown: 125
+		UpgradeTypes: selfheal
+		UpgradeMinEnabledLevel: 1
+	WithRankDecoration:
+		Image: rank
+		Sequence: rank
+		Palette: effect
+		ReferencePoint: Bottom, Right
+		Offset: 2, 2
+		UpgradeTypes: rank
+		ZOffset: 256
+		UpgradeMinEnabledLevel: 1
+		UpgradeMaxAcceptedLevel: 4
+
+^ExistsInWorld:
+	AppearsOnRadar:
+	UpdatesPlayerStatistics:
+	CombatDebugOverlay:
+	DrawLineToTarget:
+	GivesExperience:
+	BodyOrientation:
+	ScriptTriggers:
+	UpgradeManager:
+	Huntable:
+
+^BasicBuilding:
+	Inherits@1: ^ExistsInWorld
+	SelectionDecorations:
+	Selectable:
+		Priority: 3
+	TargetableBuilding:
+		TargetTypes: Ground, Structure
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+		TerrainTypes: Clear,Road
+		RequiresBaseProvider: True
+	SoundOnDamageTransition:
+		DamagedSounds: kaboom1.aud
+		DestroyedSounds: kaboom22.aud
+	RenderBuilding:
+	WithBuildingExplosion:
+	CaptureNotification:
+	ShakeOnDeath:
+	ProximityCaptor:
+		Types: Building
+	GivesBounty:
+	Guardable:
+		Range: 3
+	FrozenUnderFog:
+	Tooltip:
+		GenericName: Structure
+
+^Building:
+	Inherits: ^BasicBuilding
+	GivesBuildableArea:
+	RepairableBuilding:
+	EngineerRepairable:
+	AcceptsSupplies:
+	WithMakeAnimation:
+	ExternalCapturable:
+	ExternalCapturableBar:
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	Sellable:
+		SellSounds: cashturn.aud
+
+^Wall:
+	AppearsOnRadar:
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+		BuildSounds: placbldg.aud
+		Adjacent: 7
+		TerrainTypes: Clear,Road
+	SoundOnDamageTransition:
+		DamagedSounds: sandbag2.aud
+		DestroyedSounds: sandbag2.aud
+	BlocksProjectiles:
+	LineBuild:
+		Range: 8
+		NodeTypes: wall
+	LineBuildNode:
+		Types: wall
+	TargetableBuilding:
+		TargetTypes: Ground
+	RenderBuildingWall:
+		Palette: effect
+	GivesExperience:
+	AutoTargetIgnore:
+	ProximityCaptor:
+		Types: Wall
+	Sellable:
+		SellSounds: cashturn.aud
+	Guardable:
+	BodyOrientation:
+	FrozenUnderFog:
+	ScriptTriggers:
+
+^Vehicle:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^GainsExperience
+	Mobile:
+		Crushes: mine
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 40
+			Road: 100
+			Bridge: 100
+			Ore: 70
+			Gems: 70
+			Beach: 40
+		ROT: 5
+	SelectionDecorations:
+	Selectable:
+		Bounds: 24, 24
+	TargetableUnit:
+		TargetTypes: Ground, Repair, Vehicle
+	Repairable:
+	Passenger:
+		CargoType: Vehicle
+	AttackMove:
+	HiddenUnderFog:
+	ActorLostNotification:
+	ProximityCaptor:
+		Types: Vehicle
+	GivesBounty:
+	WithSmoke:
+	Guard:
+	Guardable:
+	Tooltip:
+		GenericName: Vehicle
+	Voiced:
+		VoiceSet: VehicleVoice
+	Explodes:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+	WithFacingSpriteBody:
+	AutoSelectionSize:
+	RenderSprites:
+
+^Tank:
+	Inherits: ^Vehicle
+	Mobile:
+		Crushes: crush_weak_wall, mine
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 70
+			Road: 100
+			Bridge: 100
+			Ore: 70
+			Gems: 70
+			Beach: 70
+	TargetableUnit:
+		TargetTypes: Ground, C4, Repair, Tank
+	Tooltip:
+		GenericName: Tank
+
+^Infantry:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^GainsExperience
+	Health:
+		Radius: 128
+		HP: 25
+	Armor:
+		Type: None
+	RevealsShroud:
+		Range: 4c0
+	Mobile:
+		Speed: 56
+		Crushes: mine, pass_weak_wall
+		SharesCell: true
+		TerrainSpeeds:
+			Clear: 90
+			Rough: 80
+			Road: 100
+			Bridge: 100
+			Ore: 80
+			Gems: 80
+			Beach: 80
+	SelectionDecorations:
+	Selectable:
+		Bounds: 12,18,0,-8
+	TargetableUnit:
+		TargetTypes: Ground, Infantry
+	RenderSprites:
+	WithInfantryBody:
+	WithDeathAnimation:
+		DeathTypes:
+			DefaultDeath: 1
+			BulletDeath: 2
+			SmallExplosionDeath: 3
+			ExplosionDeath: 4
+			FireDeath: 5
+			ElectricityDeath: 6
+		CrushedSequence: die-crushed
+	AttackMove:
+	Passenger:
+		CargoType: Infantry
+	HiddenUnderFog:
+	ActorLostNotification:
+	GivesBounty:
+	Crushable:
+		CrushSound: squishy2.aud
+	Guard:
+	Guardable:
+	Tooltip:
+		GenericName: Soldier
+	DeathSounds@NORMAL:
+		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath
+	DeathSounds@BURNED:
+		Voice: Burned
+		DeathTypes: FireDeath
+	DeathSounds@ZAPPED:
+		Voice: Zapped
+		DeathTypes: ElectricityDeath
+	Voiced:
+		VoiceSet: GenericVoice
+
+^Soldier:
+	Inherits: ^Infantry
+	AutoTarget:
+	ProximityCaptor:
+		Types: Infantry
+	TakeCover:
+		DamageModifiers:
+			Prone50Percent: 50
+		DamageTriggers: TriggerProne
+	WithInfantryBody:
+		IdleSequences: idle1,idle2
+		StandSequences: stand,stand2

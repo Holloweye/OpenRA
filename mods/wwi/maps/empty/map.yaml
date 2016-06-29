@@ -1,0 +1,43 @@
+MapFormat: 7
+
+RequiresMod: wwi
+
+Title: Empty
+
+Description: Void
+
+Author: Holloweye
+
+Tileset: TEMPERAT
+
+MapSize: 130,130
+
+Bounds: 1,1,128,128
+
+Visibility: Shellmap
+
+Type: Conquest
+
+Videos:
+
+Options:
+
+Players:
+
+Actors:
+
+Smudges:
+
+Rules:
+
+Sequences:
+
+VoxelSequences:
+
+Weapons:
+
+Voices:
+
+Notifications:
+
+Translations:

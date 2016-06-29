@@ -1,0 +1,59 @@
+WWI_VFACT:
+	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 70
+		Prerequisites: powerplant
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Vehicle Factory
+		Description: Produces vehicles.
+	Building:
+		Footprint: xxx xxx
+		Dimensions: 3,2
+	Health:
+		HP: 1500
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 4c0
+	WithIdleOverlay@TOP:
+		Sequence: idle-top
+	Bib:
+	RallyPoint:
+	Exit@1:
+		SpawnOffset: 0,1300,0
+		ExitCell: 1,2
+	Production:
+		Produces: Vehicle
+	ProvidesPrerequisite@vfact:
+		Prerequisite: vehiclefactory
+	ProvidesPrerequisite@austria:
+		Factions: austria
+		Prerequisite: vehicles.austria
+	ProvidesPrerequisite@ottoman:
+		Factions: ottoman
+		Prerequisite: vehicles.ottoman
+	ProvidesPrerequisite@germany:
+		Factions: germany
+		Prerequisite: vehicles.germany
+	ProvidesPrerequisite@uk:
+		Factions: uk
+		Prerequisite: vehicles.uk
+	ProvidesPrerequisite@france:
+		Factions: france
+		Prerequisite: vehicles.france
+	ProvidesPrerequisite@russia:
+		Factions: russia
+		Prerequisite: vehicles.russia
+	ProvidesPrerequisite@usa:
+		Factions: usa
+		Prerequisite: vehicles.usa
+	ProvidesPrerequisite@italy:
+		Factions: italy
+		Prerequisite: vehicles.italy
+	PrimaryBuilding:
+	ProductionBar:
+	Power:
+		Amount: -30

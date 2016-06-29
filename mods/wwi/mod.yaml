@@ -1,0 +1,221 @@
+Metadata:
+	Title: The great war
+	Description: 
+	Version: {DEV_VERSION}
+	Author: Holloweye
+
+Folders:
+	.
+	./mods/wwi
+	./mods/wwi/bits
+	./mods/wwi/bits/inherited
+	./mods/wwi/uibits
+	~^Content/wwi
+	~^Content/ra
+
+MapFolders:
+	./mods/wwi/maps: System
+	~^maps/wwi: User
+
+Packages:
+	~main.mix
+	redalert.mix
+	conquer.mix
+	hires.mix
+	local.mix
+	sounds.mix
+	speech.mix
+	allies.mix
+	russian.mix
+	temperat.mix
+	snow.mix
+	interior.mix
+	~scores.mix
+	~movies1.mix
+	~movies2.mix
+
+Rules:
+	./mods/wwi/rules/player.yaml
+	./mods/wwi/rules/palettes.yaml
+	./mods/wwi/rules/world.yaml
+	./mods/wwi/rules/misc.yaml
+	./mods/wwi/rules/defaults.yaml
+	./mods/wwi/rules/commons/infantry/wwi_rifle.yaml
+	./mods/wwi/rules/commons/structures/wwi_house.yaml
+	./mods/wwi/rules/commons/structures/wwi_stable.yaml
+	./mods/wwi/rules/commons/structures/wwi_barr.yaml
+	./mods/wwi/rules/commons/structures/wwi_vfact.yaml
+	./mods/wwi/rules/commons/structures/wwi_tfact.yaml
+	./mods/wwi/rules/commons/structures/wwi_pp.yaml
+	./mods/wwi/rules/commons/structures/wwi_airstrip.yaml
+	./mods/wwi/rules/commons/structures/wwi_recon.yaml
+	./mods/wwi/rules/commons/structures/wwi_supply_station.yaml
+	./mods/wwi/rules/commons/structures/wwi_fence.yaml
+	./mods/wwi/rules/austria/structures/wwi_aus_hq.yaml
+	./mods/wwi/rules/austria/vehicles/wwi_adp.yaml
+	./mods/wwi/rules/austria/vehicles/wwi_jppa1.yaml
+	./mods/wwi/rules/austria/vehicles/wwi_trade.yaml
+	./mods/wwi/rules/usa/structures/wwi_usa_hq.yaml
+
+Sequences:
+	./mods/wwi/sequences/misc.yaml
+	./mods/wwi/sequences/structures.yaml
+	./mods/wwi/sequences/vehicles.yaml
+	./mods/wwi/sequences/infantry.yaml
+
+TileSets:
+	./mods/wwi/tilesets/snow.yaml
+	./mods/wwi/tilesets/interior.yaml
+	./mods/wwi/tilesets/temperat.yaml
+	./mods/wwi/tilesets/desert.yaml
+
+Cursors:
+	./mods/wwi/cursors.yaml
+
+Chrome:
+	./mods/wwi/chrome/chrome.yaml
+	./mods/wwi/chrome/austria.yaml
+	./mods/wwi/chrome/ottoman.yaml
+	./mods/wwi/chrome/germany.yaml
+	./mods/wwi/chrome/uk.yaml
+	./mods/wwi/chrome/france.yaml
+	./mods/wwi/chrome/russia.yaml
+	./mods/wwi/chrome/italy.yaml
+	./mods/wwi/chrome/usa.yaml
+
+Assemblies:
+	./mods/common/OpenRA.Mods.Common.dll
+	./mods/wwi/OpenRA.Mods.WWI.dll
+
+ChromeLayout:
+	./mods/wwi/chrome/layout/install.yaml
+	./mods/wwi/chrome/layout/ingame.yaml
+	./mods/wwi/chrome/layout/ingame-chat.yaml
+	./mods/wwi/chrome/layout/ingame-diplomacy.yaml
+	./mods/wwi/chrome/layout/ingame-fmvplayer.yaml
+	./mods/wwi/chrome/layout/ingame-info.yaml
+	./mods/wwi/chrome/layout/ingame-infoscripterror.yaml
+	./mods/wwi/chrome/layout/ingame-infobriefing.yaml
+	./mods/wwi/chrome/layout/ingame-infoobjectives.yaml
+	./mods/wwi/chrome/layout/ingame-infostats.yaml
+	./mods/wwi/chrome/layout/ingame-menu.yaml
+	./mods/wwi/chrome/layout/ingame-observer.yaml
+	./mods/wwi/chrome/layout/ingame-observerstats.yaml
+	./mods/wwi/chrome/layout/ingame-player.yaml
+	./mods/wwi/chrome/layout/ingame-perf.yaml
+	./mods/wwi/chrome/layout/ingame-debug.yaml
+	./mods/wwi/chrome/layout/mainmenu.yaml
+	./mods/wwi/chrome/layout/settings.yaml
+	./mods/wwi/chrome/layout/credits.yaml
+	./mods/wwi/chrome/layout/lobby.yaml
+	./mods/wwi/chrome/layout/lobby-mappreview.yaml
+	./mods/wwi/chrome/layout/lobby-playerbin.yaml
+	./mods/wwi/chrome/layout/lobby-dialogs.yaml
+	./mods/wwi/chrome/layout/color-picker.yaml
+	./mods/wwi/chrome/layout/map-chooser.yaml
+	./mods/wwi/chrome/layout/create-server.yaml
+	./mods/wwi/chrome/layout/serverbrowser.yaml
+	./mods/wwi/chrome/layout/connection.yaml
+	./mods/wwi/chrome/layout/directconnect.yaml
+	./mods/wwi/chrome/layout/replaybrowser.yaml
+	./mods/wwi/chrome/layout/dropdowns.yaml
+	./mods/wwi/chrome/layout/musicplayer.yaml
+	./mods/wwi/chrome/layout/tooltips.yaml
+	./mods/wwi/chrome/layout/assetbrowser.yaml
+	./mods/wwi/chrome/layout/missionbrowser.yaml
+	./mods/wwi/chrome/layout/confirmation-dialogs.yaml
+	./mods/wwi/chrome/layout/editor.yaml
+
+Weapons:
+	./mods/wwi/weapons/smallcaliber.yaml
+
+Voices:
+	./mods/wwi/audio/voices.yaml
+
+Notifications:
+	./mods/wwi/audio/notifications.yaml
+
+Music:
+	./mods/wwi/audio/music.yaml
+
+Translations:
+	./mods/wwi/languages/english.yaml
+
+LoadScreen: LogoStripeLoadScreen
+	Image: ./mods/wwi/uibits/loadscreen.png
+	Text: Filling Crates..., Charging Capacitors..., Reticulating Splines..., Planting Trees..., Building Bridges..., Aging Empires..., Compiling EVA..., Constructing Pylons..., Activating Skynet..., Splitting Atoms...
+
+ContentInstaller:
+	MenuWidget: INSTALL_PANEL
+	MusicMenuWidget: INSTALL_MUSIC_PANEL
+	TestFiles: allies.mix, conquer.mix, interior.mix, redalert.mix, russian.mix, snow.mix, sounds.mix, temperat.mix
+	PackageMirrorList: http://www.openra.net/packages/ra-mirrors.txt
+	DiskTestFiles: MAIN.MIX, INSTALL/REDALERT.MIX
+	PackageToExtractFromCD: MAIN.MIX
+	ExtractFilesFromCD:
+		.: conquer.mix, russian.mix, allies.mix, sounds.mix, scores.mix, snow.mix, interior.mix, temperat.mix, general.mix
+	CopyFilesFromCD:
+		.: INSTALL/REDALERT.MIX
+	ShippedSoundtracks: 2
+	MusicPackageMirrorList: http://www.openra.net/packages/ra-music-mirrors.txt
+	InstallShieldCABFilePackageIds: 105
+	InstallShieldCABFileIds: 116
+
+ServerTraits:
+	LobbyCommands
+	PlayerPinger
+	MasterServerPinger
+	LobbySettingsNotification
+	ColorValidator
+
+LobbyDefaults:
+	AllowCheats: false
+	Crates: true
+	StartingUnitsClass: none
+	FragileAlliances: false
+	Shroud: true
+	Fog: true
+	TechLevel: Unrestricted
+
+ChromeMetrics:
+	./mods/wwi/metrics.yaml
+
+Fonts:
+	Regular:
+		Font:./mods/common/FreeSans.ttf
+		Size:14
+	Bold:
+		Font:./mods/common/FreeSansBold.ttf
+		Size:14
+	Title:
+		Font:./mods/ra/ZoodRangmah.ttf
+		Size:48
+	MediumBold:
+		Font:./mods/common/FreeSansBold.ttf
+		Size:18
+	BigBold:
+		Font:./mods/common/FreeSansBold.ttf
+		Size:24
+	Small:
+		Font:./mods/common/FreeSans.ttf
+		Size:12
+	Tiny:
+		Font:./mods/common/FreeSans.ttf
+		Size:10
+	TinyBold:
+		Font:./mods/common/FreeSansBold.ttf
+		Size:10
+
+Missions:
+	./mods/wwi/missions.yaml
+
+SupportsMapsFrom: wwi
+
+SpriteFormats: ShpTD, TmpRA, TmpTD, ShpTS
+
+SpriteSequenceFormat: TilesetSpecificSpriteSequence
+	TilesetExtensions:
+		TEMPERAT: .tem
+		SNOW: .sno
+		INTERIOR: .int
+		DESERT: .des

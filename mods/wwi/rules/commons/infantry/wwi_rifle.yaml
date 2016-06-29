@@ -1,0 +1,21 @@
+WWI_RIFLE:
+	Inherits: ^Soldier
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 10
+		Prerequisites: Pop1
+	Population:
+		Amount: -1
+	Valued:
+		Cost: 100
+	Tooltip:
+		Name: Rifle Infantry
+		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles
+	Health:
+		HP: 50
+	Armament@PRIMARY:
+		Weapon: Rifle
+	AttackFrontal:
+	WithInfantryBody:
+		AttackSequence: shoot

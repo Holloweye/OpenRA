@@ -1,0 +1,29 @@
+WWI_JPPA1:
+	Inherits: ^Tank
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 40
+		Prerequisite: vehicles.austria
+	Valued:
+		Cost: 850
+	Tooltip:
+		Name: Junovicz Panzerwagen PA1
+		Description: Good firepower, long ranged but lacks turret.
+	Health:
+		HP: 220
+	Armor:
+		Type: Light
+	Mobile:
+		Speed: 20
+		Crushes: wall, mine
+	RevealsShroud:
+		Range: 5c0
+	AttackFrontal:
+	Armament@PRIMARY:
+		Weapon: Jppa17.92
+		LocalOffset: 300,-513,0
+		MuzzleSequence: muzzle
+	WithMuzzleFlash:
+	AutoTarget:
+	SelectionDecorations:
+		VisualBounds: 30,30,0,-7

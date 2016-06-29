@@ -1,0 +1,30 @@
+WWI_PP:
+	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 10
+		Prerequisites: !~structures.germany
+		# All except Russia, Russia uses not power.
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Power Plant
+		Description: Provides power for other structures.
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Health:
+		HP: 400
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 4c0
+	Bib:
+	Power:
+		Amount: 60
+	ProvidesPrerequisite@pp:
+		Prerequisite: powerplant
+	ScalePowerWithHealth:
+	DisabledOverlay:
+	WithBuildingExplosion:
+		Delay: 1

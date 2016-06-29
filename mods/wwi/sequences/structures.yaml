@@ -1,0 +1,158 @@
+wwi_aus_hq:
+	idle:
+		Offset: -2, 10
+	damaged-idle:
+		Offset: -2, 10
+	make:
+		Start:1
+		Length: 7
+		Offset: -2, 10
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_aus_hq_icon
+
+wwi_usa_hq:
+	idle:
+	damaged-idle:
+	make:
+		Start:1
+		Length: 7
+	bib: bib2
+		Offset: 0,-10
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_usa_hq_icon
+
+wwi_pp:
+	idle:
+	damaged-idle:
+	make:
+		Start:1
+		Length: 6
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_pp_icon
+
+wwi_recon:
+	idle:
+	damaged-idle:
+	make:
+		Start:1
+		Length: 8
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_recon_icon
+
+wwi_house:
+	idle:
+	damaged-idle:
+	make:
+		Start:1
+		Length: 7
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_house_icon
+
+wwi_stable:
+	idle:
+	damaged-idle:
+	make:
+		Start:1
+		Length: 8
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_stable_icon
+
+wwi_barr:
+	idle:
+	damaged-idle:
+	make:
+		Start:1
+		Length: 6
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_barr_icon
+
+wwi_airstrip:
+	idle:
+	damaged-idle:
+	make:
+		Start:1
+		Length: 8
+	bib: bib3
+		Length: *
+		Offset: 0,-20
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_airstrip_icon
+
+wwi_vfact:
+	idle:
+	damaged-idle:
+	idle-top:
+		Start: 8
+		ZOffset: 1000000
+	damaged-idle-top:
+		Start: 8
+		ZOffset: 1000000
+	make:
+		Start: 1
+		Length: 7
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_vfact_icon
+
+wwi_tfact:
+	idle:
+	damaged-idle:
+	make:
+		Start: 1
+		Length: 8
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_tfact_icon
+
+wwi_supply_station:
+	idle: wwi_house
+	damaged-idle: wwi_house
+	make: wwi_house
+		Start:1
+		Length: 7
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_house_icon
+
+wwi_fence:
+	idle: fenc
+		Length: 16
+	icon: wwi_house_icon

@@ -1,0 +1,7 @@
+mpspawn:
+	AlwaysVisible:
+	Immobile:
+		OccupiesSpace: false
+	WithSpriteBody:
+	RenderSpritesEditorOnly:
+	BodyOrientation:

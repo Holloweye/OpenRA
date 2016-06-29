@@ -1,0 +1,57 @@
+WWI_BARR:
+	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 30
+		Prerequisites: powerplant
+	Valued:
+		Cost: 400
+	Tooltip:
+		Name: Barracks
+		Description: Trains infantry.
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Health:
+		HP: 800
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 5c0
+	Bib:
+	RallyPoint:
+	Exit@1:
+		SpawnOffset: -800,810,0
+		ExitCell: 0,2
+	Production:
+		Produces: Infantry, Soldier
+	PrimaryBuilding:
+	ProductionBar:
+	ProvidesPrerequisite:
+		Prerequisite: barracks
+	ProvidesPrerequisite@austria:
+		Factions: austria
+		Prerequisite: infantry.austria
+	ProvidesPrerequisite@germany:
+		Factions: germany
+		Prerequisite: infantry.germany
+	ProvidesPrerequisite@ottoman:
+		Factions: ottoman
+		Prerequisite: infantry.ottoman
+	ProvidesPrerequisite@uk:
+		Factions: uk
+		Prerequisite: infantry.uk
+	ProvidesPrerequisite@france:
+		Factions: france
+		Prerequisite: infantry.france
+	ProvidesPrerequisite@usa:
+		Factions: usa
+		Prerequisite: infantry.usa
+	ProvidesPrerequisite@russia:
+		Factions: russia
+		Prerequisite: infantry.russia
+	ProvidesPrerequisite@italy:
+		Factions: italy
+		Prerequisite: infantry.italy
+	Power:
+		Amount: -20

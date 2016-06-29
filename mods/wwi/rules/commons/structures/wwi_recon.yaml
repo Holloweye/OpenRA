@@ -1,0 +1,29 @@
+WWI_RECON:
+	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 40
+		Prerequisites: barracks, powerplant
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Reconnaissance Center
+		Description: Provides minimap.
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Health:
+		HP: 500
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 4c0
+	Bib:
+	Power:
+		Amount: -30
+	ProvidesPrerequisite@recon:
+		Prerequisite: reconnaissance
+	ScalePowerWithHealth:
+	DisabledOverlay:
+	WithBuildingExplosion:
+		Delay: 1
