@@ -178,6 +178,9 @@
 			Ore: 70
 			Gems: 70
 			Beach: 70
+	TankArmor:
+		FrontalDamageModifier: 50
+		SideDamageModifier: 75
 	TargetableUnit:
 		TargetTypes: Ground, C4, Repair, Tank
 	Tooltip:

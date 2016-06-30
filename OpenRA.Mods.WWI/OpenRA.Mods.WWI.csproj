@@ -47,6 +47,7 @@
     <Compile Include="Traits\Passable.cs" />
     <Compile Include="Traits\Population.cs" />
     <Compile Include="Traits\PopulationManager.cs" />
+    <Compile Include="Traits\TankArmor.cs" />
     <Compile Include="Traits\Trader.cs" />
   </ItemGroup>
   <ItemGroup>
