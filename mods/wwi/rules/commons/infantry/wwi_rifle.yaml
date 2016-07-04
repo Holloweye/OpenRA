@@ -15,7 +15,7 @@ WWI_RIFLE:
 	Health:
 		HP: 50
 	Armament@PRIMARY:
-		Weapon: Rifle
+		Weapon: Rifleman
 	AttackFrontal:
 	WithInfantryBody:
 		AttackSequence: shoot

@@ -3,16 +3,18 @@ WWI_TRADE:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
-		Prerequisite: vehicles.austria
+		Prerequisites: vehicles.austria, Pop2
 	Valued:
 		Cost: 700
+	Population:
+		Amount: -2
 	Tooltip:
 		Name: Trader
 		Description: Trades with supply stations.
 	Health:
 		HP: 150
 	Armor:
-		Type: Light
+		Type: vehicle
 	Mobile:
 		Speed: 60
 		Crushes: mine

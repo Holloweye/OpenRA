@@ -1,0 +1,18 @@
+UnitExplodeSmall:
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 40
+		Versus:
+			None: 90
+			Wood: 75
+			Light: 60
+			Heavy: 25
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water

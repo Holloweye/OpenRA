@@ -85,7 +85,7 @@ wwi_barr:
 	damaged-idle:
 	make:
 		Start:1
-		Length: 6
+		Length: 7
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true
@@ -154,5 +154,10 @@ wwi_supply_station:
 
 wwi_fence:
 	idle: fenc
+		Length: 16
+	icon: wwi_house_icon
+
+wwi_trench:
+	idle:
 		Length: 16
 	icon: wwi_house_icon

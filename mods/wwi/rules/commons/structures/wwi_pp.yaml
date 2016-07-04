@@ -16,7 +16,7 @@ WWI_PP:
 	Health:
 		HP: 400
 	Armor:
-		Type: Wood
+		Type: stone_building
 	RevealsShroud:
 		Range: 4c0
 	Bib:

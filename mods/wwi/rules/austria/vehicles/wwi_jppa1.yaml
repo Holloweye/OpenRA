@@ -3,24 +3,26 @@ WWI_JPPA1:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
-		Prerequisite: vehicles.austria
+		Prerequisites: vehicles.austria, Pop5
 	Valued:
 		Cost: 850
+	Population:
+		Amount: -5
 	Tooltip:
 		Name: Junovicz Panzerwagen PA1
-		Description: Good firepower, long ranged but lacks turret.
+		Description: Medium tank.
 	Health:
-		HP: 220
+		HP: 200
 	Armor:
-		Type: Light
+		Type: medium_tank
 	Mobile:
-		Speed: 20
-		Crushes: wall, mine
+		Speed: 55
+		Crushes: mine, crush_fench
 	RevealsShroud:
-		Range: 5c0
+		Range: 4c0
 	AttackFrontal:
 	Armament@PRIMARY:
-		Weapon: Jppa17.92
+		Weapon: Jppa
 		LocalOffset: 300,-513,0
 		MuzzleSequence: muzzle
 	WithMuzzleFlash:

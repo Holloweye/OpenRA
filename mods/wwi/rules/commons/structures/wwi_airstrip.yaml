@@ -15,7 +15,7 @@ WWI_AIRSTRIP:
 	Health:
 		HP: 1000
 	Armor:
-		Type: Wood
+		Type: stone_building
 	RevealsShroud:
 		Range: 7c0
 	Bib:

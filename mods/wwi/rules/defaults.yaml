@@ -103,7 +103,6 @@
 	SoundOnDamageTransition:
 		DamagedSounds: sandbag2.aud
 		DestroyedSounds: sandbag2.aud
-	BlocksProjectiles:
 	LineBuild:
 		Range: 8
 		NodeTypes: wall
@@ -169,7 +168,7 @@
 ^Tank:
 	Inherits: ^Vehicle
 	Mobile:
-		Crushes: crush_weak_wall, mine
+		Crushes: mine
 		TerrainSpeeds:
 			Clear: 80
 			Rough: 70
@@ -193,12 +192,12 @@
 		Radius: 128
 		HP: 25
 	Armor:
-		Type: None
+		Type: flesh
 	RevealsShroud:
 		Range: 4c0
 	Mobile:
 		Speed: 56
-		Crushes: mine, pass_weak_wall
+		Crushes: mine, pass_trench, pass_fench
 		SharesCell: true
 		TerrainSpeeds:
 			Clear: 90

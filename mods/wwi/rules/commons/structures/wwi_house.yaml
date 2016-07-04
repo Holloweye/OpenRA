@@ -10,7 +10,7 @@ WWI_HOUSE:
 	Health:
 		HP: 400
 	Armor:
-		Type: Wood
+		Type: wood_building
 	RevealsShroud:
 		Range: 5c0
 	Bib:

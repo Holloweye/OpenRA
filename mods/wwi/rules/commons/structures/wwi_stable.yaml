@@ -15,7 +15,7 @@ WWI_STABLE:
 	Health:
 		HP: 600
 	Armor:
-		Type: Wood
+		Type: wood_building
 	RevealsShroud:
 		Range: 4c0
 	Bib:

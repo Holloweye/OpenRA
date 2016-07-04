@@ -11,9 +11,9 @@ WWI_FENCE:
 		Name: Wire Fence
 		Description: Stops infantry and blocks enemy fire.\nCan be crushed by tanks.
 	Health:
-		HP: 300
+		HP: 100
 	Armor:
-		Type: Wood
+		Type: wood_building
 	LineBuild:
 		Range: 8
 		NodeTypes: fence
@@ -22,6 +22,8 @@ WWI_FENCE:
 	RenderBuildingWall:
 		Type: fence
 	Passable:
-		CrushesClasses: crush_weak_wall
-		PassableClasses: pass_weak_wall
+		CrushesClasses: crush_fench
+		PassableClasses: pass_fench
 		PassingDamage:20
+	CellModifier:
+		DamageModifier:10

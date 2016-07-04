@@ -1,0 +1,35 @@
+WWI_LANCIA:
+	Inherits: ^Tank
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 40
+		Prerequisites: vehicles.austria, Pop6
+	Valued:
+		Cost: 950
+	Tooltip:
+		Name: Lancia Ansaldo IZ
+		Description: Heavy tank.
+	Population:
+		Amount: -6
+	Health:
+		HP: 250
+	Armor:
+		Type: heavy_tank
+	Mobile:
+		Speed: 30
+		Crushes: mine, crush_fench, crush_trench
+	RevealsShroud:
+		Range: 4c0
+	Turreted:
+		ROT: 6
+		Offset: -290,0,350
+	AttackTurreted:
+	Armament@PRIMARY:
+		Weapon: Lancia
+		LocalOffset: -380,0,500
+		MuzzleSequence: muzzle
+	WithMuzzleFlash:
+	WithTurret:
+	AutoTarget:
+	SelectionDecorations:
+		VisualBounds: 30,30,0,-7

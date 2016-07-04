@@ -1,0 +1,21 @@
+WWI_FLAMETHROWER:
+	Inherits: ^Soldier
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 10
+		Prerequisites: Pop1
+	Population:
+		Amount: -1
+	Valued:
+		Cost: 100
+	Tooltip:
+		Name: Flamethrower
+		Description: Strong vs Trench, Infantry\n  Weak vs Vehicles
+	Health:
+		HP: 40
+	Armament@PRIMARY:
+		Weapon: Flamethrower
+	AttackFrontal:
+	WithInfantryBody:
+		AttackSequence: shoot

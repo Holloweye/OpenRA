@@ -1,0 +1,28 @@
+WWI_TRENCH:
+	Inherits: ^Wall
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 20
+	Valued:
+		Cost: 25
+	CustomSellValue:
+		Value: 0
+	Tooltip:
+		Name: Trench
+		Description: Stops infantry and blocks enemy fire.\nCan be crushed by tanks.
+	Health:
+		HP: 200
+	Armor:
+		Type: wood_building
+	LineBuild:
+		Range: 8
+		NodeTypes: trench
+	LineBuildNode:
+		Types: trench
+	RenderBuildingWall:
+		Type: trench
+	Passable:
+		CrushesClasses: crush_trench
+		PassableClasses: pass_trench
+	CellModifier:
+		DamageModifier:50

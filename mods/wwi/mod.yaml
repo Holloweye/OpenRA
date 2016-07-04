@@ -1,6 +1,6 @@
 Metadata:
 	Title: The great war
-	Description: 
+	Description:
 	Version: {DEV_VERSION}
 	Author: Holloweye
 
@@ -9,6 +9,7 @@ Folders:
 	./mods/wwi
 	./mods/wwi/bits
 	./mods/wwi/bits/inherited
+	./mods/wwi/bits/inherited/shps
 	./mods/wwi/uibits
 	~^Content/wwi
 	~^Content/ra
@@ -41,6 +42,10 @@ Rules:
 	./mods/wwi/rules/misc.yaml
 	./mods/wwi/rules/defaults.yaml
 	./mods/wwi/rules/commons/infantry/wwi_rifle.yaml
+	./mods/wwi/rules/commons/infantry/wwi_grenadier.yaml
+	./mods/wwi/rules/commons/infantry/wwi_machinegunner.yaml
+	./mods/wwi/rules/commons/infantry/wwi_flamethrower.yaml
+	./mods/wwi/rules/commons/infantry/wwi_field_medic.yaml
 	./mods/wwi/rules/commons/structures/wwi_house.yaml
 	./mods/wwi/rules/commons/structures/wwi_stable.yaml
 	./mods/wwi/rules/commons/structures/wwi_barr.yaml
@@ -51,9 +56,11 @@ Rules:
 	./mods/wwi/rules/commons/structures/wwi_recon.yaml
 	./mods/wwi/rules/commons/structures/wwi_supply_station.yaml
 	./mods/wwi/rules/commons/structures/wwi_fence.yaml
+	./mods/wwi/rules/commons/structures/wwi_trench.yaml
 	./mods/wwi/rules/austria/structures/wwi_aus_hq.yaml
 	./mods/wwi/rules/austria/vehicles/wwi_adp.yaml
 	./mods/wwi/rules/austria/vehicles/wwi_jppa1.yaml
+	./mods/wwi/rules/austria/vehicles/wwi_lancia.yaml
 	./mods/wwi/rules/austria/vehicles/wwi_trade.yaml
 	./mods/wwi/rules/usa/structures/wwi_usa_hq.yaml
 
@@ -127,7 +134,8 @@ ChromeLayout:
 	./mods/wwi/chrome/layout/editor.yaml
 
 Weapons:
-	./mods/wwi/weapons/smallcaliber.yaml
+	./mods/wwi/weapons/weapons.yaml
+	./mods/wwi/weapons/effects.yaml
 
 Voices:
 	./mods/wwi/audio/voices.yaml

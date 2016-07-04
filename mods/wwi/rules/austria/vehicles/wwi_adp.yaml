@@ -3,27 +3,29 @@ WWI_ADP:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
-		Prerequisite: vehicles.austria
+		Prerequisites: vehicles.austria, Pop5
 	Valued:
 		Cost: 700
+	Population:
+		Amount: -5
 	Tooltip:
 		Name: Austro-Daimler Panzerwagen
-		Description: Fast and mobile vehicle.
+		Description: Light tank.
 	Health:
 		HP: 150
 	Armor:
-		Type: Light
+		Type: light_tank
 	Mobile:
-		Speed: 60
+		Speed: 80
 		Crushes: mine
 	RevealsShroud:
 		Range: 5c0
 	Turreted:
-		ROT: 8
+		ROT: 9
 		Offset: -380,0,500
 	AttackTurreted:
 	Armament@PRIMARY:
-		Weapon: Austro7.62
+		Weapon: Austro
 		LocalOffset: -380,0,500
 		MuzzleSequence: muzzle
 	WithMuzzleFlash:

@@ -1,0 +1,24 @@
+WWI_GRENADIER:
+	Inherits: ^Soldier
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 10
+		Prerequisites: Pop1
+	Population:
+		Amount: -1
+	Valued:
+		Cost: 100
+	Tooltip:
+		Name: Grenadier
+		Description: Strong vs Buildings, Heavy tanks\n  Weak vs Vehicles
+	Health:
+		HP: 50
+	Armament@PRIMARY:
+		Weapon: Grenadier
+	AttackFrontal:
+	WithInfantryBody:
+		AttackSequence: throw
+	Explodes:
+		Weapon: UnitExplodeSmall
+		Chance: 50
