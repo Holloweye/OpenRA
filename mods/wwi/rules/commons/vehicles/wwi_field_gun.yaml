@@ -1,0 +1,32 @@
+WWI_FIELD_GUN:
+	Inherits: ^Tank
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 70
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Field gun
+		Description: Short-range artillery.\nStrong vs Tanks and buildings.
+	Health:
+		HP: 100
+	Armor:
+		Type: field_gun
+	Mobile:
+		ROT: 4
+		Speed: 50
+	RevealsShroud:
+		Range: 4c0
+	Armament:
+		Weapon: FieldGun
+		LocalOffset: 624,0,608
+		MuzzleSequence: muzzle
+	AttackFrontal:
+	WithMuzzleFlash:
+	AutoTarget:
+	WithAttackAnimation:
+		AttackSequence: shoot
+	WithMoveAnimation:
+		MoveSequence: run
+	SelectionDecorations:
+		VisualBounds: 30,30,0,-7

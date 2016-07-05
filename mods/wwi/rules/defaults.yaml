@@ -258,3 +258,91 @@
 	WithInfantryBody:
 		IdleSequences: idle1,idle2
 		StandSequences: stand,stand2
+
+^Plane:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^GainsExperience
+	AppearsOnRadar:
+		UseLocation: true
+	SelectionDecorations:
+	Selectable:
+		Bounds: 24,24
+	TargetableAircraft:
+		TargetTypes: Air
+		GroundedTargetTypes: Ground, Repair
+	HiddenUnderFog:
+		Type: CenterPosition
+	AttackMove:
+	Guard:
+	Guardable:
+	ActorLostNotification:
+		Notification: AirUnitLost
+	ProximityCaptor:
+		Types: Plane
+	GivesBounty:
+	Tooltip:
+		GenericName: Plane
+	WithShadow:
+	RenderSprites:
+	WithFacingSpriteBody:
+	AutoSelectionSize:
+	MustBeDestroyed:
+	Voiced:
+		VoiceSet: GenericVoice
+
+^Helicopter:
+	Inherits: ^Plane
+	Tooltip:
+		GenericName: Helicopter
+	Hovers:
+
+^BasicHusk:
+	Health:
+		HP: 280
+	Armor:
+		Type: Heavy
+	HiddenUnderFog:
+		Type: CenterPosition
+	BodyOrientation:
+	AutoTargetIgnore:
+	ScriptTriggers:
+	RenderSprites:
+	WithFacingSpriteBody:
+	AutoSelectionSize:
+
+^Husk:
+	Inherits: ^BasicHusk
+	Husk:
+		AllowedTerrain: Clear, Rough, Road, Ore, Gems, Beach
+	Burns:
+		Damage: 2
+	ProximityCaptor:
+		Types: Husk
+	Capturable:
+		Type: husk
+		AllowAllies: true
+		CaptureThreshold: 1.0
+	TransformOnCapture:
+		ForceHealthPercentage: 25
+	DisabledOverlay:
+	TargetableUnit:
+		TargetTypes: Ground
+		RequiresForceFire: true
+	Tooltip:
+		GenericName: Destroyed Vehicle
+
+^PlaneHusk:
+	Inherits: ^BasicHusk
+	WithShadow:
+	Tooltip:
+		GenericName: Destroyed Plane
+	FallsToEarth:
+		Spins: False
+		Moves: True
+
+^HelicopterHusk:
+	Inherits: ^BasicHusk
+	WithShadow:
+	Tooltip:
+		GenericName: Destroyed Helicopter
+	FallsToEarth:

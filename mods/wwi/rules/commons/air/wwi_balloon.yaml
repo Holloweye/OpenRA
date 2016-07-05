@@ -1,0 +1,51 @@
+WWI_BALLOON:
+	Inherits: ^Helicopter
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Helicopter
+		BuildPaletteOrder: 20
+	Valued:
+		Cost: 900
+	Tooltip:
+		Name: Observation balloon
+		Description: Scouting unit.
+	Health:
+		HP: 140
+	Armor:
+		Type: air
+	RevealsShroud:
+		Range: 12c0
+		Type: CenterPosition
+	Helicopter:
+		RearmBuildings: wwi_airstrip
+		LandWhenIdle: false
+		InitialFacing: 20
+		ROT: 1
+		Speed: 10
+		AltitudeVelocity: 0c10
+	SelectionDecorations:
+		VisualBounds: 38,32,0,0
+	LeavesHusk:
+		HuskActor: WWI_BALLOON.Husk
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+	Hovers:
+
+WWI_BALLOON.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Observation balloon
+	Contrail:
+		Offset: -853,0,0
+	Plane:
+		ROT: 2
+		Speed: 100
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,0
+		Interval: 2
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 4c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: wwi_balloon

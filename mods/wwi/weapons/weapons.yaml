@@ -210,3 +210,103 @@ Medic:
 			light_tank: 0
 			medium_tank: 0
 			heavy_tank: 0
+
+Plane:
+	ReloadDelay: 3
+	Range: 5c0
+	MinRange: 3c0
+	Report: GUN13.AUD
+	ValidTargets: Air, Ground
+	Projectile: Bullet
+		Speed: 1c682
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 10
+		Versus:
+			flesh: 60
+			stone_building: 2
+			wood_building: 5
+			vehicle: 8
+			artillery: 10
+			light_tank: 8
+			medium_tank: 5
+			heavy_tank: 2
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidTargets: Air, Ground
+	Warhead@2Eff: CreateEffect
+		Explosion: piffs
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosion: water_piffs
+		ValidImpactTypes: Water
+
+FieldGun:
+	ReloadDelay: 65
+	Range: 7c0
+	MinRange: 3c0
+	Report: TANK5.AUD
+	Projectile: Bullet
+		Speed: 400
+		Blockable: false
+		Angle: 20
+		Inaccuracy: 0c682
+		Image: 120MM
+		ContrailLength: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 80
+		Versus:
+			flesh: 20
+			stone_building: 30
+			wood_building: 50
+			medium_tank: 80
+			heavy_tank: 60
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Eff: CreateEffect
+		Explosion: artillery_explosion
+		ImpactSound: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosion: med_splash
+		ImpactSound: splash9.aud
+		ValidImpactTypes: Water
+
+Howitzer:
+	ReloadDelay: 90
+	Range: 15c0
+	MinRange: 6c0
+	Report: ArtShot1_1.AUD, ArtShot2_1.AUD
+	Projectile: Bullet
+		Speed: 184
+		Blockable: false
+		Angle: 82
+		Inaccuracy: 3c682
+		Image: 120MM
+		ContrailLength: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 100
+		Versus:
+			flesh: 80
+			stone_building: 30
+			wood_building: 20
+			vehicle: 10
+			artillery: 10
+			howitzer: 10
+			light_tank: 10
+			medium_tank: 10
+			heavy_tank: 10
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Eff: CreateEffect
+		Explosion: artillery_explosion
+		ImpactSound: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosion: med_splash
+		ImpactSound: splash9.aud
+		ValidImpactTypes: Water

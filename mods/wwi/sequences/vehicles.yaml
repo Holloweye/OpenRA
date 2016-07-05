@@ -27,3 +27,50 @@ wwi_trade:
 	idle: wwi_adp
 		Facings: 16
 	icon: wwi_adp_icon
+
+wwi_plane:
+	idle:
+		Facings: 8
+	muzzle: minigun
+		Length: 6
+		Facings: 8
+	icon: wwi_adp_icon
+
+wwi_balloon:
+	idle:
+		Facings: 1
+	icon: wwi_adp_icon
+
+wwi_field_gun:
+	idle:
+		Facings: 8
+	muzzle: gunfire2
+		Length: 5
+	icon: wwi_adp_icon
+	run:
+		Start: 8
+		Length: 5
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 48
+		Length: 5
+		Facings: 8
+		Tick: 100
+
+wwi_howitzer:
+	idle:
+		Facings: 8
+	muzzle: gunfire2
+		Length: 5
+	icon: wwi_adp_icon
+	run:
+		Start: 8
+		Length: 5
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 48
+		Length: 5
+		Facings: 8
+		Tick: 100

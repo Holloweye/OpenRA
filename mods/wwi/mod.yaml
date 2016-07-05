@@ -46,6 +46,10 @@ Rules:
 	./mods/wwi/rules/commons/infantry/wwi_machinegunner.yaml
 	./mods/wwi/rules/commons/infantry/wwi_flamethrower.yaml
 	./mods/wwi/rules/commons/infantry/wwi_field_medic.yaml
+	./mods/wwi/rules/commons/vehicles/wwi_field_gun.yaml
+	./mods/wwi/rules/commons/vehicles/wwi_howitzer.yaml
+	./mods/wwi/rules/commons/air/wwi_balloon.yaml
+	./mods/wwi/rules/commons/air/wwi_plane.yaml
 	./mods/wwi/rules/commons/structures/wwi_house.yaml
 	./mods/wwi/rules/commons/structures/wwi_stable.yaml
 	./mods/wwi/rules/commons/structures/wwi_barr.yaml
