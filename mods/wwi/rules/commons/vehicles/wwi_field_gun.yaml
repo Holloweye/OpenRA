@@ -3,8 +3,11 @@ WWI_FIELD_GUN:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 70
+		Prerequisites: Pop2
 	Valued:
 		Cost: 600
+	Population:
+		Amount: -2
 	Tooltip:
 		Name: Field gun
 		Description: Short-range artillery.\nStrong vs Tanks and buildings.

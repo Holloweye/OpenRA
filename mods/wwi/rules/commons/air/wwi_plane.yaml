@@ -4,8 +4,11 @@ WWI_PLANE:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 30
+		Prerequisites: Pop2
 	Valued:
 		Cost: 500
+	Population:
+		Amount: -2
 	Tooltip:
 		Name: Fighter Plane
 		Description: Anti-Air Plane.

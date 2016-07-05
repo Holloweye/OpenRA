@@ -4,8 +4,11 @@ WWI_BALLOON:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 20
+		Prerequisites: Pop2
 	Valued:
 		Cost: 900
+	Population:
+		Amount: -2
 	Tooltip:
 		Name: Observation balloon
 		Description: Scouting unit.

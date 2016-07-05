@@ -3,8 +3,11 @@ WWI_HOWITZER:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 70
+		Prerequisites: Pop4
 	Valued:
 		Cost: 700
+	Population:
+		Amount: -4
 	Tooltip:
 		Name: Heavy artillery
 		Description: Long-range artillery.\nStrong vs obstacles and infantry.
