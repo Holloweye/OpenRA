@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -20,6 +21,18 @@ using OpenRA.Traits;
 namespace OpenRA
 {
 	public enum MouseScrollType { Disabled, Standard, Inverted, Joystick }
+	public enum StatusBarsType { Standard, DamageShow, AlwaysShow }
+
+	[Flags]
+	public enum MPGameFilters
+	{
+		None = 0,
+		Waiting = 1,
+		Empty = 2,
+		Protected = 4,
+		Started = 8,
+		Incompatible = 16
+	}
 
 	public class ServerSettings
 	{
@@ -46,13 +59,8 @@ namespace OpenRA
 		[Desc("Set this to false to disable UPnP even if compatible devices are found.")]
 		public bool AllowPortForward = true;
 
-		public bool NatDeviceAvailable = false; // internal check if discovery succeeded
-
-		[Desc("Time in miliseconds to search for UPnP enabled NAT devices.")]
+		[Desc("Time in milliseconds to search for UPnP enabled NAT devices.")]
 		public int NatDiscoveryTimeout = 1000;
-
-		[Desc("Print very detailed logs for debugging issues with routers.")]
-		public bool VerboseNatDiscovery = false;
 
 		[Desc("Starts the game with a default map. Input as hash that can be obtained by the utility.")]
 		public string Map = null;
@@ -60,65 +68,60 @@ namespace OpenRA
 		[Desc("Takes a comma separated list of IP addresses that are not allowed to join.")]
 		public string[] Ban = { };
 
-		[Desc("Value in miliseconds when to terminate the game. Needs to be at least 10000 (10 s) to enable the timer.")]
+		[Desc("Value in milliseconds when to terminate the game. Needs to be at least 10000 (10 s) to enable the timer.")]
 		public int TimeOut = 0;
 
-		[Desc("Run in headless mode with an empty renderer and without sound output.")]
-		public bool Dedicated = false;
+		[Desc("For dedicated servers only, controls whether a game can be started with just one human player in the lobby.")]
+		public bool EnableSingleplayer = false;
 
-		[Desc("Automatically restart when a game ends. Disable this when something else already takes care about it.")]
-		public bool DedicatedLoop = true;
-
-		[Desc("Disallow AI bots.")]
-		public bool LockBots = false;
+		[Desc("Query map information from the Resource Center if they are not available locally.")]
+		public bool QueryMapRepository = true;
 
 		public string TimestampFormat = "s";
 
-		public ServerSettings() { }
-
-		public ServerSettings(ServerSettings other)
+		public ServerSettings Clone()
 		{
-			Name = other.Name;
-			ListenPort = other.ListenPort;
-			ExternalPort = other.ExternalPort;
-			AdvertiseOnline = other.AdvertiseOnline;
-			Password = other.Password;
-			MasterServer = other.MasterServer;
-			DiscoverNatDevices = other.DiscoverNatDevices;
-			AllowPortForward = other.AllowPortForward;
-			NatDeviceAvailable = other.NatDeviceAvailable;
-			NatDiscoveryTimeout = other.NatDiscoveryTimeout;
-			VerboseNatDiscovery = other.VerboseNatDiscovery;
-			Map = other.Map;
-			Ban = other.Ban;
-			TimeOut = other.TimeOut;
-			Dedicated = other.Dedicated;
-			DedicatedLoop = other.DedicatedLoop;
-			LockBots = other.LockBots;
+			return (ServerSettings)MemberwiseClone();
 		}
 	}
 
 	public class DebugSettings
 	{
 		public bool BotDebug = false;
+		public bool LuaDebug = false;
 		public bool PerfText = false;
 		public bool PerfGraph = false;
 		public float LongTickThresholdMs = 1;
 		public bool SanityCheckUnsyncedCode = false;
 		public int Samples = 25;
 		public bool IgnoreVersionMismatch = false;
+		public bool SendSystemInformation = true;
+		public int SystemInformationVersionPrompt = 0;
+		public string UUID = System.Guid.NewGuid().ToString();
 	}
 
 	public class GraphicSettings
 	{
 		public string Renderer = "Default";
+
+		[Desc("This can be set to Windowed, Fullscreen or PseudoFullscreen.")]
 		public WindowMode Mode = WindowMode.PseudoFullscreen;
+
+		[Desc("Screen resolution in fullscreen mode.")]
 		public int2 FullscreenSize = new int2(0, 0);
+
+		[Desc("Screen resolution in windowed mode.")]
 		public int2 WindowedSize = new int2(1024, 768);
+
 		public bool HardwareCursors = true;
+
 		public bool PixelDouble = false;
 		public bool CursorDouble = false;
+
+		[Desc("Add a frame rate limiter. It is recommended to not disable this.")]
 		public bool CapFramerate = true;
+
+		[Desc("At which frames per second to cap the framerate.")]
 		public int MaxFramerate = 60;
 
 		public int BatchSize = 8192;
@@ -143,6 +146,7 @@ namespace OpenRA
 		public string Device = null;
 
 		public bool CashTicks = true;
+		public bool Mute = false;
 	}
 
 	public class PlayerSettings
@@ -162,7 +166,8 @@ namespace OpenRA
 
 		public bool ViewportEdgeScroll = true;
 		public bool LockMouseWindow = false;
-		public MouseScrollType MouseScroll = MouseScrollType.Standard;
+		public MouseScrollType MiddleMouseScroll = MouseScrollType.Standard;
+		public MouseScrollType RightMouseScroll = MouseScrollType.Disabled;
 		public MouseButtonPreference MouseButtonPreference = new MouseButtonPreference();
 		public float ViewportEdgeScrollStep = 10f;
 		public float UIScrollSpeed = 50f;
@@ -170,16 +175,20 @@ namespace OpenRA
 		public int JoystickScrollDeadzone = 8;
 
 		public bool UseClassicMouseStyle = false;
-		public bool AlwaysShowStatusBars = false;
-		public bool TeamHealthColors = false;
+		public StatusBarsType StatusBars = StatusBarsType.Standard;
+		public bool UsePlayerStanceColors = false;
 		public bool DrawTargetLine = true;
 
 		public bool AllowDownloading = true;
 		public string MapRepository = "http://resource.openra.net/map/";
 
+		public bool AllowZoom = true;
+		public Modifiers ZoomModifier = Modifiers.Ctrl;
+
 		public bool FetchNews = true;
-		public string NewsUrl = "http://www.openra.net/gamenews";
-		public DateTime NewsFetchedDate;
+		public string NewsUrl = "http://master.openra.net/gamenews";
+
+		public MPGameFilters MPGameFilters = MPGameFilters.Waiting | MPGameFilters.Empty | MPGameFilters.Protected | MPGameFilters.Started;
 	}
 
 	public class KeySettings
@@ -194,6 +203,21 @@ namespace OpenRA
 		public Hotkey MapScrollDown = new Hotkey(Keycode.DOWN, Modifiers.None);
 		public Hotkey MapScrollLeft = new Hotkey(Keycode.LEFT, Modifiers.None);
 		public Hotkey MapScrollRight = new Hotkey(Keycode.RIGHT, Modifiers.None);
+
+		public Hotkey MapPushTop = new Hotkey(Keycode.UP, Modifiers.Alt);
+		public Hotkey MapPushBottom = new Hotkey(Keycode.DOWN, Modifiers.Alt);
+		public Hotkey MapPushLeftEdge = new Hotkey(Keycode.LEFT, Modifiers.Alt);
+		public Hotkey MapPushRightEdge = new Hotkey(Keycode.RIGHT, Modifiers.Alt);
+
+		public Hotkey ViewPortBookmarkSaveSlot1 = new Hotkey(Keycode.Q, Modifiers.Ctrl);
+		public Hotkey ViewPortBookmarkSaveSlot2 = new Hotkey(Keycode.W, Modifiers.Ctrl);
+		public Hotkey ViewPortBookmarkSaveSlot3 = new Hotkey(Keycode.E, Modifiers.Ctrl);
+		public Hotkey ViewPortBookmarkSaveSlot4 = new Hotkey(Keycode.R, Modifiers.Ctrl);
+
+		public Hotkey ViewPortBookmarkUseSlot1 = new Hotkey(Keycode.Q, Modifiers.Alt);
+		public Hotkey ViewPortBookmarkUseSlot2 = new Hotkey(Keycode.W, Modifiers.Alt);
+		public Hotkey ViewPortBookmarkUseSlot3 = new Hotkey(Keycode.E, Modifiers.Alt);
+		public Hotkey ViewPortBookmarkUseSlot4 = new Hotkey(Keycode.R, Modifiers.Alt);
 
 		public Hotkey PauseKey = new Hotkey(Keycode.PAUSE, Modifiers.None);
 		public Hotkey PlaceBeaconKey = new Hotkey(Keycode.B, Modifiers.None);
@@ -215,12 +239,14 @@ namespace OpenRA
 		public Hotkey ObserverCombinedView = new Hotkey(Keycode.MINUS, Modifiers.None);
 		public Hotkey ObserverWorldView = new Hotkey(Keycode.EQUALS, Modifiers.None);
 
-		public Hotkey ToggleStatusBarsKey = new Hotkey(Keycode.COMMA, Modifiers.None);
+		public Hotkey CycleStatusBarsKey = new Hotkey(Keycode.COMMA, Modifiers.None);
 		public Hotkey TogglePixelDoubleKey = new Hotkey(Keycode.PERIOD, Modifiers.None);
+		public Hotkey TogglePlayerStanceColorsKey = new Hotkey(Keycode.COMMA, Modifiers.Ctrl);
 
 		public Hotkey DevReloadChromeKey = new Hotkey(Keycode.C, Modifiers.Ctrl | Modifiers.Shift);
 		public Hotkey HideUserInterfaceKey = new Hotkey(Keycode.H, Modifiers.Ctrl | Modifiers.Shift);
 		public Hotkey TakeScreenshotKey = new Hotkey(Keycode.P, Modifiers.Ctrl);
+		public Hotkey ToggleMuteKey = new Hotkey(Keycode.M, Modifiers.None);
 
 		public Hotkey Production01Key = new Hotkey(Keycode.F1, Modifiers.None);
 		public Hotkey Production02Key = new Hotkey(Keycode.F2, Modifiers.None);
@@ -264,6 +290,16 @@ namespace OpenRA
 		public Hotkey SupportPower04Key = new Hotkey(Keycode.UNKNOWN, Modifiers.None);
 		public Hotkey SupportPower05Key = new Hotkey(Keycode.UNKNOWN, Modifiers.None);
 		public Hotkey SupportPower06Key = new Hotkey(Keycode.UNKNOWN, Modifiers.None);
+
+		public Hotkey ReplaySpeedSlowKey = new Hotkey(Keycode.F5, Modifiers.None);
+		public Hotkey ReplaySpeedRegularKey = new Hotkey(Keycode.F6, Modifiers.None);
+		public Hotkey ReplaySpeedFastKey = new Hotkey(Keycode.F7, Modifiers.None);
+		public Hotkey ReplaySpeedMaxKey = new Hotkey(Keycode.F8, Modifiers.None);
+
+		public Hotkey NextTrack = new Hotkey(Keycode.AUDIONEXT, Modifiers.None);
+		public Hotkey PreviousTrack = new Hotkey(Keycode.AUDIOPREV, Modifiers.None);
+		public Hotkey StopMusic = new Hotkey(Keycode.AUDIOSTOP, Modifiers.None);
+		public Hotkey PauseMusic = new Hotkey(Keycode.AUDIOPLAY, Modifiers.None);
 
 		static readonly Func<KeySettings, Hotkey>[] ProductionKeys = GetKeys(24, "Production");
 		static readonly Func<KeySettings, Hotkey>[] SupportPowerKeys = GetKeys(6, "SupportPower");

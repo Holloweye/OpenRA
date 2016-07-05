@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -22,7 +23,7 @@ namespace OpenRA.Mods.Common.Activities
 		Cargo cargo;
 
 		public EnterTransport(Actor self, Actor transport, int maxTries = 0, bool targetCenter = false)
-			: base(self, transport, maxTries, targetCenter)
+			: base(self, transport, EnterBehaviour.Exit, maxTries, targetCenter)
 		{
 			this.transport = transport;
 			this.maxTries = maxTries;

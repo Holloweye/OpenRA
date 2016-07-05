@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -25,7 +26,7 @@ namespace OpenRA.Mods.RA.Traits
 
 		public readonly string AmmoPoolName = "primary";
 
-		public readonly float MinefieldDepth = 1.5f;
+		public readonly WDist MinefieldDepth = new WDist(1536);
 
 		public object Create(ActorInitializer init) { return new Minelayer(init.Self); }
 	}
@@ -42,8 +43,8 @@ namespace OpenRA.Mods.RA.Traits
 		{
 			this.self = self;
 
-			var tileset = self.World.TileSet.Id.ToLowerInvariant();
-			tile = self.World.Map.SequenceProvider.GetSequence("overlay", "build-valid-{0}".F(tileset)).GetSprite(0);
+			var tileset = self.World.Map.Tileset.ToLowerInvariant();
+			tile = self.World.Map.Rules.Sequences.GetSequence("overlay", "build-valid-{0}".F(tileset)).GetSprite(0);
 		}
 
 		public IEnumerable<IOrderTargeter> Orders
@@ -96,7 +97,7 @@ namespace OpenRA.Mods.RA.Traits
 			}
 		}
 
-		static IEnumerable<CPos> GetMinefieldCells(CPos start, CPos end, float depth)
+		static IEnumerable<CPos> GetMinefieldCells(CPos start, CPos end, WDist depth)
 		{
 			var mins = CPos.Min(start, end);
 			var maxs = CPos.Max(start, end);
@@ -112,7 +113,7 @@ namespace OpenRA.Mods.RA.Traits
 
 			for (var i = mins.X; i <= maxs.X; i++)
 				for (var j = mins.Y; j <= maxs.Y; j++)
-					if (Math.Abs(q.X * i + q.Y * j + c) < depth)
+					if (Math.Abs(q.X * i + q.Y * j + c) * 1024 < depth.Length)
 						yield return new CPos(i, j);
 		}
 
@@ -121,7 +122,7 @@ namespace OpenRA.Mods.RA.Traits
 			if (self.Owner != self.World.LocalPlayer || Minefield == null)
 				yield break;
 
-			var pal = wr.Palette("terrain");
+			var pal = wr.Palette(TileSet.TerrainPaletteInternalName);
 			foreach (var c in Minefield)
 				yield return new SpriteRenderable(tile, self.World.Map.CenterOfCell(c),
 					WVec.Zero, -511, pal, 1f, true);
@@ -139,12 +140,12 @@ namespace OpenRA.Mods.RA.Traits
 				minelayer = self;
 				minefieldStart = xy;
 
-				var tileset = self.World.TileSet.Id.ToLowerInvariant();
-				tileOk = self.World.Map.SequenceProvider.GetSequence("overlay", "build-valid-{0}".F(tileset)).GetSprite(0);
-				tileBlocked = self.World.Map.SequenceProvider.GetSequence("overlay", "build-invalid").GetSprite(0);
+				var tileset = self.World.Map.Tileset.ToLowerInvariant();
+				tileOk = self.World.Map.Rules.Sequences.GetSequence("overlay", "build-valid-{0}".F(tileset)).GetSprite(0);
+				tileBlocked = self.World.Map.Rules.Sequences.GetSequence("overlay", "build-invalid").GetSprite(0);
 			}
 
-			public IEnumerable<Order> Order(World world, CPos xy, MouseInput mi)
+			public IEnumerable<Order> Order(World world, CPos cell, int2 worldPixel, MouseInput mi)
 			{
 				if (mi.Button == Game.Settings.Game.MouseButtonPreference.Cancel)
 				{
@@ -160,7 +161,7 @@ namespace OpenRA.Mods.RA.Traits
 				if (mi.Button == Game.Settings.Game.MouseButtonPreference.Action && underCursor == null)
 				{
 					minelayer.World.CancelInputMode();
-					yield return new Order("PlaceMinefield", minelayer, false) { TargetLocation = xy };
+					yield return new Order("PlaceMinefield", minelayer, false) { TargetLocation = cell };
 				}
 			}
 
@@ -181,7 +182,7 @@ namespace OpenRA.Mods.RA.Traits
 				var minefield = GetMinefieldCells(minefieldStart, lastMousePos,
 					minelayer.Info.TraitInfo<MinelayerInfo>().MinefieldDepth);
 
-				var pal = wr.Palette("terrain");
+				var pal = wr.Palette(TileSet.TerrainPaletteInternalName);
 				foreach (var c in minefield)
 				{
 					var tile = movement.CanEnterCell(c, null, false) ? tileOk : tileBlocked;
@@ -190,16 +191,19 @@ namespace OpenRA.Mods.RA.Traits
 				}
 			}
 
-			public string GetCursor(World world, CPos xy, MouseInput mi) { lastMousePos = xy; return "ability"; }	/* TODO */
+			public string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)
+			{
+				lastMousePos = cell; return "ability";	/* TODO */
+			}
 		}
 
 		class BeginMinefieldOrderTargeter : IOrderTargeter
 		{
 			public string OrderID { get { return "BeginMinefield"; } }
 			public int OrderPriority { get { return 5; } }
-			public bool OverrideSelection { get { return true; } }
+			public bool TargetOverridesSelection(TargetModifiers modifiers) { return true; }
 
-			public bool CanTarget(Actor self, Target target, List<Actor> othersAtTarget, TargetModifiers modifiers, ref string cursor)
+			public bool CanTarget(Actor self, Target target, List<Actor> othersAtTarget, ref TargetModifiers modifiers, ref string cursor)
 			{
 				if (target.Type != TargetType.Terrain)
 					return false;

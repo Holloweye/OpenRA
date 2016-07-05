@@ -1,30 +1,23 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using OpenRA.FileFormats;
 using OpenRA.Graphics;
-using OpenRA.Mods.Common;
-using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Traits;
-using OpenRA.Orders;
 using OpenRA.Primitives;
 using OpenRA.Traits;
-using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets
 {
-	public class EditorActorBrush : IEditorBrush
+	public sealed class EditorActorBrush : IEditorBrush
 	{
 		public readonly ActorInfo Actor;
 
@@ -89,15 +82,20 @@ namespace OpenRA.Mods.Common.Widgets
 
 			if (mi.Button == MouseButton.Right)
 			{
-				editorWidget.ClearBrush();
-				return true;
+				if (mi.Event == MouseInputEvent.Up)
+				{
+					editorWidget.ClearBrush();
+					return true;
+				}
+
+				return false;
 			}
 
 			var cell = worldRenderer.Viewport.ViewToWorld(mi.Location);
 			if (mi.Button == MouseButton.Left && mi.Event == MouseInputEvent.Down)
 			{
 				// Check the actor is inside the map
-				if (!footprint.All(c => world.Map.MapTiles.Value.Contains(cell + locationOffset + c)))
+				if (!footprint.All(c => world.Map.Tiles.Contains(cell + locationOffset + c)))
 					return true;
 
 				var newActorReference = new ActorReference(Actor.Name);
@@ -143,5 +141,7 @@ namespace OpenRA.Mods.Common.Widgets
 			preview.Bounds.Width = (int)(zoom * s.X);
 			preview.Bounds.Height = (int)(zoom * s.Y);
 		}
+
+		public void Dispose() { }
 	}
 }

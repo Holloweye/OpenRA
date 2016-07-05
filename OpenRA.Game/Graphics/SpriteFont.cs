@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -17,7 +18,7 @@ using SharpFont;
 
 namespace OpenRA.Graphics
 {
-	public class SpriteFont
+	public sealed class SpriteFont : IDisposable
 	{
 		static readonly Library Library = new Library();
 
@@ -27,7 +28,7 @@ namespace OpenRA.Graphics
 		readonly Face face;
 		readonly Cache<Pair<char, Color>, GlyphInfo> glyphs;
 
-		public SpriteFont(string name, int size, SheetBuilder builder)
+		public SpriteFont(string name, byte[] data, int size, SheetBuilder builder)
 		{
 			if (builder.Type != SheetType.BGRA)
 				throw new ArgumentException("The sheet builder must create BGRA sheets.", "builder");
@@ -35,11 +36,12 @@ namespace OpenRA.Graphics
 			this.size = size;
 			this.builder = builder;
 
-			face = new Face(Library, name);
+			face = new Face(Library, data, 0);
 			face.SetPixelSizes((uint)size, (uint)size);
 
 			glyphs = new Cache<Pair<char, Color>, GlyphInfo>(CreateGlyph, Pair<char, Color>.EqualityComparer);
 
+			// PERF: Cache these delegates for Measure calls.
 			Func<char, float> characterWidth = character => glyphs[Pair.New(character, Color.White)].Advance;
 			lineWidth = line => line.Sum(characterWidth);
 
@@ -148,6 +150,11 @@ namespace OpenRA.Graphics
 			s.Sheet.CommitBufferedData();
 
 			return g;
+		}
+
+		public void Dispose()
+		{
+			face.Dispose();
 		}
 	}
 

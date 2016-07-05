@@ -6,6 +6,7 @@
 	ScriptTriggers:
 	UpgradeManager:
 	Huntable:
+	RenderDebugState:
 
 ^SpriteActor:
 	BodyOrientation:
@@ -22,23 +23,23 @@
 			1600: firepower, damage, speed, reload, inaccuracy, rank, eliteweapon, selfheal
 	FirepowerMultiplier@EXPERIENCE:
 		UpgradeTypes: firepower
-		Modifier: 105, 110, 120, 130
+		Modifier: 105, 110, 115, 125
 	DamageMultiplier@EXPERIENCE:
 		UpgradeTypes: damage
-		Modifier: 95, 90, 85, 75
+		Modifier: 96, 92, 88, 80
 	SpeedMultiplier@EXPERIENCE:
 		UpgradeTypes: speed
-		Modifier: 105, 110, 120, 140
+		Modifier: 105, 110, 115, 125
 	ReloadDelayMultiplier@EXPERIENCE:
 		UpgradeTypes: reload
-		Modifier: 95, 90, 85, 75
+		Modifier: 96, 92, 88, 80
 	InaccuracyMultiplier@EXPERIENCE:
 		UpgradeTypes: inaccuracy
 		Modifier: 90, 80, 70, 50
 	SelfHealing@ELITE:
 		Step: 2
-		Ticks: 100
-		HealIfBelow: 1
+		Delay: 125
+		HealIfBelow: 100
 		DamageCooldown: 125
 		UpgradeTypes: selfheal
 		UpgradeMinEnabledLevel: 1
@@ -47,7 +48,6 @@
 		Sequence: rank
 		Palette: effect
 		ReferencePoint: Bottom, Right
-		Offset: 2, 2
 		UpgradeTypes: rank
 		ZOffset: 256
 		UpgradeMinEnabledLevel: 1
@@ -58,16 +58,19 @@
 	Inherits@2: ^GainsExperience
 	Inherits@3: ^SpriteActor
 	Mobile:
+		UpgradeTypes: notmobile
+		UpgradeMaxEnabledLevel: 0
 		Crushes: crate, spicebloom
 		TerrainSpeeds:
 			Sand: 100
 			Rock: 100
 			Transition: 100
 			Concrete: 100
+			SpiceSand: 100
 			Spice: 100
 			SpiceBlobs: 100
 			Dune: 50
-		ROT: 5
+		TurnSpeed: 5
 	SelectionDecorations:
 	Selectable:
 		Bounds: 32,32
@@ -80,7 +83,7 @@
 	HiddenUnderFog:
 	ActorLostNotification:
 	Repairable:
-		RepairBuildings: repair
+		RepairBuildings: repair_pad
 	Guard:
 		Voice: Guard
 	Guardable:
@@ -91,6 +94,7 @@
 	Voiced:
 		VoiceSet: VehicleVoice
 	Carryable:
+		CarryableUpgrades: notmobile
 	WithDecorationCarryable:
 		Image: pips
 		Sequence: pickup-indicator
@@ -106,7 +110,7 @@
 	Health:
 		HP: 75
 	Armor:
-		Type: Light
+		Type: light
 	HiddenUnderFog:
 		Type: CenterPosition
 	Tooltip:
@@ -118,19 +122,16 @@
 ^VehicleHusk:
 	Inherits: ^Husk
 	Husk:
-		AllowedTerrain: Sand, Rock, Transition, Concrete, Spice, SpiceBlobs, Dune
+		AllowedTerrain: Sand, Rock, Transition, Concrete, Spice, SpiceSand, SpiceBlobs, Dune
 	Burns:
 		Interval: 4
 	Targetable:
 		TargetTypes: Ground, Vehicle
-		RequiresForceFire: yes
-	Capturable:
-		Type: husk
-		AllowAllies: yes
-		CaptureThreshold: 1.0
-	TransformOnCapture:
-		ForceHealthPercentage: 25
+		RequiresForceFire: true
 	DisabledOverlay:
+	Explodes:
+		Weapon: UnitExplodeMed
+		EmptyWeapon: UnitExplodeMed
 
 ^AircraftHusk:
 	Inherits: ^Husk
@@ -144,7 +145,7 @@
 	Health:
 		HP: 125
 	Armor:
-		Type: Concrete
+		Type: concrete
 	Husk:
 	AppearsOnRadar:
 	HiddenUnderFog:
@@ -159,11 +160,12 @@
 	Inherits@2: ^GainsExperience
 	Inherits@3: ^SpriteActor
 	Health:
-		Radius: 96
+		Shape: Circle
+			Radius: 96
 	Armor:
-		Type: None
+		Type: none
 	RevealsShroud:
-		Range: 6c0
+		Range: 3c768
 	Mobile:
 		Crushes: crate, spicebloom
 		SharesCell: true
@@ -172,13 +174,14 @@
 			Rock: 100
 			Transition: 100
 			Concrete: 100
+			SpiceSand: 100
 			Spice: 100
 			SpiceBlobs: 100
-			Dune: 50
+			Dune: 80
 			Rough: 80
 	SelectionDecorations:
 	Selectable:
-		Bounds: 12,18,0,-6
+		Bounds: 12,20,0,-4
 	Targetable:
 		TargetTypes: Ground, Infantry
 	QuantizeFacingsFromSequence:
@@ -208,6 +211,8 @@
 	Guard:
 		Voice: Guard
 	Guardable:
+	DetectCloaked:
+		Range: 1c384
 	DeathSounds:
 		DeathTypes: ExplosionDeath, SoundDeath, SmallExplosionDeath, BulletDeath
 	MustBeDestroyed:
@@ -221,15 +226,13 @@
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
 	AppearsOnRadar:
-		UseLocation: yes
+		UseLocation: true
 	HiddenUnderFog:
 		Type: CenterPosition
 		AlwaysVisibleStances: None
 	ActorLostNotification:
 	AttackMove:
 	DrawLineToTarget:
-	Voiced:
-		VoiceSet: GenericVoice
 	WithFacingSpriteBody:
 	WithShadow:
 
@@ -239,6 +242,8 @@
 	SelectionDecorations:
 	Selectable:
 		Priority: 2
+	RevealsShroud:
+		VisibilityType: CenterPosition
 	Targetable:
 		TargetTypes: Ground, C4, Structure
 	Building:
@@ -249,15 +254,16 @@
 		Adjacent: 3
 	GivesBuildableArea:
 	Capturable:
-		CaptureThreshold: 1.0
+		CaptureThreshold: 100
 	SoundOnDamageTransition:
 		DamagedSounds: EXPLSML1.WAV
 		DestroyedSounds: EXPLHG1.WAV
 	WithSpriteBody:
 	WithBuildingExplosion:
+		Sequences: building, self_destruct, large_explosion
 	RepairableBuilding:
 	EmitInfantryOnSell:
-		ActorTypes: light_inf,light_inf,light_inf,light_inf,light_inf,trooper,trooper,trooper,engineer
+		ActorTypes: light_inf
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	FrozenUnderFog:
@@ -274,27 +280,25 @@
 	DamagedWithoutFoundation:
 	ThrowsShrapnel:
 		Weapons: Debris, Debris2, Debris3, Debris4
-		Pieces: 3, 7
-		Range: 2c0, 5c0
+		Pieces: 2, 5
+		Range: 1c512, 4c0
 	WithMakeAnimation:
 
 ^Defense:
 	Inherits: ^Building
-	WithTurret:
+	WithSpriteTurret:
 	AttackTurreted:
 	AutoTarget:
 	RenderRangeCircle:
 	-GivesBuildableArea:
-	-WithCrumbleOverlay:
 	-WithMakeAnimation:
 	-WithSpriteBody:
 	WithWallSpriteBody:
 	LineBuildNode:
 		Types: turret
 	ThrowsShrapnel:
-		Weapons: Debris, Debris2, Debris3, Debris4
-		Pieces: 2, 5
-		Range: 2c0, 5c0
+		Weapons: Debris, Debris3
+		Pieces: 2, 2
+		Range: 2c0, 4c0
 	MustBeDestroyed:
 		RequiredForShortGame: false
-

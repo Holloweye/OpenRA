@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -21,14 +22,14 @@ namespace OpenRA.Mods.Common.Traits
 	[Desc("Allows King of the Hill (KotH) style gameplay.")]
 	public class StrategicVictoryConditionsInfo : ITraitInfo, Requires<MissionObjectivesInfo>
 	{
-		[Desc("Amount of time (in game ticks) that the player has to hold all the strategic points.", "Defaults to 5 minutes.")]
-		public readonly int TicksToHold = 25 * 60 * 5;
+		[Desc("Amount of time (in game ticks) that the player has to hold all the strategic points.", "Defaults to 7500 ticks (5 minutes at default speed).")]
+		public readonly int HoldDuration = 7500;
 
 		[Desc("Should the timer reset when the player loses hold of a strategic point.")]
 		public readonly bool ResetOnHoldLost = true;
 
 		[Desc("Percentage of all strategic points the player has to hold to win.")]
-		public readonly float RatioRequired = 0.5f;
+		public readonly int RatioRequired = 50;
 
 		[Desc("Delay for the end game notification in milliseconds.")]
 		public readonly int NotificationDelay = 1500;
@@ -51,20 +52,20 @@ namespace OpenRA.Mods.Common.Traits
 		public StrategicVictoryConditions(Actor self, StrategicVictoryConditionsInfo svcInfo)
 		{
 			info = svcInfo;
-			TicksLeft = info.TicksToHold;
+			TicksLeft = info.HoldDuration;
 			player = self.Owner;
 			mo = self.Trait<MissionObjectives>();
 		}
 
-		public IEnumerable<TraitPair<StrategicPoint>> AllPoints
+		public IEnumerable<Actor> AllPoints
 		{
-			get { return player.World.ActorsWithTrait<StrategicPoint>(); }
+			get { return player.World.ActorsHavingTrait<StrategicPoint>(); }
 		}
 
 		public int Total { get { return AllPoints.Count(); } }
-		int Owned { get { return AllPoints.Count(a => WorldUtils.AreMutualAllies(player, a.Actor.Owner)); } }
+		int Owned { get { return AllPoints.Count(a => WorldUtils.AreMutualAllies(player, a.Owner)); } }
 
-		public bool Holding { get { return Owned >= info.RatioRequired * Total; } }
+		public bool Holding { get { return Owned >= info.RatioRequired * Total / 100; } }
 
 		public void Tick(Actor self)
 		{
@@ -90,13 +91,13 @@ namespace OpenRA.Mods.Common.Traits
 			{
 				if (Holding)
 				{
-					// Hah! We met ths critical owned condition
+					// Hah! We met this critical owned condition
 					if (--TicksLeft == 0)
 						mo.MarkCompleted(player, objectiveID);
 				}
 				else if (TicksLeft != 0)
 					if (info.ResetOnHoldLost)
-						TicksLeft = info.TicksToHold; // Reset the time hold
+						TicksLeft = info.HoldDuration; // Reset the time hold
 			}
 		}
 
@@ -107,22 +108,22 @@ namespace OpenRA.Mods.Common.Traits
 			foreach (var a in player.World.Actors.Where(a => a.Owner == player))
 				a.Kill(a);
 
-			if (player == player.World.LocalPlayer)
+			Game.RunAfterDelay(info.NotificationDelay, () =>
 			{
-				Game.RunAfterDelay(info.NotificationDelay, () =>
-				{
-					if (Game.IsCurrentWorld(player.World))
-						Game.Sound.PlayNotification(player.World.Map.Rules, player, "Speech", "Lose", player.Faction.InternalName);
-				});
-			}
+				if (Game.IsCurrentWorld(player.World) && player == player.World.LocalPlayer)
+					Game.Sound.PlayNotification(player.World.Map.Rules, player, "Speech", "Lose", player.Faction.InternalName);
+			});
 		}
 
 		public void OnPlayerWon(Player player)
 		{
 			Game.Debug("{0} is victorious.", player.PlayerName);
 
-			if (player == player.World.LocalPlayer)
-				Game.RunAfterDelay(info.NotificationDelay, () => Game.Sound.PlayNotification(player.World.Map.Rules, player, "Speech", "Win", player.Faction.InternalName));
+			Game.RunAfterDelay(info.NotificationDelay, () =>
+			{
+				if (Game.IsCurrentWorld(player.World) && player == player.World.LocalPlayer)
+					Game.Sound.PlayNotification(player.World.Map.Rules, player, "Speech", "Win", player.Faction.InternalName);
+			});
 		}
 
 		public void OnObjectiveAdded(Player player, int id) { }

@@ -1,10 +1,8 @@
-MapFormat: 7
+MapFormat: 11
 
 RequiresMod: cnc
 
-Title: Oum Hadjer (b)
-
-Description: A small village friendly to our cause has been increasingly harassed by GDI, and the Brotherhood wishes you to assist them in their efforts.\n\nSeek out the enemy village and destroy it. The event will be disguised as a GDI attack.
+Title: 04b: Oum Hadjer
 
 Author: Westwood Studios
 
@@ -16,28 +14,15 @@ Bounds: 7,17,52,44
 
 Visibility: MissionSelector
 
-Type: Campaign
+Categories: Campaign
 
-Videos:
-	Briefing: nod4b.vqa
-	GameLost: nodlose.vqa
-
-Options:
-	Crates: False
-	Creeps: False
-	Fog: True
-	Shroud: True
-	AllyBuildRadius: False
-	FragileAlliances: False
-	StartingCash: 0
-	ConfigurableStartingUnits: False
-	ShortGame: False
+LockPreview: True
 
 Players:
 	PlayerReference@GDI:
 		Name: GDI
 		Faction: gdi
-		ColorRamp: 31,222,183
+		Color: F5D378
 		Enemies: Nod
 	PlayerReference@Neutral:
 		Name: Neutral
@@ -52,7 +37,7 @@ Players:
 		LockFaction: True
 		Faction: nod
 		LockColor: True
-		ColorRamp: 3,255,127
+		Color: FE1100
 		LockSpawn: True
 		LockTeam: True
 		Enemies: GDI
@@ -491,75 +476,4 @@ Actors:
 		Location: 32,22
 		Owner: Neutral
 
-Smudges:
-
-Rules:
-	Player:
-		-ConquestVictoryConditions:
-		MissionObjectives:
-			EarlyGameOver: true
-		EnemyWatcher:
-	World:
-		-CrateSpawner:
-		-SpawnMPUnits:
-		-MPStartLocations:
-		ObjectivesPanel:
-			PanelName: MISSION_OBJECTIVES
-		LuaScript:
-			Scripts: nod04b.lua
-		MusicPlaylist:
-			StartingMusic: warfare
-			VictoryMusic: nod_win1
-	^Vehicle:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-		AnnounceOnSeen:
-	^Tank:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-		AnnounceOnSeen:
-	^Helicopter:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Infantry:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Building:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Wall:
-		Tooltip:
-			ShowOwnerRow: false
-	^CivBuilding:
-		Tooltip:
-			ShowOwnerRow: false
-	^CivBuildingHusk:
-		Tooltip:
-			ShowOwnerRow: false
-	^Husk:
-		Tooltip:
-			GenericVisibility: Enemy, Ally, Neutral
-			GenericStancePrefix: false
-			ShowOwnerRow: false
-	TRAN:
-		RejectsOrders:
-		-Selectable:
-		RevealsShroud:
-			Range: 5c0
-
-Sequences:
-
-VoxelSequences:
-
-Weapons:
-
-Voices:
-
-Notifications:
-
-Translations:
+Rules: cnc|rules/campaign-maprules.yaml, cnc|rules/campaign-tooltips.yaml, cnc|rules/campaign-palettes.yaml, rules.yaml

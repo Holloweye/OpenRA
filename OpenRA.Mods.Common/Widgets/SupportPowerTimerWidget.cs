@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -23,27 +24,38 @@ namespace OpenRA.Mods.Common.Widgets
 		public readonly string Format = "{0}: {1}";
 		public readonly TimerOrder Order = TimerOrder.Descending;
 
-		readonly World world;
+		readonly int timestep;
 		readonly IEnumerable<SupportPowerInstance> powers;
 		Pair<string, Color>[] texts;
 
 		[ObjectCreator.UseCtor]
 		public SupportPowerTimerWidget(World world)
 		{
-			this.world = world;
 			powers = world.ActorsWithTrait<SupportPowerManager>()
 				.Where(p => !p.Actor.IsDead && !p.Actor.Owner.NonCombatant)
 				.SelectMany(s => s.Trait.Powers.Values)
 				.Where(p => p.Instances.Any() && p.Info.DisplayTimer && !p.Disabled);
+
+			// Timers in replays should be synced to the effective game time, not the playback time.
+			timestep = world.Timestep;
+			if (world.IsReplay)
+				timestep = world.WorldActor.Trait<MapOptions>().GameSpeed.Timestep;
 		}
 
 		public override void Tick()
 		{
 			texts = powers.Select(p =>
 			{
-				var time = WidgetUtils.FormatTime(p.RemainingTime, false, world.Timestep);
+				var time = WidgetUtils.FormatTime(p.RemainingTime, false, timestep);
 				var text = Format.F(p.Info.Description, time);
-				var color = !p.Ready || Game.LocalTick % 50 < 25 ? p.Instances[0].Self.Owner.Color.RGB : Color.White;
+				var self = p.Instances[0].Self;
+				var playerColor = self.Owner.Color.RGB;
+
+				if (Game.Settings.Game.UsePlayerStanceColors)
+					playerColor = self.Owner.PlayerStanceColor(self);
+
+				var color = !p.Ready || Game.LocalTick % 50 < 25 ? playerColor : Color.White;
+
 				return Pair.New(text, color);
 			}).ToArray();
 		}

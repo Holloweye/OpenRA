@@ -1,3 +1,25 @@
+spicebloom.spawnpoint:
+	HiddenUnderShroud:
+		Type: CenterPosition
+	BodyOrientation:
+		QuantizedFacings: 1
+	RenderSprites:
+		Image: spicebloom
+	SpiceBloom:
+		GrowthTerrainTypes: SpiceSand
+		SpawnActor: spicebloom
+		GrowthSequences: grow0
+		GrowthDelay: 250, 750
+		RespawnDelay: 1, 2
+	Explodes:
+		Weapon: BloomSpawn
+		EmptyWeapon: BloomSpawn
+	Health:
+		HP: 9999
+		Radius: 1
+	Immobile:
+		OccupiesSpace: false
+
 spicebloom:
 	HiddenUnderShroud:
 	BodyOrientation:
@@ -5,11 +27,14 @@ spicebloom:
 	AutoSelectionSize:
 	RenderSprites:
 	AppearsOnRadar:
-		UseLocation: yes
+		UseLocation: true
 	Tooltip:
 		Name: Spice Bloom
 	SpiceBloom:
 		Weapon: SpiceExplosion
+	Explodes:
+		Weapon: BloomExplosion
+		EmptyWeapon: BloomExplosion
 	Crushable:
 		CrushClasses: spicebloom
 		CrushedByFriendlies: true
@@ -21,9 +46,9 @@ spicebloom:
 		Radius: 512
 	Targetable:
 		TargetTypes: Ground
-		RequiresForceFire: yes
+		RequiresForceFire: true
 	Armor:
-		Type: None
+		Type: none
 
 sandworm:
 	Inherits@1: ^SpriteActor
@@ -31,24 +56,37 @@ sandworm:
 		Name: Sandworm
 		Description: Attracted by vibrations in the sand.\nWill eat units whole and has a large appetite.
 	Health:
-		HP: 1200
-		Radius: 3
+		HP: 9990
+		Radius: 256
 	Armor:
-		Type: None
+		Type: heavy
 	Mobile:
-		Speed: 50
+		Speed: 42
 		TerrainSpeeds:
 			Sand: 100
 			Dune: 100
+			SpiceSand: 100
 			Spice: 100
 	Targetable:
 		TargetTypes: Ground
-	WithFacingSpriteBody:
-	WithAttackOverlay:
+	WithSpriteBody:
+	WithIdleAnimation:
+		Interval: 160
+		Sequences: lightninga, lightningb, lightningc, lightningd, lightninge, lightningf
+		UpgradeTypes: attacking
+		UpgradeMaxEnabledLevel: 0
+	AmbientSound:
+		SoundFile: WRMSIGN1.WAV
+		Interval: 160
+		UpgradeTypes: attacking
+		UpgradeMaxEnabledLevel: 0
+	WithAttackOverlay@mouth:
+		Sequence: mouth
+	WithAttackOverlay@sand:
 		Sequence: sand
 	HiddenUnderFog:
 	AppearsOnRadar:
-		UseLocation: yes
+		UseLocation: true
 	AttackSwallow:
 		AttackRequiresEnteringCell: true
 		IgnoresVisibility: true
@@ -60,6 +98,18 @@ sandworm:
 	AnnounceOnSeen:
 		Notification: WormSign
 		PingRadar: True
+	RevealsShroud:
+		Range: 5c0
+	LeavesTrails:
+		Image: sandtrail
+		Sequences: traila, trailb, trailc
+		Palette: effect
+		Type: CenterPosition
+		TerrainTypes: Sand, Dune, SpiceSand, Spice
+		MovingInterval: 3
+		UpgradeTypes: attacking
+		UpgradeMaxEnabledLevel: 0
+	UpgradeManager:
 
 sietch:
 	Inherits: ^Building
@@ -70,9 +120,9 @@ sietch:
 		Dimensions: 2,2
 		TerrainTypes: Cliff
 	Health:
-		HP: 400
+		HP: 6000
 	Armor:
-		Type: Concrete
+		Type: wood
 	RevealsShroud:
 		Range: 10c0
 	-DamagedWithoutFoundation:
@@ -84,4 +134,3 @@ sietch:
 	ProvidesPrerequisite@buildingname:
 	-WithMakeAnimation:
 	-WithCrumbleOverlay:
-

@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -56,7 +57,7 @@ namespace OpenRA.Mods.Common.Traits
 			if (!Visible)
 				return;
 
-			var qr = Game.Renderer.WorldQuadRenderer;
+			var qr = Game.Renderer.WorldRgbaColorRenderer;
 			var doDim = refreshTick - world.WorldTick <= 0;
 			if (doDim) refreshTick = world.WorldTick + 20;
 
@@ -80,7 +81,7 @@ namespace OpenRA.Mods.Common.Traits
 					var pos = wr.World.Map.CenterOfCell(uv.ToCPos(map));
 					var tl = wr.ScreenPxPosition(pos - new WVec(512, 512, 0));
 					var br = wr.ScreenPxPosition(pos + new WVec(511, 511, 0));
-					qr.FillRect(RectangleF.FromLTRB(tl.X, tl.Y, br.X, br.Y), Color.FromArgb(w, c));
+					qr.FillRect(tl, br, Color.FromArgb(w, c));
 				}
 			}
 		}

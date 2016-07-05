@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -14,7 +15,6 @@ using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using OpenRA.Server;
-using OpenRA.Support;
 
 namespace OpenRA.Network
 {
@@ -45,6 +45,7 @@ namespace OpenRA.Network
 		}
 
 		protected List<ReceivedPacket> receivedPackets = new List<ReceivedPacket>();
+		public ReplayRecorder Recorder { get; private set; }
 
 		public virtual int LocalClientId
 		{
@@ -68,7 +69,7 @@ namespace OpenRA.Network
 		public virtual void SendImmediate(List<byte[]> orders)
 		{
 			var ms = new MemoryStream();
-			ms.Write(BitConverter.GetBytes((int)0));
+			ms.Write(BitConverter.GetBytes(0));
 			foreach (var o in orders)
 				ms.Write(o);
 			Send(ms.ToArray());
@@ -100,10 +101,26 @@ namespace OpenRA.Network
 			}
 
 			foreach (var p in packets)
+			{
 				packetFn(p.FromClient, p.Data);
+				if (Recorder != null)
+					Recorder.Receive(p.FromClient, p.Data);
+			}
 		}
 
-		protected virtual void Dispose(bool disposing) { }
+		public void StartRecording(Func<string> chooseFilename)
+		{
+			// If we have a previous recording then save/dispose it and start a new one.
+			if (Recorder != null)
+				Recorder.Dispose();
+			Recorder = new ReplayRecorder(chooseFilename);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing && Recorder != null)
+				Recorder.Dispose();
+		}
 
 		public void Dispose()
 		{
@@ -180,12 +197,12 @@ namespace OpenRA.Network
 			try
 			{
 				var ms = new MemoryStream();
-				ms.Write(BitConverter.GetBytes((int)packet.Length));
+				ms.Write(BitConverter.GetBytes(packet.Length));
 				ms.Write(packet);
 
 				foreach (var q in queuedSyncPackets)
 				{
-					ms.Write(BitConverter.GetBytes((int)q.Length));
+					ms.Write(BitConverter.GetBytes(q.Length));
 					ms.Write(q);
 					base.Send(q);
 				}
@@ -211,12 +228,6 @@ namespace OpenRA.Network
 			if (disposing)
 				if (socket != null)
 					socket.Client.Close();
-
-			using (new PerfSample("Thread.Join"))
-			{
-				if (!t.Join(1000))
-					return;
-			}
 
 			base.Dispose(disposing);
 		}

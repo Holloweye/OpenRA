@@ -2,7 +2,7 @@ Rockets:
 	ReloadDelay: 50
 	Range: 6c0
 	MinRange: 0c512
-	Report: BAZOOK1.AUD
+	Report: bazook1.aud
 	ValidTargets: Ground, Air
 	Projectile: Missile
 		Arm: 0
@@ -12,29 +12,28 @@ Rockets:
 		HorizontalRateOfTurn: 15
 		TrailImage: smokey
 		ContrailLength: 8
-		MaximumLaunchSpeed: 298
-		RangeLimit: 20
+		Speed: 298
+		RangeLimit: 7c204
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
-		Damage: 30
+		Damage: 35
 		ValidTargets: Ground, Air
 		Versus:
-			None: 50
+			None: 30
 			Wood: 85
 			Light: 100
 			Heavy: 100
-			Concrete: 25
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: small_frag
-		ImpactSound: xplos.aud
+		Explosions: small_frag
+		ImpactSounds: xplos.aud
 
 BikeRockets:
 	ReloadDelay: 50
 	Range: 6c0
-	Report: BAZOOK1.AUD
+	Report: bazook1.aud
 	ValidTargets: Ground, Air
 	Burst: 2
 	BurstDelay: 10
@@ -46,8 +45,8 @@ BikeRockets:
 		HorizontalRateOfTurn: 10
 		TrailImage: smokey
 		ContrailLength: 8
-		MaximumLaunchSpeed: 213
-		RangeLimit: 30
+		Speed: 213
+		RangeLimit: 7c204
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 30
@@ -57,13 +56,12 @@ BikeRockets:
 			Wood: 75
 			Light: 100
 			Heavy: 100
-			Concrete: 50
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: small_frag
-		ImpactSound: xplos.aud
+		Explosions: small_frag
+		ImpactSounds: xplos.aud
 
 OrcaAGMissiles:
 	ReloadDelay: 12
@@ -71,7 +69,7 @@ OrcaAGMissiles:
 	BurstDelay: 12
 	Range: 5c0
 	MinRange: 1c256
-	Report: BAZOOK1.AUD
+	Report: bazook1.aud
 	ValidTargets: Ground
 	Projectile: Missile
 		Arm: 1
@@ -81,8 +79,8 @@ OrcaAGMissiles:
 		HorizontalRateOfTurn: 20
 		TrailImage: smokey
 		ContrailLength: 8
-		MaximumLaunchSpeed: 256
-		RangeLimit: 30
+		Speed: 256
+		RangeLimit: 6c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 25
@@ -96,8 +94,8 @@ OrcaAGMissiles:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: small_frag
-		ImpactSound: xplos.aud
+		Explosions: small_frag
+		ImpactSounds: xplos.aud
 
 OrcaAAMissiles:
 	ReloadDelay: 12
@@ -105,7 +103,7 @@ OrcaAAMissiles:
 	BurstDelay: 12
 	Range: 5c0
 	MinRange: 1c256
-	Report: BAZOOK1.AUD
+	Report: bazook1.aud
 	ValidTargets: Air
 	Projectile: Missile
 		Arm: 0
@@ -115,8 +113,8 @@ OrcaAAMissiles:
 		HorizontalRateOfTurn: 20
 		TrailImage: smokey
 		ContrailLength: 8
-		MaximumLaunchSpeed: 298
-		RangeLimit: 30
+		Speed: 298
+		RangeLimit: 6c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 25
@@ -128,13 +126,13 @@ OrcaAAMissiles:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: small_frag
-		ImpactSound: xplos.aud
+		Explosions: small_frag
+		ImpactSounds: xplos.aud
 
 MammothMissiles:
 	ReloadDelay: 45
 	Range: 5c0
-	Report: ROCKET1.AUD
+	Report: rocket1.aud
 	ValidTargets: Ground, Air
 	Burst: 2
 	BurstDelay: 15
@@ -146,8 +144,8 @@ MammothMissiles:
 		HorizontalRateOfTurn: 20
 		TrailImage: smokey
 		ContrailLength: 8
-		MaximumLaunchSpeed: 341
-		RangeLimit: 35
+		Speed: 341
+		RangeLimit: 6c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 298
 		Damage: 45
@@ -161,21 +159,21 @@ MammothMissiles:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: small_poof
-		ImpactSound: xplos.aud
+		Explosions: small_poof
+		ImpactSounds: xplos.aud
 		InvalidImpactTypes: Air, AirHit
 	Warhead@4EffAir: CreateEffect
-		Explosion: small_building
-		ImpactSound: xplos.aud
+		Explosions: small_building
+		ImpactSounds: xplos.aud
 		ValidImpactTypes: Air, AirHit
 
 227mm:
-	ReloadDelay: 140
+	ReloadDelay: 100
 	Range: 12c0
 	MinRange: 3c0
 	Burst: 4
 	BurstDelay: 4
-	Report: ROCKET1.AUD
+	Report: rocket1.aud
 	ValidTargets: Ground
 	Projectile: Bullet
 		Arm: 5
@@ -186,7 +184,7 @@ MammothMissiles:
 		Image: DRAGON
 		RateOfTurn: 2
 		ContrailLength: 10
-		Trail: smokey
+		TrailImage: smokey
 		Speed: 341
 	Warhead@1Dam: SpreadDamage
 		Spread: 683
@@ -201,13 +199,13 @@ MammothMissiles:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: med_frag
-		ImpactSound: xplos.aud
+		Explosions: med_frag
+		ImpactSounds: xplos.aud
 
 227mm.stnk:
 	ReloadDelay: 70
 	Range: 7c0
-	Report: ROCKET1.AUD
+	Report: rocket1.aud
 	Burst: 2
 	BurstDelay: 10
 	ValidTargets: Ground, Air
@@ -219,8 +217,8 @@ MammothMissiles:
 		HorizontalRateOfTurn: 10
 		TrailImage: smokey
 		ContrailLength: 8
-		MaximumLaunchSpeed: 213
-		RangeLimit: 40
+		Speed: 213
+		RangeLimit: 8c409
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 60
@@ -234,25 +232,25 @@ MammothMissiles:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: small_frag
-		ImpactSound: xplos.aud
+		Explosions: small_frag
+		ImpactSounds: xplos.aud
 
 BoatMissile:
 	ReloadDelay: 35
 	Range: 8c0
 	Burst: 2
-	BurstDelay: 7
-	Report: ROCKET2.AUD
+	BurstDelay: 10
+	Report: rocket2.aud
 	Projectile: Missile
 		Arm: 0
 		Blockable: false
-		Inaccuracy: 213
+		Inaccuracy: 426
 		Image: DRAGON
-		HorizontalRateOfTurn: 10
+		HorizontalRateOfTurn: 5
 		TrailImage: smokey
 		ContrailLength: 8
-		MaximumLaunchSpeed: 170
-		RangeLimit: 60
+		Speed: 170
+		RangeLimit: 9c614
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
 		Damage: 60
@@ -265,18 +263,18 @@ BoatMissile:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: small_poof
-		ImpactSound: xplos.aud
+		Explosions: small_poof
+		ImpactSounds: xplos.aud
 		InvalidImpactTypes: Air, AirHit
 	Warhead@4EffAir: CreateEffect
-		Explosion: small_building
-		ImpactSound: xplos.aud
+		Explosions: small_building
+		ImpactSounds: xplos.aud
 		ValidImpactTypes: Air, AirHit
 
 TowerMissle:
 	ReloadDelay: 15
 	Range: 7c0
-	Report: ROCKET2.AUD
+	Report: rocket2.aud
 	ValidTargets: Ground
 	Projectile: Missile
 		Arm: 0
@@ -286,8 +284,8 @@ TowerMissle:
 		HorizontalRateOfTurn: 20
 		TrailImage: smokey
 		ContrailLength: 8
-		MaximumLaunchSpeed: 298
-		RangeLimit: 40
+		Speed: 298
+		RangeLimit: 8c409
 	Warhead@1Dam: SpreadDamage
 		Spread: 683
 		Damage: 25
@@ -301,21 +299,21 @@ TowerMissle:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: med_frag
-		ImpactSound: xplos.aud
+		Explosions: med_frag
+		ImpactSounds: xplos.aud
 
 SAMMissile:
 	ReloadDelay: 15
 	Range: 8c0
-	Report: ROCKET2.AUD
+	Report: rocket2.aud
 	ValidTargets: Air
 	Projectile: Missile
 		Arm: 0
 		Blockable: false
 		Image: MISSILE
 		HorizontalRateOfTurn: 20
-		MaximumLaunchSpeed: 426
-		RangeLimit: 35
+		Speed: 426
+		RangeLimit: 9c614
 		TrailImage: smokey
 		ContrailLength: 8
 	Warhead@1Dam: SpreadDamage
@@ -326,25 +324,25 @@ SAMMissile:
 			Wood: 100
 			Light: 100
 			Heavy: 75
-		Damage: 30
+		Damage: 35
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: small_building
-		ImpactSound: xplos.aud
+		Explosions: small_building
+		ImpactSounds: xplos.aud
 
 HonestJohn:
 	ReloadDelay: 200
 	Range: 10c0
-	Report: ROCKET1.AUD
+	Report: rocket1.aud
 	Projectile: Bullet
 		Arm: 10
 		Blockable: false
 		Shadow: true
 		Inaccuracy: 213
 		Image: patriot
-		Trail: smokey
+		TrailImage: smokey
 		Speed: 187
 		RangeLimit: 35
 		Angle: 88
@@ -360,14 +358,14 @@ HonestJohn:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: small_poof
-		ImpactSound: xplos.aud
+		Explosions: small_poof
+		ImpactSounds: xplos.aud
 
 Patriot:
 	ReloadDelay: 25
 	Range: 9c0
 	MinRange: 1c0
-	Report: ROCKET2.AUD
+	Report: rocket2.aud
 	ValidTargets: Air
 	Projectile: Missile
 		Blockable: false
@@ -375,8 +373,8 @@ Patriot:
 		TrailImage: smokey
 		ContrailLength: 8
 		HorizontalRateOfTurn: 20
-		MaximumLaunchSpeed: 341
-		RangeLimit: 30
+		Speed: 300
+		RangeLimit: 10c819
 	Warhead@1Dam: SpreadDamage
 		Spread: 682
 		ValidTargets: Air
@@ -387,6 +385,5 @@ Patriot:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: poof
-		ImpactSound: xplos.aud
-
+		Explosions: poof
+		ImpactSounds: xplos.aud

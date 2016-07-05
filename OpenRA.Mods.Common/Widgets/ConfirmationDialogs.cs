@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -15,45 +16,82 @@ namespace OpenRA.Mods.Common.Widgets
 {
 	public static class ConfirmationDialogs
 	{
-		public static void PromptConfirmAction(string title, string text, Action onConfirm, Action onCancel = null, string confirmText = null, string cancelText = null)
+		public static void ButtonPrompt(
+			string title,
+			string text,
+			Action onConfirm = null,
+			Action onCancel = null,
+			Action onOther = null,
+			string confirmText = null,
+			string cancelText = null,
+			string otherText = null)
 		{
-			var prompt = Ui.OpenWindow("CONFIRM_PROMPT");
+			var promptName = onOther != null ? "THREEBUTTON_PROMPT" : "TWOBUTTON_PROMPT";
+			var prompt = Ui.OpenWindow(promptName);
+			var confirmButton = prompt.GetOrNull<ButtonWidget>("CONFIRM_BUTTON");
+			var cancelButton = prompt.GetOrNull<ButtonWidget>("CANCEL_BUTTON");
+			var otherButton = prompt.GetOrNull<ButtonWidget>("OTHER_BUTTON");
+
 			prompt.Get<LabelWidget>("PROMPT_TITLE").GetText = () => title;
-			prompt.Get<LabelWidget>("PROMPT_TEXT").GetText = () => text;
-			if (!string.IsNullOrEmpty(confirmText))
-				prompt.Get<ButtonWidget>("CONFIRM_BUTTON").GetText = () => confirmText;
-			if (!string.IsNullOrEmpty(cancelText))
-				prompt.Get<ButtonWidget>("CANCEL_BUTTON").GetText = () => cancelText;
 
-			prompt.Get<ButtonWidget>("CONFIRM_BUTTON").OnClick = () =>
+			var headerTemplate = prompt.Get<LabelWidget>("PROMPT_TEXT");
+			var headerLines = text.Replace("\\n", "\n").Split('\n');
+			var headerHeight = 0;
+			foreach (var l in headerLines)
 			{
-				Ui.CloseWindow();
-				onConfirm();
-			};
+				var line = (LabelWidget)headerTemplate.Clone();
+				line.GetText = () => l;
+				line.Bounds.Y += headerHeight;
+				prompt.AddChild(line);
 
-			prompt.Get<ButtonWidget>("CANCEL_BUTTON").OnClick = () =>
+				headerHeight += headerTemplate.Bounds.Height;
+			}
+
+			prompt.Bounds.Height += headerHeight;
+			prompt.Bounds.Y -= headerHeight / 2;
+
+			if (onConfirm != null && confirmButton != null)
 			{
-				Ui.CloseWindow();
-				if (onCancel != null)
-					onCancel();
-			};
-		}
+				confirmButton.Visible = true;
+				confirmButton.Bounds.Y += headerHeight;
+				confirmButton.OnClick = () =>
+				{
+					Ui.CloseWindow();
+					onConfirm();
+				};
 
-		public static void CancelPrompt(string title, string text, Action onCancel = null, string cancelText = null)
-		{
-			var prompt = Ui.OpenWindow("CANCEL_PROMPT");
-			prompt.Get<LabelWidget>("PROMPT_TITLE").GetText = () => title;
-			prompt.Get<LabelWidget>("PROMPT_TEXT").GetText = () => text;
+				if (!string.IsNullOrEmpty(confirmText))
+					confirmButton.GetText = () => confirmText;
+			}
 
-			if (!string.IsNullOrEmpty(cancelText))
-				prompt.Get<ButtonWidget>("CANCEL_BUTTON").GetText = () => cancelText;
-
-			prompt.Get<ButtonWidget>("CANCEL_BUTTON").OnClick = () =>
+			if (onCancel != null && cancelButton != null)
 			{
-				Ui.CloseWindow();
-				if (onCancel != null)
-					onCancel();
-			};
+				cancelButton.Visible = true;
+				cancelButton.Bounds.Y += headerHeight;
+				cancelButton.OnClick = () =>
+				{
+					Ui.CloseWindow();
+					if (onCancel != null)
+						onCancel();
+				};
+
+				if (!string.IsNullOrEmpty(cancelText) && cancelButton != null)
+					cancelButton.GetText = () => cancelText;
+			}
+
+			if (onOther != null && otherButton != null)
+			{
+				otherButton.Visible = true;
+				otherButton.Bounds.Y += headerHeight;
+				otherButton.OnClick = () =>
+				{
+					if (onOther != null)
+						onOther();
+                };
+
+				if (!string.IsNullOrEmpty(otherText) && otherButton != null)
+					otherButton.GetText = () => otherText;
+			}
 		}
 
 		public static void TextInputPrompt(

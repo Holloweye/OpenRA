@@ -1,10 +1,8 @@
-MapFormat: 7
+MapFormat: 11
 
 RequiresMod: cnc
 
 Title: Strange Behavior
-
-Description: There have been some reports of strange animals in this area. \n\nTake your units to investigate, and report back your findings.
 
 Author: Westwood Studios
 
@@ -16,23 +14,9 @@ Bounds: 10,5,45,52
 
 Visibility: MissionSelector
 
-Type: Campaign
+Categories: Campaign
 
-Videos:
-	Briefing: generic.vqa
-	GameStart: dino.vqa
-
-Options:
-	Crates: False
-	Creeps: False
-	Fog: True
-	Shroud: True
-	AllyBuildRadius: False
-	FragileAlliances: False
-	StartingCash: 0
-	ConfigurableStartingUnits: False
-	Difficulties: Easy, Normal
-	ShortGame: False
+LockPreview: True
 
 Players:
 	PlayerReference@Neutral:
@@ -49,7 +33,7 @@ Players:
 		Name: Dinosaur
 		NonCombatant: True
 		Faction: gdi
-		ColorRamp: 14,119,96
+		Color: 8C5033
 		Enemies: Nod, Civilian
 	PlayerReference@Nod:
 		Name: Nod
@@ -59,7 +43,7 @@ Players:
 		LockFaction: True
 		Faction: nod
 		LockColor: True
-		ColorRamp: 3,255,127
+		Color: FE1100
 		LockSpawn: True
 		LockTeam: True
 		Allies: Nod
@@ -361,7 +345,7 @@ Actors:
 		Location: 21,15
 		Owner: Civilian
 	Actor117: v06
-		Owner: Neutral # TREX can't attack it
+		Owner: Neutral
 		Location: 21,8
 	Actor100: v07
 		Location: 12,12
@@ -425,113 +409,8 @@ Actors:
 		Location: 16,50
 		Owner: Neutral
 
-Smudges:
+Rules: cnc|rules/campaign-maprules.yaml, cnc|rules/campaign-tooltips.yaml, cnc|rules/campaign-palettes.yaml, rules.yaml
 
-Rules:
-	Player:
-		-ConquestVictoryConditions:
-		MissionObjectives:
-			EarlyGameOver: true
-		EnemyWatcher:
-	World:
-		-CrateSpawner:
-		-SpawnMPUnits:
-		-MPStartLocations:
-		LuaScript:
-			Scripts: scj01ea.lua
-		ObjectivesPanel:
-			PanelName: MISSION_OBJECTIVES
-		MusicPlaylist:
-			StartingMusic: j1
-	^Vehicle:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Tank:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Helicopter:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Infantry:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Plane:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Ship:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Building:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Wall:
-		Tooltip:
-			ShowOwnerRow: false
-	^Husk:
-		Tooltip:
-			GenericVisibility: Enemy, Ally, Neutral
-			GenericStancePrefix: false
-			ShowOwnerRow: false
-	^CivInfantry:
-		-ActorLostNotification:
-	^CivBuilding:
-		AnnounceOnSeen:
-	OLDLST:
-		Inherits: LST
-		-WithRoof:
-		-Selectable:
-		RejectsOrders:
-	TREX:
-		Health:
-			HP: 750
-		Mobile:
-			Speed: 34
-		AutoTarget:
-			ScanRadius: 5
-	TRIC:
-		Health:
-			HP: 700
-		Mobile:
-			Speed: 18
-		AutoTarget:
-			ScanRadius: 5
-	STEG:
-		Health:
-			HP: 600
-		Mobile:
-			Speed: 32
-	^DINO:
-		Tooltip:
-			ShowOwnerRow: false
-		MustBeDestroyed:
+Sequences: sequences.yaml
 
-Sequences:
-	oldlst:
-		idle: lst
-			Start: 0
-			Facings: 1
-			ZOffset: -1024
-		icon: lsticnh.tem
-			AddExtension: False
-
-VoxelSequences:
-
-Weapons:
-	Teeth:
-		Range: 1c900
-		Warhead@1Dam: SpreadDamage
-			Versus:
-				Wood: 35
-
-Voices:
-
-Notifications:
-
-Translations:
+Weapons: weapons.yaml

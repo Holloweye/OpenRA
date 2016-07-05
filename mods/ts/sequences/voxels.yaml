@@ -33,8 +33,6 @@ bike:
 
 ttnk:
 	idle:
-
-gatick:
 	turret: ttnktur
 	barrel: ttnkbarl
 
@@ -94,6 +92,7 @@ repair:
 
 weed:
 	idle:
+	unload:
 
 bus:
 	idle:

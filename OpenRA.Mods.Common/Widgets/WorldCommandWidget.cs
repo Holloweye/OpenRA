@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -12,6 +13,7 @@ using System;
 using System.Drawing;
 using System.Linq;
 using OpenRA.Graphics;
+using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Orders;
 using OpenRA.Primitives;
@@ -184,7 +186,8 @@ namespace OpenRA.Mods.Common.Widgets
 				.Where(a => !a.Disposed && a.Owner == world.LocalPlayer && a.Info.HasTraitInfo<GuardInfo>());
 
 			if (actors.Any())
-				world.OrderGenerator = new GuardOrderGenerator(actors);
+				world.OrderGenerator = new GuardOrderGenerator(actors,
+					"Guard", "guard", Game.Settings.Game.MouseButtonPreference.Action);
 
 			return true;
 		}
@@ -193,16 +196,14 @@ namespace OpenRA.Mods.Common.Widgets
 		{
 			var player = world.RenderPlayer ?? world.LocalPlayer;
 
-			var bases = world.ActorsWithTrait<BaseBuilding>()
-				.Where(a => a.Actor.Owner == player)
-				.Select(b => b.Actor)
+			var bases = world.ActorsHavingTrait<BaseBuilding>()
+				.Where(a => a.Owner == player)
 				.ToList();
 
 			// If no BaseBuilding exist pick the first selectable Building.
 			if (!bases.Any())
 			{
-				var building = world.ActorsWithTrait<Building>()
-					.Select(b => b.Actor)
+				var building = world.ActorsHavingTrait<Building>()
 					.FirstOrDefault(a => a.Owner == player && a.Info.HasTraitInfo<SelectableInfo>());
 
 				// No buildings left
@@ -214,7 +215,7 @@ namespace OpenRA.Mods.Common.Widgets
 			}
 
 			var next = bases
-				.SkipWhile(b => !world.Selection.Actors.Contains(b))
+				.SkipWhile(b => !world.Selection.Contains(b))
 				.Skip(1)
 				.FirstOrDefault();
 
@@ -230,17 +231,16 @@ namespace OpenRA.Mods.Common.Widgets
 		{
 			var player = world.RenderPlayer ?? world.LocalPlayer;
 
-			var facilities = world.ActorsWithTrait<Production>()
-				.Where(a => a.Actor.Owner == player && !a.Actor.Info.HasTraitInfo<BaseBuildingInfo>())
-				.OrderBy(f => f.Actor.Info.TraitInfo<ProductionInfo>().Produces.First())
-				.Select(b => b.Actor)
+			var facilities = world.ActorsHavingTrait<Production>()
+				.Where(a => a.Owner == player && !a.Info.HasTraitInfo<BaseBuildingInfo>())
+				.OrderBy(f => f.Info.TraitInfo<ProductionInfo>().Produces.First())
 				.ToList();
 
 			if (!facilities.Any())
 				return true;
 
 			var next = facilities
-				.SkipWhile(b => !world.Selection.Actors.Contains(b))
+				.SkipWhile(b => !world.Selection.Contains(b))
 				.Skip(1)
 				.FirstOrDefault();
 

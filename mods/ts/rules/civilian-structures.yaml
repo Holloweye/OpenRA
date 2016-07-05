@@ -659,69 +659,31 @@ CABHUT:
 		Palette: player
 
 CACRSH01:
-	Inherits: ^CivBuilding
+	Inherits: ^Decoration
 	Tooltip:
-		Name: Crash 1
-	Building:
-		Footprint: x
-		Dimensions: 1, 1
+		Name: Crash Site
 	Armor:
 		Type: concrete
 	Health:
 		HP: 400
 
 CACRSH02:
-	Inherits: ^CivBuilding
-	Tooltip:
-		Name: Crash 2
-	Building:
-		Footprint: x
-		Dimensions: 1, 1
-	Armor:
-		Type: concrete
-	Health:
-		HP: 400
+	Inherits: CACRSH01
 
 CACRSH03:
-	Inherits: ^CivBuilding
-	Tooltip:
-		Name: Crash 3
-	Building:
-		Footprint: x
-		Dimensions: 1, 1
-	Armor:
-		Type: concrete
-	Health:
-		HP: 400
+	Inherits: CACRSH01
 
 CACRSH04:
-	Inherits: ^CivBuilding
-	Tooltip:
-		Name: Crash 4
-	Building:
-		Footprint: x
-		Dimensions: 1, 1
-	Armor:
-		Type: concrete
-	Health:
-		HP: 400
+	Inherits: CACRSH01
 
 CACRSH05:
-	Inherits: ^CivBuilding
-	Tooltip:
-		Name: Crash 5
-	Building:
-		Footprint: x
-		Dimensions: 1, 1
-	Armor:
-		Type: concrete
-	Health:
-		HP: 400
+	Inherits: CACRSH01
 
 CAHOSP:
-	Inherits: ^CivBuilding
+	Inherits: ^BasicBuilding
 	Tooltip:
 		Name: Civilian Hospital
+		Description: Gives friendly units a medkit to heal themselves.
 	Building:
 		Footprint: xxx xxx xxx xxx
 		Dimensions: 3, 4
@@ -731,6 +693,9 @@ CAHOSP:
 		HP: 800
 	RenderSprites:
 		Palette: player
+	Capturable:
+	CaptureNotification:
+	ProvidesPrerequisite@BuildingName:
 
 CAPYR01:
 	Inherits: ^CivBuilding
@@ -1092,6 +1057,7 @@ CTDAM:
 		Dimensions: 2, 5
 	Power:
 		Amount: 200
+	PowerTooltip:
 	Armor:
 		Type: heavy
 	Health:
@@ -1295,6 +1261,7 @@ GALITE:
 		Range: 2c0
 	Power:
 		Amount: 0
+# TODO: should use terrain lighting instead, depends on https://github.com/OpenRA/OpenRA/issues/3605
 	WithIdleOverlay@LIGHTING:
 		Sequence: lighting
 		Palette: alpha
@@ -1306,6 +1273,13 @@ GALITE:
 	SelectionDecorations:
 		VisualBounds: 25, 35, 0, -12
 	-Cloak@CLOAKGENERATOR:
+
+TSTLAMP:
+	Inherits: GALITE
+	RenderSprites:
+		Image: galite
+	Tooltip:
+		Description: light post with alpha blending
 
 GAICBM:
 	Inherits: ^Building
@@ -1382,4 +1356,3 @@ UFO:
 		RequireTilesets: TEMPERATE
 	SelectionDecorations:
 		VisualBounds: 144, 72, 0, 0
-

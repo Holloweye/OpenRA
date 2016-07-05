@@ -9,7 +9,7 @@ WaterTransportTriggerArea = { CPos.New(39, 54), CPos.New(40, 54), CPos.New(41, 5
 ParadropTriggerArea = { CPos.New(81, 60), CPos.New(82, 60), CPos.New(83, 60), CPos.New(63, 63), CPos.New(64, 63), CPos.New(65, 63), CPos.New(66, 63), CPos.New(67, 63), CPos.New(68, 63), CPos.New(69, 63), CPos.New(70, 63), CPos.New(71, 63), CPos.New(72, 63) }
 ReinforcementsTriggerArea = { CPos.New(96, 55), CPos.New(97, 55), CPos.New(97, 56), CPos.New(98, 56) }
 
-if Map.Difficulty == "Easy" then
+if Map.LobbyOption("difficulty") == "easy" then
 	TanyaType = "e7"
 else
 	TanyaType = "e7.noautotarget"
@@ -145,11 +145,12 @@ InitTriggers = function()
 	end)
 
 	Trigger.OnKilled(ExplosiveBarrel, function()
-		local bridge = Map.ActorsInBox(USSRReinforcementsCameraWaypoint.CenterPosition, USSRReinforcementsEntryWaypoint.CenterPosition,
-			function(self) return self.Type == "bridge1" end)
 
-		if not bridge[1].IsDead then
-			bridge[1].Kill()
+		-- We need the first bridge which is returned
+		local bridge = Utils.Where(Map.ActorsInWorld, function(actor) return actor.Type == "bridge1" end)[1]
+
+		if not bridge.IsDead then
+			bridge.Kill()
 		end
 	end)
 
@@ -237,7 +238,7 @@ InitTriggers = function()
 	end)
 
 	Trigger.AfterDelay(0, function()
-		local bridges = Map.ActorsInBox(Map.TopLeft, Map.BottomRight, function(self) return self.Type == "bridge1" end)
+		local bridges = Utils.Where(Map.ActorsInWorld, function(actor) return actor.Type == "bridge1" end)
 
 		Trigger.OnAllKilled(bridges, function()
 			player.MarkCompletedObjective(KillBridges)

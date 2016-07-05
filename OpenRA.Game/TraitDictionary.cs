@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -34,21 +35,19 @@ namespace OpenRA
 		}
 	}
 
+	/// <summary>
+	/// Provides efficient ways to query a set of actors by their traits.
+	/// </summary>
 	class TraitDictionary
 	{
-		// construct this delegate once.
-		static Func<Type, ITraitContainer> doCreateTraitContainer = CreateTraitContainer;
-		static ITraitContainer CreateTraitContainer(Type t)
-		{
-			return (ITraitContainer)typeof(TraitContainer<>).MakeGenericType(t)
-				.GetConstructor(Type.EmptyTypes).Invoke(null);
-		}
+		static readonly Func<Type, ITraitContainer> CreateTraitContainer = t =>
+			(ITraitContainer)typeof(TraitContainer<>).MakeGenericType(t).GetConstructor(Type.EmptyTypes).Invoke(null);
 
-		Dictionary<Type, ITraitContainer> traits = new Dictionary<Type, ITraitContainer>();
+		readonly Dictionary<Type, ITraitContainer> traits = new Dictionary<Type, ITraitContainer>();
 
 		ITraitContainer InnerGet(Type t)
 		{
-			return traits.GetOrAdd(t, doCreateTraitContainer);
+			return traits.GetOrAdd(t, CreateTraitContainer);
 		}
 
 		TraitContainer<T> InnerGet<T>()
@@ -107,6 +106,16 @@ namespace OpenRA
 			return InnerGet<T>().All();
 		}
 
+		public IEnumerable<Actor> ActorsHavingTrait<T>()
+		{
+			return InnerGet<T>().Actors();
+		}
+
+		public IEnumerable<Actor> ActorsHavingTrait<T>(Func<T, bool> predicate)
+		{
+			return InnerGet<T>().Actors(predicate);
+		}
+
 		public void RemoveActor(Actor a)
 		{
 			foreach (var t in traits)
@@ -156,6 +165,7 @@ namespace OpenRA
 
 			public IEnumerable<T> GetMultiple(uint actor)
 			{
+				// PERF: Custom enumerator for efficiency - using `yield` is slower.
 				++Queries;
 				return new MultipleEnumerable(this, actor);
 			}
@@ -192,8 +202,36 @@ namespace OpenRA
 
 			public IEnumerable<TraitPair<T>> All()
 			{
+				// PERF: Custom enumerator for efficiency - using `yield` is slower.
 				++Queries;
 				return new AllEnumerable(this);
+			}
+
+			public IEnumerable<Actor> Actors()
+			{
+				++Queries;
+				Actor last = null;
+				for (var i = 0; i < actors.Count; i++)
+				{
+					if (actors[i] == last)
+						continue;
+					yield return actors[i];
+					last = actors[i];
+				}
+			}
+
+			public IEnumerable<Actor> Actors(Func<T, bool> predicate)
+			{
+				++Queries;
+				Actor last = null;
+
+				for (var i = 0; i < actors.Count; i++)
+				{
+					if (actors[i] == last || !predicate(traits[i]))
+						continue;
+					yield return actors[i];
+					last = actors[i];
+				}
 			}
 
 			class AllEnumerable : IEnumerable<TraitPair<T>>
@@ -218,7 +256,7 @@ namespace OpenRA
 
 				public void Reset() { index = -1; }
 				public bool MoveNext() { return ++index < actors.Count; }
-				public TraitPair<T> Current { get { return new TraitPair<T> { Actor = actors[index], Trait = traits[index] }; } }
+				public TraitPair<T> Current { get { return new TraitPair<T>(actors[index], traits[index]); } }
 				object System.Collections.IEnumerator.Current { get { return Current; } }
 				public void Dispose() { }
 			}

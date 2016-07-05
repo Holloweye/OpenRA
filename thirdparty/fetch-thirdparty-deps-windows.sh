@@ -18,10 +18,10 @@ function get()
 }
 
 if [ ! -f SDL2.dll ]; then
-	echo "Fetching SDL2 from NuGet"
-	get sdl2.redist 2.0.3
-	cp ./sdl2.redist/build/native/bin/Win32/dynamic/SDL2.dll .
-	rm -rf sdl2.redist
+	echo "Fetching SDL2 from libsdl.org"
+	wget https://www.libsdl.org/release/SDL2-2.0.4-win32-x86.zip
+	unzip SDL2-2.0.4-win32-x86.zip SDL2.dll
+	rm SDL2-2.0.4-win32-x86.zip
 fi
 
 if [ ! -f freetype6.dll ]; then
@@ -43,8 +43,4 @@ if [ ! -f soft_oal.dll ]; then
 	get OpenAL-Soft 1.16.0
 	cp ./OpenAL-Soft/bin/Win32/soft_oal.dll ./soft_oal.dll
 	rm -rf OpenAL-Soft
-fi
-
-if [ ! -f ../NsProcess.zip ]; then
-	curl -s -L -o ../NsProcess.zip http://nsis.sourceforge.net/mediawiki/images/archive/1/18/20140806212030!NsProcess.zip
 fi

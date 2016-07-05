@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -14,6 +15,7 @@ using System.Drawing;
 using System.Linq;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Mods.Common.Traits.Render;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.RA.Traits
@@ -94,7 +96,7 @@ namespace OpenRA.Mods.RA.Traits
 		{
 			get
 			{
-				yield return new TargetTypeOrderTargeter(new[] { "Disguise" }, "Disguise", 7, "ability", true, true) { ForceAttack = false };
+				yield return new TargetTypeOrderTargeter(new HashSet<string> { "Disguise" }, "Disguise", 7, "ability", true, true) { ForceAttack = false };
 			}
 		}
 
@@ -120,12 +122,12 @@ namespace OpenRA.Mods.RA.Traits
 			return order.OrderString == "Disguise" ? info.Voice : null;
 		}
 
-		public Color RadarColorOverride(Actor self)
+		public Color RadarColorOverride(Actor self, Color color)
 		{
 			if (!Disguised || self.Owner.IsAlliedWith(self.World.RenderPlayer))
-				return self.Owner.Color.RGB;
+				return color;
 
-			return AsPlayer.Color.RGB;
+			return color = Game.Settings.Game.UsePlayerStanceColors ? AsPlayer.PlayerStanceColor(self) : AsPlayer.Color.RGB;
 		}
 
 		public void DisguiseAs(Actor target)
@@ -168,7 +170,7 @@ namespace OpenRA.Mods.RA.Traits
 			var oldEffectiveOwner = AsPlayer;
 
 			var renderSprites = actorInfo.TraitInfoOrDefault<RenderSpritesInfo>();
-			AsSprite = renderSprites == null ? null : renderSprites.GetImage(actorInfo, self.World.Map.SequenceProvider, newOwner.Faction.InternalName);
+			AsSprite = renderSprites == null ? null : renderSprites.GetImage(actorInfo, self.World.Map.Rules.Sequences, newOwner.Faction.InternalName);
 			AsPlayer = newOwner;
 			AsTooltipInfo = actorInfo.TraitInfos<TooltipInfo>().FirstOrDefault();
 
@@ -195,6 +197,8 @@ namespace OpenRA.Mods.RA.Traits
 			}
 		}
 
-		public void Attacking(Actor self, Target target, Armament a, Barrel barrel) { DisguiseAs(null); }
+		void INotifyAttack.PreparingAttack(Actor self, Target target, Armament a, Barrel barrel) { }
+
+		void INotifyAttack.Attacking(Actor self, Target target, Armament a, Barrel barrel) { DisguiseAs(null); }
 	}
 }

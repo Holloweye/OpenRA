@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -172,6 +173,17 @@ namespace OpenRA.Network
 			}
 		}
 
+		public class LobbyOptionState
+		{
+			public bool Locked;
+			public string Value;
+			public string PreferredValue;
+
+			public LobbyOptionState() { }
+
+			public bool Enabled { get { return Value == "True"; } }
+		}
+
 		public class Global
 		{
 			public string ServerName;
@@ -179,32 +191,50 @@ namespace OpenRA.Network
 			public int Timestep = 40;
 			public int OrderLatency = 3; // net tick frames (x 120 = ms)
 			public int RandomSeed = 0;
-			public bool FragileAlliances = false; // Allow diplomatic stance changes after game start.
-			public bool AllowCheats = false;
 			public bool AllowSpectators = true;
-			public bool Dedicated;
-			public string Difficulty;
-			public bool Crates = true;
-			public bool Creeps = true;
-			public bool Shroud = true;
-			public bool Fog = true;
-			public bool AllyBuildRadius = true;
-			public int StartingCash = 5000;
-			public string TechLevel = "none";
-			public string StartingUnitsClass = "none";
-			public string GameSpeedType = "default";
-			public bool ShortGame = true;
 			public bool AllowVersionMismatch;
 			public string GameUid;
+			public bool EnableSingleplayer;
+
+			[FieldLoader.Ignore]
+			public Dictionary<string, LobbyOptionState> LobbyOptions = new Dictionary<string, LobbyOptionState>();
 
 			public static Global Deserialize(MiniYaml data)
 			{
-				return FieldLoader.Load<Global>(data);
+				var gs = FieldLoader.Load<Global>(data);
+
+				var optionsNode = data.Nodes.FirstOrDefault(n => n.Key == "Options");
+				if (optionsNode != null)
+					foreach (var n in optionsNode.Value.Nodes)
+						gs.LobbyOptions[n.Key] = FieldLoader.Load<LobbyOptionState>(n.Value);
+
+				return gs;
 			}
 
 			public MiniYamlNode Serialize()
 			{
-				return new MiniYamlNode("GlobalSettings", FieldSaver.Save(this));
+				var data = new MiniYamlNode("GlobalSettings", FieldSaver.Save(this));
+				var options = LobbyOptions.Select(kv => new MiniYamlNode(kv.Key, FieldSaver.Save(kv.Value))).ToList();
+				data.Value.Nodes.Add(new MiniYamlNode("Options", new MiniYaml(null, options)));
+				return data;
+			}
+
+			public bool OptionOrDefault(string id, bool def)
+			{
+				LobbyOptionState option;
+				if (LobbyOptions.TryGetValue(id, out option))
+					return option.Enabled;
+
+				return def;
+			}
+
+			public string OptionOrDefault(string id, string def)
+			{
+				LobbyOptionState option;
+				if (LobbyOptions.TryGetValue(id, out option))
+					return option.Value;
+
+				return def;
 			}
 		}
 

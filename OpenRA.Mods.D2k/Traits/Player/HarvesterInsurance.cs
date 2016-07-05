@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -31,15 +32,15 @@ namespace OpenRA.Mods.D2k.Traits
 
 		public void TryActivate()
 		{
-			var harvesters = self.World.ActorsWithTrait<Harvester>().Where(x => x.Actor.Owner == self.Owner);
+			var harvesters = self.World.ActorsHavingTrait<Harvester>().Where(x => x.Owner == self.Owner);
 			if (harvesters.Any())
 				return;
 
-			var refineries = self.World.ActorsWithTrait<Refinery>().Where(x => x.Actor.Owner == self.Owner);
+			var refineries = self.World.ActorsHavingTrait<Refinery>().Where(x => x.Owner == self.Owner);
 			if (!refineries.Any())
 				return;
 
-			var refinery = refineries.First().Actor;
+			var refinery = refineries.First();
 			var delivery = refinery.Trait<FreeActorWithDelivery>();
 			delivery.DoDelivery(refinery.Location + delivery.Info.DeliveryOffset, delivery.Info.Actor,
 				delivery.Info.DeliveringActor);

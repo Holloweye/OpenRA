@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -16,13 +17,13 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets.Logic
 {
-	public class ColorPickerLogic
+	public class ColorPickerLogic : ChromeLogic
 	{
 		[ObjectCreator.UseCtor]
-		public ColorPickerLogic(Widget widget, World world, HSLColor initialColor, Action<HSLColor> onChange, WorldRenderer worldRenderer)
+		public ColorPickerLogic(Widget widget, ModData modData, World world, HSLColor initialColor, Action<HSLColor> onChange, WorldRenderer worldRenderer)
 		{
 			string actorType;
-			if (!ChromeMetrics.TryGet<string>("ColorPickerActorType", out actorType))
+			if (!ChromeMetrics.TryGet("ColorPickerActorType", out actorType))
 				actorType = "mcv";
 
 			var preview = widget.GetOrNull<ActorPreviewWidget>("PREVIEW");
@@ -56,7 +57,10 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				};
 
 			// Set the initial state
+			var validator = modData.Manifest.Get<ColorValidator>();
+			mixer.SetPaletteRange(validator.HsvSaturationRange[0], validator.HsvSaturationRange[1], validator.HsvValueRange[0], validator.HsvValueRange[1]);
 			mixer.Set(initialColor);
+
 			hueSlider.Value = initialColor.H / 255f;
 			onChange(mixer.Color);
 		}

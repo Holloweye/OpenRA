@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -14,7 +15,7 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets.Logic
 {
-	public class ServerCreationLogic
+	public class ServerCreationLogic : ChromeLogic
 	{
 		Widget panel;
 		Action onCreate;
@@ -24,16 +25,15 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		bool allowPortForward;
 
 		[ObjectCreator.UseCtor]
-		public ServerCreationLogic(Widget widget, Action onExit, Action openLobby)
+		public ServerCreationLogic(Widget widget, ModData modData, Action onExit, Action openLobby)
 		{
 			panel = widget;
 			onCreate = openLobby;
 			this.onExit = onExit;
 
 			var settings = Game.Settings;
-			preview = Game.ModData.MapCache[WidgetUtils.ChooseInitialMap(Game.Settings.Server.Map)];
+			preview = modData.MapCache[modData.MapCache.ChooseInitialMap(Game.Settings.Server.Map, Game.CosmeticRandom)];
 
-			panel.Get<ButtonWidget>("BACK_BUTTON").OnClick = () => { Ui.CloseWindow(); onExit(); };
 			panel.Get<ButtonWidget>("CREATE_BUTTON").OnClick = CreateAndJoin;
 
 			var mapButton = panel.GetOrNull<ButtonWidget>("MAP_BUTTON");
@@ -46,14 +46,21 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 						{ "initialMap", preview.Uid },
 						{ "initialTab", MapClassification.System },
 						{ "onExit", () => { } },
-						{ "onSelect", (Action<string>)(uid => preview = Game.ModData.MapCache[uid]) },
+						{ "onSelect", (Action<string>)(uid => preview = modData.MapCache[uid]) },
 						{ "filter", MapVisibility.Lobby },
 						{ "onStart", () => { } }
 					});
 				};
 
 				panel.Get<MapPreviewWidget>("MAP_PREVIEW").Preview = () => preview;
-				panel.Get<LabelWidget>("MAP_NAME").GetText = () => preview.Title;
+
+				var mapTitle = panel.Get<LabelWidget>("MAP_NAME");
+				if (mapTitle != null)
+				{
+					var font = Game.Renderer.Fonts[mapTitle.Font];
+					var title = new CachedTransform<MapPreview, string>(m => WidgetUtils.TruncateText(m.Title, mapTitle.Bounds.Width, font));
+					mapTitle.GetText = () => title.Update(preview);
+				}
 			}
 
 			var serverName = panel.Get<TextFieldWidget>("SERVER_NAME");
@@ -81,7 +88,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			var checkboxUPnP = panel.Get<CheckboxWidget>("UPNP_CHECKBOX");
 			checkboxUPnP.IsChecked = () => allowPortForward;
 			checkboxUPnP.OnClick = () => allowPortForward ^= true;
-			checkboxUPnP.IsDisabled = () => !Game.Settings.Server.NatDeviceAvailable;
+			checkboxUPnP.IsDisabled = () => !Game.Settings.Server.AllowPortForward;
 
 			var passwordField = panel.GetOrNull<PasswordFieldWidget>("PASSWORD");
 			if (passwordField != null)
@@ -112,7 +119,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			Game.Settings.Save();
 
 			// Take a copy so that subsequent changes don't affect the server
-			var settings = new ServerSettings(Game.Settings.Server);
+			var settings = Game.Settings.Server.Clone();
 
 			// Create and join the server
 			try
@@ -121,18 +128,17 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			}
 			catch (System.Net.Sockets.SocketException e)
 			{
-				var err_msg = "Could not listen on port {0}.".F(Game.Settings.Server.ListenPort);
+				var message = "Could not listen on port {0}.".F(Game.Settings.Server.ListenPort);
 				if (e.ErrorCode == 10048) { // AddressAlreadyInUse (WSAEADDRINUSE)
-					err_msg += "\n\nCheck if the port is already being used.";
+					message += "\nCheck if the port is already being used.";
 				} else {
-					err_msg += "\n\nError is: \"{0}\" ({1})".F(e.Message, e.ErrorCode);
+					message += "\nError is: \"{0}\" ({1})".F(e.Message, e.ErrorCode);
 				}
 
-				ConfirmationDialogs.CancelPrompt("Server Creation Failed", err_msg, cancelText: "OK");
+				ConfirmationDialogs.ButtonPrompt("Server Creation Failed", message, onCancel: () => { }, cancelText: "Back");
 				return;
 			}
 
-			Ui.CloseWindow();
 			ConnectionLogic.Connect(IPAddress.Loopback.ToString(), Game.Settings.Server.ListenPort, password, onCreate, onExit);
 		}
 	}

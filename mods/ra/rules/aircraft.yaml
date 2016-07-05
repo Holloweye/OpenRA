@@ -8,11 +8,10 @@ BADR:
 		Type: Light
 	Aircraft:
 		CruiseAltitude: 2560
-		ROT: 5
+		TurnSpeed: 5
 		Speed: 149
 		Repulsable: False
 		MaximumPitch: 56
-		AirborneUpgrades: airborne
 	Cargo:
 		MaxWeight: 10
 	-Selectable:
@@ -46,11 +45,10 @@ BADR.Bomber:
 		Type: Light
 	Aircraft:
 		CruiseAltitude: 2560
-		ROT: 5
+		TurnSpeed: 5
 		Speed: 149
 		Repulsable: False
 		MaximumPitch: 56
-		AirborneUpgrades: airborne
 	AmmoPool:
 		Ammo: 7
 	-Selectable:
@@ -81,7 +79,7 @@ MIG:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 50
-		Prerequisites: ~afld, stek, ~techlevel.unrestricted
+		Prerequisites: ~afld, stek, ~techlevel.high
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -103,12 +101,10 @@ MIG:
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
-		ROT: 4
+		TurnSpeed: 4
 		Speed: 223
-		RearmBuildings: afld
 		RepulsionSpeed: 40
 		MaximumPitch: 56
-		AirborneUpgrades: airborne
 	AutoTarget:
 		TargetWhenIdle: false
 		TargetWhenDamaged: false
@@ -164,13 +160,11 @@ YAK:
 		FacingTolerance: 20
 	Aircraft:
 		CruiseAltitude: 2560
-		RearmBuildings: afld
 		InitialFacing: 192
-		ROT: 4
+		TurnSpeed: 4
 		Speed: 178
 		RepulsionSpeed: 40
 		MaximumPitch: 56
-		AirborneUpgrades: airborne
 	AutoTarget:
 		TargetWhenIdle: false
 		TargetWhenDamaged: false
@@ -178,7 +172,7 @@ YAK:
 	AmmoPool:
 		Ammo: 18
 		PipCount: 6
-		ReloadTicks: 11
+		ReloadDelay: 11
 	ReturnOnIdle:
 	SelectionDecorations:
 		VisualBounds: 30,28,0,2
@@ -210,23 +204,34 @@ TRAN:
 	Armor:
 		Type: Light
 	RevealsShroud:
-		Range: 12c0
+		Range: 10c0
 		Type: CenterPosition
 	Aircraft:
-		RearmBuildings: hpad
-		InitialFacing: 0
-		ROT: 5
+		InitialFacing: 224
+		TurnSpeed: 5
 		Speed: 112
-		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach
+		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems
 		AltitudeVelocity: 0c100
-		AirborneUpgrades: airborne
-		CanHover: True
-	WithSpriteRotorOverlay@PRIMARY:
+	WithIdleOverlay@ROTOR1AIR:
+		Offset: 597,0,213
+		Sequence: rotor
+		UpgradeTypes: airborne
+		UpgradeMinEnabledLevel: 1
+	WithIdleOverlay@ROTOR1GROUND:
+		Offset: 597,0,213
+		Sequence: slow-rotor
+		UpgradeTypes: airborne
+		UpgradeMaxEnabledLevel: 0
+	WithIdleOverlay@ROTOR2AIR:
 		Offset: -597,0,341
 		Sequence: rotor2
-		GroundSequence: slow-rotor2
-	WithSpriteRotorOverlay@SECONDARY:
-		Offset: 597,0,213
+		UpgradeTypes: airborne
+		UpgradeMinEnabledLevel: 1
+	WithIdleOverlay@ROTOR2GROUND:
+		Offset: -597,0,341
+		Sequence: slow-rotor2
+		UpgradeTypes: airborne
+		UpgradeMaxEnabledLevel: 0
 	Cargo:
 		Types: Infantry
 		MaxWeight: 8
@@ -242,7 +247,7 @@ HELI:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 40
-		Prerequisites: ~hpad, atek, ~techlevel.unrestricted
+		Prerequisites: ~hpad, atek, ~techlevel.high
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -264,17 +269,23 @@ HELI:
 	AttackHeli:
 		FacingTolerance: 20
 	Aircraft:
-		RearmBuildings: hpad
 		LandWhenIdle: false
-		InitialFacing: 20
-		ROT: 4
+		InitialFacing: 224
+		TurnSpeed: 4
 		Speed: 149
-		AirborneUpgrades: airborne
-		CanHover: True
 	AutoTarget:
 		InitialStance: HoldFire
-	WithSpriteRotorOverlay:
+		InitialStanceAI: HoldFire
+	WithIdleOverlay@ROTORAIR:
 		Offset: 0,0,85
+		Sequence: rotor
+		UpgradeTypes: airborne
+		UpgradeMinEnabledLevel: 1
+	WithIdleOverlay@ROTORGROUND:
+		Offset: 0,0,85
+		Sequence: slow-rotor
+		UpgradeTypes: airborne
+		UpgradeMaxEnabledLevel: 0
 	AmmoPool:
 		Ammo: 8
 	SelectionDecorations:
@@ -317,20 +328,25 @@ HIND:
 	AttackHeli:
 		FacingTolerance: 20
 	Aircraft:
-		RearmBuildings: hpad
 		LandWhenIdle: false
-		InitialFacing: 20
-		ROT: 4
+		InitialFacing: 224
+		TurnSpeed: 4
 		Speed: 112
-		AirborneUpgrades: airborne
-		CanHover: True
 	AutoTarget:
 		InitialStance: HoldFire
-	WithSpriteRotorOverlay:
+		InitialStanceAI: HoldFire
+	WithIdleOverlay@ROTORAIR:
+		Sequence: rotor
+		UpgradeTypes: airborne
+		UpgradeMinEnabledLevel: 1
+	WithIdleOverlay@ROTORGROUND:
+		Sequence: slow-rotor
+		UpgradeTypes: airborne
+		UpgradeMaxEnabledLevel: 0
 	AmmoPool:
 		Ammo: 24
 		PipCount: 6
-		ReloadTicks: 8
+		ReloadDelay: 8
 	SelectionDecorations:
 		VisualBounds: 38,32
 	WithMuzzleOverlay:
@@ -345,15 +361,16 @@ U2:
 	Inherits: ^Plane
 	Health:
 		HP: 2000
+	Tooltip:
+		Name: Spy Plane
 	Armor:
 		Type: Heavy
 	Aircraft:
 		CruiseAltitude: 2560
-		ROT: 7
+		TurnSpeed: 7
 		Speed: 373
 		Repulsable: False
 		MaximumPitch: 56
-		AirborneUpgrades: airborne
 	AttackBomber:
 	-Selectable:
 	-Voiced:
@@ -369,4 +386,3 @@ U2:
 		Offset: -1c43,0,0
 		Interval: 2
 	RejectsOrders:
-

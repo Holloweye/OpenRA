@@ -7,6 +7,8 @@ GDI Campaign:
 	./mods/cnc/maps/gdi04c
 	./mods/cnc/maps/gdi05a
 	./mods/cnc/maps/gdi05b
+	./mods/cnc/maps/gdi06
+	./mods/cnc/maps/gdi07
 
 Nod Campaign:
 	./mods/cnc/maps/nod01
@@ -20,6 +22,12 @@ Nod Campaign:
 	./mods/cnc/maps/nod06a
 	./mods/cnc/maps/nod06b
 	./mods/cnc/maps/nod06c
+	./mods/cnc/maps/nod07a
+	./mods/cnc/maps/nod07b
+	./mods/cnc/maps/nod07c
+	./mods/cnc/maps/nod08a
+	./mods/cnc/maps/nod08b
+	./mods/cnc/maps/nod09
 
 Funpark Campaign:
 	./mods/cnc/maps/funpark01

@@ -13,7 +13,7 @@
 	PaletteFromFile@effect:
 		Name: effect
 		Filename: PALETTE.BIN
-		ShadowIndex: 4
+		ShadowIndex: 1
 		AllowModifiers: false
 	PaletteFromFile@colorpicker:
 		Name: colorpicker
@@ -37,6 +37,7 @@
 		Filename: DATA.R8
 		Offset: 2572352
 		InvertColor: true
+		AllowModifiers: false
 	PaletteFromRGBA@disabled:
 		Name: disabled
 		R: 0
@@ -60,7 +61,6 @@
 		Name: shroud
 		Filename: DATA.R8
 		Offset: 12007
-		InvertColor: true
 	FogPaletteFromR8@fog:
 		Name: fog
 		Filename: DATA.R8
@@ -80,4 +80,3 @@
 		BaseName: cloak
 		BasePalette: player
 		Alpha: 0.55
-

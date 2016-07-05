@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -12,90 +13,52 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Effects;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Mods.Common.Traits.Radar;
 using OpenRA.Mods.RA.Effects;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.RA.Traits
 {
-	[Desc("Required for GpsPower. Attach this to the player actor.")]
-	class GpsWatcherInfo : ITraitInfo
-	{
-		public object Create(ActorInitializer init) { return new GpsWatcher(init.Self.Owner); }
-	}
-
-	class GpsWatcher : ISync, IFogVisibilityModifier
-	{
-		[Sync] public bool Launched = false;
-		[Sync] public bool GrantedAllies = false;
-		[Sync] public bool Granted = false;
-		public Player Owner;
-
-		List<Actor> actors = new List<Actor> { };
-
-		public GpsWatcher(Player owner) { Owner = owner; }
-
-		public void GpsRem(Actor atek)
-		{
-			actors.Remove(atek);
-			RefreshGps(atek);
-		}
-
-		public void GpsAdd(Actor atek)
-		{
-			actors.Add(atek);
-			RefreshGps(atek);
-		}
-
-		public void Launch(Actor atek, SupportPowerInfo info)
-		{
-			atek.World.Add(new DelayedAction(((GpsPowerInfo)info).RevealDelay * 25,
-					() =>
-					{
-						Launched = true;
-						RefreshGps(atek);
-					}));
-		}
-
-		public void RefreshGps(Actor atek)
-		{
-			RefreshGranted();
-
-			foreach (var i in atek.World.ActorsWithTrait<GpsWatcher>())
-				i.Trait.RefreshGranted();
-
-			if ((Granted || GrantedAllies) && atek.Owner.IsAlliedWith(atek.World.RenderPlayer))
-				atek.Owner.Shroud.ExploreAll(atek.World);
-		}
-
-		void RefreshGranted()
-		{
-			Granted = actors.Count > 0 && Launched;
-			GrantedAllies = Owner.World.ActorsWithTrait<GpsWatcher>().Any(p => p.Actor.Owner.IsAlliedWith(Owner) && p.Trait.Granted);
-
-			if (Granted || GrantedAllies)
-				Owner.Shroud.ExploreAll(Owner.World);
-		}
-
-		public bool HasFogVisibility(Player byPlayer)
-		{
-			return Granted || GrantedAllies;
-		}
-	}
-
+	[Desc("Requires `GpsWatcher` on the player actor.")]
 	class GpsPowerInfo : SupportPowerInfo
 	{
 		public readonly int RevealDelay = 0;
 
+		public readonly string DoorImage = "atek";
+		[SequenceReference("DoorImage")] public readonly string DoorSequence = "active";
+
+		[Desc("Palette to use for rendering the launch animation")]
+		[PaletteReference("DoorPaletteIsPlayerPalette")] public readonly string DoorPalette = "player";
+
+		[Desc("Custom palette is a player palette BaseName")]
+		public readonly bool DoorPaletteIsPlayerPalette = true;
+
+		public readonly string SatelliteImage = "sputnik";
+		[SequenceReference("SatelliteImage")] public readonly string SatelliteSequence = "idle";
+
+		[Desc("Palette to use for rendering the satellite projectile")]
+		[PaletteReference("SatellitePaletteIsPlayerPalette")] public readonly string SatellitePalette = "player";
+
+		[Desc("Custom palette is a player palette BaseName")]
+		public readonly bool SatellitePaletteIsPlayerPalette = true;
+
+		[Desc("Requires an actor with an online `ProvidesRadar` to show GPS dots.")]
+		public readonly bool RequiresActiveRadar = true;
+
 		public override object Create(ActorInitializer init) { return new GpsPower(init.Self, this); }
 	}
 
-	class GpsPower : SupportPower, INotifyKilled, INotifyStanceChanged, INotifySold, INotifyOwnerChanged
+	class GpsPower : SupportPower, INotifyKilled, INotifySold, INotifyOwnerChanged, ITick
 	{
+		readonly Actor self;
+		readonly GpsPowerInfo info;
 		GpsWatcher owner;
 
 		public GpsPower(Actor self, GpsPowerInfo info)
 			: base(self, info)
 		{
+			this.self = self;
+			this.info = info;
 			owner = self.Owner.PlayerActor.Trait<GpsWatcher>();
 			owner.GpsAdd(self);
 		}
@@ -113,9 +76,9 @@ namespace OpenRA.Mods.RA.Traits
 			{
 				Game.Sound.PlayToPlayer(self.Owner, Info.LaunchSound);
 
-				w.Add(new SatelliteLaunch(self));
+				w.Add(new SatelliteLaunch(self, info));
 
-				owner.Launch(self, Info);
+				owner.Launch(self, info);
 			});
 		}
 
@@ -127,12 +90,7 @@ namespace OpenRA.Mods.RA.Traits
 		void RemoveGps(Actor self)
 		{
 			// Extra function just in case something needs to be added later
-			owner.GpsRem(self);
-		}
-
-		public void StanceChanged(Actor self, Player a, Player b, Stance oldStance, Stance newStance)
-		{
-			owner.RefreshGps(self);
+			owner.GpsRemove(self);
 		}
 
 		public void OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
@@ -140,6 +98,23 @@ namespace OpenRA.Mods.RA.Traits
 			RemoveGps(self);
 			owner = newOwner.PlayerActor.Trait<GpsWatcher>();
 			owner.GpsAdd(self);
+		}
+
+		bool NoActiveRadar { get { return !self.World.ActorsHavingTrait<ProvidesRadar>(r => r.IsActive).Any(a => a.Owner == self.Owner); } }
+		bool wasDisabled;
+
+		public void Tick(Actor self)
+		{
+			if (!wasDisabled && (self.IsDisabled() || (info.RequiresActiveRadar && NoActiveRadar)))
+			{
+				wasDisabled = true;
+				RemoveGps(self);
+			}
+			else if (wasDisabled && !self.IsDisabled() && !(info.RequiresActiveRadar && NoActiveRadar))
+			{
+				wasDisabled = false;
+				owner.GpsAdd(self);
+			}
 		}
 	}
 }

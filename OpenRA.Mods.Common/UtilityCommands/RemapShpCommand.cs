@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -13,7 +14,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using OpenRA.FileSystem;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.SpriteLoaders;
 using OpenRA.Traits;
@@ -39,18 +39,16 @@ namespace OpenRA.Mods.Common.UtilityCommands
 				remap[i] = i;
 
 			var srcMod = args[1].Split(':')[0];
+			var srcModData = new ModData(srcMod);
+			Game.ModData = srcModData;
 
-			Game.ModData = new ModData(srcMod);
-			GlobalFileSystem.LoadFromManifest(Game.ModData.Manifest);
-			var srcRules = Game.ModData.RulesetCache.Load();
-			var srcPaletteInfo = srcRules.Actors["player"].TraitInfo<PlayerColorPaletteInfo>();
+			var srcPaletteInfo = srcModData.DefaultRules.Actors["player"].TraitInfo<PlayerColorPaletteInfo>();
 			var srcRemapIndex = srcPaletteInfo.RemapIndex;
 
 			var destMod = args[2].Split(':')[0];
-			Game.ModData = new ModData(destMod);
-			GlobalFileSystem.LoadFromManifest(Game.ModData.Manifest);
-			var destRules = Game.ModData.RulesetCache.Load();
-			var destPaletteInfo = destRules.Actors["player"].TraitInfo<PlayerColorPaletteInfo>();
+			var destModData = new ModData(destMod);
+			Game.ModData = destModData;
+			var destPaletteInfo = destModData.DefaultRules.Actors["player"].TraitInfo<PlayerColorPaletteInfo>();
 			var destRemapIndex = destPaletteInfo.RemapIndex;
 			var shadowIndex = new int[] { };
 
@@ -83,9 +81,9 @@ namespace OpenRA.Mods.Common.UtilityCommands
 			var ca = Color.FromArgb((int)a);
 			var cb = Color.FromArgb((int)b);
 
-			return Math.Abs((int)ca.R - (int)cb.R) +
-				Math.Abs((int)ca.G - (int)cb.G) +
-				Math.Abs((int)ca.B - (int)cb.B);
+			return Math.Abs(ca.R - cb.R) +
+				Math.Abs(ca.G - cb.G) +
+				Math.Abs(ca.B - cb.B);
 		}
 	}
 }

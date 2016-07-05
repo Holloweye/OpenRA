@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -20,11 +21,11 @@ namespace OpenRA.Mods.Common.Widgets
 {
 	public class ObserverSupportPowerIconsWidget : Widget
 	{
-		public Func<Player> GetPlayer;
-		Animation icon;
-		World world;
-		WorldRenderer worldRenderer;
-		Dictionary<string, Animation> clocks;
+		readonly Animation icon;
+		readonly World world;
+		readonly WorldRenderer worldRenderer;
+		readonly Dictionary<string, Animation> clocks;
+		readonly int timestep;
 
 		public int IconWidth = 32;
 		public int IconHeight = 24;
@@ -33,6 +34,7 @@ namespace OpenRA.Mods.Common.Widgets
 		public string ClockAnimation = "clock";
 		public string ClockSequence = "idle";
 		public string ClockPalette = "chrome";
+		public Func<Player> GetPlayer;
 
 		[ObjectCreator.UseCtor]
 		public ObserverSupportPowerIconsWidget(World world, WorldRenderer worldRenderer)
@@ -41,6 +43,11 @@ namespace OpenRA.Mods.Common.Widgets
 			this.worldRenderer = worldRenderer;
 			clocks = new Dictionary<string, Animation>();
 			icon = new Animation(world, "icon");
+
+			// Timers in replays should be synced to the effective game time, not the playback time.
+			timestep = world.Timestep;
+			if (world.IsReplay)
+				timestep = world.WorldActor.Trait<MapOptions>().GameSpeed.Timestep;
 		}
 
 		protected ObserverSupportPowerIconsWidget(ObserverSupportPowerIconsWidget other)
@@ -51,6 +58,7 @@ namespace OpenRA.Mods.Common.Widgets
 			world = other.world;
 			worldRenderer = other.worldRenderer;
 			clocks = other.clocks;
+			timestep = other.timestep;
 
 			IconWidth = other.IconWidth;
 			IconHeight = other.IconHeight;
@@ -68,7 +76,7 @@ namespace OpenRA.Mods.Common.Widgets
 				return;
 
 			var powers = player.PlayerActor.Trait<SupportPowerManager>().Powers
-				.Select((a, i) => new { a, i });
+				.Where(x => !x.Value.Disabled).Select((a, i) => new { a, i });
 			foreach (var power in powers)
 			{
 				if (!clocks.ContainsKey(power.a.Key))
@@ -94,7 +102,7 @@ namespace OpenRA.Mods.Common.Widgets
 				WidgetUtils.DrawSHPCentered(clock.Image, location + 0.5f * iconSize, worldRenderer.Palette(ClockPalette), 0.5f);
 
 				var tiny = Game.Renderer.Fonts["Tiny"];
-				var text = GetOverlayForItem(item, world.Timestep);
+				var text = GetOverlayForItem(item, timestep);
 				tiny.DrawTextWithContrast(text,
 					location + new float2(16, 16) - new float2(tiny.Measure(text).X / 2, 0),
 					Color.White, Color.Black, 1);

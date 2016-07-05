@@ -8,7 +8,7 @@ Container@SCRIPT_ERROR_PANEL:
 			Width: PARENT_RIGHT-30
 			Height: 20
 			Font: Bold
-			Align:Center
+			Align: Center
 			Text: The map script has encountered a fatal error
 		Label@DESCB:
 			X: 15

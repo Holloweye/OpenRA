@@ -1,10 +1,8 @@
-MapFormat: 7
+MapFormat: 11
 
 RequiresMod: cnc
 
-Title: Storm the Beachhead
-
-Description: Use the units provided to protect the Mobile Construction Vehicle (MCV).\n\nYou should then deploy the MCV by selecting it with a left-click and then right-clicking on it.\n\nThen you can begin to build up a base. Start with a Power Plant.\n\nFinally, search out and destroy all enemy Nod units in the surrounding area.
+Title: 01:   Storm the Beachhead
 
 Author: Westwood Studios
 
@@ -16,31 +14,15 @@ Bounds: 35,39,27,23
 
 Visibility: MissionSelector
 
-Type: Campaign
+Categories: Campaign
 
-Videos:
-	BackgroundInfo: intro2.vqa
-	Briefing: gdi1.vqa
-	GameStart: landing.vqa
-	GameWon: consyard.vqa
-	GameLost: gameover.vqa
-
-Options:
-	Crates: False
-	Creeps: False
-	Fog: True
-	Shroud: True
-	AllyBuildRadius: False
-	FragileAlliances: False
-	StartingCash: 5000
-	ConfigurableStartingUnits: False
-	ShortGame: False
+LockPreview: True
 
 Players:
 	PlayerReference@Nod:
 		Name: Nod
 		Faction: nod
-		ColorRamp: 3,255,127
+		Color: FE1100
 		Allies: Nod
 		Enemies: GDI
 	PlayerReference@GDI:
@@ -51,7 +33,7 @@ Players:
 		LockFaction: True
 		Faction: gdi
 		LockColor: True
-		ColorRamp: 31,222,183
+		Color: F5D378
 		LockSpawn: True
 		LockTeam: True
 		Allies: GDI
@@ -412,151 +394,8 @@ Actors:
 		Location: 54,53
 		Owner: Neutral
 
-Smudges:
+Rules: cnc|rules/campaign-maprules.yaml, cnc|rules/campaign-tooltips.yaml, cnc|rules/campaign-palettes.yaml, rules.yaml
 
-Rules:
-	World:
-		-SpawnMPUnits:
-		-MPStartLocations:
-		-CrateSpawner:
-		LuaScript:
-			Scripts: gdi01.lua
-		ObjectivesPanel:
-			PanelName: MISSION_OBJECTIVES
-		MusicPlaylist:
-			StartingMusic: aoi
-	Player:
-		-ConquestVictoryConditions:
-		MissionObjectives:
-			EarlyGameOver: true
-	^Vehicle:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Tank:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Helicopter:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Infantry:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Plane:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Ship:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Building:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Wall:
-		Tooltip:
-			ShowOwnerRow: false
-	^Husk:
-		Tooltip:
-			GenericVisibility: Enemy, Ally, Neutral
-			GenericStancePrefix: false
-			ShowOwnerRow: false
-	NUKE:
-		-Sellable:
-		Buildable:
-			BuildLimit: 1
-	PYLE:
-		-Sellable:
-		Buildable:
-			BuildLimit: 1
-	FACT:
-		-Sellable:
-	PROC:
-		Buildable:
-			Prerequisites: ~disabled
-	SILO:
-		Buildable:
-			Prerequisites: ~disabled
-	WEAP:
-		Buildable:
-			Prerequisites: ~disabled
-	HQ:
-		Buildable:
-			Prerequisites: ~disabled
-	NUK2:
-		Buildable:
-			Prerequisites: ~disabled
-	FIX:
-		Buildable:
-			Prerequisites: ~disabled
-	HPAD:
-		Buildable:
-			Prerequisites: ~disabled
-	EYE:
-		Buildable:
-			Prerequisites: ~disabled
-	GUN:
-		Buildable:
-			Prerequisites: ~disabled
-	GTWR:
-		Buildable:
-			Prerequisites: ~disabled
-	ATWR:
-		Buildable:
-			Prerequisites: ~disabled
-	BRIK:
-		Buildable:
-			Prerequisites: ~disabled
-	E2:
-		Buildable:
-			Prerequisites: ~disabled
-	E3:
-		Buildable:
-			Prerequisites: ~disabled
-	E6:
-		Buildable:
-			Prerequisites: ~disabled
-	RMBO:
-		Buildable:
-			Prerequisites: ~disabled
-	BOAT:
-		Health:
-			HP: 1500
-		AutoTarget:
-			InitialStance: AttackAnything
-		RejectsOrders:
-			Except: Attack
-	OLDLST:
-		Inherits: LST
-		-WithRoof:
-		-Selectable:
-		RejectsOrders:
+Sequences: sequences.yaml
 
-Sequences:
-	oldlst:
-		idle: lst
-			Start: 0
-			Facings: 1
-			ZOffset: -1024
-		icon: lsticnh.tem
-			AddExtension: False
-
-VoxelSequences:
-
-Weapons:
-	BoatMissile:
-		Warhead: SpreadDamage
-			Versus:
-				Heavy: 50
-			Damage: 50
-			DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-
-Voices:
-
-Notifications:
-
-Translations:
+Weapons: weapons.yaml

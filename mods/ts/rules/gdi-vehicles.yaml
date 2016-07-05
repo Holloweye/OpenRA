@@ -1,7 +1,7 @@
 APC:
-	Inherits: ^VoxelVehicle
+	Inherits: ^VoxelTank
 	Valued:
-		Cost: 600
+		Cost: 800
 	Tooltip:
 		Name: Amphibious APC
 		Description: Armored infantry transport.\nCan move on water.\n  Unarmed
@@ -10,7 +10,7 @@ APC:
 		BuildPaletteOrder: 30
 		Prerequisites: ~gaweap, gapile
 	Mobile:
-		ROT: 5
+		TurnSpeed: 5
 		Speed: 113
 		TerrainSpeeds:
 			Water: 80
@@ -21,18 +21,30 @@ APC:
 	RevealsShroud:
 		Range: 5c0
 	Turreted:
-		ROT: 10
+		TurnSpeed: 10
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
 		PipCount: 5
 		UnloadVoice: Unload
-	-WithVoxelBody:
-	WithVoxelWaterBody:
+		LoadingUpgrades: notmobile
+		EjectOnDeath: true
+	UpgradeOnTerrain:
+		Upgrades: inwater
+		TerrainTypes: Water
+	WithVoxelBody:
+		UpgradeTypes: inwater
+		UpgradeMaxEnabledLevel: 0
+	WithVoxelBody@water:
+		Sequence: water
+		UpgradeTypes: inwater
+		UpgradeMinEnabledLevel: 1
 	LeavesTrails:
 		Image: wake
 		Palette: effect
 		TerrainTypes: Water
+		StationaryInterval: 18
+		MovingInterval: 6
 
 HVR:
 	Inherits: ^VoxelVehicle
@@ -60,14 +72,14 @@ HVR:
 	Health:
 		HP: 230
 	Armor:
-		Type: Light
+		Type: Wood
 	RevealsShroud:
 		Range: 7c0
 	Armament:
 		Weapon: HoverMissile
 		LocalOffset: 0,171,384, 0,-171,384
 	Turreted:
-		ROT: 7
+		TurnSpeed: 7
 		Offset: -128,0,85
 	AttackTurreted:
 		Voice: Attack
@@ -78,9 +90,13 @@ HVR:
 		Image: wake
 		Palette: effect
 		TerrainTypes: Water
+		TrailWhileStationary: True
+		StationaryInterval: 18
+		MovingInterval: 6
+	-PoisonedByTiberium:
 
 SMECH:
-	Inherits: ^Tank
+	Inherits: ^Vehicle
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -91,7 +107,7 @@ SMECH:
 		BuildPaletteOrder: 10
 		Prerequisites: ~gaweap
 	Mobile:
-		ROT: 5
+		TurnSpeed: 5
 		Speed: 99
 	Health:
 		HP: 175
@@ -116,6 +132,7 @@ SMECH:
 		MoveSequence: run
 	Selectable:
 		Bounds: 20, 32, 0, -8
+	-PoisonedByTiberium:
 
 MMCH:
 	Inherits: ^Tank
@@ -129,7 +146,7 @@ MMCH:
 		BuildPaletteOrder: 30
 		Prerequisites: ~gaweap
 	Mobile:
-		ROT: 5
+		TurnSpeed: 5
 		Speed: 56
 		Crushes: wall, crate, infantry
 	Health:
@@ -140,20 +157,24 @@ MMCH:
 		Range: 8c0
 	BodyOrientation:
 		QuantizedFacings: 32
+		UseClassicPerspectiveFudge: False
 	WithInfantryBody:
 	Turreted:
-		ROT: 5
+		TurnSpeed: 5
 	AttackTurreted:
 		Voice: Attack
-	WithTurret:
-		Recoils: no
+	WithSpriteTurret:
+		Recoils: false
 	Armament:
 		Weapon: 120mm
-		Recoil: 127
-		RecoilRecovery: 26
+		MuzzleSequence: muzzle
+		Recoil: 128
+		RecoilRecovery: 32
+		LocalOffset: 640, 192, 832
+	WithMuzzleOverlay:
 	RenderVoxels:
 	WithVoxelBarrel:
-		LocalOffset: -128, 85, 256
+		LocalOffset: -64, 64, 256
 	AutoTarget:
 	Selectable:
 		Bounds: 30, 42, 0, -8
@@ -171,7 +192,7 @@ HMEC:
 		Prerequisites: ~gaweap, gatech
 		BuildLimit: 1
 	Mobile:
-		ROT: 3
+		TurnSpeed: 3
 		Speed: 42
 		Crushes: wall, crate, infantry
 	Health:
@@ -207,8 +228,10 @@ SONIC:
 		Queue: Vehicle
 		BuildPaletteOrder: 70
 		Prerequisites: ~gaweap, gatech
+	Targetable:
+		TargetTypes: Ground, Vehicle, Repair, Disruptor
 	Mobile:
-		ROT: 4
+		TurnSpeed: 4
 		Speed: 56
 		Crushes: wall, crate, infantry
 	Health:
@@ -223,8 +246,7 @@ SONIC:
 	AttackTurreted:
 		Voice: Attack
 	Turreted:
-		ROT: 5
+		TurnSpeed: 5
 		Offset: -170,0,0
 	AutoTarget:
 	WithVoxelTurret:
-

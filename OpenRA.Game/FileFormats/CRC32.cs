@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -111,11 +112,11 @@ namespace OpenRA.FileFormats
 
 		/// <summary>
 		/// A fast (native) CRC32 implementation that can be used on a pinned byte array using
-		/// default polynomal.
+		/// default polynomial.
 		/// </summary>
 		/// <param name="data">		[in,out] If non-null, the.</param>
-		/// <param name="len">		The length of the data data.</param>
-		/// <param name="polynomial">The polynomal to xor with.</param>
+		/// <param name="len">		The length of the data.</param>
+		/// <param name="polynomial">The polynomial to XOR with.</param>
 		/// <returns>The calculated checksum.</returns>
 		public static unsafe uint Calculate(byte* data, uint len, uint polynomial)
 		{

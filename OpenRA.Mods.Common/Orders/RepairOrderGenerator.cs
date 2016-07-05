@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -18,7 +19,7 @@ namespace OpenRA.Mods.Common.Orders
 {
 	public class RepairOrderGenerator : IOrderGenerator
 	{
-		public IEnumerable<Order> Order(World world, CPos xy, MouseInput mi)
+		public IEnumerable<Order> Order(World world, CPos cell, int2 worldPixel, MouseInput mi)
 		{
 			if (mi.Button == MouseButton.Right)
 				world.CancelInputMode();
@@ -44,6 +45,10 @@ namespace OpenRA.Mods.Common.Orders
 			if (underCursor.Info.HasTraitInfo<RepairableBuildingInfo>())
 				yield return new Order("RepairBuilding", world.LocalPlayer.PlayerActor, false) { TargetActor = underCursor };
 
+			// Don't command allied units
+			if (underCursor.Owner != world.LocalPlayer)
+				yield break;
+
 			// Test for generic Repairable (used on units).
 			var repairable = underCursor.TraitOrDefault<Repairable>();
 			if (repairable == null)
@@ -67,7 +72,7 @@ namespace OpenRA.Mods.Common.Orders
 		public IEnumerable<IRenderable> Render(WorldRenderer wr, World world) { yield break; }
 		public IEnumerable<IRenderable> RenderAfterWorld(WorldRenderer wr, World world) { yield break; }
 
-		public string GetCursor(World world, CPos xy, MouseInput mi)
+		public string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)
 		{
 			mi.Button = MouseButton.Left;
 			return OrderInner(world, mi).Any()

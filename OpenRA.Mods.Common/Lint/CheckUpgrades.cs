@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -30,14 +31,23 @@ namespace OpenRA.Mods.Common.Lint
 
 			foreach (var actorInfo in rules.Actors)
 			{
+				if (actorInfo.Key.StartsWith("^"))
+					continue;
+
 				foreach (var trait in actorInfo.Value.TraitInfos<ITraitInfo>())
 				{
 					var fields = trait.GetType().GetFields();
 					foreach (var field in fields.Where(x => x.HasAttribute<UpgradeUsedReferenceAttribute>()))
 					{
 						var values = LintExts.GetFieldValues(trait, field, emitError);
-						foreach (var value in values.Where(x => !upgradesGranted.Contains(x)))
-							emitError("Actor type `{0}` uses upgrade `{1}` that is not granted by anything!".F(actorInfo.Key, value));
+						foreach (var value in values)
+						{
+							if (!upgradesGranted.Contains(value))
+								emitError("Actor type `{0}` uses upgrade `{1}` that is not granted by anything!".F(actorInfo.Key, value));
+
+							if (actorInfo.Value.TraitInfoOrDefault<UpgradeManagerInfo>() == null)
+								emitError("Actor type `{0}` uses upgrade `{1}`, but doesn't have the UpgradeManager trait.".F(actorInfo.Key, value));
+						}
 					}
 				}
 			}
@@ -50,6 +60,9 @@ namespace OpenRA.Mods.Common.Lint
 			// Check all upgrades granted by traits.
 			foreach (var actorInfo in rules.Actors)
 			{
+				if (actorInfo.Key.StartsWith("^"))
+					continue;
+
 				foreach (var trait in actorInfo.Value.TraitInfos<ITraitInfo>())
 				{
 					var fields = trait.GetType().GetFields();

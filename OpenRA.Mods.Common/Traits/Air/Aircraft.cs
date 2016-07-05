@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -20,7 +21,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
-	public class AircraftInfo : IPositionableInfo, IFacingInfo, IOccupySpaceInfo, IMoveInfo, ICruiseAltitudeInfo,
+	public class AircraftInfo : ITraitInfo, IPositionableInfo, IFacingInfo, IOccupySpaceInfo, IMoveInfo, ICruiseAltitudeInfo,
 		UsesInit<LocationInit>, UsesInit<FacingInit>
 	{
 		public readonly WDist CruiseAltitude = new WDist(1280);
@@ -31,11 +32,11 @@ namespace OpenRA.Mods.Common.Traits
 		public readonly int RepulsionSpeed = -1;
 
 		[ActorReference]
-		public readonly HashSet<string> RepairBuildings = new HashSet<string> { "fix" };
+		public readonly HashSet<string> RepairBuildings = new HashSet<string> { };
 		[ActorReference]
-		public readonly HashSet<string> RearmBuildings = new HashSet<string> { "hpad", "afld" };
+		public readonly HashSet<string> RearmBuildings = new HashSet<string> { };
 		public readonly int InitialFacing = 0;
-		public readonly int ROT = 255;
+		public readonly int TurnSpeed = 255;
 		public readonly int Speed = 1;
 
 		[Desc("Minimum altitude where this aircraft is considered airborne")]
@@ -54,6 +55,10 @@ namespace OpenRA.Mods.Common.Traits
 		[UpgradeGrantedReference]
 		[Desc("The upgrades to grant to self while airborne.")]
 		public readonly string[] AirborneUpgrades = { };
+
+		[UpgradeGrantedReference]
+		[Desc("The upgrades to grant to self while at cruise altitude.")]
+		public readonly string[] CruisingUpgrades = { };
 
 		[Desc("Can the actor hover in place mid-air? If not, then the actor will have to remain in motion (circle around).")]
 		public readonly bool CanHover = false;
@@ -82,8 +87,8 @@ namespace OpenRA.Mods.Common.Traits
 		bool IOccupySpaceInfo.SharesCell { get { return false; } }
 	}
 
-	public class Aircraft : ITick, ISync, IFacing, IPositionable, IMove, IIssueOrder, IResolveOrder, IOrderVoice,
-		INotifyCreated, INotifyAddedToWorld, INotifyRemovedFromWorld, INotifyActorDisposing
+	public class Aircraft : ITick, ISync, IFacing, IPositionable, IMove, IIssueOrder, IResolveOrder, IOrderVoice, IDeathActorInitModifier,
+		INotifyCreated, INotifyAddedToWorld, INotifyRemovedFromWorld, INotifyActorDisposing, IActorPreviewInitModifier
 	{
 		static readonly Pair<CPos, SubCell>[] NoCells = { };
 
@@ -92,37 +97,16 @@ namespace OpenRA.Mods.Common.Traits
 		readonly Actor self;
 
 		UpgradeManager um;
+		IDisposable reservation;
+		IEnumerable<int> speedModifiers;
 
 		[Sync] public int Facing { get; set; }
 		[Sync] public WPos CenterPosition { get; private set; }
 		public CPos TopLeft { get { return self.World.Map.CellContaining(CenterPosition); } }
-		public IDisposable Reservation;
-		public int ROT { get { return Info.ROT; } }
+		public int TurnSpeed { get { return Info.TurnSpeed; } }
 
 		bool airborne;
-		bool IsAirborne
-		{
-			get
-			{
-				return airborne;
-			}
-
-			set
-			{
-				if (airborne == value)
-					return;
-				airborne = value;
-				if (um != null)
-				{
-					if (airborne)
-						foreach (var u in Info.AirborneUpgrades)
-							um.GrantUpgrade(self, u, this);
-					else
-						foreach (var u in Info.AirborneUpgrades)
-							um.RevokeUpgrade(self, u, this);
-				}
-			}
-		}
+		bool cruising;
 
 		public Aircraft(ActorInitializer init, AircraftInfo info)
 		{
@@ -137,20 +121,26 @@ namespace OpenRA.Mods.Common.Traits
 
 			Facing = init.Contains<FacingInit>() ? init.Get<FacingInit, int>() : info.InitialFacing;
 
-			// TODO: HACK: This is a hack until we can properly distinquish between airplane and helicopter!
+			// TODO: HACK: This is a hack until we can properly distinguish between airplane and helicopter!
 			// Or until the activities get unified enough so that it doesn't matter.
 			IsPlane = !info.CanHover;
 		}
 
-		public void Created(Actor self) { um = self.TraitOrDefault<UpgradeManager>(); }
+		public void Created(Actor self)
+		{
+			um = self.TraitOrDefault<UpgradeManager>();
+			speedModifiers = self.TraitsImplementing<ISpeedModifier>().ToArray().Select(sm => sm.GetSpeedModifier());
+		}
 
 		public void AddedToWorld(Actor self)
 		{
-			self.World.ActorMap.AddInfluence(self, this);
-			self.World.ActorMap.AddPosition(self, this);
-			self.World.ScreenMap.Add(self);
-			if (self.World.Map.DistanceAboveTerrain(CenterPosition).Length >= Info.MinAirborneAltitude)
-				IsAirborne = true;
+			self.World.AddToMaps(self, this);
+
+			var altitude = self.World.Map.DistanceAboveTerrain(CenterPosition);
+			if (altitude.Length >= Info.MinAirborneAltitude)
+				OnAirborneAltitudeReached();
+			if (altitude == Info.CruiseAltitude)
+				OnCruisingAltitudeReached();
 		}
 
 		bool firstTick = true;
@@ -179,13 +169,11 @@ namespace OpenRA.Mods.Common.Traits
 		public void Repulse()
 		{
 			var repulsionForce = GetRepulsionForce();
-
-			var repulsionFacing = Util.GetFacing(repulsionForce, -1);
-			if (repulsionFacing == -1)
+			if (repulsionForce.HorizontalLengthSquared == 0)
 				return;
 
 			var speed = Info.RepulsionSpeed != -1 ? Info.RepulsionSpeed : MovementSpeed;
-			SetPosition(self, CenterPosition + FlyStep(speed, repulsionFacing));
+			SetPosition(self, CenterPosition + FlyStep(speed, repulsionForce.Yaw.Facing));
 		}
 
 		public virtual WVec GetRepulsionForce()
@@ -194,15 +182,23 @@ namespace OpenRA.Mods.Common.Traits
 				return WVec.Zero;
 
 			// Repulsion only applies when we're flying!
-			var altitude = CenterPosition.Z;
+			var altitude = self.World.Map.DistanceAboveTerrain(CenterPosition).Length;
 			if (altitude != Info.CruiseAltitude.Length)
 				return WVec.Zero;
 
-			var repulsionForce = self.World.FindActorsInCircle(self.CenterPosition, Info.IdealSeparation)
-				.Where(a => !a.IsDead && a.Info.HasTraitInfo<AircraftInfo>()
-					&& a.Info.TraitInfo<AircraftInfo>().CruiseAltitude == Info.CruiseAltitude)
-				.Select(GetRepulsionForce)
-				.Aggregate(WVec.Zero, (a, b) => a + b);
+			// PERF: Avoid LINQ.
+			var repulsionForce = WVec.Zero;
+			foreach (var actor in self.World.FindActorsInCircle(self.CenterPosition, Info.IdealSeparation))
+			{
+				if (actor.IsDead)
+					continue;
+
+				var ai = actor.Info.TraitInfoOrDefault<AircraftInfo>();
+				if (ai == null || !ai.Repulsable || ai.CruiseAltitude != Info.CruiseAltitude)
+					continue;
+
+				repulsionForce += GetRepulsionForce(actor);
+			}
 
 			if (Info.CanHover)
 				return repulsionForce;
@@ -246,7 +242,7 @@ namespace OpenRA.Mods.Common.Traits
 			if (self.World.Map.DistanceAboveTerrain(CenterPosition).Length != 0)
 				return null; // not on the ground.
 
-			return self.World.ActorMap.GetUnitsAt(self.Location)
+			return self.World.ActorMap.GetActorsAt(self.Location)
 				.FirstOrDefault(a => a.Info.HasTraitInfo<ReservableInfo>());
 		}
 
@@ -257,22 +253,24 @@ namespace OpenRA.Mods.Common.Traits
 			if (afld == null)
 				return;
 
-			var res = afld.TraitOrDefault<Reservable>();
+			MakeReservation(afld);
+		}
 
-			if (res != null)
-			{
-				UnReserve();
-				Reservation = res.Reserve(afld, self, this);
-			}
+		public void MakeReservation(Actor target)
+		{
+			UnReserve();
+			var reservable = target.TraitOrDefault<Reservable>();
+			if (reservable != null)
+				reservation = reservable.Reserve(target, self, this);
 		}
 
 		public void UnReserve()
 		{
-			if (Reservation != null)
-			{
-				Reservation.Dispose();
-				Reservation = null;
-			}
+			if (reservation == null)
+				return;
+
+			reservation.Dispose();
+			reservation = null;
 		}
 
 		public bool AircraftCanEnter(Actor a)
@@ -286,12 +284,7 @@ namespace OpenRA.Mods.Common.Traits
 
 		public int MovementSpeed
 		{
-			get
-			{
-				var modifiers = self.TraitsImplementing<ISpeedModifier>()
-					.Select(m => m.GetSpeedModifier());
-				return Util.ApplyPercentageModifiers(Info.Speed, modifiers);
-			}
+			get { return Util.ApplyPercentageModifiers(Info.Speed, speedModifiers); }
 		}
 
 		public IEnumerable<Pair<CPos, SubCell>> OccupiedCells() { return NoCells; }
@@ -312,7 +305,7 @@ namespace OpenRA.Mods.Common.Traits
 			if (!self.World.Map.Contains(cell))
 				return false;
 
-			if (self.World.ActorMap.AnyUnitsAt(cell))
+			if (self.World.ActorMap.AnyActorsAt(cell))
 				return false;
 
 			var type = self.World.Map.GetTerrainInfo(cell).Type;
@@ -326,6 +319,11 @@ namespace OpenRA.Mods.Common.Traits
 				yield return new Rearm(self);
 			if (Info.RepairBuildings.Contains(name))
 				yield return new Repair(a);
+		}
+
+		public void ModifyDeathActorInit(Actor self, TypeDictionary init)
+		{
+			init.Add(new FacingInit(Facing));
 		}
 
 		#region Implement IPositionable
@@ -354,9 +352,19 @@ namespace OpenRA.Mods.Common.Traits
 			if (!self.IsInWorld)
 				return;
 
-			self.World.ScreenMap.Update(self);
-			self.World.ActorMap.UpdatePosition(self, this);
-			IsAirborne = self.World.Map.DistanceAboveTerrain(CenterPosition).Length >= Info.MinAirborneAltitude;
+			self.World.UpdateMaps(self, this);
+
+			var altitude = self.World.Map.DistanceAboveTerrain(CenterPosition);
+			var isAirborne = altitude.Length >= Info.MinAirborneAltitude;
+			if (isAirborne && !airborne)
+				OnAirborneAltitudeReached();
+			else if (!isAirborne && airborne)
+				OnAirborneAltitudeLeft();
+			var isCruising = altitude == Info.CruiseAltitude;
+			if (isCruising && !cruising)
+				OnCruisingAltitudeReached();
+			else if (!isCruising && cruising)
+				OnCruisingAltitudeLeft();
 		}
 
 		#endregion
@@ -416,7 +424,7 @@ namespace OpenRA.Mods.Common.Traits
 			if (IsPlane)
 				return new Fly(self, target, WDist.FromCells(3), WDist.FromCells(5));
 
-			return Util.SequenceActivities(new HeliFly(self, target), new Turn(self, Info.InitialFacing));
+			return ActivityUtils.SequenceActivities(new HeliFly(self, target), new Turn(self, Info.InitialFacing));
 		}
 
 		public Activity MoveIntoTarget(Actor self, Target target)
@@ -431,29 +439,24 @@ namespace OpenRA.Mods.Common.Traits
 		{
 			// TODO: Ignore repulsion when moving
 			if (IsPlane)
-				return Util.SequenceActivities(
+				return ActivityUtils.SequenceActivities(
 					new CallFunc(() => SetVisualPosition(self, fromPos)),
 					new Fly(self, Target.FromPos(toPos)));
 
-			return Util.SequenceActivities(new CallFunc(() => SetVisualPosition(self, fromPos)),
+			return ActivityUtils.SequenceActivities(new CallFunc(() => SetVisualPosition(self, fromPos)),
 				new HeliFly(self, Target.FromPos(toPos)));
 		}
 
 		public CPos NearestMoveableCell(CPos cell) { return cell; }
 
-		public bool IsMoving { get { return self.CenterPosition.Z > 0; } set { } }
+		public bool IsMoving { get { return self.World.Map.DistanceAboveTerrain(CenterPosition).Length > 0; } set { } }
 
 		public bool CanEnterTargetNow(Actor self, Target target)
 		{
-			if (target.Positions.Any(p => self.World.ActorMap.GetUnitsAt(self.World.Map.CellContaining(p)).Any(a => a != self && a != target.Actor)))
+			if (target.Positions.Any(p => self.World.ActorMap.GetActorsAt(self.World.Map.CellContaining(p)).Any(a => a != self && a != target.Actor)))
 				return false;
 
-			var res = target.Actor.TraitOrDefault<Reservable>();
-			if (res == null)
-				return true;
-
-			UnReserve();
-			Reservation = res.Reserve(target.Actor, self, this);
+			MakeReservation(target.Actor);
 			return true;
 		}
 
@@ -535,15 +538,13 @@ namespace OpenRA.Mods.Common.Traits
 
 					if (IsPlane)
 					{
-						self.QueueActivity(order.Queued, Util.SequenceActivities(
+						self.QueueActivity(order.Queued, ActivityUtils.SequenceActivities(
 							new ReturnToBase(self, order.TargetActor),
 							new ResupplyAircraft(self)));
 					}
 					else
 					{
-						var res = order.TargetActor.TraitOrDefault<Reservable>();
-						if (res != null)
-							Reservation = res.Reserve(order.TargetActor, self, this);
+						MakeReservation(order.TargetActor);
 
 						Action enter = () =>
 						{
@@ -601,15 +602,69 @@ namespace OpenRA.Mods.Common.Traits
 		public void RemovedFromWorld(Actor self)
 		{
 			UnReserve();
-			self.World.ActorMap.RemoveInfluence(self, this);
-			self.World.ActorMap.RemovePosition(self, this);
-			self.World.ScreenMap.Remove(self);
-			IsAirborne = false;
+			self.World.RemoveFromMaps(self, this);
+
+			OnCruisingAltitudeLeft();
+			OnAirborneAltitudeLeft();
 		}
+
+		#region Airborne upgrades
+
+		void OnAirborneAltitudeReached()
+		{
+			if (airborne)
+				return;
+			airborne = true;
+			if (um != null)
+				foreach (var u in Info.AirborneUpgrades)
+					um.GrantUpgrade(self, u, this);
+		}
+
+		void OnAirborneAltitudeLeft()
+		{
+			if (!airborne)
+				return;
+			airborne = false;
+			if (um != null)
+				foreach (var u in Info.AirborneUpgrades)
+					um.RevokeUpgrade(self, u, this);
+		}
+
+		#endregion
+
+		#region Cruising upgrades
+
+		void OnCruisingAltitudeReached()
+		{
+			if (cruising)
+				return;
+			cruising = true;
+			if (um != null)
+				foreach (var u in Info.CruisingUpgrades)
+					um.GrantUpgrade(self, u, this);
+		}
+
+		void OnCruisingAltitudeLeft()
+		{
+			if (!cruising)
+				return;
+			cruising = false;
+			if (um != null)
+				foreach (var u in Info.CruisingUpgrades)
+					um.RevokeUpgrade(self, u, this);
+		}
+
+		#endregion
 
 		public void Disposing(Actor self)
 		{
 			UnReserve();
+		}
+
+		void IActorPreviewInitModifier.ModifyActorPreviewInit(Actor self, TypeDictionary inits)
+		{
+			if (!inits.Contains<DynamicFacingInit>() && !inits.Contains<FacingInit>())
+				inits.Add(new DynamicFacingInit(() => Facing));
 		}
 	}
 }

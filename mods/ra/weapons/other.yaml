@@ -1,56 +1,61 @@
 FireballLauncher:
+	ValidTargets: Ground, Water, Trees
 	ReloadDelay: 65
 	Range: 5c0
 	Burst: 2
 	BurstDelay: 20
 	Projectile: Bullet
 		Speed: 204
-		Trail: fb2
+		TrailImage: fb2
 		Image: FB1
 	Warhead@1Dam: SpreadDamage
 		Spread: 213
 		Damage: 150
+		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 90
 			Wood: 50
 			Light: 60
 			Heavy: 25
 			Concrete: 50
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
-		Explosion: napalm
-		ImpactSound: firebl3.aud
+		Explosions: napalm
+		ImpactSounds: firebl3.aud
 
 Flamer:
+	ValidTargets: Ground, Water, Trees
 	ReloadDelay: 50
 	Range: 5c0
 	Burst: 15
 	BurstDelay: 1
 	Projectile: Bullet
 		Speed: 170
-		Trail: fb4
+		TrailImage: fb4
 		Image: fb3
 		Angle: 62
 		Inaccuracy: 853
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 8
+		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 90
 			Wood: 100
 			Light: 60
 			Heavy: 25
 			Concrete: 50
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
-		Explosion: small_napalm
-		ImpactSound: firebl3.aud
+		Explosions: small_napalm
+		ImpactSounds: firebl3.aud
 
 Napalm:
+	ValidTargets: Ground, Water, Trees
 	ReloadDelay: 20
 	Range: 4c512
 	Projectile: Bullet
@@ -60,21 +65,22 @@ Napalm:
 	Warhead@1Dam: SpreadDamage
 		Spread: 170
 		Damage: 100
+		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 90
 			Light: 60
 			Heavy: 25
 			Concrete: 50
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
-		Explosion: napalm
-		ImpactSound: firebl3.aud
+		Explosions: napalm
+		ImpactSounds: firebl3.aud
 		InvalidImpactTypes: Water
 	Warhead@4Eff: CreateEffect
-		Explosion: med_splash
-		ImpactSound: splash9.aud
+		Explosions: med_splash
+		ImpactSounds: splash9.aud
 		ValidImpactTypes: Water
 
 Grenade:
@@ -94,17 +100,18 @@ Grenade:
 			None: 50
 			Wood: 100
 			Light: 25
-			Heavy: 5
+			Heavy: 25
+			Concrete: 100
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: med_explosion
-		ImpactSound: kaboom25.aud
+		Explosions: med_explosion
+		ImpactSounds: kaboom25.aud
 		InvalidImpactTypes: Water
 	Warhead@4EffWater: CreateEffect
-		Explosion: small_splash
-		ImpactSound: splash9.aud
+		Explosions: small_splash
+		ImpactSounds: splash9.aud
 		ValidImpactTypes: Water
 
 DepthCharge:
@@ -130,37 +137,21 @@ DepthCharge:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: large_splash
-		ImpactSound: h2obomb2.aud
+		Explosions: large_splash
+		ImpactSounds: h2obomb2.aud
 	Warhead@4EffHit: CreateEffect
-		Explosion: small_explosion
-		ImpactSound: kaboom15.aud
+		Explosions: small_explosion
+		ImpactSounds: kaboom15.aud
 		ValidImpactTypes: WaterHit
 
 TeslaZap:
 	ReloadDelay: 3
-	Charges: true
 	Range: 8c512
-	Report: TESLA1.AUD
+	Report: tesla1.aud
 	Projectile: TeslaZap
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 100
-		Versus:
-			None: 1000
-			Wood: 60
-		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
-
-TeslaZap.Upgraded:
-	ReloadDelay: 3
-	Charges: true
-	Range: 9c512
-	Report: TESLA1.AUD
-	Projectile: TeslaZap
-		Image: litningupg
-	Warhead@1Dam: SpreadDamage
-		Spread: 42
-		Damage: 120
 		Versus:
 			None: 1000
 			Wood: 60
@@ -169,8 +160,7 @@ TeslaZap.Upgraded:
 PortaTesla:
 	ReloadDelay: 70
 	Range: 6c0
-	Report: TESLA1.AUD
-	Charges: yes
+	Report: tesla1.aud
 	Projectile: TeslaZap
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
@@ -179,27 +169,10 @@ PortaTesla:
 			None: 1000
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 
-PortaCharge:
-	ReloadDelay: 70
-	Range: 2c0
-	Report: teslacharge.aud
-	Charges: yes
-	ValidStances: Ally
-	ValidTargets: TeslaBoost
-	Projectile: TeslaZap
-		Image: litningupg
-	Warhead@charge: GrantUpgrade
-		Range: 42
-		Duration: 75
-		Upgrades: tesla
-		ValidStances: Ally
-		ValidTargets: TeslaBoost
-
 TTankZap:
 	ReloadDelay: 120
 	Range: 7c0
-	Report: TESLA1.AUD
-	Charges: yes
+	Report: tesla1.aud
 	Projectile: TeslaZap
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
@@ -208,27 +181,11 @@ TTankZap:
 			None: 1000
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 
-TTankCharge:
-	ReloadDelay: 120
-	Range: 2c0
-	Report: teslacharge.aud
-	Charges: yes
-	ValidStances: Ally
-	ValidTargets: TeslaBoost
-	Projectile: TeslaZap
-		Image: litningupg
-	Warhead@charge: GrantUpgrade
-		Range: 42
-		Duration: 125
-		Upgrades: tesla, tesla, tesla
-		ValidStances: Ally
-		ValidTargets: TeslaBoost
-
 DogJaw:
 	ValidTargets: Infantry
 	ReloadDelay: 10
 	Range: 3c0
-	Report: DOGG5P.AUD
+	Report: dogg5p.aud
 	Warhead@1Dam: SpreadDamage
 		Spread: 213
 		Damage: 100
@@ -238,7 +195,7 @@ DogJaw:
 Heal:
 	ReloadDelay: 80
 	Range: 4c0
-	Report: HEAL2.AUD
+	Report: heal2.aud
 	ValidTargets: Infantry
 	Projectile: Bullet
 		Speed: 1c682
@@ -246,11 +203,12 @@ Heal:
 		Spread: 213
 		Damage: -50
 		ValidTargets: Infantry
+		DebugOverlayColor: 00FF00
 
 Repair:
 	ReloadDelay: 80
 	Range: 4c0
-	Report: FIXIT1.AUD
+	Report: fixit1.aud
 	ValidTargets: Repair
 	Projectile: Bullet
 		Speed: 1c682
@@ -258,24 +216,25 @@ Repair:
 		Spread: 213
 		Damage: -20
 		ValidTargets: Repair
+		DebugOverlayColor: 00FF00
 
 Crush:
 	Warhead@1Dam: SpreadDamage
 		Damage: 100
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
-		ImpactSound: squishy2.aud
+		ImpactSounds: squishy2.aud
 
 Demolish:
 	Warhead@1Dam: SpreadDamage
 		DamageTypes: DefaultDeath
 	Warhead@2Eff: CreateEffect
-		Explosion: building
-		ImpactSound: kaboom25.aud
+		Explosions: building
+		ImpactSounds: kaboom25.aud
 
 Claw:
 	ReloadDelay: 30
-	Range: 1c0
+	Range: 1c512
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
@@ -291,7 +250,7 @@ Claw:
 
 Mandible:
 	ReloadDelay: 10
-	Range: 1c0
+	Range: 1c512
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
@@ -322,6 +281,5 @@ MADTankDetonate:
 		SmudgeType: Crater
 		Size: 7,6
 	Warhead@3Eff: CreateEffect
-		Explosion: med_explosion
-		ImpactSound: mineblo1.aud
-
+		Explosions: med_explosion
+		ImpactSounds: mineblo1.aud

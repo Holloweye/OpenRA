@@ -1,14 +1,16 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System.Linq;
+using OpenRA.Mods.Common.HitShapes;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
@@ -17,12 +19,38 @@ namespace OpenRA.Mods.Common.Traits
 	{
 		[Desc("HitPoints")]
 		public readonly int HP = 0;
-
-		[Desc("Physical size of the unit used for damage calculations. Impacts within this radius apply full damage.")]
-		public readonly WDist Radius = new WDist(426);
-
 		[Desc("Trigger interfaces such as AnnounceOnKill?")]
 		public readonly bool NotifyAppliedDamage = true;
+
+		[FieldLoader.LoadUsing("LoadShape")]
+		public readonly IHitShape Shape;
+
+		static object LoadShape(MiniYaml yaml)
+		{
+			IHitShape ret;
+
+			var shapeNode = yaml.Nodes.Find(n => n.Key == "Shape");
+			var shape = shapeNode != null ? shapeNode.Value.Value : string.Empty;
+
+			if (!string.IsNullOrEmpty(shape))
+			{
+				ret = Game.CreateObject<IHitShape>(shape + "Shape");
+
+				try
+				{
+					FieldLoader.Load(ret, shapeNode.Value);
+				}
+				catch (YamlException e)
+				{
+					throw new YamlException("HitShape {0}: {1}".F(shape, e.Message));
+				}
+			}
+			else
+				ret = new CircleShape();
+
+			ret.Initialize();
+			return ret;
+		}
 
 		public virtual object Create(ActorInitializer init) { return new Health(init, this); }
 	}
@@ -91,7 +119,7 @@ namespace OpenRA.Mods.Common.Traits
 			};
 
 			foreach (var nd in self.TraitsImplementing<INotifyDamage>()
-				.Concat(self.Owner.PlayerActor.TraitsImplementing<INotifyDamage>()))
+					.Concat(self.Owner.PlayerActor.TraitsImplementing<INotifyDamage>()))
 				nd.Damaged(self, ai);
 
 			foreach (var nd in self.TraitsImplementing<INotifyDamageStateChanged>())
@@ -99,7 +127,7 @@ namespace OpenRA.Mods.Common.Traits
 
 			if (Info.NotifyAppliedDamage && repairer != null && repairer.IsInWorld && !repairer.IsDead)
 				foreach (var nd in repairer.TraitsImplementing<INotifyAppliedDamage>()
-					.Concat(repairer.Owner.PlayerActor.TraitsImplementing<INotifyAppliedDamage>()))
+						.Concat(repairer.Owner.PlayerActor.TraitsImplementing<INotifyAppliedDamage>()))
 					nd.AppliedDamage(repairer, self, ai);
 		}
 
@@ -133,7 +161,7 @@ namespace OpenRA.Mods.Common.Traits
 			};
 
 			foreach (var nd in self.TraitsImplementing<INotifyDamage>()
-					 .Concat(self.Owner.PlayerActor.TraitsImplementing<INotifyDamage>()))
+					.Concat(self.Owner.PlayerActor.TraitsImplementing<INotifyDamage>()))
 				nd.Damaged(self, ai);
 
 			if (DamageState != oldState)
@@ -142,7 +170,7 @@ namespace OpenRA.Mods.Common.Traits
 
 			if (Info.NotifyAppliedDamage && attacker != null && attacker.IsInWorld && !attacker.IsDead)
 				foreach (var nd in attacker.TraitsImplementing<INotifyAppliedDamage>()
-					 .Concat(attacker.Owner.PlayerActor.TraitsImplementing<INotifyAppliedDamage>()))
+						.Concat(attacker.Owner.PlayerActor.TraitsImplementing<INotifyAppliedDamage>()))
 					nd.AppliedDamage(attacker, self, ai);
 
 			if (hp == 0)

@@ -1,24 +1,23 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
 	[Desc("Adds a particle-based overlay.")]
-	public class WeatherOverlayInfo : ITraitInfo
+	public class WeatherOverlayInfo : ITraitInfo, ILobbyCustomRulesIgnore
 	{
 		[Desc("Factor for particle density. As higher as more particles will get spawned.")]
 		public readonly float ParticleDensityFactor = 0.0007625f;
@@ -35,11 +34,11 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("Hard or soft fading between the WindLevels.")]
 		public readonly bool InstantWindChanges = false;
 
-		[Desc("Particles are drawn in squares when enabled, else with lines.")]
+		[Desc("Particles are drawn in squares when enabled, otherwise with lines.")]
 		public readonly bool UseSquares = true;
 
-		[Desc("Works only with squares enabled. Size min. and max. value in pixels.")]
-		public readonly int[] PaticleSize = { 1, 3 };
+		[Desc("Size / width of the particle in px.")]
+		public readonly int[] ParticleSize = { 1, 3 };
 
 		[Desc("Scatters falling direction on the x-axis. Scatter min. and max. value in px/tick.")]
 		public readonly int[] ScatterDirection = { -1, 1 };
@@ -56,15 +55,15 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("The value range that can be swung to the left or right. SwingAmplitude min. and max. value in px/tick.")]
 		public readonly float[] SwingAmplitude = { 1.0f, 1.5f };
 
-		[Desc("The randomly selected ArgbColors for the particles. Use this order: a,r,g,b,  a,r,g,b, a,...")]
+		[Desc("The randomly selected rgb(a) hex colors for the particles. Use this order: rrggbb[aa], rrggbb[aa], ...")]
 		public readonly Color[] ParticleColors = {
-			Color.FromArgb(255, 236, 236, 236),
-			Color.FromArgb(255, 228, 228, 228),
-			Color.FromArgb(255, 208, 208, 208),
-			Color.FromArgb(255, 188, 188, 188)
+			Color.FromArgb(236, 236, 236),
+			Color.FromArgb(228, 228, 228),
+			Color.FromArgb(208, 208, 208),
+			Color.FromArgb(188, 188, 188)
 		};
 
-		[Desc("Works only with line enabled and can get used to fade out the tail of the line like a contrail.")]
+		[Desc("Works only with line enabled and can be used to fade out the tail of the line like a contrail.")]
 		public readonly byte LineTailAlphaValue = 200;
 
 		public object Create(ActorInitializer init) { return new WeatherOverlay(init.World, this); }
@@ -130,7 +129,7 @@ namespace OpenRA.Mods.Common.Traits
 						{
 							PosX = Game.CosmeticRandom.Next(Game.Renderer.Resolution.Width),
 							PosY = Game.CosmeticRandom.Next(rangeY),
-							Size = Game.CosmeticRandom.Next(info.PaticleSize[0], info.PaticleSize[1] + 1),
+							Size = Game.CosmeticRandom.Next(info.ParticleSize[0], info.ParticleSize[1] + 1),
 							DirectionScatterX = info.ScatterDirection[0] + Game.CosmeticRandom.Next(info.ScatterDirection[1] - info.ScatterDirection[0]),
 							Gravity = float2.Lerp(info.Gravity[0], info.Gravity[1], Game.CosmeticRandom.NextFloat()),
 							SwingOffset = float2.Lerp(info.SwingOffset[0], info.SwingOffset[1], Game.CosmeticRandom.NextFloat()),
@@ -290,11 +289,11 @@ namespace OpenRA.Mods.Common.Traits
 				var tempPos = new float2(item.PosX + topLeft.X, item.PosY + topLeft.Y);
 
 				if (info.UseSquares)
-					Game.Renderer.WorldQuadRenderer.FillRect(new RectangleF(tempPos.X, tempPos.Y, item.Size, item.Size), item.Color);
+					Game.Renderer.WorldRgbaColorRenderer.FillRect(tempPos, tempPos + new float2(item.Size, item.Size), item.Color);
 				else
 				{
 					var tempPosTail = new float2(topLeft.X + item.PosX - currentWindXOffset, item.PosY - (item.Gravity * 2 / 3) + topLeft.Y);
-					Game.Renderer.WorldLineRenderer.DrawLine(tempPos, tempPosTail, item.Color, item.TailColor);
+					Game.Renderer.WorldRgbaColorRenderer.DrawLine(tempPos, tempPosTail, item.Size, item.TailColor);
 				}
 			}
 		}

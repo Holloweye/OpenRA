@@ -6,6 +6,7 @@
 	ScriptTriggers:
 	UpgradeManager:
 	Huntable:
+	RenderDebugState:
 
 ^SpriteActor:
 	BodyOrientation:
@@ -33,8 +34,8 @@
 		Modifier: 90, 75
 	SelfHealing@ELITE:
 		Step: 2
-		Ticks: 100
-		HealIfBelow: 1
+		Delay: 100
+		HealIfBelow: 100
 		DamageCooldown: 125
 		UpgradeTypes: selfheal
 		UpgradeMinEnabledLevel: 1
@@ -43,7 +44,6 @@
 		Sequence: rank
 		Palette: ra
 		ReferencePoint: Bottom, Right
-		Offset: 2, 2
 		UpgradeTypes: rank
 		ZOffset: 256
 		UpgradeMinEnabledLevel: 1
@@ -59,20 +59,39 @@
 		UpgradeMinEnabledLevel: 1
 	TimedUpgradeBar@EMPDISABLE:
 		Upgrade: empdisable
-		Color: 255,255,255
-	WithDecoration@EMPDISABLE:
-		Image: emp
-		Sequence: idle
-		ReferencePoint: HCenter, VCenter
+		Color: FFFFFF
+	WithIdleOverlay@EMPDISABLE:
+		Sequence: emp-overlay
 		Palette: effect
 		UpgradeTypes: empdisable
 		ShowToEnemies: true
 		ZOffset: 512
 		UpgradeMinEnabledLevel: 1
+	PowerMultiplier@EMPDISABLE:
+		UpgradeTypes: empdisable
+		Modifier: 0
+
+^EmpDisableMobile:
+	Inherits: ^EmpDisable
+	Mobile:
+		UpgradeTypes: notmobile
+		UpgradeMaxEnabledLevel: 0
+
+^Cloakable:
+	Cloak@CLOAKGENERATOR:
+		UpgradeTypes: cloakgenerator
+		UpgradeMinEnabledLevel: 1
+		InitialDelay: 0
+		CloakDelay: 90
+		IsPlayerPalette: true
+		CloakSound: cloak5.aud
+		UncloakSound: cloak5.aud
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage
 
 ^BasicBuilding:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
+	Inherits@3: ^Cloakable
 	SelectionDecorations:
 		Palette: pips
 	Selectable:
@@ -98,15 +117,10 @@
 	Guardable:
 		Range: 3c0
 	Demolishable:
-	Cloak@CLOAKGENERATOR:
-		UpgradeTypes: cloakgenerator
-		UpgradeMinEnabledLevel: 1
-		InitialDelay: 0
-		CloakDelay: 90
-		IsPlayerPalette: true
 
 ^Building:
-	Inherits: ^BasicBuilding
+	Inherits@1: ^BasicBuilding
+	Inherits@2: ^EmpDisable
 	GivesBuildableArea:
 	Capturable:
 	RepairableBuilding:
@@ -173,6 +187,8 @@
 
 ^Wall:
 	Inherits@1: ^SpriteActor
+	Inherits@2: ^Cloakable
+	CombatDebugOverlay:
 	HiddenUnderShroud:
 	AppearsOnRadar:
 	Building:
@@ -201,12 +217,10 @@
 	Demolishable:
 	ScriptTriggers:
 	UpgradeManager:
-	Cloak@CLOAKGENERATOR:
-		UpgradeTypes: cloakgenerator
-		UpgradeMinEnabledLevel: 1
-		InitialDelay: 0
-		CloakDelay: 90
-		IsPlayerPalette: true
+	Health:
+		Shape: Circle
+			Radius: 363
+			VerticalTopOffset: 512
 
 ^BuildingPlug:
 	AlwaysVisible:
@@ -220,10 +234,13 @@
 	Inherits@1: ^GainsExperience
 	Inherits@2: ^ExistsInWorld
 	Inherits@3: ^SpriteActor
+	Inherits@4: ^Cloakable
 	DrawLineToTarget:
 	Health:
-		Radius: 128
 		HP: 50
+		Shape: Circle
+			Radius: 128
+			VerticalTopOffset: 512
 	Armor:
 		Type: None
 	Valued:
@@ -242,7 +259,9 @@
 			DirtRoad: 100
 			Rough: 80
 			Tiberium: 90
+				PathingCost: 90
 			BlueTiberium: 90
+				PathingCost: 90
 			Veins: 50
 	SelectionDecorations:
 		Palette: pips
@@ -255,22 +274,6 @@
 	QuantizeFacingsFromSequence:
 		Sequence: stand
 	WithInfantryBody:
-	WithDeathAnimation@normal:
-		DeathTypes:
-			BulletDeath: 1
-			SmallExplosionDeath: 2
-			HeadshotDeath: 3
-			FireDeath: 5
-	WithDeathAnimation@explosion:
-		DeathSequencePalette: effect
-		DeathPaletteIsPlayerPalette: False
-		DeathTypes:
-			ExplosionDeath: 4
-	WithDeathAnimation@energy:
-		DeathSequencePalette: ra
-		DeathPaletteIsPlayerPalette: False
-		DeathTypes:
-			EnergyDeath: 6
 	AutoTarget:
 	AttackMove:
 		Voice: Move
@@ -279,36 +282,77 @@
 		Voice: Move
 	HiddenUnderFog:
 	ActorLostNotification:
-	Crushable:
-		CrushSound: squish6.aud
 	PoisonedByTiberium:
-	SpawnActorOnDeath:
-		Actor: vissml
-		Probability: 10
-		OwnerType: InternalName
-		InternalOwner: Creeps
-		DeathType: EnergyDeath # TODO: FIX ME! (Tiberium currently uses the wrong damage type!)
-		RequiresLobbyCreeps: true
 	Guard:
 		Voice: Move
 	Guardable:
+	SelfHealing@HOSPITAL:
+		Step: 5
+		Delay: 100
+		HealIfBelow: 100
+		DamageCooldown: 125
+		UpgradeTypes: hospitalheal
+		UpgradeMinEnabledLevel: 1
+	GlobalUpgradable@HOSPITAL:
+		Upgrades: hospitalheal
+		Prerequisites: cahosp
+	WithDecoration@REDCROSS:
+		Image: pips
+		Sequence: medic
+		Palette: pips
+		ReferencePoint: Bottom, Right
+		UpgradeTypes: hospitalheal
+		UpgradeMinEnabledLevel: 1
+
+^RegularInfantryDeath:
+	WithDeathAnimation@normal:
+		DeathSequence: die-
+		DeathTypes:
+			BulletDeath: twirling
+			SmallExplosionDeath: flying
+	WithDeathAnimation@explosion:
+		DeathSequence: die-
+		DeathSequencePalette: effect
+		DeathPaletteIsPlayerPalette: False
+		DeathTypes:
+			ExplosionDeath: exploding
+	WithDeathAnimation@energy:
+		DeathSequence: die-
+		DeathSequencePalette: ra
+		DeathPaletteIsPlayerPalette: False
+		DeathTypes:
+			EnergyDeath: melting
+	WithDeathAnimation:
+		CrushedSequence: die-crushed
+		CrushedSequencePalette: player
+		CrushedPaletteIsPlayerPalette: true
 	DeathSounds@NORMAL:
 		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath
+	DeathSounds@EXPLOSION:
+		Voice: Explode
+		DeathTypes: ExplosionDeath
 	DeathSounds@BURNED:
 		Voice: Burned
 		DeathTypes: FireDeath
 	DeathSounds@ZAPPED:
 		Voice: Zapped
 		DeathTypes: EnergyDeath
-	Cloak@CLOAKGENERATOR:
-		UpgradeTypes: cloakgenerator
-		UpgradeMinEnabledLevel: 1
-		InitialDelay: 0
-		CloakDelay: 90
-		IsPlayerPalette: true
+	Crushable:
+		CrushSound: squish6.aud
+	SpawnActorOnDeath:
+		Actor: visc_sml
+		Probability: 10
+		OwnerType: InternalName
+		InternalOwner: Creeps
+		DeathType: TriggerVisceroid
+		RequiresLobbyCreeps: true
+	SpawnActorOnDeath@FLAMEGUY:
+		Actor: FLAMEGUY
+		DeathType: FireDeath
 
 ^Soldier:
-	Inherits: ^Infantry
+	Inherits@1: ^Infantry
+	Inherits@2: ^RegularInfantryDeath
 	RevealsShroud:
 		Range: 4c0
 	MustBeDestroyed:
@@ -322,40 +366,52 @@
 		DamageTriggers: TriggerProne
 	WithInfantryBody:
 		IdleSequences: idle1,idle2
-	WithDeathAnimation:
-		CrushedSequence: die-crushed
-		CrushedSequencePalette: player
-		CrushedPaletteIsPlayerPalette: true
 
 ^Cyborg:
-	Inherits: ^Infantry
+	Inherits@1: ^Infantry
+	Inherits@2: ^EmpDisableMobile
+	ExplosionOnDamageTransition:
+		Weapon: CyborgExplode
+		DamageState: Critical
+		TriggerOnlyOnce: true
+	Explodes:
+		Weapon: CyborgExplode
+		EmptyWeapon: CyborgExplode
+	DeathSounds:
 	RevealsShroud:
 		Range: 4c0
 	MustBeDestroyed:
-	-Crushable:
 	PoisonedByTiberium:
 		Weapon: TiberiumHeal
 	WithPermanentInjury:
 	WithInfantryBody:
-		AttackSequence: shoot
+		AttackSequence: attack
 		IdleSequences: idle1,idle2
+	UpgradeOnDamage@CRITICAL:
+		Upgrades: criticalspeed
+		ValidDamageStates: Critical
+		GrantPermanently: true
+	SpeedMultiplier@CRITICAL:
+		UpgradeTypes: criticalspeed
+		Modifier: 50
 
 ^CivilianInfantry:
-	Inherits: ^Infantry
+	Inherits@1: ^Infantry
+	Inherits@2: ^RegularInfantryDeath
 	Voiced:
 		VoiceSet: Civilian
 	Tooltip:
 		Name: Civilian
 	ScaredyCat:
-	WithDeathAnimation:
-		CrushedSequence: die-crushed
-		CrushedSequencePalette: player
-		CrushedPaletteIsPlayerPalette: true
+	Wanders:
+		MinMoveDelay: 150
+		MaxMoveDelay: 750
 
 ^Vehicle:
 	Inherits@1: ^GainsExperience
 	Inherits@2: ^ExistsInWorld
-	Inherits@3: ^EmpDisable
+	Inherits@3: ^EmpDisableMobile
+	Inherits@4: ^Cloakable
 	DrawLineToTarget:
 	Mobile:
 		Crushes: crate
@@ -368,7 +424,8 @@
 			Tiberium: 50
 			BlueTiberium: 50
 			Veins: 50
-		ROT: 5
+				PathingCost: 90
+		TurnSpeed: 5
 		Voice: Move
 	Selectable:
 		Bounds: 40,24
@@ -390,7 +447,7 @@
 	ActorLostNotification:
 	Capturable:
 		Type: Vehicle
-		CaptureThreshold: 1
+		CaptureThreshold: 100
 		CancelActivity: True
 	Guard:
 		Voice: Move
@@ -400,18 +457,27 @@
 	Explodes:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
-	Cloak@CLOAKGENERATOR:
-		UpgradeTypes: cloakgenerator
-		UpgradeMinEnabledLevel: 1
-		InitialDelay: 0
-		CloakDelay: 90
-		IsPlayerPalette: true
 	MustBeDestroyed:
 	RenderSprites:
 	ThrowsShrapnel:
 		Weapons: SmallDebris
 		Pieces: 3, 7
 		Range: 2c0, 5c0
+	PoisonedByTiberium:
+		Weapon: Veins
+		Resources: Veins
+	UpgradeOnDamage@DAMAGED:
+		Upgrades: damagedspeed
+		ValidDamageStates: Heavy
+	UpgradeOnDamage@CRITICAL:
+		Upgrades: criticalspeed
+		ValidDamageStates: Critical
+	SpeedMultiplier@DAMAGED:
+		UpgradeTypes: damagedspeed
+		Modifier: 80
+	SpeedMultiplier@CRITICAL:
+		UpgradeTypes: criticalspeed
+		Modifier: 60
 
 ^Tank:
 	Inherits: ^Vehicle
@@ -443,15 +509,20 @@
 
 ^CivilianVoxelVehicle:
 	Inherits: ^VoxelVehicle
-	-RenderSprites:
 	-MustBeDestroyed:
+
+^CivilianVoxelCrusher:
+	Inherits: ^CivilianVoxelVehicle
+	Mobile:
+		Crushes: wall, crate, infantry
 
 ^Aircraft:
 	Inherits@1: ^GainsExperience
 	Inherits@2: ^ExistsInWorld
+	Inherits@3: ^Cloakable
 	DrawLineToTarget:
 	AppearsOnRadar:
-		UseLocation: yes
+		UseLocation: true
 	Targetable@GROUND:
 		TargetTypes: Ground
 		UpgradeTypes: airborne
@@ -463,6 +534,14 @@
 	Selectable:
 	SelectionDecorations:
 		Palette: pips
+	Aircraft:
+		AirborneUpgrades: airborne
+		CruisingUpgrades: cruising
+		RepairBuildings: gadept
+		RearmBuildings: gahpad, nahpad
+		LandWhenIdle: false
+		Voice: Move
+		IdealSeparation: 853
 	Voiced:
 		VoiceSet: Heli
 	HiddenUnderFog:
@@ -483,36 +562,56 @@
 ^Helicopter:
 	Inherits: ^Aircraft
 	Aircraft:
-		RepairBuildings: gadept
-		RearmBuildings:
-		LandWhenIdle: no
 		CruiseAltitude: 2048
-		Voice: Move
-		AirborneUpgrades: airborne
 		CanHover: True
+	Hovers@CRUISING:
+		UpgradeTypes: cruising
+		UpgradeMinEnabledLevel: 1
 
 ^Plane:
 	Inherits: ^Aircraft
 	Aircraft:
-		RepairBuildings: gadept
-		RearmBuildings: gahpad, nahpad
-		LandWhenIdle: no
 		CruiseAltitude: 2560
-		Voice: Move
-		AirborneUpgrades: airborne
 	ReturnOnIdle:
 
-^Viceroid:
+^AircraftHusk:
+	RenderVoxels:
+	RenderSprites:
+	WithVoxelBody:
+	BodyOrientation:
+		QuantizedFacings: 0
+		CameraPitch: 90
+	Aircraft:
+		AirborneUpgrades: airborne
+		CruisingUpgrades: cruising
+	Health:
+		HP: 280
+	Armor:
+		Type: Heavy
+	HiddenUnderFog:
+		Type: CenterPosition
+	AutoTargetIgnore:
+	ScriptTriggers:
+	Tooltip:
+		GenericName: Destroyed Aircraft
+	FallsToEarth:
+		Spins: true
+		Moves: true
+		Velocity: 86
+
+^Visceroid:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
 	DrawLineToTarget:
 	Health:
-		Radius: 256
+		Shape: Circle
+			Radius: 256
+			VerticalTopOffset: 512
 	Armor:
 		Type: Light
 	Mobile:
 		Speed: 113
-		ROT: 16
+		TurnSpeed: 16
 		Crushes: crate
 		SharesCell: no
 		TerrainSpeeds:
@@ -551,11 +650,10 @@
 	RadarColorFromTerrain:
 		Terrain: Tiberium
 	FrozenUnderFog:
-		StartsRevealed: true
 	SeedsResource:
 		ResourceType: Tiberium
 		Interval: 55
-	WithActiveAnimation:
+	WithIdleAnimation:
 
 ^Tree:
 	Inherits@1: ^SpriteActor
@@ -650,17 +748,24 @@
 	ActorLostNotification:
 
 ^Train:
-	Inherits@1: ^EmpDisable
+	Inherits@1: ^EmpDisableMobile
 	Inherits@2: ^ExistsInWorld
+	Inherits@3: ^Cloakable
 	RenderVoxels:
+	RenderSprites:
 	WithVoxelBody:
 	DrawLineToTarget:
 	Mobile:
 		TerrainSpeeds:
 			Rail: 100
-		ROT: 5
+		Crushes: wall, crate, infantry
+		TurnSpeed: 5
 		Voice: Move
 		Speed: 113
+	Cargo:
+		Types: Infantry
+		UnloadVoice: Unload
+		LoadingUpgrades: notmobile
 	Health:
 		HP: 100
 	Armor:
@@ -685,12 +790,6 @@
 	Explodes:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
-	Cloak@CLOAKGENERATOR:
-		UpgradeTypes: cloakgenerator
-		UpgradeMinEnabledLevel: 1
-		InitialDelay: 0
-		CloakDelay: 90
-		IsPlayerPalette: true
 	ThrowsShrapnel:
 		Weapons: SmallDebris
 		Pieces: 3, 7
@@ -709,8 +808,57 @@
 
 ^Railway:
 	Inherits: ^TerrainOverlay
+	EditorOnlyTooltip:
+		Name: Railway
+	AutoSelectionSize:
 
 ^Tunnel:
 	Inherits: ^TerrainOverlay
 	CustomSelectionSize:
 		CustomBounds: 220,220
+
+^Gate:
+	Inherits: ^Building
+	Valued:
+		Cost: 250
+	Health:
+		HP: 350
+	Armor:
+		Type: Heavy
+	LineBuildNode:
+		Types: wall, gate
+	-Building:
+	-Capturable:
+	-GivesBuildableArea:
+	-MustBeDestroyed:
+	-WithSpriteBody:
+	WithGateSpriteBody:
+	Tooltip:
+		Description: Automated barrier that opens for allied units.
+	Gate:
+		Adjacent: 4
+		BuildSounds: place2.aud
+		OpeningSound: gateup1.aud
+		ClosingSound: gatedwn1.aud
+		TerrainTypes: Clear, Rough, Road, DirtRoad, Green, Sand, Pavement
+		BlocksProjectilesHeight: 640
+
+^Gate_A:
+	Inherits: ^Gate
+	Gate:
+		Dimensions: 3,1
+		Footprint: xxx
+	WithGateSpriteBody:
+		WallConnections: -1,0, 3,0
+	LineBuildNode:
+		Connections: -1,0, 1,0
+
+^Gate_B:
+	Inherits: ^Gate
+	Gate:
+		Dimensions: 1,3
+		Footprint: x x x
+	WithGateSpriteBody:
+		WallConnections: 0,-1, 0,3
+	LineBuildNode:
+		Connections: 0,-1, 0,1

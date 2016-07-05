@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -12,8 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using OpenRA.Traits;
 
 namespace OpenRA.Graphics
 {
@@ -33,7 +32,7 @@ namespace OpenRA.Graphics
 		readonly WorldRenderer worldRenderer;
 		readonly Map map;
 
-		float paletteIndex;
+		readonly PaletteReference palette;
 
 		public TerrainSpriteLayer(World world, WorldRenderer wr, Sheet sheet, BlendMode blendMode, PaletteReference palette, bool restrictToBounds)
 		{
@@ -41,40 +40,41 @@ namespace OpenRA.Graphics
 			this.restrictToBounds = restrictToBounds;
 			Sheet = sheet;
 			BlendMode = blendMode;
-			paletteIndex = palette.TextureIndex;
+			this.palette = palette;
 
 			map = world.Map;
-			rowStride = 4 * map.MapSize.X;
+			rowStride = 6 * map.MapSize.X;
 
 			vertices = new Vertex[rowStride * map.MapSize.Y];
 			vertexBuffer = Game.Renderer.Device.CreateVertexBuffer(vertices.Length);
 			emptySprite = new Sprite(sheet, Rectangle.Empty, TextureChannel.Alpha);
 
-			wr.PaletteInvalidated += () =>
+			wr.PaletteInvalidated += UpdatePaletteIndices;
+		}
+
+		void UpdatePaletteIndices()
+		{
+			// Everything in the layer uses the same palette,
+			// so we can fix the indices in one pass
+			for (var i = 0; i < vertices.Length; i++)
 			{
-				paletteIndex = palette.TextureIndex;
+				var v = vertices[i];
+				vertices[i] = new Vertex(v.X, v.Y, v.Z, v.S, v.T, v.U, v.V, palette.TextureIndex, v.C);
+			}
 
-				// Everything in the layer uses the same palette,
-				// so we can fix the indices in one pass
-				for (var i = 0; i < vertices.Length; i++)
-				{
-					var v = vertices[i];
-					vertices[i] = new Vertex(v.X, v.Y, v.Z, v.U, v.V, paletteIndex, v.C);
-				}
-
-				for (var row = 0; row < map.MapSize.Y; row++)
-					dirtyRows.Add(row);
-			};
+			for (var row = 0; row < map.MapSize.Y; row++)
+				dirtyRows.Add(row);
 		}
 
 		public void Update(CPos cell, Sprite sprite)
 		{
-			var pos = sprite == null ? float2.Zero :
-				worldRenderer.ScreenPosition(map.CenterOfCell(cell)) + sprite.Offset - 0.5f * sprite.Size;
-			Update(cell.ToMPos(map.Grid.Type), sprite, pos);
+			var xyz = sprite == null ? float3.Zero :
+				worldRenderer.Screen3DPosition(map.CenterOfCell(cell)) + sprite.Offset - 0.5f * sprite.Size;
+
+			Update(cell.ToMPos(map.Grid.Type), sprite, xyz);
 		}
 
-		public void Update(MPos uv, Sprite sprite, float2 pos)
+		public void Update(MPos uv, Sprite sprite, float3 pos)
 		{
 			if (sprite != null)
 			{
@@ -87,8 +87,8 @@ namespace OpenRA.Graphics
 			else
 				sprite = emptySprite;
 
-			var offset = rowStride * uv.V + 4 * uv.U;
-			Util.FastCreateQuad(vertices, pos, sprite, paletteIndex, offset, sprite.Size);
+			var offset = rowStride * uv.V + 6 * uv.U;
+			Util.FastCreateQuad(vertices, pos, sprite, palette.TextureIndex, offset, sprite.Size);
 
 			dirtyRows.Add(uv.V);
 		}
@@ -123,13 +123,14 @@ namespace OpenRA.Graphics
 
 			Game.Renderer.WorldSpriteRenderer.DrawVertexBuffer(
 				vertexBuffer, rowStride * firstRow, rowStride * (lastRow - firstRow),
-				PrimitiveType.QuadList, Sheet, BlendMode);
+				PrimitiveType.TriangleList, Sheet, BlendMode);
 
 			Game.Renderer.Flush();
 		}
 
 		public void Dispose()
 		{
+			worldRenderer.PaletteInvalidated -= UpdatePaletteIndices;
 			vertexBuffer.Dispose();
 		}
 	}

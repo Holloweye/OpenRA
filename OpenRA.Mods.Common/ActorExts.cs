@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -23,7 +24,7 @@ namespace OpenRA.Mods.Common
 			if (self.IsDead)
 				return false;
 
-			if (!self.Info.HasTraitInfo<IOccupySpaceInfo>())
+			if (self.OccupiesSpace == null)
 				return false;
 
 			if (!self.IsInWorld)
@@ -110,12 +111,12 @@ namespace OpenRA.Mods.Common
 
 		public static void NotifyBlocker(this Actor self, CPos position)
 		{
-			NotifyBlocker(self, self.World.ActorMap.GetUnitsAt(position));
+			NotifyBlocker(self, self.World.ActorMap.GetActorsAt(position));
 		}
 
 		public static void NotifyBlocker(this Actor self, IEnumerable<CPos> positions)
 		{
-			NotifyBlocker(self, positions.SelectMany(p => self.World.ActorMap.GetUnitsAt(p)));
+			NotifyBlocker(self, positions.SelectMany(p => self.World.ActorMap.GetActorsAt(p)));
 		}
 
 		public static bool CanHarvestAt(this Actor self, CPos pos, ResourceLayer resLayer, HarvesterInfo harvInfo,

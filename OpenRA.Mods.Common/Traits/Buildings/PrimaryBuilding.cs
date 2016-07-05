@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -25,16 +26,28 @@ namespace OpenRA.Mods.Common.Traits
 	}
 
 	[Desc("Used together with ClassicProductionQueue.")]
-	public class PrimaryBuildingInfo : TraitInfo<PrimaryBuilding> { }
-
-	public class PrimaryBuilding : IIssueOrder, IResolveOrder, ITags
+	public class PrimaryBuildingInfo : ITraitInfo, Requires<UpgradeManagerInfo>
 	{
-		bool isPrimary = false;
-		public bool IsPrimary { get { return isPrimary; } }
+		[UpgradeGrantedReference, Desc("The upgrades to grant while the primary building.")]
+		public readonly string[] Upgrades = { "primary" };
 
-		public IEnumerable<TagType> GetTags()
+		[Desc("The speech notification to play when selecting a primary building.")]
+		public readonly string SelectionNotification = "PrimaryBuildingSelected";
+
+		public object Create(ActorInitializer init) { return new PrimaryBuilding(init.Self, this); }
+	}
+
+	public class PrimaryBuilding : IIssueOrder, IResolveOrder
+	{
+		readonly PrimaryBuildingInfo info;
+		readonly UpgradeManager manager;
+
+		public bool IsPrimary { get; private set; }
+
+		public PrimaryBuilding(Actor self, PrimaryBuildingInfo info)
 		{
-			yield return isPrimary ? TagType.Primary : TagType.None;
+			this.info = info;
+			manager = self.Trait<UpgradeManager>();
 		}
 
 		public IEnumerable<IOrderTargeter> Orders
@@ -53,14 +66,16 @@ namespace OpenRA.Mods.Common.Traits
 		public void ResolveOrder(Actor self, Order order)
 		{
 			if (order.OrderString == "PrimaryProducer")
-				SetPrimaryProducer(self, !isPrimary);
+				SetPrimaryProducer(self, !IsPrimary);
 		}
 
 		public void SetPrimaryProducer(Actor self, bool state)
 		{
 			if (state == false)
 			{
-				isPrimary = false;
+				IsPrimary = false;
+				foreach (var up in info.Upgrades)
+					manager.RevokeUpgrade(self, up, this);
 				return;
 			}
 
@@ -78,9 +93,11 @@ namespace OpenRA.Mods.Common.Traits
 					b.Trait.SetPrimaryProducer(b.Actor, false);
 			}
 
-			isPrimary = true;
+			IsPrimary = true;
+			foreach (var up in info.Upgrades)
+				manager.GrantUpgrade(self, up, this);
 
-			Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", "PrimaryBuildingSelected", self.Owner.Faction.InternalName);
+			Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.SelectionNotification, self.Owner.Faction.InternalName);
 		}
 	}
 }

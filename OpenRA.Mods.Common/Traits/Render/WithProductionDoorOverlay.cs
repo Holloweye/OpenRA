@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -14,7 +15,7 @@ using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.Common.Traits
+namespace OpenRA.Mods.Common.Traits.Render
 {
 	[Desc("Play an animation when a unit exits or blocks the exit after production finished.")]
 	class WithProductionDoorOverlayInfo : ITraitInfo, IRenderActorPreviewSpritesInfo, Requires<RenderSpritesInfo>, Requires<BodyOrientationInfo>, Requires<BuildingInfo>
@@ -30,7 +31,7 @@ namespace OpenRA.Mods.Common.Traits
 
 			var bi = init.Actor.TraitInfo<BuildingInfo>();
 			var offset = FootprintUtils.CenterOffset(init.World, bi).Y + 512; // Additional 512 units move from center -> top of cell
-			yield return new SpriteActorPreview(anim, WVec.Zero, offset, p, rs.Scale);
+			yield return new SpriteActorPreview(anim, () => WVec.Zero, () => offset, p, rs.Scale);
 		}
 	}
 
@@ -63,7 +64,7 @@ namespace OpenRA.Mods.Common.Traits
 
 		public void Tick(Actor self)
 		{
-			if (desiredFrame > 0 && !self.World.ActorMap.GetUnitsAt(openExit).Any(a => a != self))
+			if (desiredFrame > 0 && !self.World.ActorMap.GetActorsAt(openExit).Any(a => a != self))
 				desiredFrame = 0;
 		}
 

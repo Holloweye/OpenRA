@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -18,7 +19,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
-	public abstract class AttackBaseInfo : UpgradableTraitInfo, ITraitInfo
+	public abstract class AttackBaseInfo : UpgradableTraitInfo
 	{
 		[Desc("Armament names")]
 		public readonly string[] Armaments = { "primary", "secondary" };
@@ -70,7 +71,10 @@ namespace OpenRA.Mods.Common.Traits
 
 		protected virtual bool CanAttack(Actor self, Target target)
 		{
-			if (!self.IsInWorld || IsTraitDisabled)
+			if (!self.IsInWorld || IsTraitDisabled || self.IsDisabled())
+				return false;
+
+			if (!target.IsValidFor(self))
 				return false;
 
 			if (!HasAnyValidWeapons(target))
@@ -80,13 +84,7 @@ namespace OpenRA.Mods.Common.Traits
 			if (building.Value != null && !building.Value.BuildComplete)
 				return false;
 
-			if (!target.IsValidFor(self))
-				return false;
-
 			if (Armaments.All(a => a.IsReloading))
-				return false;
-
-			if (self.IsDisabled())
 				return false;
 
 			return true;
@@ -147,6 +145,9 @@ namespace OpenRA.Mods.Common.Traits
 				self.SetTargetLine(target, Color.Red);
 				AttackTarget(target, order.Queued, true, forceAttack);
 			}
+
+			if (order.OrderString == "Stop")
+				self.CancelActivity();
 		}
 
 		static Target TargetFromOrder(Actor self, Order order)
@@ -186,7 +187,12 @@ namespace OpenRA.Mods.Common.Traits
 			if (Info.AttackRequiresEnteringCell && !positionable.Value.CanEnterCell(t.Actor.Location, null, false))
 				return false;
 
-			return Armaments.Any(a => a.Weapon.IsValidAgainst(t, self.World, self));
+			// PERF: Avoid LINQ.
+			foreach (var armament in Armaments)
+				if (!armament.OutOfAmmo && armament.Weapon.IsValidAgainst(t, self.World, self))
+					return true;
+
+			return false;
 		}
 
 		public WDist GetMinimumRange()
@@ -194,9 +200,21 @@ namespace OpenRA.Mods.Common.Traits
 			if (IsTraitDisabled)
 				return WDist.Zero;
 
-			var min = Armaments.Where(a => !a.IsTraitDisabled)
-				.Select(a => a.Weapon.MinRange)
-				.Append(WDist.MaxValue).Min();
+			// PERF: Avoid LINQ.
+			var min = WDist.MaxValue;
+			foreach (var armament in Armaments)
+			{
+				if (armament.IsTraitDisabled)
+					continue;
+
+				if (armament.OutOfAmmo)
+					continue;
+
+				var range = armament.Weapon.MinRange;
+				if (min > range)
+					min = range;
+			}
+
 			return min != WDist.MaxValue ? min : WDist.Zero;
 		}
 
@@ -205,32 +223,109 @@ namespace OpenRA.Mods.Common.Traits
 			if (IsTraitDisabled)
 				return WDist.Zero;
 
-			return Armaments.Where(a => !a.IsTraitDisabled)
-				.Select(a => a.MaxRange())
-				.Append(WDist.Zero).Max();
+			// PERF: Avoid LINQ.
+			var max = WDist.Zero;
+			foreach (var armament in Armaments)
+			{
+				if (armament.IsTraitDisabled)
+					continue;
+
+				if (armament.OutOfAmmo)
+					continue;
+
+				var range = armament.MaxRange();
+				if (max < range)
+					max = range;
+			}
+
+			return max;
+		}
+
+		public WDist GetMinimumRangeVersusTarget(Target target)
+		{
+			if (IsTraitDisabled)
+				return WDist.Zero;
+
+			// PERF: Avoid LINQ.
+			var min = WDist.MaxValue;
+			foreach (var armament in Armaments)
+			{
+				if (armament.IsTraitDisabled)
+					continue;
+
+				if (armament.OutOfAmmo)
+					continue;
+
+				if (!armament.Weapon.IsValidAgainst(target, self.World, self))
+					continue;
+
+				var range = armament.Weapon.MinRange;
+				if (min > range)
+					min = range;
+			}
+
+			return min != WDist.MaxValue ? min : WDist.Zero;
+		}
+
+		public WDist GetMaximumRangeVersusTarget(Target target)
+		{
+			if (IsTraitDisabled)
+				return WDist.Zero;
+
+			// PERF: Avoid LINQ.
+			var max = WDist.Zero;
+			foreach (var armament in Armaments)
+			{
+				if (armament.IsTraitDisabled)
+					continue;
+
+				if (armament.OutOfAmmo)
+					continue;
+
+				if (!armament.Weapon.IsValidAgainst(target, self.World, self))
+					continue;
+
+				var range = armament.MaxRange();
+				if (max < range)
+					max = range;
+			}
+
+			return max;
 		}
 
 		// Enumerates all armaments, that this actor possesses, that can be used against Target t
-		public IEnumerable<Armament> ChooseArmamentsForTarget(Target t, bool forceAttack, bool onlyEnabled = true)
+		public IEnumerable<Armament> ChooseArmamentsForTarget(Target t, bool forceAttack)
 		{
 			// If force-fire is not used, and the target requires force-firing or the target is
 			// terrain or invalid, no armaments can be used
-			if (!forceAttack && (t.RequiresForceFire || t.Type == TargetType.Terrain || t.Type == TargetType.Invalid))
+			if (!forceAttack && (t.Type == TargetType.Terrain || t.Type == TargetType.Invalid || t.RequiresForceFire))
 				return Enumerable.Empty<Armament>();
 
 			// Get target's owner; in case of terrain or invalid target there will be no problems
 			// with owner == null since forceFire will have to be true in this part of the method
 			// (short-circuiting in the logical expression below)
-			var owner = null as Player;
+			Player owner = null;
 			if (t.Type == TargetType.FrozenActor)
+			{
 				owner = t.FrozenActor.Owner;
+			}
 			else if (t.Type == TargetType.Actor)
-				owner = t.Actor.Owner;
+			{
+				owner = t.Actor.EffectiveOwner != null && t.Actor.EffectiveOwner.Owner != null
+					? t.Actor.EffectiveOwner.Owner
+					: t.Actor.Owner;
 
-			return Armaments.Where(a => (!a.IsTraitDisabled || !onlyEnabled) &&
-				a.Weapon.IsValidAgainst(t, self.World, self) &&
-				(owner == null || (forceAttack ? a.Info.ForceTargetStances : a.Info.TargetStances)
-					.HasStance(self.Owner.Stances[owner])));
+				// Special cases for spies so we don't kill friendly disguised spies
+				// and enable dogs to kill enemy disguised spies.
+				if (self.Owner.Stances[t.Actor.Owner] == Stance.Ally || self.Info.HasTraitInfo<IgnoresDisguiseInfo>())
+					owner = t.Actor.Owner;
+			}
+
+			return Armaments.Where(a =>
+				!a.IsTraitDisabled
+				&& (owner == null || (forceAttack ? a.Info.ForceTargetStances : a.Info.TargetStances)
+					.HasStance(self.Owner.Stances[owner]))
+				&& a.Weapon.IsValidAgainst(t, self.World, self));
 		}
 
 		public void AttackTarget(Target target, bool queued, bool allowMove, bool forceAttack = false)
@@ -250,7 +345,18 @@ namespace OpenRA.Mods.Common.Traits
 		public bool IsReachableTarget(Target target, bool allowMove)
 		{
 			return HasAnyValidWeapons(target)
-				&& (target.IsInRange(self.CenterPosition, GetMaximumRange()) || (allowMove && self.Info.HasTraitInfo<IMoveInfo>()));
+				&& (target.IsInRange(self.CenterPosition, GetMaximumRangeVersusTarget(target)) || (allowMove && self.Info.HasTraitInfo<IMoveInfo>()));
+		}
+
+		public Stance UnforcedAttackTargetStances()
+		{
+			// PERF: Avoid LINQ.
+			var stances = Stance.None;
+			foreach (var armament in Armaments)
+				if (!armament.IsTraitDisabled)
+					stances |= armament.Info.TargetStances;
+
+			return stances;
 		}
 
 		class AttackOrderTargeter : IOrderTargeter
@@ -260,25 +366,40 @@ namespace OpenRA.Mods.Common.Traits
 			public AttackOrderTargeter(AttackBase ab, int priority, bool negativeDamage)
 			{
 				this.ab = ab;
-				this.OrderID = ab.attackOrderName;
-				this.OrderPriority = priority;
+				OrderID = ab.attackOrderName;
+				OrderPriority = priority;
 			}
 
 			public string OrderID { get; private set; }
 			public int OrderPriority { get; private set; }
-			public bool OverrideSelection { get { return true; } }
+			public bool TargetOverridesSelection(TargetModifiers modifiers) { return true; }
 
-			bool CanTargetActor(Actor self, Target target, TargetModifiers modifiers, ref string cursor)
+			bool CanTargetActor(Actor self, Target target, ref TargetModifiers modifiers, ref string cursor)
 			{
 				IsQueued = modifiers.HasModifier(TargetModifiers.ForceQueue);
 
 				if (modifiers.HasModifier(TargetModifiers.ForceMove))
 					return false;
 
+				// Disguised actors are revealed by the attack cursor
+				// HACK: works around limitations in the targeting code that force the
+				// targeting and attacking logic (which should be logically separate)
+				// to use the same code
+				if (target.Type == TargetType.Actor && target.Actor.EffectiveOwner != null &&
+						target.Actor.EffectiveOwner.Disguised && self.Owner.Stances[target.Actor.Owner] == Stance.Enemy)
+					modifiers |= TargetModifiers.ForceAttack;
+
 				var forceAttack = modifiers.HasModifier(TargetModifiers.ForceAttack);
-				var a = ab.ChooseArmamentsForTarget(target, forceAttack).FirstOrDefault();
-				if (a == null)
+				var armaments = ab.ChooseArmamentsForTarget(target, forceAttack);
+				if (!armaments.Any())
 					return false;
+
+				// Use valid armament with highest range out of those that have ammo
+				// If all are out of ammo, just use valid armament with highest range
+				armaments = armaments.OrderByDescending(x => x.MaxRange());
+				var a = armaments.FirstOrDefault(x => !x.OutOfAmmo);
+				if (a == null)
+					a = armaments.First();
 
 				cursor = !target.IsInRange(self.CenterPosition, a.MaxRange())
 					? ab.Info.OutsideRangeCursor ?? a.Info.OutsideRangeCursor
@@ -303,9 +424,16 @@ namespace OpenRA.Mods.Common.Traits
 					return false;
 
 				var target = Target.FromCell(self.World, location);
-				var a = ab.ChooseArmamentsForTarget(target, true).FirstOrDefault();
-				if (a == null)
+				var armaments = ab.ChooseArmamentsForTarget(target, true);
+				if (!armaments.Any())
 					return false;
+
+				// Use valid armament with highest range out of those that have ammo
+				// If all are out of ammo, just use valid armament with highest range
+				armaments = armaments.OrderByDescending(x => x.MaxRange());
+				var a = armaments.FirstOrDefault(x => !x.OutOfAmmo);
+				if (a == null)
+					a = armaments.First();
 
 				cursor = !target.IsInRange(self.CenterPosition, a.MaxRange())
 					? ab.Info.OutsideRangeCursor ?? a.Info.OutsideRangeCursor
@@ -315,13 +443,13 @@ namespace OpenRA.Mods.Common.Traits
 				return true;
 			}
 
-			public bool CanTarget(Actor self, Target target, List<Actor> othersAtTarget, TargetModifiers modifiers, ref string cursor)
+			public bool CanTarget(Actor self, Target target, List<Actor> othersAtTarget, ref TargetModifiers modifiers, ref string cursor)
 			{
 				switch (target.Type)
 				{
 					case TargetType.Actor:
 					case TargetType.FrozenActor:
-						return CanTargetActor(self, target, modifiers, ref cursor);
+						return CanTargetActor(self, target, ref modifiers, ref cursor);
 					case TargetType.Terrain:
 						return CanTargetLocation(self, self.World.Map.CellContaining(target.CenterPosition), othersAtTarget, modifiers, ref cursor);
 					default:

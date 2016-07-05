@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -20,11 +21,13 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets.Logic
 {
-	public class AssetBrowserLogic
+	public class AssetBrowserLogic : ChromeLogic
 	{
-		static readonly string[] AllowedExtensions = { ".shp", ".r8", "tmp", ".tem", ".des", ".sno", ".int", ".jun", ".vqa" };
+		readonly string[] allowedExtensions;
+		readonly IEnumerable<IReadOnlyPackage> acceptablePackages;
 
 		readonly World world;
+		readonly ModData modData;
 
 		Widget panel;
 
@@ -33,7 +36,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		ScrollPanelWidget assetList;
 		ScrollItemWidget template;
 
-		IFolder assetSource = null;
+		IReadOnlyPackage assetSource = null;
 		List<string> availableShps = new List<string>();
 		bool animateFrames = false;
 
@@ -45,12 +48,11 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		int currentFrame;
 
 		[ObjectCreator.UseCtor]
-		public AssetBrowserLogic(Widget widget, Action onExit, World world)
+		public AssetBrowserLogic(Widget widget, Action onExit, ModData modData, World world, Dictionary<string, MiniYaml> logicArgs)
 		{
 			this.world = world;
-
+			this.modData = modData;
 			panel = widget;
-			assetSource = GlobalFileSystem.MountedFolders.First();
 
 			var ticker = panel.GetOrNull<LogicTickerWidget>("ANIMATION_TICKER");
 			if (ticker != null)
@@ -212,6 +214,14 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				prevButton.IsVisible = () => !isVideoLoaded;
 			}
 
+			if (logicArgs.ContainsKey("SupportedFormats"))
+				allowedExtensions = FieldLoader.GetValue<string[]>("SupportedFormats", logicArgs["SupportedFormats"].Value);
+			else
+				allowedExtensions = new string[0];
+
+			acceptablePackages = modData.ModFiles.MountedPackages.Where(p =>
+				p.Contents.Any(c => allowedExtensions.Contains(Path.GetExtension(c).ToLowerInvariant())));
+
 			assetList = panel.Get<ScrollPanelWidget>("ASSET_LIST");
 			template = panel.Get<ScrollItemWidget>("ASSET_TEMPLATE");
 			PopulateAssetList();
@@ -301,7 +311,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			if (string.IsNullOrEmpty(filename))
 				return false;
 
-			if (!GlobalFileSystem.Exists(filename))
+			if (!modData.DefaultFileSystem.Exists(filename))
 				return false;
 
 			if (Path.GetExtension(filename.ToLowerInvariant()) == ".vqa")
@@ -318,7 +328,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			else
 			{
 				currentFilename = filename;
-				currentSprites = world.Map.SequenceProvider.SpriteCache[filename];
+				currentSprites = world.Map.Rules.Sequences.SpriteCache[filename];
 				currentFrame = 0;
 				frameSlider.MaximumValue = (float)currentSprites.Length - 1;
 				frameSlider.Ticks = currentSprites.Length;
@@ -329,7 +339,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 		bool ShowSourceDropdown(DropDownButtonWidget dropdown)
 		{
-			Func<IFolder, ScrollItemWidget, ScrollItemWidget> setupItem = (source, itemTemplate) =>
+			Func<IReadOnlyPackage, ScrollItemWidget, ScrollItemWidget> setupItem = (source, itemTemplate) =>
 			{
 				var item = ScrollItemWidget.Setup(itemTemplate,
 					() => assetSource == source,
@@ -338,9 +348,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				return item;
 			};
 
-			// TODO: Re-enable "All Packages" once list generation is done in a background thread
-			// var sources = new[] { (IFolder)null }.Concat(GlobalFileSystem.MountedFolders);
-			var sources = GlobalFileSystem.MountedFolders;
+			var sources = new[] { (IReadOnlyPackage)null }.Concat(acceptablePackages);
 			dropdown.ShowDropDown("LABEL_DROPDOWN_TEMPLATE", 280, sources, setupItem);
 			return true;
 		}
@@ -350,16 +358,10 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			assetList.RemoveChildren();
 			availableShps.Clear();
 
-			// TODO: This is too slow to run in the main thread
-			// var files = AssetSource != null ? AssetSource.AllFileNames() :
-			// GlobalFileSystem.MountedFolders.SelectMany(f => f.AllFileNames());
-			if (assetSource == null)
-				return;
-
-			var files = assetSource.AllFileNames().OrderBy(s => s);
-			foreach (var file in files)
+			var files = assetSource != null ? assetSource.Contents : modData.ModFiles.MountedPackages.SelectMany(f => f.Contents).Distinct();
+			foreach (var file in files.OrderBy(s => s))
 			{
-				if (AllowedExtensions.Any(ext => file.EndsWith(ext, true, CultureInfo.InvariantCulture)))
+				if (allowedExtensions.Any(ext => file.EndsWith(ext, true, CultureInfo.InvariantCulture)))
 				{
 					AddAsset(assetList, file, template);
 					availableShps.Add(file);

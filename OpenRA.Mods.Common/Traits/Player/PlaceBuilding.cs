@@ -1,27 +1,26 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
-using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Effects;
-using OpenRA.Graphics;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
 	[Desc("Allows the player to execute build orders.", " Attach this to the player actor.")]
-	public class PlaceBuildingInfo : ITraitInfo, IPlaceBuildingDecorationInfo
+	public class PlaceBuildingInfo : ITraitInfo
 	{
 		[Desc("Palette to use for rendering the placement sprite.")]
-		[PaletteReference] public readonly string Palette = "terrain";
+		[PaletteReference] public readonly string Palette = TileSet.TerrainPaletteInternalName;
 
 		[Desc("Play NewOptionsNotification this many ticks after building placement.")]
 		public readonly int NewOptionsNotificationDelay = 10;
@@ -30,16 +29,6 @@ namespace OpenRA.Mods.Common.Traits
 		public readonly string NewOptionsNotification = "NewOptions";
 
 		public object Create(ActorInitializer init) { return new PlaceBuilding(this); }
-
-		public IEnumerable<IRenderable> Render(WorldRenderer wr, World w, ActorInfo ai, WPos centerPosition)
-		{
-			if (!ai.TraitInfo<BuildingInfo>().RequiresBaseProvider)
-				yield break;
-
-			foreach (var a in w.ActorsWithTrait<BaseProvider>())
-				foreach (var r in a.Trait.RenderAfterWorld(wr))
-					yield return r;
-		}
 	}
 
 	public class PlaceBuilding : IResolveOrder

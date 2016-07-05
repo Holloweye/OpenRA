@@ -17,6 +17,11 @@ WEEDGUY:
 		LocalOffset: 85,0,384
 	AttackFrontal:
 		Voice: Attack
+	-SpawnActorOnDeath@FLAMEGUY:
+	WithDeathAnimation@fire:
+		DeathSequence: die-
+		DeathTypes:
+			FireDeath: burning
 
 UMAGON:
 	Inherits: ^Soldier
@@ -40,7 +45,7 @@ UMAGON:
 	AttackFrontal:
 		Voice: Attack
 	WithInfantryBody:
-		AttackSequence: shoot
+		AttackSequence: attack
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -65,7 +70,6 @@ CHAMSPY:
 		Sequence: pip-disguise
 		Palette: pips
 		ReferencePoint: Top, Right
-		Offset: 4, -2
 		ZOffset: 256
 		UpgradeTypes: disguise
 		UpgradeMinEnabledLevel: 1
@@ -97,7 +101,7 @@ MUTANT:
 	AttackFrontal:
 		Voice: Attack
 	WithInfantryBody:
-		AttackSequence: shoot
+		AttackSequence: attack
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -122,7 +126,7 @@ MWMN:
 	AttackFrontal:
 		Voice: Attack
 	WithInfantryBody:
-		AttackSequence: shoot
+		AttackSequence: attack
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -147,7 +151,7 @@ MUTANT3:
 	AttackFrontal:
 		Voice: Attack
 	WithInfantryBody:
-		AttackSequence: shoot
+		AttackSequence: attack
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -169,7 +173,7 @@ TRATOS:
 		Range: 4c0
 	-AutoTarget:
 	WithInfantryBody:
-		AttackSequence: shoot
+		AttackSequence: attack
 
 OXANNA:
 	Inherits: ^Soldier
@@ -187,7 +191,7 @@ OXANNA:
 		Range: 4c0
 	-AutoTarget:
 	WithInfantryBody:
-		AttackSequence: shoot
+		AttackSequence: attack
 
 SLAV:
 	Inherits: ^Soldier
@@ -205,15 +209,17 @@ SLAV:
 		Range: 4c0
 	-AutoTarget:
 	WithInfantryBody:
-		AttackSequence: shoot
+		AttackSequence: attack
 
 DOGGIE:
-	Inherits: ^Infantry
+	Inherits@1: ^Infantry
+	Inherits@2: ^RegularInfantryDeath
 	Tooltip:
 		Name: Tiberian Fiend
 	Health:
-		Radius: 213
 		HP: 250
+		Shape: Circle
+			Radius: 213
 	PoisonedByTiberium:
 		Weapon: TiberiumHeal
 	Valued:
@@ -235,22 +241,31 @@ DOGGIE:
 		WanderMoveRadius: 2
 		MinMoveDelayInTicks: 25
 		MaxMoveDelayInTicks: 45
+	-SpawnActorOnDeath@FLAMEGUY:
+	WithDeathAnimation@fire:
+		DeathSequence: die-
+		DeathTypes:
+			FireDeath: burning
 
-VISSML:
-	Inherits: ^Viceroid
+VISC_SML:
+	Inherits: ^Visceroid
 	Tooltip:
 		Name: Baby Visceroid
+		Description: infantry transmorgifies into this
 	Health:
 		HP: 200
 	AttackWander:
 		WanderMoveRadius: 2
 		MinMoveDelayInTicks: 30
 		MaxMoveDelayInTicks: 60
+	RenderSprites:
+		Image: vissml
 
-VISLRG:
-	Inherits: ^Viceroid
+VISC_LRG:
+	Inherits: ^Visceroid
 	Tooltip:
 		Name: Adult Visceroid
+		Description: 2 small visceroids combine into this
 	Health:
 		HP: 500
 	Armament:
@@ -264,11 +279,13 @@ VISLRG:
 		MaxMoveDelayInTicks: 45
 	Mobile:
 		Crushes: crate, infantry
+	RenderSprites:
+		Image: vislrg
 
 CIV1:
 	Inherits: ^CivilianInfantry
 	WithInfantryBody:
-		AttackSequence: shoot
+		AttackSequence: attack
 	Armament:
 		Weapon: Pistola
 	AttackFrontal:
@@ -281,9 +298,8 @@ CIV2:
 CIV3:
 	Inherits: ^CivilianInfantry
 	WithInfantryBody:
-		AttackSequence: shoot
+		AttackSequence: attack
 	Armament:
 		Weapon: Pistola
 	AttackFrontal:
 		Voice: Attack
-

@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -24,12 +25,14 @@ namespace OpenRA.GameRules
 		public int[] RangeModifiers;
 		public int Facing;
 		public WPos Source;
+		public Func<WPos> CurrentSource;
 		public Actor SourceActor;
 		public WPos PassiveTarget;
 		public Target GuidedTarget;
 	}
 
-	public interface IProjectileInfo { IEffect Create(ProjectileArgs args); }
+	public interface IProjectile : IEffect { }
+	public interface IProjectileInfo { IProjectile Create(ProjectileArgs args); }
 
 	public sealed class WeaponInfo
 	{
@@ -44,8 +47,6 @@ namespace OpenRA.GameRules
 
 		[Desc("Number of shots in a single ammo magazine.")]
 		public readonly int Burst = 1;
-
-		public readonly bool Charges = false;
 
 		[Desc("What types of targets are affected.")]
 		public readonly HashSet<string> ValidTargets = new HashSet<string> { "Ground", "Water" };
@@ -126,14 +127,17 @@ namespace OpenRA.GameRules
 		/// <summary>Checks if the weapon is valid against (can target) the actor.</summary>
 		public bool IsValidAgainst(Actor victim, Actor firedBy)
 		{
-			var targetable = victim.TraitsImplementing<ITargetable>().Where(Exts.IsTraitEnabled);
-			if (!IsValidTarget(targetable.SelectMany(t => t.TargetTypes)))
+			var targetTypes = victim.GetEnabledTargetTypes();
+
+			if (!IsValidTarget(targetTypes))
 				return false;
 
-			if (!Warheads.Any(w => w.IsValidAgainst(victim, firedBy)))
-				return false;
+			// PERF: Avoid LINQ.
+			foreach (var warhead in Warheads)
+				if (warhead.IsValidAgainst(victim, firedBy))
+					return true;
 
-			return true;
+			return false;
 		}
 
 		/// <summary>Checks if the weapon is valid against (can target) the frozen actor.</summary>

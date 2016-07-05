@@ -30,6 +30,14 @@ medium_gun_turret:
 		Frames: 2621, 2624, 2622, 2632, 2625, 2626, 2636, 2629, 2623, 2633, 2627, 2628, 2634, 2630, 2631, 2635
 		Length: 16
 		Offset: -24,16
+	make: DATA.R8 #TODO: unused, enabling WMA currently breaks turrets (bleed 20151214)
+		Start: 4313
+		Length: 8
+		Offset: -16,16
+	crumble-overlay: DATA.R8
+		Start: 4321
+		Length: 7
+		Offset: -16,16
 	turret: DATA.R8
 		Start: 2589
 		Facings: -32
@@ -53,6 +61,14 @@ large_gun_turret:
 		Frames: 2621, 2624, 2622, 2632, 2625, 2626, 2636, 2629, 2623, 2633, 2627, 2628, 2634, 2630, 2631, 2635
 		Length: 16
 		Offset: -24,16
+	make: DATA.R8 #TODO: unused, enabling WMA currently breaks turrets (bleed 20151214)
+		Start: 4313
+		Length: 8
+		Offset: -16,16
+	crumble-overlay: DATA.R8
+		Start: 4321
+		Length: 7
+		Offset: -16,16
 	turret: DATA.R8
 		Start: 2637
 		Facings: -32
@@ -313,23 +329,23 @@ barracks.atreides:
 outpost.atreides:
 	idle: DATA.R8
 		Start: 2521
-		Offset: -48,80
+		Offset: -48,64
 	make: DATA.R8
 		Start: 4254
 		Length: 9
-		Offset: -48,80
+		Offset: -48,64
 	crumble-overlay: DATA.R8
 		Start: 4263
 		Length: 10
-		Offset: -48,80
+		Offset: -48,64
 		Tick: 100
 	damaged-idle: DATA.R8
 		Start: 2522
-		Offset: -48,80
+		Offset: -48,64
 	idle-dish: DATA.R8
 		Start: 4522
 		Length: 30
-		Offset: -48,80
+		Offset: -48,64
 	bib: BLOXBASE.R8
 		Frames: 611, 612, 613, 631, 632, 633
 		Length: 6
@@ -808,23 +824,23 @@ barracks.harkonnen:
 outpost.harkonnen:
 	idle: DATA.R8
 		Start: 2681
-		Offset: -48,80
+		Offset: -48,64
 	make: DATA.R8
 		Start: 4254
 		Length: 9
-		Offset: -48,80
+		Offset: -48,64
 	crumble-overlay: DATA.R8
 		Start: 4263
 		Length: 10
-		Offset: -48,80
+		Offset: -48,64
 		Tick: 100
 	damaged-idle: DATA.R8
 		Start: 2682
-		Offset: -48,80
+		Offset: -48,64
 	idle-dish: DATA.R8
 		Start: 4553
 		Length: 30
-		Offset: -48,80
+		Offset: -48,64
 	bib: BLOXBASE.R8
 		Frames: 611, 612, 613, 631, 632, 633
 		Length: 6
@@ -1212,23 +1228,23 @@ barracks.ordos:
 outpost.ordos:
 	idle: DATA.R8
 		Start: 2841
-		Offset: -48,80
+		Offset: -48,64
 	make: DATA.R8
 		Start: 4254
 		Length: 9
-		Offset: -48,80
+		Offset: -48,64
 	crumble-overlay: DATA.R8
 		Start: 4263
 		Length: 10
-		Offset: -48,80
+		Offset: -48,64
 		Tick: 100
 	damaged-idle: DATA.R8
 		Start: 2842
-		Offset: -48,80
+		Offset: -48,64
 	idle-dish: DATA.R8
 		Start: 4583
 		Length: 30
-		Offset: -48,80
+		Offset: -48,64
 	bib: BLOXBASE.R8
 		Frames: 611, 612, 613, 631, 632, 633
 		Length: 6
@@ -1481,7 +1497,7 @@ palace.corrino:
 		Offset: -48,48
 		Tick: 100
 
-starport.corrino:
+starport.smuggler:
 	idle: DATA.R8
 		Start: 2999
 		Offset: -48,48
@@ -1525,7 +1541,7 @@ starport.corrino:
 		Start: 4020
 		Offset: -30,-24
 
-heavy.corrino:
+heavy.mercenary:
 	idle: DATA.R8
 		Start: 3001
 		Offset: -48,64

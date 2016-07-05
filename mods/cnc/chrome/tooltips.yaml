@@ -1,10 +1,14 @@
 Background@SIMPLE_TOOLTIP:
 	Logic: SimpleTooltipLogic
 	Background: panel-black
-	Height: 25
+	Height: 27
 	Children:
+		Container@LINE_HEIGHT:
+			Y: 2
+			Height: 19
 		Label@LABEL:
 			X: 5
+			Y: 0-2
 			Height: 23
 			Font: Bold
 
@@ -19,7 +23,7 @@ Background@BUTTON_TOOLTIP:
 			Font: Bold
 		Label@HOTKEY:
 			Visible: false
-			TextColor: 255,255,0
+			TextColor: FFFF00
 			Height: 23
 			Font: Bold
 
@@ -64,7 +68,7 @@ Background@PRODUCTION_TOOLTIP:
 		Label@HOTKEY:
 			Visible: false
 			Height: 23
-			TextColor: 255,255,0
+			TextColor: FFFF00
 			Font: Bold
 		Label@REQUIRES:
 			X: 5
@@ -119,7 +123,7 @@ Background@SUPPORT_POWER_TOOLTIP:
 		Label@HOTKEY:
 			Visible: false
 			Height: 20
-			TextColor: 255,255,0
+			TextColor: FFFF00
 			Font: Bold
 		Label@TIME:
 			Y: 6
@@ -188,6 +192,30 @@ Background@CLIENT_TOOLTIP:
 			Y: 29
 			Height: 10
 			Font: TinyBold
+
+Background@INGAME_CLIENT_TOOLTIP:
+	Logic: ClientTooltipLogic
+	Background: panel-black
+	Height: 35
+	Width: 5
+	Children:
+		Label@ADMIN:
+			Y: 2
+			Height: 18
+			Font: Bold
+			Text: Game Admin
+			Align: Center
+		Label@IP:
+			Y: 5
+			Width: 5
+			Height: 10
+			Font: TinyBold
+			Align: Center
+		Label@LOCATION:
+			Y: 17
+			Height: 10
+			Font: TinyBold
+			Align: Center
 
 Background@FACTION_DESCRIPTION_TOOLTIP:
 	Logic: FactionTooltipLogic

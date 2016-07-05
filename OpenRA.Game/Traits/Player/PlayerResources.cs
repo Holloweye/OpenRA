@@ -1,23 +1,44 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OpenRA.Traits
 {
-	public class PlayerResourcesInfo : ITraitInfo
+	public class PlayerResourcesInfo : ITraitInfo, ILobbyOptions
 	{
+		[Desc("Starting cash options that are available in the lobby options.")]
 		public readonly int[] SelectableCash = { 2500, 5000, 10000, 20000 };
+
+		[Desc("Default starting cash option: should be one of the SelectableCash options.")]
 		public readonly int DefaultCash = 5000;
-		public readonly int AdviceInterval = 250;
+
+		[Desc("Force the DefaultCash option by disabling changes in the lobby.")]
+		public readonly bool DefaultCashLocked = false;
+
+		[Desc("Speech notification to play when the player does not have any funds.")]
+		public readonly string InsufficientFundsNotification = null;
+
+		[Desc("Delay (in ticks) during which warnings will be muted.")]
+		public readonly int InsufficientFundsNotificationDelay = 750;
+
+		IEnumerable<LobbyOption> ILobbyOptions.LobbyOptions(Ruleset rules)
+		{
+			var startingCash = SelectableCash.ToDictionary(c => c.ToString(), c => "$" + c.ToString());
+
+			if (startingCash.Any())
+				yield return new LobbyOption("startingcash", "Starting Cash", new ReadOnlyDictionary<string, string>(startingCash), DefaultCash.ToString(), DefaultCashLocked);
+		}
 
 		public object Create(ActorInitializer init) { return new PlayerResources(init.Self, this); }
 	}
@@ -26,15 +47,19 @@ namespace OpenRA.Traits
 	{
 		const float DisplayCashFracPerFrame = .07f;
 		const int DisplayCashDeltaPerFrame = 37;
+		readonly PlayerResourcesInfo info;
 		readonly Player owner;
-		int adviceInterval;
 
 		public PlayerResources(Actor self, PlayerResourcesInfo info)
 		{
+			this.info = info;
 			owner = self.Owner;
 
-			Cash = self.World.LobbyInfo.GlobalSettings.StartingCash;
-			adviceInterval = info.AdviceInterval;
+			var startingCash = self.World.LobbyInfo.GlobalSettings
+				.OptionOrDefault("startingcash", info.DefaultCash.ToString());
+
+			if (!int.TryParse(startingCash, out Cash))
+				Cash = info.DefaultCash;
 		}
 
 		[Sync] public int Cash;
@@ -44,10 +69,11 @@ namespace OpenRA.Traits
 
 		public int DisplayCash;
 		public int DisplayResources;
-		public bool AlertSilo;
 
 		public int Earned;
 		public int Spent;
+
+		int lastNotificationTick;
 
 		public bool CanGiveResources(int amount)
 		{
@@ -61,8 +87,6 @@ namespace OpenRA.Traits
 
 			if (Resources > ResourceCapacity)
 			{
-				nextSiloAdviceTime = 0;
-
 				Earned -= Resources - ResourceCapacity;
 				Resources = ResourceCapacity;
 			}
@@ -110,9 +134,19 @@ namespace OpenRA.Traits
 			}
 		}
 
-		public bool TakeCash(int num)
+		public bool TakeCash(int num, bool notifyLowFunds = false)
 		{
-			if (Cash + Resources < num) return false;
+			if (Cash + Resources < num)
+			{
+				if (notifyLowFunds && !string.IsNullOrEmpty(info.InsufficientFundsNotification) &&
+					owner.World.WorldTick - lastNotificationTick >= info.InsufficientFundsNotificationDelay)
+				{
+					lastNotificationTick = owner.World.WorldTick;
+					Game.Sound.PlayNotification(owner.World.Map.Rules, owner, "Speech", info.InsufficientFundsNotification, owner.Faction.InternalName);
+				}
+
+				return false;
+			}
 
 			// Spend ore before cash
 			Resources -= num;
@@ -126,7 +160,6 @@ namespace OpenRA.Traits
 			return true;
 		}
 
-		int nextSiloAdviceTime = 0;
 		int nextCashTickTime = 0;
 
 		public void Tick(Actor self)
@@ -140,19 +173,6 @@ namespace OpenRA.Traits
 
 			if (Resources > ResourceCapacity)
 				Resources = ResourceCapacity;
-
-			if (--nextSiloAdviceTime <= 0)
-			{
-				if (Resources > 0.8 * ResourceCapacity)
-				{
-					Game.Sound.PlayNotification(self.World.Map.Rules, owner, "Speech", "SilosNeeded", owner.Faction.InternalName);
-					AlertSilo = true;
-				}
-				else
-					AlertSilo = false;
-
-				nextSiloAdviceTime = adviceInterval;
-			}
 
 			var diff = Math.Abs(Cash - DisplayCash);
 			var move = Math.Min(Math.Max((int)(diff * DisplayCashFracPerFrame), DisplayCashDeltaPerFrame), diff);

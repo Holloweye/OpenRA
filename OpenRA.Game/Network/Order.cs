@@ -1,16 +1,16 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
 using System.IO;
-using System.Linq;
 using OpenRA.Network;
 
 namespace OpenRA
@@ -52,14 +52,14 @@ namespace OpenRA
 		Order(string orderString, Actor subject,
 			Actor targetActor, CPos targetLocation, string targetString, bool queued, CPos extraLocation, uint extraData)
 		{
-			this.OrderString = orderString;
-			this.Subject = subject;
-			this.TargetActor = targetActor;
-			this.TargetLocation = targetLocation;
-			this.TargetString = targetString;
-			this.Queued = queued;
-			this.ExtraLocation = extraLocation;
-			this.ExtraData = extraData;
+			OrderString = orderString;
+			Subject = subject;
+			TargetActor = targetActor;
+			TargetLocation = targetLocation;
+			TargetString = targetString;
+			Queued = queued;
+			ExtraLocation = extraLocation;
+			ExtraData = extraData;
 		}
 
 		public static Order Deserialize(World world, BinaryReader r)

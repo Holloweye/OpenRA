@@ -1,30 +1,25 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
-using System;
 using System.Collections.Generic;
 using OpenRA.Activities;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Graphics;
+using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
-	public interface ISpriteBodyInfo : ITraitInfo { }
-	public interface ISpriteBody
-	{
-		void PlayCustomAnimation(Actor self, string newAnimation, Action after);
-		void PlayCustomAnimationRepeating(Actor self, string name);
-		void PlayCustomAnimationBackwards(Actor self, string name, Action after);
-	}
+	public enum AttackDelayType { Preparation, Attack }
 
 	public interface IQuantizeBodyOrientationInfo : ITraitInfo
 	{
@@ -41,10 +36,17 @@ namespace OpenRA.Mods.Common.Traits
 		IEnumerable<IRenderable> Render(WorldRenderer wr, World w, ActorInfo ai, WPos centerPosition);
 	}
 
-	public interface INotifyAttack { void Attacking(Actor self, Target target, Armament a, Barrel barrel); }
+	[RequireExplicitImplementation]
+	public interface INotifyAttack
+	{
+		void Attacking(Actor self, Target target, Armament a, Barrel barrel);
+		void PreparingAttack(Actor self, Target target, Armament a, Barrel barrel);
+	}
+
+	public interface INotifyBurstComplete { void FiredBurst(Actor self, Target target, Armament a); }
 	public interface INotifyCharging { void Charging(Actor self, Target target); }
 	public interface INotifyChat { bool OnChat(string from, string message); }
-	public interface INotifyParachuteLanded { void OnLanded(); }
+	public interface INotifyParachuteLanded { void OnLanded(Actor ignore); }
 	public interface IRenderActorPreviewInfo : ITraitInfo { IEnumerable<IActorPreview> RenderPreview(ActorPreviewInitializer init); }
 	public interface ICruiseAltitudeInfo : ITraitInfo { WDist GetCruiseAltitude(); }
 
@@ -84,9 +86,8 @@ namespace OpenRA.Mods.Common.Traits
 
 	public interface IProductionIconOverlay
 	{
-		Sprite Sprite();
-		string Palette();
-		float Scale();
+		Sprite Sprite { get; }
+		string Palette { get; }
 		float2 Offset(float2 iconSize);
 		bool IsOverlayActive(ActorInfo ai);
 	}
@@ -114,5 +115,28 @@ namespace OpenRA.Mods.Common.Traits
 		bool WantsTransport { get; set; }
 		void MovementCancelled(Actor self);
 		void RequestTransport(CPos destination, Activity afterLandActivity);
+	}
+
+	public interface IDeathActorInitModifier
+	{
+		void ModifyDeathActorInit(Actor self, TypeDictionary init);
+	}
+
+	public interface IPreventsAutoTarget
+	{
+		bool PreventsAutoTarget(Actor self, Actor attacker);
+	}
+
+	[RequireExplicitImplementation]
+	interface IWallConnector
+	{
+		bool AdjacentWallCanConnect(Actor self, CPos wallLocation, string wallType, out CVec facing);
+		void SetDirty();
+	}
+
+	[RequireExplicitImplementation]
+	public interface IActorPreviewInitModifier
+	{
+		void ModifyActorPreviewInit(Actor self, TypeDictionary inits);
 	}
 }

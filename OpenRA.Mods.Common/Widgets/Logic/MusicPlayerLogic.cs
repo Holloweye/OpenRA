@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -16,7 +17,7 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets.Logic
 {
-	public class MusicPlayerLogic
+	public class MusicPlayerLogic : ChromeLogic
 	{
 		readonly ScrollPanelWidget musicList;
 		readonly ScrollItemWidget itemTemplate;
@@ -25,7 +26,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		MusicInfo currentSong = null;
 
 		[ObjectCreator.UseCtor]
-		public MusicPlayerLogic(Widget widget, Ruleset modRules, World world, Action onExit)
+		public MusicPlayerLogic(Widget widget, ModData modData, World world, Action onExit)
 		{
 			var panel = widget;
 
@@ -37,6 +38,17 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 			Func<bool> noMusic = () => !musicPlaylist.IsMusicAvailable || musicPlaylist.CurrentSongIsBackground || currentSong == null;
 			panel.Get("NO_MUSIC_LABEL").IsVisible = () => !musicPlaylist.IsMusicAvailable;
+
+			if (musicPlaylist.IsMusicAvailable)
+			{
+				panel.Get<LabelWidget>("MUTE_LABEL").GetText = () =>
+				{
+					if (Game.Settings.Sound.Mute)
+						return "Audio has been muted in settings.";
+
+					return "";
+				};
+			}
 
 			var playButton = panel.Get<ButtonWidget>("BUTTON_PLAY");
 			playButton.OnClick = Play;
@@ -90,18 +102,6 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			var musicSlider = panel.Get<SliderWidget>("MUSIC_SLIDER");
 			musicSlider.OnChange += x => Game.Sound.MusicVolume = x;
 			musicSlider.Value = Game.Sound.MusicVolume;
-
-			var installButton = widget.GetOrNull<ButtonWidget>("INSTALL_BUTTON");
-			if (installButton != null)
-			{
-				installButton.IsDisabled = () => world.Type != WorldType.Shellmap;
-				var args = new[] { "installMusic={0}".F(Game.ModData.Manifest.Mod.Id) };
-				installButton.OnClick = () =>
-					Game.RunAfterTick(() => Game.InitializeMod("modchooser", new Arguments(args)));
-
-				var installData = Game.ModData.Manifest.Get<ContentInstaller>();
-				installButton.IsVisible = () => modRules.InstalledMusic.ToArray().Length <= installData.ShippedSoundtracks;
-			}
 
 			var songWatcher = widget.GetOrNull<LogicTickerWidget>("SONG_WATCHER");
 			if (songWatcher != null)

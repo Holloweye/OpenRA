@@ -1,23 +1,23 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
 using System.Linq;
-using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
-using OpenRA.Mods.Common.Widgets;
+using OpenRA.Traits;
 using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets.Logic
 {
-	public class MenuButtonsChromeLogic
+	public class MenuButtonsChromeLogic : ChromeLogic
 	{
 		readonly World world;
 		readonly Widget worldRoot;
@@ -65,18 +65,15 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				}
 			}
 
-			var diplomacy = widget.GetOrNull<MenuButtonWidget>("DIPLOMACY_BUTTON");
-			if (diplomacy != null)
-			{
-				diplomacy.Visible = !world.Map.Visibility.HasFlag(MapVisibility.MissionSelector) && world.Players.Any(a => a != world.LocalPlayer && !a.NonCombatant);
-				diplomacy.IsDisabled = () => disableSystemButtons;
-				diplomacy.OnClick = () => OpenMenuPanel(diplomacy);
-			}
-
 			var debug = widget.GetOrNull<MenuButtonWidget>("DEBUG_BUTTON");
 			if (debug != null)
 			{
-				debug.IsVisible = () => world.LobbyInfo.GlobalSettings.AllowCheats;
+				// Can't use DeveloperMode.Enabled because there is a hardcoded hack to *always*
+				// enable developer mode for singleplayer games, but we only want to show the button
+				// if it has been explicitly enabled
+				var def = world.Map.Rules.Actors["player"].TraitInfo<DeveloperModeInfo>().Enabled;
+				var enabled = world.LobbyInfo.GlobalSettings.OptionOrDefault("cheats", def);
+				debug.IsVisible = () => enabled;
 				debug.IsDisabled = () => disableSystemButtons;
 				debug.OnClick = () => OpenMenuPanel(debug, new WidgetArgs()
 				{
@@ -98,7 +95,12 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			var cachedPause = world.PredictedPaused;
 
 			if (button.HideIngameUI)
+			{
+				// Cancel custom input modes (guard, building placement, etc)
+				world.CancelInputMode();
+
 				worldRoot.IsVisible = () => false;
+			}
 
 			if (button.Pause && world.LobbyInfo.IsSinglePlayer)
 				world.SetPauseState(true);
@@ -117,6 +119,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			});
 
 			currentWidget = Game.LoadWidget(world, button.MenuContainer, menuRoot, widgetArgs);
+			Game.RunAfterTick(Ui.ResetTooltips);
 		}
 	}
 }

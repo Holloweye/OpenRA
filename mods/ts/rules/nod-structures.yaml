@@ -31,6 +31,7 @@ NAPOWR:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, SpyInfiltrate
 	ScalePowerWithHealth:
+	PowerTooltip:
 	DisabledOverlay:
 	SelectionDecorations:
 		VisualBounds: 88, 80, 2, -12
@@ -42,7 +43,7 @@ NAAPWR:
 		BuildPaletteOrder: 5
 		Prerequisites: factory, ~structures.nod
 	Valued:
-		Cost: 600
+		Cost: 500
 	Tooltip:
 		Name: Advanced Power Plant
 		Description: Provides twice as much power as\nthe normal Power Plant.
@@ -54,7 +55,7 @@ NAAPWR:
 	Selectable:
 		Bounds: 100, 54, 0, -4
 	Health:
-		HP: 900
+		HP: 750
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -69,6 +70,7 @@ NAAPWR:
 		TargetTypes: Ground, C4, DetonateAttack, SpyInfiltrate
 	ScalePowerWithHealth:
 	DisabledOverlay:
+	PowerTooltip:
 	SelectionDecorations:
 		VisualBounds: 100, 74, 0, -12
 
@@ -116,6 +118,14 @@ NAHAND:
 	ProvidesPrerequisite@buildingname:
 	SelectionDecorations:
 		VisualBounds: 116, 78, 3, -8
+	WithTextDecoration@primary:
+		RequiresSelection: true
+		Text: PRIMARY
+		ReferencePoint: Top
+		Color: E0D048
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 NAWEAP:
 	Inherits: ^Building
@@ -137,15 +147,17 @@ NAWEAP:
 		Bounds: 149, 80, -3, -10
 	Health:
 		HP: 1000
+	Armor:
+		Type: Heavy
 	RevealsShroud:
 		Range: 4c0
 	RallyPoint:
-		Offset: 6,1
+		Offset: 4,1
 		Palette: mouse
 		IsPlayerPalette: false
 	Exit@1:
 		SpawnOffset: -384,-384,0
-		ExitCell: 4,1
+		ExitCell: 3,1
 		ExitDelay: 5
 	Production:
 		Produces: Vehicle
@@ -163,6 +175,14 @@ NAWEAP:
 	ProvidesPrerequisite@buildingname:
 	SelectionDecorations:
 		VisualBounds: 149, 116, -3, -20
+	WithTextDecoration@primary:
+		RequiresSelection: true
+		Text: PRIMARY
+		ReferencePoint: Top
+		Color: E0D048
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 NAHPAD:
 	Inherits: ^Building
@@ -207,6 +227,14 @@ NAHPAD:
 	ProvidesPrerequisite@buildingname:
 	SelectionDecorations:
 		VisualBounds: 78, 54, 0, -8
+	WithTextDecoration@primary:
+		RequiresSelection: true
+		Text: PRIMARY
+		ReferencePoint: Top
+		Color: E0D048
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 NARADR:
 	Inherits: ^Building
@@ -227,12 +255,14 @@ NARADR:
 	Selectable:
 		Bounds: 96, 48, 0, -6
 	Health:
-		HP: 800
+		HP: 1000
 	Armor:
 		Type: Wood
 	RequiresPower:
 	CanPowerDown:
 		IndicatorPalette: mouse
+		PowerupSpeech: EnablePower
+		PowerdownSpeech: DisablePower
 	ProvidesRadar:
 	InfiltrateForExploration:
 	DetectCloaked:
@@ -242,11 +272,11 @@ NARADR:
 		Range: 10c0
 	WithIdleOverlay@DISH:
 		Sequence: idle-dish
-		PauseOnLowPower: yes
+		PauseOnLowPower: true
 	Targetable:
 		TargetTypes: Ground, C4, SpyInfiltrate
 	Power:
-		Amount: -50
+		Amount: -40
 	ProvidesPrerequisite@buildingname:
 	SelectionDecorations:
 		VisualBounds: 96, 72, 0, -12
@@ -258,7 +288,7 @@ NATECH:
 		BuildPaletteOrder: 100
 		Prerequisites: naweap, naradr, ~structures.nod
 	Valued:
-		Cost: 2000
+		Cost: 1500
 	Tooltip:
 		Name: Nod Tech Center
 		Description: Provides access to advanced Nod technologies.
@@ -352,6 +382,8 @@ NASTLH:
 		Amount: -350
 	RequiresPower:
 	CanPowerDown:
+		PowerupSpeech: EnablePower
+		PowerdownSpeech: DisablePower
 		IndicatorPalette: mouse
 	UpgradeActorsNear:
 		Upgrades: cloakgenerator
@@ -364,3 +396,47 @@ NASTLH:
 	SelectionDecorations:
 		VisualBounds: 106, 60, 8, -15
 
+NAWAST:
+	Inherits: ^Building
+	Valued:
+		Cost: 1600
+	Tooltip:
+		Name: Waste Refinery
+		Description: Processes Veins\ninto useable resources.\nMaximum 1 can be built.
+	Buildable:
+		BuildPaletteOrder: 110
+		Prerequisites: namisl, ~structures.nod
+		Queue: Building
+		BuildLimit: 1
+	Building:
+		Footprint: =x= xx= =x=
+		Dimensions: 3,3
+	Selectable:
+		Bounds: 100, 60, 5, -5
+	Health:
+		HP: 400
+	RevealsShroud:
+		Range: 6c0
+	TiberianSunRefinery:
+		DockAngle: 160
+		DockOffset: 2,1
+	StoresResources:
+		PipColor: Red
+		PipCount: 15
+		Capacity: 56
+	Power:
+		Amount: -40
+	FreeActor:
+		Actor: WEED
+		SpawnOffset: 3,1
+		Facing: 160
+	WithIdleOverlay@GLOW:
+		Sequence: idle-glow
+	WithIdleOverlay@LIGHTS:
+		Sequence: idle-lights
+	WithIdleOverlay@BIB:
+		Sequence: bib
+	ProvidesPrerequisite@buildingname:
+	SelectionDecorations:
+		VisualBounds: 100, 60, 5, -5
+	RenderSprites:

@@ -21,7 +21,7 @@ E3:
 	AttackFrontal:
 		Voice: Attack
 	WithInfantryBody:
-		AttackSequence: shoot
+		AttackSequence: attack
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -104,6 +104,7 @@ MHIJACK:
 	Tooltip:
 		Name: Mutant Hijacker
 		Description: Hijacks enemy vehicles.\n  Unarmed
+		BuildLimit: 1
 	Voiced:
 		VoiceSet: Hijacker
 	Health:
@@ -112,11 +113,9 @@ MHIJACK:
 		Weapon: TiberiumHeal
 	Mobile:
 		Speed: 99
+	-Crushable:
 	Captures:
 		CaptureTypes: Vehicle
 	RevealsShroud:
 		Range: 6c0
 	-AutoTarget:
-	WithInfantryBody:
-		AttackSequence: shoot
-

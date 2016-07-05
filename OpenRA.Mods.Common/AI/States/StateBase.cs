@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -31,8 +32,8 @@ namespace OpenRA.Mods.Common.AI
 		protected static CPos RandomBuildingLocation(Squad squad)
 		{
 			var location = squad.Bot.GetRandomBaseCenter();
-			var buildings = squad.World.ActorsWithTrait<Building>()
-				.Where(a => a.Actor.Owner == squad.Bot.Player).Select(a => a.Actor).ToList();
+			var buildings = squad.World.ActorsHavingTrait<Building>()
+				.Where(a => a.Owner == squad.Bot.Player).ToList();
 			if (buildings.Count > 0)
 				location = buildings.Random(squad.Random).Location;
 			return location;
@@ -63,7 +64,7 @@ namespace OpenRA.Mods.Common.AI
 			if (!a.Info.HasTraitInfo<AttackBaseInfo>())
 				return false;
 
-			var targetTypes = target.TraitsImplementing<ITargetable>().Where(Exts.IsTraitEnabled).SelectMany(t => t.TargetTypes);
+			var targetTypes = target.GetEnabledTargetTypes();
 			if (!targetTypes.Any())
 				return false;
 

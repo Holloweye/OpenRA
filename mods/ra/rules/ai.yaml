@@ -9,7 +9,6 @@ Player:
 			Barracks: barr,tent
 			VehiclesFactory: weap
 			Production: barr,tent,weap,afld,hpad
-			NavalProduction: spen,syrd
 			Silo: silo
 		UnitsCommonNames:
 			Mcv: mcv
@@ -478,4 +477,3 @@ Player:
 				Attractiveness: -10
 				TargetMetric: Value
 				CheckRadius: 7c0
-

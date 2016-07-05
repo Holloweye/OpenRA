@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -64,12 +65,12 @@ namespace OpenRA.Widgets
 
 		public static void FillRectWithColor(Rectangle r, Color c)
 		{
-			Game.Renderer.LineRenderer.FillRect(new RectangleF(r.X, r.Y, r.Width, r.Height), c);
+			Game.Renderer.RgbaColorRenderer.FillRect(new float2(r.Left, r.Top), new float2(r.Right, r.Bottom), c);
 		}
 
 		public static void FillEllipseWithColor(Rectangle r, Color c)
 		{
-			Game.Renderer.LineRenderer.FillEllipse(new RectangleF(r.X, r.Y, r.Width, r.Height), c);
+			Game.Renderer.RgbaColorRenderer.FillEllipse(new RectangleF(r.X, r.Y, r.Width, r.Height), c);
 		}
 
 		public static int[] GetBorderSizes(string collection)
@@ -79,7 +80,12 @@ namespace OpenRA.Widgets
 			return new[] { (int)ss[0].Size.Y, (int)ss[1].Size.Y, (int)ss[2].Size.X, (int)ss[3].Size.X };
 		}
 
-		static bool HasFlags(this PanelSides a, PanelSides b) { return (a & b) == b; }
+		static bool HasFlags(this PanelSides a, PanelSides b)
+		{
+			// PERF: Enum.HasFlag is slower and requires allocations.
+			return (a & b) == b;
+		}
+
 		public static Rectangle InflateBy(this Rectangle rect, int l, int t, int r, int b)
 		{
 			return Rectangle.FromLTRB(rect.Left - l, rect.Top - t,
@@ -227,18 +233,46 @@ namespace OpenRA.Widgets
 			return text;
 		}
 
-		public static Action Once(Action a) { return () => { if (a != null) { a(); a = null; } }; }
-
-		public static string ChooseInitialMap(string initialUid)
+		public static string TruncateText(string text, int width, SpriteFont font)
 		{
-			if (string.IsNullOrEmpty(initialUid) || Game.ModData.MapCache[initialUid].Status != MapStatus.Available)
+			var trimmedWidth = font.Measure(text).X;
+			if (trimmedWidth <= width)
+				return text;
+
+			var trimmed = text;
+			while (trimmedWidth > width && trimmed.Length > 3)
 			{
-				var selected = Game.ModData.MapCache.Where(x => x.SuitableForInitialMap).RandomOrDefault(Game.CosmeticRandom) ??
-					Game.ModData.MapCache.First(m => m.Status == MapStatus.Available && m.Map.Visibility.HasFlag(MapVisibility.Lobby));
-				return selected.Uid;
+				trimmed = text.Substring(0, trimmed.Length - 4) + "...";
+				trimmedWidth = font.Measure(trimmed).X;
 			}
 
-			return initialUid;
+			return trimmed;
+		}
+	}
+
+	public class CachedTransform<T, U>
+	{
+		readonly Func<T, U> transform;
+
+		bool initialized;
+		T lastInput;
+		U lastOutput;
+
+		public CachedTransform(Func<T, U> transform)
+		{
+			this.transform = transform;
+		}
+
+		public U Update(T input)
+		{
+			if (initialized && ((input == null && lastInput == null) || (input != null && input.Equals(lastInput))))
+				return lastOutput;
+
+			lastInput = input;
+			lastOutput = transform(input);
+			initialized = true;
+
+			return lastOutput;
 		}
 	}
 

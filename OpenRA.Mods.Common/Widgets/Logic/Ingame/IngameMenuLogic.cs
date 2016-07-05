@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -18,12 +19,12 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets.Logic
 {
-	public class IngameMenuLogic
+	public class IngameMenuLogic : ChromeLogic
 	{
 		Widget menu;
 
 		[ObjectCreator.UseCtor]
-		public IngameMenuLogic(Widget widget, World world, Action onExit, WorldRenderer worldRenderer, IngameInfoPanel activePanel)
+		public IngameMenuLogic(Widget widget, ModData modData, World world, Action onExit, WorldRenderer worldRenderer, IngameInfoPanel activePanel)
 		{
 			var leaving = false;
 			menu = widget.Get("INGAME_MENU");
@@ -31,7 +32,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			if (mpe != null)
 				mpe.Fade(mpe.Info.MenuEffect);
 
-			menu.Get<LabelWidget>("VERSION_LABEL").Text = Game.ModData.Manifest.Mod.Version;
+			menu.Get<LabelWidget>("VERSION_LABEL").Text = modData.Manifest.Mod.Version;
 
 			var hideMenu = false;
 			menu.Get("MENU_BUTTONS").IsVisible = () => !hideMenu;
@@ -51,12 +52,19 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				var exitDelay = iop != null ? iop.ExitDelay : 0;
 				if (mpe != null)
 				{
-					Game.RunAfterDelay(exitDelay, () => mpe.Fade(MenuPaletteEffect.EffectType.Black));
+					Game.RunAfterDelay(exitDelay, () =>
+					{
+						if (Game.IsCurrentWorld(world))
+							mpe.Fade(MenuPaletteEffect.EffectType.Black);
+					});
 					exitDelay += 40 * mpe.Info.FadeLength;
 				}
 
 				Game.RunAfterDelay(exitDelay, () =>
 				{
+					if (!Game.IsCurrentWorld(world))
+						return;
+
 					Game.Disconnect();
 					Ui.ResetAll();
 					Game.LoadShellMap();
@@ -81,14 +89,42 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 			abortMissionButton.OnClick = () =>
 			{
-				if (world.IsGameOver)
-				{
-					onQuit();
-					return;
-				}
-
 				hideMenu = true;
-				ConfirmationDialogs.PromptConfirmAction("Abort Mission", "Leave this game and return to the menu?", onQuit, showMenu);
+
+				if (world.LocalPlayer == null || world.LocalPlayer.WinState != WinState.Won)
+				{
+					Action restartAction = null;
+					var iop = world.WorldActor.TraitsImplementing<IObjectivesPanel>().FirstOrDefault();
+					var exitDelay = iop != null ? iop.ExitDelay : 0;
+
+					if (world.LobbyInfo.IsSinglePlayer)
+					{
+						restartAction = () =>
+						{
+							Ui.CloseWindow();
+							if (mpe != null)
+							{
+								if (Game.IsCurrentWorld(world))
+									mpe.Fade(MenuPaletteEffect.EffectType.Black);
+								exitDelay += 40 * mpe.Info.FadeLength;
+							}
+
+							Game.RunAfterDelay(exitDelay, Game.RestartGame);
+						};
+					}
+
+					ConfirmationDialogs.ButtonPrompt(
+						title: "Leave Mission",
+						text: "Leave this game and return to the menu?",
+						onConfirm: onQuit,
+						onCancel: showMenu,
+						confirmText: "Leave",
+						cancelText: "Stay",
+						otherText: "Restart",
+						onOther: restartAction);
+				}
+				else
+					onQuit();
 			};
 
 			var exitEditorButton = menu.Get<ButtonWidget>("EXIT_EDITOR");
@@ -96,7 +132,11 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			exitEditorButton.OnClick = () =>
 			{
 				hideMenu = true;
-				ConfirmationDialogs.PromptConfirmAction("Exit Map Editor", "Exit and lose all unsaved changes?", onQuit, showMenu);
+				ConfirmationDialogs.ButtonPrompt(
+					title: "Exit Map Editor",
+					text: "Exit and lose all unsaved changes?",
+					onConfirm: onQuit,
+					onCancel: showMenu);
 			};
 
 			Action onSurrender = () =>
@@ -106,11 +146,19 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			};
 			var surrenderButton = menu.Get<ButtonWidget>("SURRENDER");
 			surrenderButton.IsVisible = () => world.Type == WorldType.Regular;
-			surrenderButton.IsDisabled = () => (world.LocalPlayer == null || world.LocalPlayer.WinState != WinState.Undefined) || hasError;
+			surrenderButton.IsDisabled = () =>
+				world.LocalPlayer == null || world.LocalPlayer.WinState != WinState.Undefined ||
+				world.Map.Visibility.HasFlag(MapVisibility.MissionSelector) || hasError;
 			surrenderButton.OnClick = () =>
 			{
 				hideMenu = true;
-				ConfirmationDialogs.PromptConfirmAction("Surrender", "Are you sure you want to surrender?", onSurrender, showMenu);
+				ConfirmationDialogs.ButtonPrompt(
+					title: "Surrender",
+					text: "Are you sure you want to surrender?",
+					onConfirm: onSurrender,
+					onCancel: showMenu,
+					confirmText: "Surrender",
+					cancelText: "Stay");
 			};
 
 			var saveMapButton = menu.Get<ButtonWidget>("SAVE_MAP");

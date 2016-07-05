@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -37,7 +38,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			}
 		}
 
-		public static void ShowSlotDropDown(Ruleset rules, DropDownButtonWidget dropdown, Session.Slot slot,
+		public static void ShowSlotDropDown(LobbyLogic logic, DropDownButtonWidget dropdown, Session.Slot slot,
 			Session.Client client, OrderManager orderManager)
 		{
 			var options = new Dictionary<string, IEnumerable<SlotDropDownOption>>() { { "Slot", new List<SlotDropDownOption>()
@@ -49,7 +50,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			var bots = new List<SlotDropDownOption>();
 			if (slot.AllowBots)
 			{
-				foreach (var b in rules.Actors["player"].TraitInfos<IBotInfo>().Select(t => t.Name))
+				foreach (var b in logic.Map.Rules.Actors["player"].TraitInfos<IBotInfo>().Select(t => t.Name))
 				{
 					var bot = b;
 					var botController = orderManager.LobbyInfo.Clients.FirstOrDefault(c => c.IsAdmin);
@@ -70,7 +71,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				return item;
 			};
 
-			dropdown.ShowDropDown<SlotDropDownOption>("LABEL_DROPDOWN_TEMPLATE", 167, options, setupItem);
+			dropdown.ShowDropDown("LABEL_DROPDOWN_TEMPLATE", 167, options, setupItem);
 		}
 
 		public static void ShowTeamDropDown(DropDownButtonWidget dropdown, Session.Client client,
@@ -179,7 +180,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 			var spawnSize = new float2(ChromeProvider.GetImage("lobby-bits", "spawn-unclaimed").Bounds.Size);
 			var selectedSpawn = preview.SpawnPoints
-				.Select((sp, i) => Pair.New(mapPreview.ConvertToPreview(sp), i))
+				.Select((sp, i) => Pair.New(mapPreview.ConvertToPreview(sp, preview.GridType), i))
 				.Where(a => ((a.First - mi.Location).ToFloat2() / spawnSize * 2).LengthSquared <= 1)
 				.Select(a => a.Second + 1)
 				.FirstOrDefault();
@@ -235,19 +236,26 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			return ip;
 		}
 
-		public static void SetupClientWidget(Widget parent, Session.Slot s, Session.Client c, OrderManager orderManager, bool visible)
+		public static void SetupClientWidget(Widget parent, Session.Client c, OrderManager orderManager, bool visible)
 		{
-			parent.Get("ADMIN_INDICATOR").IsVisible = () => c.IsAdmin;
-			var block = parent.Get("LATENCY");
-			block.IsVisible = () => visible;
+			var adminIndicator = parent.GetOrNull("ADMIN_INDICATOR");
+			if (adminIndicator != null)
+				adminIndicator.IsVisible = () => c != null && c.IsAdmin;
 
-			if (visible)
-				block.Get<ColorBlockWidget>("LATENCY_COLOR").GetColor = () => LatencyColor(
-					orderManager.LobbyInfo.PingFromClient(c));
+			var block = parent.GetOrNull("LATENCY");
+			if (block != null)
+			{
+				block.IsVisible = () => visible;
+
+				if (visible)
+					block.Get<ColorBlockWidget>("LATENCY_COLOR").GetColor = () => LatencyColor(
+						orderManager.LobbyInfo.PingFromClient(c));
+			}
 
 			var tooltip = parent.Get<ClientTooltipRegionWidget>("CLIENT_REGION");
-			tooltip.IsVisible = () => visible;
-			tooltip.Bind(orderManager, c.Index);
+			tooltip.IsVisible = () => c != null && visible;
+			if (c != null)
+				tooltip.Bind(orderManager, c.Index);
 		}
 
 		public static void SetupEditableNameWidget(Widget parent, Session.Slot s, Session.Client c, OrderManager orderManager)
@@ -291,16 +299,18 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		public static void SetupNameWidget(Widget parent, Session.Slot s, Session.Client c)
 		{
 			var name = parent.Get<LabelWidget>("NAME");
-			name.GetText = () => c.Name;
+			var font = Game.Renderer.Fonts[name.Font];
+			var label = WidgetUtils.TruncateText(c.Name, name.Bounds.Width, font);
+			name.GetText = () => label;
 		}
 
-		public static void SetupEditableSlotWidget(Widget parent, Session.Slot s, Session.Client c, OrderManager orderManager, Ruleset rules)
+		public static void SetupEditableSlotWidget(LobbyLogic logic, Widget parent, Session.Slot s, Session.Client c, OrderManager orderManager)
 		{
 			var slot = parent.Get<DropDownButtonWidget>("SLOT_OPTIONS");
 			slot.IsVisible = () => true;
 			slot.IsDisabled = () => orderManager.LocalClient.IsReady;
 			slot.GetText = () => c != null ? c.Name : s.Closed ? "Closed" : "Open";
-			slot.OnMouseDown = _ => ShowSlotDropDown(rules, slot, s, c, orderManager);
+			slot.OnMouseDown = _ => ShowSlotDropDown(logic, slot, s, c, orderManager);
 
 			// Ensure Name selector (if present) is hidden
 			var name = parent.GetOrNull("NAME");
@@ -447,12 +457,12 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			parent.Get<LabelWidget>("SPAWN").GetText = () => (c.SpawnPoint == 0) ? "-" : Convert.ToChar('A' - 1 + c.SpawnPoint).ToString();
 		}
 
-		public static void SetupEditableReadyWidget(Widget parent, Session.Slot s, Session.Client c, OrderManager orderManager, MapPreview map)
+		public static void SetupEditableReadyWidget(Widget parent, Session.Slot s, Session.Client c, OrderManager orderManager, MapPreview map, bool forceDisable)
 		{
 			var status = parent.Get<CheckboxWidget>("STATUS_CHECKBOX");
 			status.IsChecked = () => orderManager.LocalClient.IsReady || c.Bot != null;
 			status.IsVisible = () => true;
-			status.IsDisabled = () => c.Bot != null || map.Status != MapStatus.Available || map.RuleStatus != MapRuleStatus.Cached;
+			status.IsDisabled = () => c.Bot != null || map.Status != MapStatus.Available || forceDisable;
 
 			var state = orderManager.LocalClient.IsReady ? Session.ClientState.NotReady : Session.ClientState.Ready;
 			status.OnClick = () => orderManager.IssueOrder(Order.Command("state {0}".F(state)));
@@ -472,23 +482,34 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			else
 				flag.GetImageName = () => player.Faction.InternalName;
 
-			var playerName = template.Get<LabelWidget>("PLAYER");
 			var client = player.World.LobbyInfo.ClientWithIndex(player.ClientIndex);
+			var playerName = template.Get<LabelWidget>("PLAYER");
+			var playerNameFont = Game.Renderer.Fonts[playerName.Font];
+			var suffixLength = new CachedTransform<string, int>(s => playerNameFont.Measure(s).X);
+			var name = new CachedTransform<Pair<string, int>, string>(c =>
+				WidgetUtils.TruncateText(c.First, playerName.Bounds.Width - c.Second, playerNameFont));
+
 			playerName.GetText = () =>
 			{
-				if (client != null && client.State == Network.Session.ClientState.Disconnected)
-					return player.PlayerName + " (Gone)";
-				return player.PlayerName + (player.WinState == WinState.Undefined ? "" : " (" + player.WinState + ")");
+				var suffix = player.WinState == WinState.Undefined ? "" : " (" + player.WinState + ")";
+				if (client != null && client.State == Session.ClientState.Disconnected)
+					suffix = " (Gone)";
+
+				var sl = suffixLength.Update(suffix);
+				return name.Update(Pair.New(player.PlayerName, sl)) + suffix;
 			};
+
 			playerName.GetColor = () => player.Color.RGB;
 		}
 
 		public static string GetExternalIP(int clientIndex, OrderManager orderManager)
 		{
-			var address = orderManager.LobbyInfo.ClientWithIndex(clientIndex).IpAddress;
-			if (clientIndex == orderManager.LocalClient.Index && address == IPAddress.Loopback.ToString() && UPnP.NatDevice != null)
+			var client = orderManager.LobbyInfo.ClientWithIndex(clientIndex);
+			var address = client != null ? client.IpAddress : "";
+			var lc = orderManager.LocalClient;
+			if (lc != null && lc.Index == clientIndex && address == IPAddress.Loopback.ToString())
 			{
-				var externalIP = UPnP.NatDevice.GetExternalIP();
+				var externalIP = UPnP.ExternalIP;
 				if (externalIP != null)
 					address = externalIP.ToString();
 			}

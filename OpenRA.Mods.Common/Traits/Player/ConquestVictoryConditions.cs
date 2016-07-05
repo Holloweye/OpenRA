@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -62,22 +63,22 @@ namespace OpenRA.Mods.Common.Traits
 			foreach (var a in player.World.Actors.Where(a => a.Owner == player))
 				a.Kill(a);
 
-			if (player == player.World.LocalPlayer)
+			Game.RunAfterDelay(info.NotificationDelay, () =>
 			{
-				Game.RunAfterDelay(info.NotificationDelay, () =>
-				{
-					if (Game.IsCurrentWorld(player.World))
-						Game.Sound.PlayNotification(player.World.Map.Rules, player, "Speech", "Lose", player.Faction.InternalName);
-				});
-			}
+				if (Game.IsCurrentWorld(player.World) && player == player.World.LocalPlayer)
+					Game.Sound.PlayNotification(player.World.Map.Rules, player, "Speech", "Lose", player.Faction.InternalName);
+			});
 		}
 
 		public void OnPlayerWon(Player player)
 		{
 			Game.Debug("{0} is victorious.", player.PlayerName);
 
-			if (player == player.World.LocalPlayer)
-				Game.RunAfterDelay(info.NotificationDelay, () => Game.Sound.PlayNotification(player.World.Map.Rules, player, "Speech", "Win", player.Faction.InternalName));
+			Game.RunAfterDelay(info.NotificationDelay, () =>
+			{
+				if (Game.IsCurrentWorld(player.World) && player == player.World.LocalPlayer)
+					Game.Sound.PlayNotification(player.World.Map.Rules, player, "Speech", "Win", player.Faction.InternalName);
+			});
 		}
 
 		public void OnObjectiveAdded(Player player, int id) { }

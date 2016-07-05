@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -22,54 +23,55 @@ namespace OpenRA
 		// Corners of the region
 		public readonly CPos TopLeft;
 		public readonly CPos BottomRight;
-		readonly TileShape shape;
+		readonly MapGridType gridType;
 
 		// Corners in map coordinates
-		// These will only equal TopLeft and BottomRight for TileShape.Rectangular
+		// These will only equal TopLeft and BottomRight for MapGridType.Rectangular
 		readonly MPos mapTopLeft;
 		readonly MPos mapBottomRight;
 
-		public CellRegion(TileShape shape, CPos topLeft, CPos bottomRight)
+		public CellRegion(MapGridType gridType, CPos topLeft, CPos bottomRight)
 		{
-			this.shape = shape;
+			this.gridType = gridType;
 			TopLeft = topLeft;
 			BottomRight = bottomRight;
 
-			mapTopLeft = TopLeft.ToMPos(shape);
-			mapBottomRight = BottomRight.ToMPos(shape);
+			mapTopLeft = TopLeft.ToMPos(gridType);
+			mapBottomRight = BottomRight.ToMPos(gridType);
 		}
 
 		/// <summary>Expand the specified region with an additional cordon. This may expand the region outside the map borders.</summary>
 		public static CellRegion Expand(CellRegion region, int cordon)
 		{
-			var tl = new MPos(region.mapTopLeft.U - cordon, region.mapTopLeft.V - cordon).ToCPos(region.shape);
-			var br = new MPos(region.mapBottomRight.U + cordon, region.mapBottomRight.V + cordon).ToCPos(region.shape);
-			return new CellRegion(region.shape, tl, br);
+			var tl = new MPos(region.mapTopLeft.U - cordon, region.mapTopLeft.V - cordon).ToCPos(region.gridType);
+			var br = new MPos(region.mapBottomRight.U + cordon, region.mapBottomRight.V + cordon).ToCPos(region.gridType);
+			return new CellRegion(region.gridType, tl, br);
 		}
 
 		/// <summary>Returns the minimal region that covers at least the specified cells.</summary>
-		public static CellRegion BoundingRegion(TileShape shape, IEnumerable<CPos> cells)
+		public static CellRegion BoundingRegion(MapGridType shape, IEnumerable<CPos> cells)
 		{
 			if (cells == null || !cells.Any())
 				throw new ArgumentException("cells must not be null or empty.", "cells");
 
-			var minX = int.MaxValue;
-			var minY = int.MaxValue;
-			var maxX = int.MinValue;
-			var maxY = int.MinValue;
+			var minU = int.MaxValue;
+			var minV = int.MaxValue;
+			var maxU = int.MinValue;
+			var maxV = int.MinValue;
 			foreach (var cell in cells)
 			{
-				if (minX > cell.X)
-					minX = cell.X;
-				if (maxX < cell.X)
-					maxX = cell.X;
-				if (minY > cell.Y)
-					minY = cell.Y;
-				if (maxY < cell.Y)
-					maxY = cell.Y;
+				var uv = cell.ToMPos(shape);
+				if (minU > uv.U)
+					minU = uv.U;
+				if (maxU < uv.U)
+					maxU = uv.U;
+				if (minV > uv.V)
+					minV = uv.V;
+				if (maxV < uv.V)
+					maxV = uv.V;
 			}
 
-			return new CellRegion(shape, new CPos(minX, minY), new CPos(maxX, maxY));
+			return new CellRegion(shape, new MPos(minU, minV).ToCPos(shape), new MPos(maxU, maxV).ToCPos(shape));
 		}
 
 		public bool Contains(CellRegion region)
@@ -81,7 +83,7 @@ namespace OpenRA
 
 		public bool Contains(CPos cell)
 		{
-			var uv = cell.ToMPos(shape);
+			var uv = cell.ToMPos(gridType);
 			return uv.U >= mapTopLeft.U && uv.U <= mapBottomRight.U && uv.V >= mapTopLeft.V && uv.V <= mapBottomRight.V;
 		}
 
@@ -136,7 +138,7 @@ namespace OpenRA
 						return false;
 				}
 
-				current = new MPos(u, v).ToCPos(r.shape);
+				current = new MPos(u, v).ToCPos(r.gridType);
 				return true;
 			}
 

@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -19,7 +20,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.Common.Traits
 {
 	[Desc("This actor can transport Passenger actors.")]
-	public class CargoInfo : ITraitInfo, Requires<IOccupySpaceInfo>
+	public class CargoInfo : ITraitInfo, Requires<IOccupySpaceInfo>, Requires<UpgradeManagerInfo>
 	{
 		[Desc("The maximum sum of Passenger.Weight that this actor can support.")]
 		public readonly int MaxWeight = 0;
@@ -36,6 +37,9 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("When this actor is sold should all of its passengers be unloaded?")]
 		public readonly bool EjectOnSell = true;
 
+		[Desc("When this actor dies should all of its passengers be unloaded?")]
+		public readonly bool EjectOnDeath = false;
+
 		[Desc("Terrain types that this actor is allowed to eject actors onto. Leave empty for all terrain types.")]
 		public readonly HashSet<string> UnloadTerrainTypes = new HashSet<string>();
 
@@ -51,14 +55,19 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("Cursor to display when unable to unload the passengers.")]
 		public readonly string UnloadBlockedCursor = "deploy-blocked";
 
+		[UpgradeGrantedReference]
+		[Desc("The upgrades to grant to self while loading cargo.")]
+		public readonly string[] LoadingUpgrades = { };
+
 		public object Create(ActorInitializer init) { return new Cargo(init, this); }
 	}
 
 	public class Cargo : IPips, IIssueOrder, IResolveOrder, IOrderVoice, INotifyCreated, INotifyKilled,
-		INotifyOwnerChanged, INotifyAddedToWorld, ITick, INotifySold, IDisableMove, INotifyActorDisposing
+		INotifyOwnerChanged, INotifyAddedToWorld, ITick, INotifySold, INotifyActorDisposing
 	{
 		public readonly CargoInfo Info;
 		readonly Actor self;
+		readonly UpgradeManager upgradeManager;
 		readonly Stack<Actor> cargo = new Stack<Actor>();
 		readonly HashSet<Actor> reserves = new HashSet<Actor>();
 		readonly Lazy<IFacing> facing;
@@ -80,6 +89,7 @@ namespace OpenRA.Mods.Common.Traits
 			Info = info;
 			Unloading = false;
 			checkTerrainType = info.UnloadTerrainTypes.Count > 0;
+			upgradeManager = self.Trait<UpgradeManager>();
 
 			if (init.Contains<RuntimeCargoInit>())
 			{
@@ -183,6 +193,10 @@ namespace OpenRA.Mods.Common.Traits
 			if (!HasSpace(w))
 				return false;
 
+			if (reserves.Count == 0)
+				foreach (var u in Info.LoadingUpgrades)
+					upgradeManager.GrantUpgrade(self, u, this);
+
 			reserves.Add(a);
 			reservedWeight += w;
 
@@ -196,6 +210,10 @@ namespace OpenRA.Mods.Common.Traits
 
 			reservedWeight -= GetWeight(a);
 			reserves.Remove(a);
+
+			if (reserves.Count == 0)
+				foreach (var u in Info.LoadingUpgrades)
+					upgradeManager.RevokeUpgrade(self, u, this);
 		}
 
 		public string CursorForOrder(Actor self, Order order)
@@ -214,7 +232,6 @@ namespace OpenRA.Mods.Common.Traits
 			return Info.UnloadVoice;
 		}
 
-		public bool MoveDisabled(Actor self) { return reserves.Any(); }
 		public bool HasSpace(int weight) { return totalWeight + reservedWeight + weight <= Info.MaxWeight; }
 		public bool IsEmpty(Actor self) { return cargo.Count == 0; }
 
@@ -229,13 +246,13 @@ namespace OpenRA.Mods.Common.Traits
 			SetPassengerFacing(a);
 
 			foreach (var npe in self.TraitsImplementing<INotifyPassengerExited>())
-				npe.PassengerExited(self, a);
+				npe.OnPassengerExited(self, a);
 
 			var p = a.Trait<Passenger>();
 			p.Transport = null;
 
 			foreach (var u in p.Info.GrantUpgrades)
-				self.Trait<UpgradeManager>().RevokeUpgrade(self, u, p);
+				upgradeManager.RevokeUpgrade(self, u, p);
 
 			return a;
 		}
@@ -249,9 +266,8 @@ namespace OpenRA.Mods.Common.Traits
 			if (passengerFacing != null)
 				passengerFacing.Facing = facing.Value.Facing + Info.PassengerFacing;
 
-			var passengerTurreted = passenger.TraitOrDefault<Turreted>();
-			if (passengerTurreted != null)
-				passengerTurreted.TurretFacing = facing.Value.Facing + Info.PassengerFacing;
+			foreach (var t in passenger.TraitsImplementing<Turreted>())
+				t.TurretFacing = facing.Value.Facing + Info.PassengerFacing;
 		}
 
 		public IEnumerable<PipType> GetPips(Actor self)
@@ -287,19 +303,45 @@ namespace OpenRA.Mods.Common.Traits
 			{
 				reservedWeight -= w;
 				reserves.Remove(a);
+
+				if (reserves.Count == 0)
+					foreach (var u in Info.LoadingUpgrades)
+						upgradeManager.RevokeUpgrade(self, u, this);
 			}
 
-			foreach (var npe in self.TraitsImplementing<INotifyPassengerEntered>())
-				npe.PassengerEntered(self, a);
+			// If not initialized then this will be notified in the first tick
+			if (initialized)
+				foreach (var npe in self.TraitsImplementing<INotifyPassengerEntered>())
+					npe.OnPassengerEntered(self, a);
 
 			var p = a.Trait<Passenger>();
 			p.Transport = self;
 			foreach (var u in p.Info.GrantUpgrades)
-				self.Trait<UpgradeManager>().GrantUpgrade(self, u, p);
+				upgradeManager.GrantUpgrade(self, u, p);
 		}
 
 		public void Killed(Actor self, AttackInfo e)
 		{
+			if (Info.EjectOnDeath)
+				while (!IsEmpty(self) && CanUnload())
+				{
+					var passenger = Unload(self);
+					var cp = self.CenterPosition;
+					var inAir = self.World.Map.DistanceAboveTerrain(cp).Length != 0;
+					var positionable = passenger.Trait<IPositionable>();
+					positionable.SetPosition(passenger, self.Location);
+
+					if (!inAir && positionable.CanEnterCell(self.Location, self, false))
+					{
+						self.World.AddFrameEndTask(w => w.Add(passenger));
+						var nbm = passenger.TraitOrDefault<INotifyBlockingMove>();
+						if (nbm != null)
+							nbm.OnNotifyBlockingMove(passenger, passenger);
+					}
+					else
+						passenger.Kill(e.Attacker);
+				}
+
 			foreach (var c in cargo)
 				c.Kill(e.Attacker);
 
@@ -365,7 +407,7 @@ namespace OpenRA.Mods.Common.Traits
 					c.Trait<Passenger>().Transport = self;
 
 					foreach (var npe in self.TraitsImplementing<INotifyPassengerEntered>())
-						npe.PassengerEntered(self, c);
+						npe.OnPassengerEntered(self, c);
 				}
 
 				initialized = true;
@@ -380,8 +422,11 @@ namespace OpenRA.Mods.Common.Traits
 		}
 	}
 
-	public interface INotifyPassengerEntered { void PassengerEntered(Actor self, Actor passenger); }
-	public interface INotifyPassengerExited { void PassengerExited(Actor self, Actor passenger); }
+	[RequireExplicitImplementation]
+	public interface INotifyPassengerEntered { void OnPassengerEntered(Actor self, Actor passenger); }
+
+	[RequireExplicitImplementation]
+	public interface INotifyPassengerExited { void OnPassengerExited(Actor self, Actor passenger); }
 
 	public class RuntimeCargoInit : IActorInit<Actor[]>, ISuppressInitExport
 	{

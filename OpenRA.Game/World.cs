@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Effects;
 using OpenRA.FileFormats;
+using OpenRA.GameRules;
 using OpenRA.Graphics;
 using OpenRA.Network;
 using OpenRA.Orders;
@@ -29,6 +31,8 @@ namespace OpenRA
 		internal readonly TraitDictionary TraitDict = new TraitDictionary();
 		readonly SortedDictionary<uint, Actor> actors = new SortedDictionary<uint, Actor>();
 		readonly List<IEffect> effects = new List<IEffect>();
+		readonly List<ISync> syncedEffects = new List<ISync>();
+
 		readonly Queue<Action<World>> frameEndActions = new Queue<Action<World>>();
 
 		public int Timestep;
@@ -38,9 +42,16 @@ namespace OpenRA
 
 		public readonly MersenneTwister SharedRandom;
 
-		public readonly List<Player> Players = new List<Player>();
+		public Player[] Players = new Player[0];
 
-		public void AddPlayer(Player p) { Players.Add(p); }
+		public void SetPlayers(IEnumerable<Player> players, Player localPlayer)
+		{
+			if (Players.Length > 0)
+				throw new InvalidOperationException("Players are fixed once they have been set.");
+			Players = players.ToArray();
+			SetLocalPlayer(localPlayer);
+		}
+
 		public Player LocalPlayer { get; private set; }
 
 		public event Action GameOver = () => { };
@@ -77,25 +88,24 @@ namespace OpenRA
 			get { return OrderManager.Connection is ReplayConnection; }
 		}
 
-		public bool AllowDevCommands
+		void SetLocalPlayer(Player localPlayer)
 		{
-			get { return LobbyInfo.GlobalSettings.AllowCheats || LobbyInfo.IsSinglePlayer; }
-		}
+			if (localPlayer == null)
+				return;
 
-		public void SetLocalPlayer(string pr)
-		{
+			if (!Players.Contains(localPlayer))
+				throw new ArgumentException("The local player must be one of the players in the world.", "localPlayer");
+
 			if (IsReplay)
 				return;
 
-			LocalPlayer = Players.FirstOrDefault(p => p.InternalName == pr);
+			LocalPlayer = localPlayer;
 			RenderPlayer = LocalPlayer;
 		}
 
 		public readonly Actor WorldActor;
 
 		public readonly Map Map;
-
-		public readonly TileSet TileSet;
 
 		public readonly ActorMap ActorMap;
 		public readonly ScreenMap ScreenMap;
@@ -145,8 +155,6 @@ namespace OpenRA
 			orderGenerator = new UnitOrderGenerator();
 			Map = map;
 			Timestep = orderManager.LobbyInfo.GlobalSettings.Timestep;
-
-			TileSet = map.Rules.TileSets[Map.Tileset];
 			SharedRandom = new MersenneTwister(orderManager.LobbyInfo.GlobalSettings.RandomSeed);
 
 			var worldActorType = type == WorldType.Editor ? "EditorWorld" : "World";
@@ -174,16 +182,41 @@ namespace OpenRA
 				MapUid = Map.Uid,
 				MapTitle = Map.Title
 			};
+		}
 
-			if (!LobbyInfo.GlobalSettings.Shroud)
-				foreach (var player in Players)
-					player.Shroud.ExploreAll(this);
+		public void AddToMaps(Actor self, IOccupySpace ios)
+		{
+			ActorMap.AddInfluence(self, ios);
+			ActorMap.AddPosition(self, ios);
+
+			if (!self.Bounds.Size.IsEmpty)
+				ScreenMap.Add(self);
+		}
+
+		public void UpdateMaps(Actor self, IOccupySpace ios)
+		{
+			if (!self.IsInWorld)
+				return;
+
+			if (!self.Bounds.Size.IsEmpty)
+				ScreenMap.Update(self);
+
+			ActorMap.UpdatePosition(self, ios);
+		}
+
+		public void RemoveFromMaps(Actor self, IOccupySpace ios)
+		{
+			ActorMap.RemoveInfluence(self, ios);
+			ActorMap.RemovePosition(self, ios);
+
+			if (!self.Bounds.Size.IsEmpty)
+				ScreenMap.Remove(self);
 		}
 
 		public void LoadComplete(WorldRenderer wr)
 		{
 			// ScreenMap must be initialized before anything else
-			using (new Support.PerfTimer("ScreenMap.WorldLoaded"))
+			using (new PerfTimer("ScreenMap.WorldLoaded"))
 				ScreenMap.WorldLoaded(this, wr);
 
 			foreach (var wlh in WorldActor.TraitsImplementing<IWorldLoaded>())
@@ -192,7 +225,7 @@ namespace OpenRA
 				if (wlh == ScreenMap)
 					continue;
 
-				using (new Support.PerfTimer(wlh.GetType().Name + ".WorldLoaded"))
+				using (new PerfTimer(wlh.GetType().Name + ".WorldLoaded"))
 					wlh.WorldLoaded(this, wr);
 			}
 
@@ -200,7 +233,9 @@ namespace OpenRA
 			foreach (var player in Players)
 				gameInfo.AddPlayer(player, OrderManager.LobbyInfo);
 
-			var rc = OrderManager.Connection as ReplayRecorderConnection;
+			var echo = OrderManager.Connection as EchoConnection;
+			var rc = echo != null ? echo.Recorder : null;
+
 			if (rc != null)
 				rc.Metadata = new ReplayMetadata(gameInfo);
 		}
@@ -240,15 +275,34 @@ namespace OpenRA
 				t.RemovedFromWorld(a);
 		}
 
-		public void Add(IEffect b) { effects.Add(b); }
-		public void Remove(IEffect b) { effects.Remove(b); }
-		public void RemoveAll(Predicate<IEffect> predicate) { effects.RemoveAll(predicate); }
+		public void Add(IEffect e)
+		{
+			effects.Add(e);
+			var se = e as ISync;
+			if (se != null)
+				syncedEffects.Add(se);
+		}
+
+		public void Remove(IEffect e)
+		{
+			effects.Remove(e);
+			var se = e as ISync;
+			if (se != null)
+				syncedEffects.Remove(se);
+		}
+
+		public void RemoveAll(Predicate<IEffect> predicate)
+		{
+			effects.RemoveAll(predicate);
+			syncedEffects.RemoveAll(e => predicate((IEffect)e));
+		}
 
 		public void AddFrameEndTask(Action<World> a) { frameEndActions.Enqueue(a); }
 
 		public event Action<Actor> ActorAdded = _ => { };
 		public event Action<Actor> ActorRemoved = _ => { };
 
+		public bool ShouldTick { get { return Type != WorldType.Shellmap || Game.Settings.Game.ShowShellmap; } }
 		public bool Paused { get; internal set; }
 		public bool PredictedPaused { get; internal set; }
 		public bool PauseStateLocked { get; set; }
@@ -271,7 +325,7 @@ namespace OpenRA
 
 		public void Tick()
 		{
-			if (!Paused && (Type != WorldType.Shellmap || Game.Settings.Game.ShowShellmap))
+			if (!Paused)
 			{
 				WorldTick++;
 
@@ -301,6 +355,7 @@ namespace OpenRA
 
 		public IEnumerable<Actor> Actors { get { return actors.Values; } }
 		public IEnumerable<IEffect> Effects { get { return effects; } }
+		public IEnumerable<ISync> SyncedEffects { get { return syncedEffects; } }
 
 		public Actor GetActorById(uint actorId)
 		{
@@ -323,23 +378,20 @@ namespace OpenRA
 				var n = 0;
 				var ret = 0;
 
-				// hash all the actors
+				// Hash all the actors.
 				foreach (var a in Actors)
-					ret += n++ * (int)(1 + a.ActorID) * Sync.CalculateSyncHash(a);
+					ret += n++ * (int)(1 + a.ActorID) * Sync.HashActor(a);
 
-				// hash all the traits that tick
-				foreach (var x in ActorsWithTrait<ISync>())
-					ret += n++ * (int)(1 + x.Actor.ActorID) * Sync.CalculateSyncHash(x.Trait);
+				// Hash fields marked with the ISync interface.
+				foreach (var actor in ActorsHavingTrait<ISync>())
+					foreach (var syncHash in actor.SyncHashes)
+						ret += n++ * (int)(1 + actor.ActorID) * syncHash.Hash;
 
-				// TODO: don't go over all effects
-				foreach (var e in Effects)
-				{
-					var sync = e as ISync;
-					if (sync != null)
-						ret += n++ * Sync.CalculateSyncHash(sync);
-				}
+				// Hash game state relevant effects such as projectiles.
+				foreach (var sync in SyncedEffects)
+					ret += n++ * Sync.Hash(sync);
 
-				// Hash the shared rng
+				// Hash the shared random number generator.
 				ret += SharedRandom.Last;
 
 				return ret;
@@ -349,6 +401,16 @@ namespace OpenRA
 		public IEnumerable<TraitPair<T>> ActorsWithTrait<T>()
 		{
 			return TraitDict.ActorsWithTrait<T>();
+		}
+
+		public IEnumerable<Actor> ActorsHavingTrait<T>()
+		{
+			return TraitDict.ActorsHavingTrait<T>();
+		}
+
+		public IEnumerable<Actor> ActorsHavingTrait<T>(Func<T, bool> predicate)
+		{
+			return TraitDict.ActorsHavingTrait(predicate);
 		}
 
 		public void OnPlayerWinStateChanged(Player player)
@@ -382,14 +444,21 @@ namespace OpenRA
 		}
 	}
 
-	public struct TraitPair<T>
+	public struct TraitPair<T> : IEquatable<TraitPair<T>>
 	{
-		public Actor Actor;
-		public T Trait;
+		public readonly Actor Actor;
+		public readonly T Trait;
 
-		public override string ToString()
-		{
-			return "{0}->{1}".F(Actor.Info.Name, Trait.GetType().Name);
-		}
+		public TraitPair(Actor actor, T trait) { Actor = actor; Trait = trait; }
+
+		public static bool operator ==(TraitPair<T> me, TraitPair<T> other) { return me.Actor == other.Actor && Equals(me.Trait, other.Trait); }
+		public static bool operator !=(TraitPair<T> me, TraitPair<T> other) { return !(me == other); }
+
+		public override int GetHashCode() { return Actor.GetHashCode() ^ Trait.GetHashCode(); }
+
+		public bool Equals(TraitPair<T> other) { return this == other; }
+		public override bool Equals(object obj) { return obj is TraitPair<T> && Equals((TraitPair<T>)obj); }
+
+		public override string ToString() { return "{0}->{1}".F(Actor.Info.Name, Trait.GetType().Name); }
 	}
 }

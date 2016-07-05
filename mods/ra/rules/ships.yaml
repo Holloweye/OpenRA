@@ -15,7 +15,7 @@ SS:
 	Armor:
 		Type: Light
 	Mobile:
-		ROT: 4
+		TurnSpeed: 4
 		Speed: 71
 	RevealsShroud:
 		Range: 6c0
@@ -43,7 +43,8 @@ SS:
 	SelectionDecorations:
 		VisualBounds: 38,38
 	AutoTarget:
-		InitialStance: ReturnFire
+		InitialStance: HoldFire
+		InitialStanceAI: ReturnFire
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 4c0
@@ -59,7 +60,7 @@ MSUB:
 		Queue: Ship
 		BuildAtProductionType: Submarine
 		BuildPaletteOrder: 60
-		Prerequisites: ~spen, stek, ~techlevel.unrestricted
+		Prerequisites: ~spen, stek, ~techlevel.high
 	Valued:
 		Cost: 2400
 	Tooltip:
@@ -70,7 +71,7 @@ MSUB:
 	Armor:
 		Type: Light
 	Mobile:
-		ROT: 3
+		TurnSpeed: 3
 		Speed: 42
 	RevealsShroud:
 		Range: 6c0
@@ -98,7 +99,8 @@ MSUB:
 	SelectionDecorations:
 		VisualBounds: 44,44
 	AutoTarget:
-		InitialStance: ReturnFire
+		InitialStance: HoldFire
+		InitialStanceAI: ReturnFire
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 4c0
@@ -125,12 +127,12 @@ DD:
 	Armor:
 		Type: Heavy
 	Mobile:
-		ROT: 7
+		TurnSpeed: 7
 		Speed: 85
 	RevealsShroud:
 		Range: 6c0
 	Turreted:
-		ROT: 7
+		TurnSpeed: 7
 		Offset: 341,0,128
 	Armament@PRIMARY:
 		Weapon: Stinger
@@ -147,7 +149,7 @@ DD:
 	AttackTurreted:
 	SelectionDecorations:
 		VisualBounds: 38,38
-	WithTurret:
+	WithSpriteTurret:
 	AutoTarget:
 	DetectCloaked:
 		CloakTypes: Underwater
@@ -160,7 +162,7 @@ CA:
 		Queue: Ship
 		BuildAtProductionType: Boat
 		BuildPaletteOrder: 50
-		Prerequisites: ~syrd, atek, ~techlevel.unrestricted
+		Prerequisites: ~syrd, atek, ~techlevel.high
 	Valued:
 		Cost: 2400
 	Tooltip:
@@ -171,18 +173,18 @@ CA:
 	Armor:
 		Type: Heavy
 	Mobile:
-		ROT: 3
+		TurnSpeed: 3
 		Speed: 42
 	RevealsShroud:
 		Range: 7c0
 	Turreted@PRIMARY:
 		Turret: primary
 		Offset: -864,0,128
-		ROT: 3
+		TurnSpeed: 3
 	Turreted@SECONDARY:
 		Turret: secondary
 		Offset: 768,0,128
-		ROT: 3
+		TurnSpeed: 3
 	Armament@PRIMARY:
 		Turret: primary
 		Weapon: 8Inch
@@ -202,9 +204,9 @@ CA:
 	WithMuzzleOverlay:
 	SelectionDecorations:
 		VisualBounds: 44,44
-	WithTurret@PRIMARY:
+	WithSpriteTurret@PRIMARY:
 		Turret: primary
-	WithTurret@SECONDARY:
+	WithSpriteTurret@SECONDARY:
 		Turret: secondary
 	AutoTarget:
 
@@ -224,7 +226,9 @@ LST:
 	Armor:
 		Type: Heavy
 	Mobile:
-		ROT: 10
+		UpgradeTypes: notmobile
+		UpgradeMaxEnabledLevel: 0
+		TurnSpeed: 10
 		Speed: 113
 	RevealsShroud:
 		Range: 6c0
@@ -237,6 +241,7 @@ LST:
 		MaxWeight: 5
 		PipCount: 5
 		PassengerFacing: 0
+		LoadingUpgrades: notmobile
 	-Chronoshiftable:
 
 PT:
@@ -256,12 +261,12 @@ PT:
 	Armor:
 		Type: Heavy
 	Mobile:
-		ROT: 7
+		TurnSpeed: 7
 		Speed: 128
 	RevealsShroud:
 		Range: 7c0
 	Turreted:
-		ROT: 7
+		TurnSpeed: 7
 		Offset: 512,0,0
 	Armament@PRIMARY:
 		Weapon: 2Inch
@@ -275,10 +280,9 @@ PT:
 	WithMuzzleOverlay:
 	SelectionDecorations:
 		VisualBounds: 36,36
-	WithTurret:
+	WithSpriteTurret:
 	AutoTarget:
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
-

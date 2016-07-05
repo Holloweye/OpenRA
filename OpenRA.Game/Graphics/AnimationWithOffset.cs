@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -18,22 +19,20 @@ namespace OpenRA.Graphics
 		public readonly Animation Animation;
 		public readonly Func<WVec> OffsetFunc;
 		public readonly Func<bool> DisableFunc;
-		public readonly Func<bool> Paused;
 		public readonly Func<WPos, int> ZOffset;
 
 		public AnimationWithOffset(Animation a, Func<WVec> offset, Func<bool> disable)
-			: this(a, offset, disable, () => false, null) { }
+			: this(a, offset, disable, null) { }
 
 		public AnimationWithOffset(Animation a, Func<WVec> offset, Func<bool> disable, int zOffset)
-			: this(a, offset, disable, () => false, _ => zOffset) { }
+			: this(a, offset, disable, _ => zOffset) { }
 
-		public AnimationWithOffset(Animation a, Func<WVec> offset, Func<bool> disable, Func<bool> pause, Func<WPos, int> zOffset)
+		public AnimationWithOffset(Animation a, Func<WVec> offset, Func<bool> disable, Func<WPos, int> zOffset)
 		{
-			this.Animation = a;
-			this.Animation.Paused = pause;
-			this.OffsetFunc = offset;
-			this.DisableFunc = disable;
-			this.ZOffset = zOffset;
+			Animation = a;
+			OffsetFunc = offset;
+			DisableFunc = disable;
+			ZOffset = zOffset;
 		}
 
 		public IEnumerable<IRenderable> Render(Actor self, WorldRenderer wr, PaletteReference pal, float scale)
@@ -47,7 +46,7 @@ namespace OpenRA.Graphics
 
 		public static implicit operator AnimationWithOffset(Animation a)
 		{
-			return new AnimationWithOffset(a, null, null, null, null);
+			return new AnimationWithOffset(a, null, null, null);
 		}
 	}
 }

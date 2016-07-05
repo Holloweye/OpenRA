@@ -1,19 +1,19 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System.Collections.Generic;
-using System.Linq;
 using OpenRA.Mods.Common.Warheads;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.Common.Traits
+namespace OpenRA.Mods.Common.Traits.Sound
 {
 	[Desc("Sounds to play when killed.")]
 	public class DeathSoundsInfo : ITraitInfo
@@ -41,11 +41,8 @@ namespace OpenRA.Mods.Common.Traits
 		{
 			var warhead = e.Warhead as DamageWarhead;
 
-			// Killed by some non-standard means
-			if (warhead == null)
-				return;
-
-			if (warhead.DamageTypes.Overlaps(info.DeathTypes))
+			// If the warhead is null, the actor was killed by some non-standard means
+			if (info.DeathTypes.Count == 0 || (warhead != null && warhead.DamageTypes.Overlaps(info.DeathTypes)))
 				self.PlayVoiceLocal(info.Voice, info.VolumeMultiplier);
 		}
 	}

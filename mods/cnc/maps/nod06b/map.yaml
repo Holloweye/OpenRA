@@ -1,10 +1,8 @@
-MapFormat: 7
+MapFormat: 11
 
 RequiresMod: cnc
 
-Title: Steal The Detonator (b)
-
-Description: GDI has imported a Nuclear Detonator in an attempt to sway a few local political leaders. Penetrate the base and steal the detonator. A chopper will be sent to meet you at a designated landing zone. Look for the landing flare once you have stolen the device.
+Title: 06b: Steal the Detonator
 
 Author: Westwood Studios
 
@@ -16,30 +14,16 @@ Bounds: 15,12,47,50
 
 Visibility: MissionSelector
 
-Type: Campaign
+Categories: Campaign
 
-Videos:
-	Briefing: nod6.vqa
-	GameStart: sundial.vqa
-	GameLost: banner.vqa
-
-Options:
-	Crates: False
-	Creeps: False
-	Fog: True
-	Shroud: True
-	AllyBuildRadius: False
-	FragileAlliances: False
-	StartingCash: 0
-	ConfigurableStartingUnits: False
-	ShortGame: False
+LockPreview: True
 
 Players:
 	PlayerReference@GDI:
 		Name: GDI
 		Playable: False
 		Faction: gdi
-		ColorRamp: 31,222,183
+		Color: F5D378
 		Enemies: Nod
 	PlayerReference@Neutral:
 		Name: Neutral
@@ -59,7 +43,7 @@ Players:
 		LockFaction: True
 		Faction: nod
 		LockColor: True
-		ColorRamp: 3,255,127
+		Color: FE1100
 		LockSpawn: True
 		LockTeam: True
 		Enemies: GDI, Civilians
@@ -585,7 +569,7 @@ Actors:
 		Location: 51,18
 		Owner: GDI
 	Chn2Actor1: weap
-		Location: 51,21
+		Location: 51,22
 		Owner: GDI
 	Atk1Actor1: gtwr
 		Location: 39,25
@@ -602,69 +586,4 @@ Actors:
 		Owner: GDI
 		SubCell: 1
 
-Smudges:
-
-Rules:
-	Player:
-		-ConquestVictoryConditions:
-		MissionObjectives:
-			EarlyGameOver: true
-	World:
-		-CrateSpawner:
-		-SpawnMPUnits:
-		-MPStartLocations:
-		ObjectivesPanel:
-			PanelName: MISSION_OBJECTIVES
-		LuaScript:
-			Scripts: nod06b.lua
-		MusicPlaylist:
-			StartingMusic: rout
-			VictoryMusic: nod_win1
-	^Vehicle:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Tank:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Infantry:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Plane:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Ship:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Building:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Husk:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^CivBuildingHusk:
-		Tooltip:
-			ShowOwnerRow: false
-	FLARE:
-		Tooltip:
-			ShowOwnerRow: false
-	TRAN:
-		-Selectable:
-
-Sequences:
-
-VoxelSequences:
-
-Weapons:
-
-Voices:
-
-Notifications:
-
-Translations:
+Rules: cnc|rules/campaign-maprules.yaml, cnc|rules/campaign-tooltips.yaml, cnc|rules/campaign-palettes.yaml, rules.yaml

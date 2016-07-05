@@ -1,15 +1,15 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
-using System.Collections;
 using Eluant;
 
 namespace OpenRA.Scripting
@@ -107,13 +107,22 @@ namespace OpenRA.Scripting
 
 				foreach (var kv in table)
 				{
-					object element;
-					if (innerType == typeof(LuaValue))
-						element = kv.Value;
-					else if (!kv.Value.TryGetClrValue(innerType, out element))
-						throw new LuaException("Unable to convert table value of type {0} to type {1}".F(kv.Value.WrappedClrType(), innerType));
+					using (kv.Key)
+					{
+						object element;
+						if (innerType == typeof(LuaValue))
+							element = kv.Value;
+						else
+						{
+							var elementHasClrValue = kv.Value.TryGetClrValue(innerType, out element);
+							if (!elementHasClrValue || !(element is LuaValue))
+								kv.Value.Dispose();
+							if (!elementHasClrValue)
+								throw new LuaException("Unable to convert table value of type {0} to type {1}".F(kv.Value.WrappedClrType(), innerType));
+						}
 
-					array.SetValue(element, i++);
+						array.SetValue(element, i++);
+					}
 				}
 
 				clrObject = array;
@@ -136,16 +145,16 @@ namespace OpenRA.Scripting
 				return LuaNil.Instance;
 
 			if (obj is double)
-				return (LuaValue)(double)obj;
+				return (double)obj;
 
 			if (obj is int)
-				return (LuaValue)(int)obj;
+				return (int)obj;
 
 			if (obj is bool)
-				return (LuaValue)(bool)obj;
+				return (bool)obj;
 
 			if (obj is string)
-				return (LuaValue)(string)obj;
+				return (string)obj;
 
 			if (obj is IScriptBindable)
 			{
@@ -159,11 +168,13 @@ namespace OpenRA.Scripting
 
 			if (obj is Array)
 			{
-				var array = obj as Array;
+				var array = (Array)obj;
 				var i = 1;
 				var table = context.CreateTable();
+
 				foreach (var x in array)
-					table.Add(i++, x.ToLuaValue(context));
+					using (LuaValue key = i++, value = x.ToLuaValue(context))
+						table.Add(key, value);
 
 				return table;
 			}

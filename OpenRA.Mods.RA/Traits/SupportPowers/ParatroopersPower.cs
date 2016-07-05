@@ -1,16 +1,18 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Effects;
 using OpenRA.Mods.Common.Traits;
@@ -21,7 +23,7 @@ namespace OpenRA.Mods.RA.Traits
 {
 	public class ParatroopersPowerInfo : SupportPowerInfo
 	{
-		[ActorReference]
+		[ActorReference(typeof(AircraftInfo))]
 		public readonly string UnitType = "badr";
 		public readonly int SquadSize = 1;
 		public readonly WVec SquadOffset = new WVec(-1536, 1536, 0);
@@ -32,7 +34,7 @@ namespace OpenRA.Mods.RA.Traits
 		[Desc("Spawn and remove the plane this far outside the map.")]
 		public readonly WDist Cordon = new WDist(5120);
 
-		[ActorReference]
+		[ActorReference(typeof(PassengerInfo))]
 		[Desc("Troops to be delivered.  They will be distributed between the planes if SquadSize > 1.")]
 		public readonly string[] DropItems = { };
 
@@ -70,9 +72,14 @@ namespace OpenRA.Mods.RA.Traits
 			var info = Info as ParatroopersPowerInfo;
 
 			if (randomize)
-				dropFacing = Util.QuantizeFacing(self.World.SharedRandom.Next(256), info.QuantizedFacings) * (256 / info.QuantizedFacings);
+				dropFacing = 256 * self.World.SharedRandom.Next(info.QuantizedFacings) / info.QuantizedFacings;
 
-			var altitude = self.World.Map.Rules.Actors[info.UnitType].TraitInfo<AircraftInfo>().CruiseAltitude.Length;
+			var utLower = info.UnitType.ToLowerInvariant();
+			ActorInfo unitType;
+			if (!self.World.Map.Rules.Actors.TryGetValue(utLower, out unitType))
+				throw new YamlException("Actors ruleset does not include the entry '{0}'".F(utLower));
+
+			var altitude = unitType.TraitInfo<AircraftInfo>().CruiseAltitude.Length;
 			var dropRotation = WRot.FromFacing(dropFacing);
 			var delta = new WVec(0, -1024, 0).Rotate(dropRotation);
 			target = target + new WVec(0, 0, altitude);
@@ -198,9 +205,14 @@ namespace OpenRA.Mods.RA.Traits
 					beacon = new Beacon(
 						self.Owner,
 						target - new WVec(0, 0, altitude),
-						Info.BeaconPalettePrefix,
+						Info.BeaconPaletteIsPlayerPalette,
+						Info.BeaconPalette,
+						Info.BeaconImage,
 						Info.BeaconPoster,
 						Info.BeaconPosterPalette,
+						Info.ArrowSequence,
+						Info.CircleSequence,
+						Info.ClockSequence,
 						() => 1 - ((distanceTestActor.CenterPosition - target).HorizontalLength - info.BeaconDistanceOffset.Length) * 1f / distance);
 
 					w.Add(beacon);

@@ -1,28 +1,34 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Effects;
 using OpenRA.GameRules;
 using OpenRA.Graphics;
+using OpenRA.Mods.Common;
+using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Mods.Common.Traits.Render;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.D2k.Traits
 {
 	[Desc("Seeds resources by explosive eruptions after accumulation times.")]
-	public class SpiceBloomInfo : ITraitInfo, Requires<RenderSpritesInfo>
+	public class SpiceBloomInfo : ITraitInfo, IRenderActorPreviewSpritesInfo, Requires<RenderSpritesInfo>
 	{
+		[ActorReference]
+		public readonly string SpawnActor = "spicebloom.spawnpoint";
+
 		[SequenceReference]
 		public readonly string[] GrowthSequences = { "grow1", "grow2", "grow3" };
 
@@ -30,21 +36,32 @@ namespace OpenRA.Mods.D2k.Traits
 		public readonly int[] RespawnDelay = { 1500, 2500 };
 
 		[Desc("The range of time (in ticks) that the spicebloom will take to grow.")]
-		public readonly int[] GrowthDelay = { 1000, 1500 };
+		public readonly int[] GrowthDelay = { 1000, 3000 };
 
 		public readonly string ResourceType = "Spice";
 
+		[Desc("Spice blooms only grow on these terrain types.")]
+		public readonly HashSet<string> GrowthTerrainTypes = new HashSet<string>();
+
 		[Desc("The weapon to use for spice creation.")]
 		[WeaponReference]
-		public readonly string Weapon = "SpiceExplosion";
+		public readonly string Weapon = null;
 
 		[Desc("The amount of spice to expel.")]
-		public readonly int[] Pieces = { 3, 10 };
+		public readonly int[] Pieces = { 2, 12 };
 
 		[Desc("The maximum distance in cells that spice may be expelled.")]
 		public readonly int Range = 5;
 
 		public object Create(ActorInitializer init) { return new SpiceBloom(init, this); }
+
+		public IEnumerable<IActorPreview> RenderPreviewSprites(ActorPreviewInitializer init, RenderSpritesInfo rs, string image, int facings, PaletteReference p)
+		{
+			var anim = new Animation(init.World, image);
+			anim.PlayRepeating(RenderSprites.NormalizeSequence(anim, init.GetDamageState(), GrowthSequences[0]));
+
+			yield return new SpriteActorPreview(anim, () => WVec.Zero, () => 0, p, rs.Scale);
+		}
 	}
 
 	public class SpiceBloom : ITick, INotifyKilled
@@ -78,6 +95,12 @@ namespace OpenRA.Mods.D2k.Traits
 
 		public void Tick(Actor self)
 		{
+			if (!self.World.Map.Contains(self.Location))
+				return;
+
+			if (info.GrowthTerrainTypes.Count > 0 && !info.GrowthTerrainTypes.Contains(self.World.Map.GetTerrainInfo(self.Location).Type))
+				return;
+
 			ticks++;
 
 			if (ticks >= growTicks)
@@ -89,32 +112,36 @@ namespace OpenRA.Mods.D2k.Traits
 			}
 		}
 
-		public void Killed(Actor self, AttackInfo e)
+		void SeedResources(Actor self)
 		{
-			var args = new ProjectileArgs
-			{
-				Weapon = self.World.Map.Rules.Weapons[info.Weapon.ToLowerInvariant()],
-				Facing = 0,
-
-				DamageModifiers = self.TraitsImplementing<IFirepowerModifier>()
-					.Select(a => a.GetFirepowerModifier()).ToArray(),
-
-				InaccuracyModifiers = self.TraitsImplementing<IInaccuracyModifier>()
-					.Select(a => a.GetInaccuracyModifier()).ToArray(),
-
-				Source = self.CenterPosition,
-				SourceActor = self,
-			};
-
 			var pieces = self.World.SharedRandom.Next(info.Pieces[0], info.Pieces[1]) * ticks / growTicks;
-			for (var i = 0; pieces > i; i++)
-			{
-				var cells = OpenRA.Traits.Util.RandomWalk(self.Location, self.World.SharedRandom);
-				var cell = cells.Take(info.Range).SkipWhile(p => resLayer.GetResource(p) == resType && resLayer.IsFull(p)).Cast<CPos?>().RandomOrDefault(self.World.SharedRandom);
-				if (cell == null)
-					cell = cells.Take(info.Range).Random(self.World.SharedRandom);
+			if (pieces < info.Pieces[0])
+				pieces = info.Pieces[0];
 
-				args.PassiveTarget = self.World.Map.CenterOfCell(cell.Value);
+			var cells = self.World.Map.FindTilesInAnnulus(self.Location, 1, info.Range);
+
+			for (var i = 0; i < pieces; i++)
+			{
+				var cell = cells.SkipWhile(p => resLayer.GetResource(p) == resType && resLayer.IsFull(p)).Cast<CPos?>().RandomOrDefault(self.World.SharedRandom);
+				if (cell == null)
+					cell = cells.Random(self.World.SharedRandom);
+
+				var args = new ProjectileArgs
+				{
+					Weapon = self.World.Map.Rules.Weapons[info.Weapon.ToLowerInvariant()],
+					Facing = 0,
+
+					DamageModifiers = self.TraitsImplementing<IFirepowerModifier>()
+						.Select(a => a.GetFirepowerModifier()).ToArray(),
+
+					InaccuracyModifiers = self.TraitsImplementing<IInaccuracyModifier>()
+						.Select(a => a.GetInaccuracyModifier()).ToArray(),
+
+					Source = self.CenterPosition,
+					CurrentSource = () => self.CenterPosition,
+					SourceActor = self,
+					PassiveTarget = self.World.Map.CenterOfCell(cell.Value)
+				};
 
 				self.World.AddFrameEndTask(_ =>
 				{
@@ -129,6 +156,12 @@ namespace OpenRA.Mods.D2k.Traits
 					}
 				});
 			}
+		}
+
+		public void Killed(Actor self, AttackInfo e)
+		{
+			if (!string.IsNullOrEmpty(info.Weapon))
+				SeedResources(self);
 
 			self.World.AddFrameEndTask(t => t.Add(new DelayedAction(respawnTicks, () =>
 			{
@@ -141,7 +174,7 @@ namespace OpenRA.Mods.D2k.Traits
 					new FactionInit(self.Owner.Faction.InternalName),
 					new SkipMakeAnimsInit()
 				};
-				self.World.CreateActor(self.Info.Name, td);
+				self.World.CreateActor(info.SpawnActor, td);
 			})));
 		}
 	}

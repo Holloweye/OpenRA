@@ -30,6 +30,7 @@ GAPOWR:
 		Amount: 100
 	InfiltrateForPowerOutage:
 	AffectedByPowerOutage:
+	PowerTooltip:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, SpyInfiltrate
 	ScalePowerWithHealth:
@@ -108,6 +109,14 @@ GAPILE:
 	ProvidesPrerequisite@buildingname:
 	SelectionDecorations:
 		VisualBounds: 88, 56, 0, -8
+	WithTextDecoration@primary:
+		RequiresSelection: true
+		Text: PRIMARY
+		ReferencePoint: Top
+		Color: E0D048
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 GAWEAP:
 	Inherits: ^Building
@@ -131,13 +140,15 @@ GAWEAP:
 		HP: 1000
 	RevealsShroud:
 		Range: 4c0
+	Armor:
+		Type: Heavy
 	RallyPoint:
-		Offset: 6,1
+		Offset: 4,1
 		Palette: mouse
 		IsPlayerPalette: false
 	Exit@1:
 		SpawnOffset: -384,-384,0
-		ExitCell: 4,1
+		ExitCell: 3,1
 		ExitDelay: 5
 	Production:
 		Produces: Vehicle
@@ -159,6 +170,14 @@ GAWEAP:
 	ProvidesPrerequisite@buildingname:
 	SelectionDecorations:
 		VisualBounds: 154, 100, -2, -12
+	WithTextDecoration@primary:
+		RequiresSelection: true
+		Text: PRIMARY
+		ReferencePoint: Top
+		Color: E0D048
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 GAHPAD:
 	Inherits: ^Building
@@ -203,6 +222,14 @@ GAHPAD:
 	ProvidesPrerequisite@buildingname:
 	SelectionDecorations:
 		VisualBounds: 88, 66, 0, -5
+	WithTextDecoration@primary:
+		RequiresSelection: true
+		Text: PRIMARY
+		ReferencePoint: Top
+		Color: E0D048
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 GADEPT:
 	Inherits: ^Building
@@ -272,12 +299,14 @@ GARADR:
 	Selectable:
 		Bounds: 96, 48, 0, -6
 	Health:
-		HP: 800
+		HP: 1000
 	Armor:
 		Type: Wood
 	RequiresPower:
 	CanPowerDown:
 		IndicatorPalette: mouse
+		PowerupSpeech: EnablePower
+		PowerdownSpeech: DisablePower
 	ProvidesRadar:
 	InfiltrateForExploration:
 	DetectCloaked:
@@ -303,7 +332,7 @@ GATECH:
 		BuildPaletteOrder: 100
 		Prerequisites: gaweap, garadr, ~structures.gdi
 	Valued:
-		Cost: 2000
+		Cost: 1500
 	Tooltip:
 		Name: GDI Tech Center
 		Description: Provides access to advanced GDI technologies.
@@ -347,6 +376,8 @@ GAPLUG:
 	RequiresPower:
 	CanPowerDown:
 		IndicatorPalette: mouse
+		PowerupSpeech: EnablePower
+		PowerdownSpeech: DisablePower
 	DisabledOverlay:
 	WithIdleOverlay@DISH:
 		Sequence: idle-dish
@@ -361,6 +392,7 @@ GAPLUG:
 	RevealsShroud:
 		Range: 6c0
 	IonCannonPower:
+		Cursor: ioncannon
 		UpgradeTypes: plug.ioncannon
 		UpgradeMinEnabledLevel: 1
 		Icon: ioncannon
@@ -368,11 +400,8 @@ GAPLUG:
 		ChargeTime: 180
 		Description: Ion Cannon
 		LongDesc: Initiate an Ion Cannon strike.\nApplies instant damage to a small area.
-		BeginChargeSound:
-		EndChargeSound: 00-i156.aud
-		LaunchSound:
-		SelectTargetSound:
-		InsufficientPowerSound:
+		EndChargeSpeechNotification: IonCannonReady
+		SelectTargetSpeechNotification: SelectTarget
 		DisplayRadarPing: True
 		CameraActor: camera
 	ProduceActorPower:
@@ -427,4 +456,3 @@ GAPLUG:
 	ProvidesPrerequisite@buildingname:
 	SelectionDecorations:
 		VisualBounds: 115,104,0,-24
-

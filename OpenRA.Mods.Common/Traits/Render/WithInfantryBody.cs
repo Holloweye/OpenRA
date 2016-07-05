@@ -1,25 +1,27 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.Common.Traits
+namespace OpenRA.Mods.Common.Traits.Render
 {
 	public class WithInfantryBodyInfo : UpgradableTraitInfo, IRenderActorPreviewSpritesInfo, Requires<IMoveInfo>, Requires<RenderSpritesInfo>
 	{
-		public readonly int MinIdleWaitTicks = 30;
-		public readonly int MaxIdleWaitTicks = 110;
+		public readonly int MinIdleDelay = 30;
+		public readonly int MaxIdleDelay = 110;
 
 		[SequenceReference] public readonly string MoveSequence = "run";
 		[SequenceReference] public readonly string AttackSequence = null;
@@ -30,14 +32,9 @@ namespace OpenRA.Mods.Common.Traits
 
 		public IEnumerable<IActorPreview> RenderPreviewSprites(ActorPreviewInitializer init, RenderSpritesInfo rs, string image, int facings, PaletteReference p)
 		{
-			var facing = 0;
-			var ifacing = init.Actor.TraitInfoOrDefault<IFacingInfo>();
-			if (ifacing != null)
-				facing = init.Contains<FacingInit>() ? init.Get<FacingInit, int>() : ifacing.GetInitialFacing();
-
-			var anim = new Animation(init.World, image, () => facing);
+			var anim = new Animation(init.World, image, init.GetFacing());
 			anim.PlayRepeating(RenderSprites.NormalizeSequence(anim, init.GetDamageState(), StandSequences.First()));
-			yield return new SpriteActorPreview(anim, WVec.Zero, 0, p, rs.Scale);
+			yield return new SpriteActorPreview(anim, () => WVec.Zero, () => 0, p, rs.Scale);
 		}
 	}
 
@@ -73,7 +70,10 @@ namespace OpenRA.Mods.Common.Traits
 		{
 			var sequence = DefaultAnimation.GetRandomExistingSequence(Info.StandSequences, Game.CosmeticRandom);
 			if (sequence != null)
-				DefaultAnimation.PlayFetchIndex(NormalizeInfantrySequence(self, sequence), () => 0);
+			{
+				var normalized = NormalizeInfantrySequence(self, sequence);
+				DefaultAnimation.PlayRepeating(normalized);
+			}
 		}
 
 		public void Created(Actor self)
@@ -105,10 +105,12 @@ namespace OpenRA.Mods.Common.Traits
 			}
 		}
 
-		public void Attacking(Actor self, Target target, Armament a, Barrel barrel)
+		void INotifyAttack.PreparingAttack(Actor self, Target target, Armament a, Barrel barrel)
 		{
 			Attacking(self, target);
 		}
+
+		void INotifyAttack.Attacking(Actor self, Target target, Armament a, Barrel barrel) { }
 
 		public virtual void Tick(Actor self)
 		{
@@ -145,7 +147,7 @@ namespace OpenRA.Mods.Common.Traits
 				if (Info.IdleSequences.Length > 0)
 				{
 					idleSequence = Info.IdleSequences.Random(self.World.SharedRandom);
-					idleDelay = self.World.SharedRandom.Next(Info.MinIdleWaitTicks, Info.MaxIdleWaitTicks);
+					idleDelay = self.World.SharedRandom.Next(Info.MinIdleDelay, Info.MaxIdleDelay);
 				}
 			}
 			else if (AllowIdleAnimation(self))

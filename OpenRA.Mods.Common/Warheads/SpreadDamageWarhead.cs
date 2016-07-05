@@ -1,14 +1,14 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
-using System;
 using System.Collections.Generic;
 using OpenRA.GameRules;
 using OpenRA.Mods.Common.Traits;
@@ -22,10 +22,10 @@ namespace OpenRA.Mods.Common.Warheads
 		public readonly WDist Spread = new WDist(43);
 
 		[Desc("Extra search radius beyond maximum spread. Required to ensure damage to actors with large health radius.")]
-		public readonly WDist TargetExtraSearchRadius = new WDist(2048);
+		public readonly WDist TargetExtraSearchRadius = new WDist(1536);
 
 		[Desc("Damage percentage at each range step")]
-		public readonly int[] Falloff = { 100, 37, 14, 5, 2, 1, 0 };
+		public readonly int[] Falloff = { 100, 37, 14, 5, 0 };
 
 		[Desc("Ranges at which each Falloff step is defined. Overrides Spread.")]
 		public WDist[] Range = null;
@@ -35,11 +35,11 @@ namespace OpenRA.Mods.Common.Warheads
 			if (Range != null)
 			{
 				if (Range.Length != 1 && Range.Length != Falloff.Length)
-					throw new InvalidOperationException("Number of range values must be 1 or equal to the number of Falloff values.");
+					throw new YamlException("Number of range values must be 1 or equal to the number of Falloff values.");
 
 				for (var i = 0; i < Range.Length - 1; i++)
 					if (Range[i] > Range[i + 1])
-						throw new InvalidOperationException("Range values must be specified in an increasing order.");
+						throw new YamlException("Range values must be specified in an increasing order.");
 			}
 			else
 				Range = Exts.MakeArray(Falloff.Length, i => i * Spread);
@@ -53,7 +53,7 @@ namespace OpenRA.Mods.Common.Warheads
 			{
 				var devMode = world.LocalPlayer.PlayerActor.TraitOrDefault<DeveloperMode>();
 				if (devMode != null && devMode.ShowCombatGeometry)
-					world.WorldActor.Trait<WarheadDebugOverlay>().AddImpact(pos, Range);
+					world.WorldActor.Trait<WarheadDebugOverlay>().AddImpact(pos, Range, DebugOverlayColor);
 			}
 
 			// This only finds actors where the center is within the search radius,
@@ -62,16 +62,12 @@ namespace OpenRA.Mods.Common.Warheads
 
 			foreach (var victim in hitActors)
 			{
-				if (!IsValidAgainst(victim, firedBy))
+				var healthInfo = victim.Info.TraitInfoOrDefault<HealthInfo>();
+				if (healthInfo == null)
 					continue;
 
-				var localModifiers = damageModifiers;
-				var healthInfo = victim.Info.TraitInfoOrDefault<HealthInfo>();
-				if (healthInfo != null)
-				{
-					var distance = Math.Max(0, (victim.CenterPosition - pos).Length - healthInfo.Radius.Length);
-					localModifiers = localModifiers.Append(GetDamageFalloff(distance));
-				}
+				var distance = healthInfo.Shape.DistanceFromEdge(pos, victim);
+				var localModifiers = damageModifiers.Append(GetDamageFalloff(distance.Length));
 
 				DoImpact(victim, firedBy, localModifiers);
 			}

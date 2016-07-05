@@ -6,6 +6,7 @@
 	ScriptTriggers:
 	UpgradeManager:
 	Huntable:
+	RenderDebugState:
 
 ^SpriteActor:
 	BodyOrientation:
@@ -37,8 +38,8 @@
 		Modifier: 90, 80, 70, 50
 	SelfHealing@ELITE:
 		Step: 2
-		Ticks: 100
-		HealIfBelow: 1
+		Delay: 100
+		HealIfBelow: 100
 		DamageCooldown: 125
 		UpgradeTypes: selfheal
 		UpgradeMinEnabledLevel: 1
@@ -47,7 +48,6 @@
 		Sequence: rank
 		Palette: effect
 		ReferencePoint: Bottom, Right
-		Offset: 2, 2
 		UpgradeTypes: rank
 		ZOffset: 256
 		UpgradeMinEnabledLevel: 1
@@ -66,7 +66,7 @@
 			Tiberium: 50
 			BlueTiberium: 50
 			Beach: 50
-		ROT: 5
+		TurnSpeed: 5
 	SelectionDecorations:
 	Selectable:
 		Bounds: 24,24
@@ -79,7 +79,7 @@
 	HiddenUnderFog:
 	AttackMove:
 	DrawLineToTarget:
-	WithSmoke:
+	WithDamageOverlay:
 	WithFacingSpriteBody:
 	Explodes:
 		Weapon: UnitExplodeSmall
@@ -98,6 +98,8 @@
 	MustBeDestroyed:
 	Voiced:
 		VoiceSet: VehicleVoice
+	BodyOrientation:
+		UseClassicFacingFudge: True
 
 ^Tank:
 	Inherits: ^Vehicle
@@ -110,7 +112,7 @@
 			Tiberium: 70
 			BlueTiberium: 70
 			Beach: 70
-		ROT: 5
+		TurnSpeed: 5
 	Tooltip:
 		GenericName: Tank
 
@@ -133,9 +135,9 @@
 		Bounds: 24,24
 	Aircraft:
 		RepairBuildings: hpad
-		RearmBuildings:
 		LandWhenIdle: false
 		AirborneUpgrades: airborne
+		CruisingUpgrades: cruising
 		CanHover: True
 	HiddenUnderFog:
 		Type: CenterPosition
@@ -151,17 +153,24 @@
 		GenericName: Helicopter
 	WithFacingSpriteBody:
 	WithShadow:
-	Hovers:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	Hovers@CRUISING:
+		UpgradeTypes: cruising
+		UpgradeMinEnabledLevel: 1
 	MustBeDestroyed:
 	Voiced:
 		VoiceSet: VehicleVoice
+	BodyOrientation:
+		UseClassicFacingFudge: True
 
 ^Infantry:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^GainsExperience
 	Inherits@3: ^SpriteActor
 	Health:
-		Radius: 128
+		Shape: Circle
+			Radius: 128
 	Armor:
 		Type: None
 	RevealsShroud:
@@ -189,7 +198,8 @@
 	WithDeathAnimation:
 		DeathTypes:
 			DefaultDeath: 1
-			BulletDeath: 2
+			BulletDeath: 1
+			RippedApartDeath: 2
 			SmallExplosionDeath: 3
 			ExplosionDeath: 4
 			FireDeath: 5
@@ -201,6 +211,17 @@
 		CargoType: Infantry
 	HiddenUnderFog:
 	PoisonedByTiberium:
+		UpgradeTypes: hazmatsuits
+		UpgradeMaxEnabledLevel: 0
+	GlobalUpgradable@BIO:
+		Upgrades: hazmatsuits
+		Prerequisites: bio
+	WithDecoration@HAZMAT:
+		Image: pips
+		Sequence: pip-hazmat
+		ReferencePoint: Bottom, Right
+		UpgradeTypes: hazmatsuits
+		UpgradeMinEnabledLevel: 1
 	ActorLostNotification:
 	SpawnActorOnDeath:
 		Probability: 10
@@ -215,14 +236,20 @@
 	Guardable:
 	SelfHealing@HOSPITAL:
 		Step: 5
-		Ticks: 100
-		HealIfBelow: 1
+		Delay: 100
+		HealIfBelow: 100
 		DamageCooldown: 125
 		UpgradeTypes: hospitalheal
 		UpgradeMinEnabledLevel: 1
-	GlobalUpgradable:
+	GlobalUpgradable@HOSPITAL:
 		Upgrades: hospitalheal
 		Prerequisites: hosp
+	WithDecoration@REDCROSS:
+		Image: pips
+		Sequence: pip-heal
+		ReferencePoint: Bottom, Right
+		UpgradeTypes: hospitalheal
+		UpgradeMinEnabledLevel: 1
 	DetectCloaked:
 		Range: 2c0
 	DeathSounds@NORMAL:
@@ -266,9 +293,6 @@
 		HP: 25
 	RevealsShroud:
 		Range: 2c0
-	Armament:
-		Weapon: Pistol
-	AttackFrontal:
 	ActorLostNotification:
 		Notification: CivilianKilled
 		NotifyAll: true
@@ -277,6 +301,14 @@
 		CrushSound: squish2.aud
 	Voiced:
 		VoiceSet: CivilianMaleVoice
+	Wanders:
+		MinMoveDelay: 150
+		MaxMoveDelay: 750
+
+^ArmedCivilian:
+	Armament:
+		Weapon: Pistol
+	AttackFrontal:
 	WithInfantryBody:
 		AttackSequence: shoot
 
@@ -284,13 +316,15 @@
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
 	Health:
-		Radius: 128
 		HP: 1000
+		Shape: Circle
+			Radius: 128
 	Armor:
 		Type: Wood
 	Buildable:
 		Queue: Biolab
 		BuildPaletteOrder: 50
+		Prerequisites: ~disabled
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -337,8 +371,9 @@
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
 	Health:
-		Radius: 427
 		HP: 300
+		Shape: Circle
+			Radius: 427
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -393,9 +428,12 @@
 		UseLocation: yes
 	HiddenUnderFog:
 		Type: CenterPosition
+		AlwaysVisibleStances: None
 	ActorLostNotification:
 	AttackMove:
 	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
 	WithFacingSpriteBody:
 	FlyAwayOnIdle:
 	RejectsOrders:
@@ -418,8 +456,14 @@
 	ActorLostNotification:
 	AttackMove:
 	DrawLineToTarget:
+	WithDamageOverlay:
+	Explodes:
+		Weapon: UnitExplodeShip
+		EmptyWeapon: UnitExplodeShip
 	Guard:
 	Guardable:
+	Tooltip:
+		GenericName: Ship
 	Voiced:
 		VoiceSet: VehicleVoice
 
@@ -441,6 +485,7 @@
 		DestroyedSounds: crumble.aud
 	WithSpriteBody:
 	WithBuildingExplosion:
+		Sequences: building, building_napalm, med_frag, poof, small_building
 		Delay: 1
 	CaptureNotification:
 		Notification: BuildingCaptured
@@ -485,10 +530,10 @@
 	Health:
 		HP: 400
 	Tooltip:
-		Name: Civilian Building
-		GenericVisibility: None
+		GenericName: Civilian Building
+		GenericStancePrefix: false
+		ShowOwnerRow: false
 	FrozenUnderFog:
-		StartsRevealed: true
 
 ^CivBuildingHusk:
 	Inherits@1: ^SpriteActor
@@ -498,10 +543,10 @@
 		Footprint: x
 	WithSpriteBody:
 	Tooltip:
-		Name: Civilian Building (Destroyed)
-		GenericVisibility: None
+		GenericName: Civilian Building (Destroyed)
+		GenericStancePrefix: false
+		ShowOwnerRow: false
 	FrozenUnderFog:
-		StartsRevealed: true
 	ScriptTriggers:
 
 ^TechBuilding:
@@ -515,12 +560,14 @@
 	EngineerRepairable:
 	RevealsShroud:
 		Range: 3c0
+	Tooltip:
+		ShowOwnerRow: True
 
 ^CivField:
 	Inherits: ^CivBuilding
 	-Selectable:
 	Tooltip:
-		Name: Field
+		GenericName: Field
 	-WithBuildingExplosion:
 	-Targetable:
 	-Demolishable:
@@ -536,15 +583,16 @@
 	Tooltip:
 		Name: Field (Destroyed)
 		GenericVisibility: None
+		ShowOwnerRow: false
 	RenderSprites:
 		Palette: terrain
 	WithSpriteBody:
 	FrozenUnderFog:
-		StartsRevealed: true
 	ScriptTriggers:
 
 ^Wall:
 	Inherits@1: ^SpriteActor
+	CombatDebugOverlay:
 	AppearsOnRadar:
 	Building:
 		Dimensions: 1,1
@@ -572,11 +620,17 @@
 	Guardable:
 	FrozenUnderFog:
 	ScriptTriggers:
+	Health:
+		HP: 100
+		Shape: Rectangle
+			TopLeft: -512, -512
+			BottomRight: 512, 512
 
 ^Tree:
 	Inherits@1: ^SpriteActor
 	Tooltip:
 		Name: Tree
+		ShowOwnerRow: false
 	RenderSprites:
 		Palette: staticterrain
 	WithSpriteBody:
@@ -590,14 +644,45 @@
 		HP: 500
 	Armor:
 		Type: Wood
+	Targetable:
+		TargetTypes: Trees
+	WithDamageOverlay@SmallBurn:
+		DamageType: Incendiary
+		Image: burn-s
+		MinimumDamageState: Light
+		MaximumDamageState: Medium
+	WithDamageOverlay@MediumBurn:
+		DamageType: Incendiary
+		Image: burn-m
+		MinimumDamageState: Medium
+		MaximumDamageState: Heavy
+	WithDamageOverlay@LargeBurn:
+		DamageType: Incendiary
+		Image: burn-l
+		MinimumDamageState: Heavy
+		MaximumDamageState: Dead
 	AutoTargetIgnore:
 	HiddenUnderShroud:
+	ScriptTriggers:
+
+^TreeHusk:
+	Inherits@1: ^SpriteActor
+	AppearsOnRadar:
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	WithSpriteBody:
+	Tooltip:
+		Name: Tree (Burnt)
+		ShowOwnerRow: false
+	FrozenUnderFog:
 	ScriptTriggers:
 
 ^TibTree:
 	Inherits@1: ^SpriteActor
 	Tooltip:
 		Name: Blossom Tree
+		ShowOwnerRow: false
 	RenderSprites:
 		Palette: staticterrain
 	WithSpriteBody:
@@ -614,6 +699,7 @@
 	Inherits@1: ^SpriteActor
 	Tooltip:
 		Name: Rock
+		ShowOwnerRow: false
 	RenderSprites:
 		Palette: staticterrain
 	WithSpriteBody:
@@ -651,7 +737,7 @@
 	Capturable:
 		Type: husk
 		AllowAllies: yes
-		CaptureThreshold: 1.0
+		CaptureThreshold: 100
 	TransformOnCapture:
 		ForceHealthPercentage: 25
 	Tooltip:
@@ -661,10 +747,14 @@
 	Explodes:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
+	BodyOrientation:
+		UseClassicFacingFudge: True
 
 ^HelicopterHusk:
 	Inherits: ^CommonHuskDefaults
 	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
 	Aircraft:
 		AirborneUpgrades: airborne
 		CanHover: True
@@ -674,11 +764,14 @@
 		Explosion: HeliCrash
 	Tooltip:
 		GenericName: Destroyed Helicopter
+	BodyOrientation:
+		UseClassicFacingFudge: True
 
 ^Bridge:
 	AlwaysVisible:
 	Tooltip:
 		Name: Bridge
+		ShowOwnerRow: false
 	Targetable:
 		RequiresForceFire: yes
 		TargetTypes: Ground, Water
@@ -695,6 +788,7 @@
 	Tooltip:
 		Name: Crate
 		GenericName: Crate
+		ShowOwnerRow: false
 	Crate:
 		TerrainTypes: Clear, Rough, Road, Tiberium, BlueTiberium, Beach
 	RenderSprites:
@@ -711,4 +805,3 @@
 	-GivesBuildableArea:
 	MustBeDestroyed:
 		RequiredForShortGame: false
-

@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -15,7 +16,7 @@ using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.Common.Traits
+namespace OpenRA.Mods.Common.Traits.Render
 {
 	public class SelectionDecorationsInfo : ITraitInfo, ISelectionDecorationsInfo
 	{
@@ -33,24 +34,32 @@ namespace OpenRA.Mods.Common.Traits
 
 		public readonly Color SelectionBoxColor = Color.White;
 
+		public readonly string Image = "pips";
+
+		[Desc("Sprite sequence used to render the control group 0-9 numbers.")]
+		[SequenceReference("Image")] public readonly string GroupSequence = "groups";
+
 		public object Create(ActorInitializer init) { return new SelectionDecorations(init.Self, this); }
 
 		public int[] SelectionBoxBounds { get { return VisualBounds; } }
 	}
 
-	public class SelectionDecorations : IPostRenderSelection
+	public class SelectionDecorations : IPostRenderSelection, ITick
 	{
 		// depends on the order of pips in TraitsInterfaces.cs!
 		static readonly string[] PipStrings = { "pip-empty", "pip-green", "pip-yellow", "pip-red", "pip-gray", "pip-blue", "pip-ammo", "pip-ammoempty" };
-		static readonly string[] TagStrings = { "", "tag-fake", "tag-primary" };
 
 		public readonly SelectionDecorationsInfo Info;
+
 		readonly Actor self;
+		readonly Animation pipImages;
 
 		public SelectionDecorations(Actor self, SelectionDecorationsInfo info)
 		{
 			this.self = self;
 			Info = info;
+
+			pipImages = new Animation(self.World, Info.Image);
 		}
 
 		IEnumerable<WPos> ActivityTargetPath()
@@ -78,7 +87,7 @@ namespace OpenRA.Mods.Common.Traits
 				yield return new SelectionBoxRenderable(self, Info.SelectionBoxColor);
 
 			if (Info.RenderSelectionBars)
-				yield return new SelectionBarsRenderable(self);
+				yield return new SelectionBarsRenderable(self, true, true);
 
 			if (!self.Owner.IsAlliedWith(wr.World.RenderPlayer))
 				yield break;
@@ -90,46 +99,38 @@ namespace OpenRA.Mods.Common.Traits
 			var pos = wr.ScreenPxPosition(self.CenterPosition);
 			var tl = wr.Viewport.WorldToViewPx(pos + new int2(b.Left, b.Top));
 			var bl = wr.Viewport.WorldToViewPx(pos + new int2(b.Left, b.Bottom));
-			var tm = wr.Viewport.WorldToViewPx(pos + new int2((b.Left + b.Right) / 2, b.Top));
+			var pal = wr.Palette(Info.Palette);
 
-			foreach (var r in DrawControlGroup(wr, self, tl))
+			foreach (var r in DrawControlGroup(wr, self, tl, pal))
 				yield return r;
 
-			foreach (var r in DrawPips(wr, self, bl))
-				yield return r;
-
-			foreach (var r in DrawTags(wr, self, tm))
+			foreach (var r in DrawPips(wr, self, bl, pal))
 				yield return r;
 		}
 
-		IEnumerable<IRenderable> DrawControlGroup(WorldRenderer wr, Actor self, int2 basePosition)
+		IEnumerable<IRenderable> DrawControlGroup(WorldRenderer wr, Actor self, int2 basePosition, PaletteReference palette)
 		{
 			var group = self.World.Selection.GetControlGroupForActor(self);
 			if (group == null)
 				yield break;
 
-			var pipImages = new Animation(self.World, "pips");
-			var pal = wr.Palette(Info.Palette);
-			pipImages.PlayFetchIndex("groups", () => (int)group);
-			pipImages.Tick();
+			pipImages.PlayFetchIndex(Info.GroupSequence, () => (int)group);
 
-			var pos = basePosition - (0.5f * pipImages.Image.Size).ToInt2() + new int2(9, 5);
-			yield return new UISpriteRenderable(pipImages.Image, pos, 0, pal, 1f);
+			var pos = basePosition - (0.5f * pipImages.Image.Size.XY).ToInt2() + new int2(9, 5);
+			yield return new UISpriteRenderable(pipImages.Image, self.CenterPosition, pos, 0, palette, 1f);
 		}
 
-		IEnumerable<IRenderable> DrawPips(WorldRenderer wr, Actor self, int2 basePosition)
+		IEnumerable<IRenderable> DrawPips(WorldRenderer wr, Actor self, int2 basePosition, PaletteReference palette)
 		{
 			var pipSources = self.TraitsImplementing<IPips>();
 			if (!pipSources.Any())
 				yield break;
 
-			var pipImages = new Animation(self.World, "pips");
 			pipImages.PlayRepeating(PipStrings[0]);
 
-			var pipSize = pipImages.Image.Size.ToInt2();
+			var pipSize = pipImages.Image.Size.XY.ToInt2();
 			var pipxyBase = basePosition + new int2(1 - pipSize.X / 2, -(3 + pipSize.Y / 2));
 			var pipxyOffset = new int2(0, 0);
-			var pal = wr.Palette(Info.Palette);
 			var width = self.VisualBounds.Width;
 
 			foreach (var pips in pipSources)
@@ -146,7 +147,7 @@ namespace OpenRA.Mods.Common.Traits
 					pipImages.PlayRepeating(PipStrings[(int)pip]);
 					pipxyOffset += new int2(pipSize.X, 0);
 
-					yield return new UISpriteRenderable(pipImages.Image, pipxyBase + pipxyOffset, 0, pal, 1f);
+					yield return new UISpriteRenderable(pipImages.Image, self.CenterPosition, pipxyBase + pipxyOffset, 0, palette, 1f);
 				}
 
 				// Increment row
@@ -154,27 +155,9 @@ namespace OpenRA.Mods.Common.Traits
 			}
 		}
 
-		IEnumerable<IRenderable> DrawTags(WorldRenderer wr, Actor self, int2 basePosition)
+		void ITick.Tick(Actor self)
 		{
-			var tagImages = new Animation(self.World, "pips");
-			var pal = wr.Palette(Info.Palette);
-			var tagxyOffset = new int2(0, 6);
-
-			foreach (var tags in self.TraitsImplementing<ITags>())
-			{
-				foreach (var tag in tags.GetTags())
-				{
-					if (tag == TagType.None)
-						continue;
-
-					tagImages.PlayRepeating(TagStrings[(int)tag]);
-					var pos = basePosition + tagxyOffset - (0.5f * tagImages.Image.Size).ToInt2();
-					yield return new UISpriteRenderable(tagImages.Image, pos, 0, pal, 1f);
-
-					// Increment row
-					tagxyOffset = tagxyOffset.WithY(tagxyOffset.Y + 8);
-				}
-			}
+			pipImages.Tick();
 		}
 	}
 }

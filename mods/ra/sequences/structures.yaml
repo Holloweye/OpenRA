@@ -127,30 +127,39 @@ powr:
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
 	icon: powricon
+	fake-icon: fpwricon
 
 apwr:
 	idle:
+		Offset: 0,-10
 	damaged-idle:
 		Start: 1
+		Offset: 0,-10
 	make: apwrmake
 		Length: *
+		Offset: 0,-10
 	dead: apwrdead
 		Tick: 800
+		Offset: 0,-10
 	bib: bib2
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
 	icon: apwricon
+	fake-icon: fapwicon
 
 barr:
 	idle:
 		Length: 10
+		Offset: 0,-6
 	damaged-idle:
 		Start: 10
 		Length: 10
+		Offset: 0,-6
 	make: barrmake
 		Length: *
+		Offset: 0,-6
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true
@@ -277,22 +286,27 @@ afld:
 		Length: 8
 		Tick: 160
 		ZOffset: -1023
+		Offset: 0,-4
 	damaged-idle: afldidle
 		Start: 8
 		Length: 8
 		Tick: 160
 		ZOffset: -1023
+		Offset: 0,-4
 	active:
 		Length: 8
 		Tick: 160
 		ZOffset: -1023
+		Offset: 0,-4
 	damaged-active:
 		Start: 8
 		Length: 8
 		Tick: 160
 		ZOffset: -1023
+		Offset: 0,-4
 	make: afldmake
 		Length: *
+		Offset: 0,-4
 	icon: afldicon
 
 spen:
@@ -340,21 +354,26 @@ fix:
 		Offset: 0,-4
 		UseTilesetExtension: true
 	icon: fixicon
+	fake-icon: fixficon
 
 gun:
 	idle:
 		Facings: 32
+		UseClassicFacingFudge: True
 	recoil:
 		Start: 32
 		Facings: 32
+		UseClassicFacingFudge: True
 	make: gunmake
 		Length: *
 	damaged-idle:
 		Start: 64
 		Facings: 32
+		UseClassicFacingFudge: True
 	damaged-recoil:
 		Start: 96
 		Facings: 32
+		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: 5
 	bib: mbGUN
@@ -366,26 +385,30 @@ gun:
 agun:
 	idle:
 		Facings: 32
-		Offset: 0,-1
+		UseClassicFacingFudge: True
+		Offset: 0,-13
 	recoil:
 		Start: 32
 		Facings: 32
-		Offset: 0,-1
+		UseClassicFacingFudge: True
+		Offset: 0,-13
 	make: agunmake
 		Length: *
-		Offset: 0,-1
+		Offset: 0,-13
 	damaged-idle:
 		Start: 64
 		Facings: 32
-		Offset: 0,-1
+		UseClassicFacingFudge: True
+		Offset: 0,-13
 	damaged-recoil:
 		Start: 96
 		Facings: 32
-		Offset: 0,-1
+		UseClassicFacingFudge: True
+		Offset: 0,-13
 	muzzle: gunfire2
 		Start: 1
 		Length: 4
-		Offset: 0,-1
+		Offset: 0,-13
 	bib: mbAGUN
 		Length: *
 		UseTilesetExtension: true
@@ -394,10 +417,12 @@ agun:
 sam:
 	idle: sam2
 		Facings: 32
+		UseClassicFacingFudge: True
 		Offset: -2,-2
 	damaged-idle: sam2
 		Start: 34
 		Facings: 32
+		UseClassicFacingFudge: True
 		Offset: -2,-2
 	make: sammake
 		Length: *
@@ -428,23 +453,23 @@ ftur:
 
 tsla:
 	idle:
-		Offset: 0,-1
+		Offset: 0,-13
 	damaged-idle:
 		Start: 10
-		Offset: 0,-1
+		Offset: 0,-13
 	make: tslamake
 		Length: *
-		Offset: 0,-1
+		Offset: 0,-13
 	active:
 		Start: 1
 		Length: 9
 		Tick: 100
-		Offset: 0,-1
+		Offset: 0,-13
 	damaged-active:
 		Start: 11
 		Length: 9
 		Tick: 100
-		Offset: 0,-1
+		Offset: 0,-13
 	bib: mbTSLA
 		Length: *
 		UseTilesetExtension: true
@@ -485,14 +510,14 @@ hbox:
 gap:
 	idle:
 		Length: 32
-		Offset: 0,-2
+		Offset: 0,-14
 	damaged-idle:
 		Start: 32
 		Length: 32
-		Offset: 0,-2
+		Offset: 0,-14
 	make: gapmake
 		Length: *
-		Offset: 0,-2
+		Offset: 0,-14
 	bib: mbGAP
 		Length: *
 		UseTilesetExtension: true
@@ -585,6 +610,33 @@ brik:
 		Start: 32
 		Length: 16
 	icon: brikicon
+
+vgate:
+	make:
+		Length: 7
+	idle:
+		Frames: 6, 5, 4, 3, 2, 1, 0
+		Length: 7
+		ZOffset: -1c511
+	damaged-idle:
+		Frames: 13, 12, 11, 10, 9, 8, 7
+		Length: 7
+		ZOffset: -1c511
+
+agate:
+	make:
+		Length: 7
+	idle:
+		Frames: 6, 5, 4, 3, 2, 1, 0
+		Length: 7
+		ZOffset: -1c511
+	damaged-idle:
+		Frames: 13, 12, 11, 10, 9, 8, 7
+		Length: 7
+		ZOffset: -1c511
+
+sgate:
+	Inherits: agate
 
 sbag:
 	idle:

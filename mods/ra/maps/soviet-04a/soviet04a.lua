@@ -24,15 +24,15 @@ RunInitialActivities = function()
 	Media.PlaySpeechNotification(player, "ReinforcementsArrived")
 
 	Trigger.OnKilled(Barr, function(building)
-		BaseBuildings[2][4] = false
+		BaseBarracks.exists = false
 	end)
 
 	Trigger.OnKilled(Proc, function(building)
-		BaseBuildings[3][4] = false
+		BaseProc.exists = false
 	end)
 
 	Trigger.OnKilled(Weap, function(building)
-		BaseBuildings[4][4] = false
+		BaseWeaponsFactory.exists = false
 	end)
 
 	Trigger.OnEnteredFootprint(VillageCamArea, function(actor, id)
@@ -83,7 +83,7 @@ RunInitialActivities = function()
 	Trigger.AfterDelay(DateTime.Minutes(1), ProduceInfantry)
 	Trigger.AfterDelay(DateTime.Minutes(2), ProduceArmor)
 
-	if Map.Difficulty == "Hard" or Map.Difficulty == "Medium" then
+	if Map.LobbyOption("difficulty") == "hard" or Map.LobbyOption("difficulty") == "normal" then
 		Trigger.AfterDelay(DateTime.Seconds(15), ReinfInf)
 	end
 	Trigger.AfterDelay(DateTime.Minutes(1), ReinfInf)
@@ -108,9 +108,9 @@ Tick = function()
 
 	if RCheck then
 		RCheck = false
-		if Map.Difficulty == "Hard" then
+		if Map.LobbyOption("difficulty") == "hard" then
 			Trigger.AfterDelay(DateTime.Seconds(150), ReinfArmor)
-		elseif Map.Difficulty == "Medium" then
+		elseif Map.LobbyOption("difficulty") == "normal" then
 			Trigger.AfterDelay(DateTime.Minutes(5), ReinfArmor)
 		else
 			Trigger.AfterDelay(DateTime.Minutes(8), ReinfArmor)

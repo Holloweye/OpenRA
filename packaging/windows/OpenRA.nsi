@@ -59,7 +59,7 @@ Section "-Reg" Reg
 	; Replay file association
 	WriteRegStr HKLM "Software\Classes\.orarep" "" "OpenRA_replay"
 	WriteRegStr HKLM "Software\Classes\OpenRA_replay\DefaultIcon" "" "$INSTDIR\OpenRA.ico,0"
-	WriteRegStr HKLM "Software\Classes\OpenRA_replay\Shell\Open\Command" "" "$INSTDIR\OpenRA.exe Launch.Replay=%1"
+	WriteRegStr HKLM "Software\Classes\OpenRA_replay\Shell\Open\Command" "" "$INSTDIR\OpenRA.exe Launch.Replay=$\"%1$\""
 	
 	; OpenRA URL Scheme
 	WriteRegStr HKLM "Software\Classes\openra" "" "URL:OpenRA scheme"
@@ -70,6 +70,8 @@ Section "-Reg" Reg
 SectionEnd
 
 Section "Game" GAME
+	SectionIn RO
+
 	RMDir /r "$INSTDIR\mods"
 	SetOutPath "$INSTDIR\mods"
 	File /r "${SRCDIR}\mods\common"
@@ -83,11 +85,11 @@ Section "Game" GAME
 	File "${SRCDIR}\OpenRA.Game.exe"
 	File "${SRCDIR}\OpenRA.Game.exe.config"
 	File "${SRCDIR}\OpenRA.Utility.exe"
-	File "${SRCDIR}\OpenRA.Platforms.Null.dll"
+	File "${SRCDIR}\OpenRA.Server.exe"
 	File "${SRCDIR}\OpenRA.Platforms.Default.dll"
 	File "${SRCDIR}\ICSharpCode.SharpZipLib.dll"
 	File "${SRCDIR}\FuzzyLogicLibrary.dll"
-	File "${SRCDIR}\Mono.Nat.dll"
+	File "${SRCDIR}\Open.Nat.dll"
 	File "${SRCDIR}\AUTHORS"
 	File "${SRCDIR}\COPYING"
 	File "${SRCDIR}\README.html"
@@ -97,11 +99,11 @@ Section "Game" GAME
 	File "${SRCDIR}\OpenRA.ico"
 	File "${SRCDIR}\SharpFont.dll"
 	File "${SRCDIR}\SDL2-CS.dll"
+	File "${SRCDIR}\OpenAL-CS.dll"
 	File "${SRCDIR}\global mix database.dat"
 	File "${SRCDIR}\MaxMind.Db.dll"
 	File "${SRCDIR}\MaxMind.GeoIP2.dll"
 	File "${SRCDIR}\Newtonsoft.Json.dll"
-	File "${SRCDIR}\RestSharp.dll"
 	File "${SRCDIR}\GeoLite2-Country.mmdb.gz"
 	File "${SRCDIR}\eluant.dll"
 	File "${SRCDIR}\SmarIrc4net.dll"
@@ -126,13 +128,11 @@ Section "Game" GAME
 	File "${SRCDIR}\glsl\*.vert"
 SectionEnd
 
-SectionGroup /e "Settings"
-	Section "Desktop Shortcut" DESKTOPSHORTCUT
-		SetOutPath "$INSTDIR"
-		CreateShortCut "$DESKTOP\OpenRA.lnk" $INSTDIR\OpenRA.exe "" \
-			"$INSTDIR\OpenRA.exe" "" "" "" ""
-	SectionEnd
-SectionGroupEnd
+Section "Desktop Shortcut" DESKTOPSHORTCUT
+	SetOutPath "$INSTDIR"
+	CreateShortCut "$DESKTOP\OpenRA.lnk" $INSTDIR\OpenRA.exe "" \
+		"$INSTDIR\OpenRA.exe" "" "" "" ""
+SectionEnd
 
 ;***************************
 ;Dependency Sections
@@ -147,14 +147,14 @@ Section "-DotNet" DotNet
 	IfErrors error 0
 	IntCmp $0 1 done error done
 	error:
-		MessageBox MB_YESNO ".NET Framework v4.0 or later is required to run OpenRA. $\n \
+		MessageBox MB_YESNO ".NET Framework v4.5 or later is required to run OpenRA. $\n \
 		Do you wish for the installer to launch your web browser in order to download and install it?" \
 		IDYES download IDNO error2
 	download:
-		ExecShell "open" "http://www.microsoft.com/en-us/download/details.aspx?id=17113"
+		ExecShell "open" "http://www.microsoft.com/en-us/download/details.aspx?id=30653"
 		Goto done
 	error2:
-		MessageBox MB_OK "Installation will continue, but be aware that OpenRA will not run unless .NET v4.0 \
+		MessageBox MB_OK "Installation will continue, but be aware that OpenRA will not run unless .NET v4.5 \
 		or later is installed."
 	done:
 SectionEnd
@@ -189,11 +189,11 @@ Function ${UN}Clean
 	Delete $INSTDIR\OpenRA.Game.exe
 	Delete $INSTDIR\OpenRA.Game.exe.config
 	Delete $INSTDIR\OpenRA.Utility.exe
-	Delete $INSTDIR\OpenRA.Platforms.Null.dll
+	Delete $INSTDIR\OpenRA.Server.exe
 	Delete $INSTDIR\OpenRA.Platforms.Default.dll
 	Delete $INSTDIR\ICSharpCode.SharpZipLib.dll
 	Delete $INSTDIR\FuzzyLogicLibrary.dll
-	Delete $INSTDIR\Mono.Nat.dll
+	Delete $INSTDIR\Open.Nat.dll
 	Delete $INSTDIR\SharpFont.dll
 	Delete $INSTDIR\AUTHORS
 	Delete $INSTDIR\COPYING
@@ -206,7 +206,6 @@ Function ${UN}Clean
 	Delete $INSTDIR\MaxMind.Db.dll
 	Delete $INSTDIR\MaxMind.GeoIP2.dll
 	Delete $INSTDIR\Newtonsoft.Json.dll
-	Delete $INSTDIR\RestSharp.dll
 	Delete $INSTDIR\GeoLite2-Country.mmdb.gz
 	Delete $INSTDIR\KopiLua.dll
 	Delete $INSTDIR\soft_oal.dll
@@ -215,6 +214,7 @@ Function ${UN}Clean
 	Delete $INSTDIR\eluant.dll
 	Delete $INSTDIR\freetype6.dll
 	Delete $INSTDIR\SDL2-CS.dll
+	Delete $INSTDIR\OpenAL-CS.dll
 	Delete $INSTDIR\SmarIrc4net.dll
 	RMDir /r $INSTDIR\Support
 	

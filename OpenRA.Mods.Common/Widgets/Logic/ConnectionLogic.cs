@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -14,7 +15,7 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets.Logic
 {
-	public class ConnectionLogic
+	public class ConnectionLogic : ChromeLogic
 	{
 		Action onConnect, onAbort;
 		Action<string> onRetry;
@@ -76,7 +77,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		}
 	}
 
-	public class ConnectionFailedLogic
+	public class ConnectionFailedLogic : ChromeLogic
 	{
 		PasswordFieldWidget passwordField;
 		bool passwordOffsetAdjusted;
@@ -106,10 +107,13 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			var connectionError = widget.Get<LabelWidget>("CONNECTION_ERROR");
 			connectionError.GetText = () => orderManager.ServerError;
 
+			var panelTitle = widget.Get<LabelWidget>("TITLE");
+			panelTitle.GetText = () => orderManager.AuthenticationFailed ? "Password Required" : "Connection Failed";
+
 			passwordField = panel.GetOrNull<PasswordFieldWidget>("PASSWORD");
 			if (passwordField != null)
 			{
-				passwordField.Text = orderManager.Password;
+				passwordField.TakeKeyboardFocus();
 				passwordField.IsVisible = () => orderManager.AuthenticationFailed;
 				var passwordLabel = widget.Get<LabelWidget>("PASSWORD_LABEL");
 				passwordLabel.IsVisible = passwordField.IsVisible;

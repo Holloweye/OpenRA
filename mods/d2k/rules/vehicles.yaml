@@ -22,7 +22,7 @@ mcv:
 		Speed: 31
 		Crushes: crate, infantry, spicebloom
 	RevealsShroud:
-		Range: 8c0
+		Range: 2c768
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	BaseBuilding:
@@ -43,8 +43,8 @@ mcv:
 		VisualBounds: 42,42
 	SelfHealing:
 		Step: 5
-		Ticks: 3
-		HealIfBelow: 50%
+		Delay: 3
+		HealIfBelow: 50
 
 harvester:
 	Inherits: ^Vehicle
@@ -52,7 +52,6 @@ harvester:
 		Queue: Armor
 		Prerequisites: refinery
 		BuildPaletteOrder: 10
-		InitialActivity: FindResources
 	Valued:
 		Cost: 1200
 	CustomBuildTimeValue:
@@ -68,7 +67,7 @@ harvester:
 		Capacity: 28
 		HarvestFacings: 8
 		Resources: Spice
-		UnloadTicksPerBale: 5
+		BaleUnloadDelay: 5
 		SearchFromProcRadius: 30
 		SearchFromOrderRadius: 15
 	Health:
@@ -79,7 +78,7 @@ harvester:
 		Speed: 43
 		Crushes: crate, infantry, spicebloom
 	RevealsShroud:
-		Range: 4c0
+		Range: 3c768
 	Explodes:
 		Weapon: UnitExplodeLarge
 		EmptyWeapon: UnitExplodeLarge
@@ -94,8 +93,8 @@ harvester:
 		VisualBounds: 42,42
 	SelfHealing:
 		Step: 5
-		Ticks: 3
-		HealIfBelow: 50%
+		Delay: 3
+		HealIfBelow: 50
 
 trike:
 	Inherits: ^Vehicle
@@ -117,10 +116,10 @@ trike:
 	Armor:
 		Type: wood
 	Mobile:
-		ROT: 10
+		TurnSpeed: 10
 		Speed: 128
 	RevealsShroud:
-		Range: 7c0
+		Range: 4c768
 	WithMuzzleOverlay:
 	Armament@damage:
 		Weapon: HMG
@@ -155,10 +154,10 @@ quad:
 	Armor:
 		Type: light
 	Mobile:
-		ROT: 8
+		TurnSpeed: 8
 		Speed: 96
 	RevealsShroud:
-		Range: 8c0
+		Range: 4c768
 	Armament:
 		Weapon: Rocket
 		LocalOffset: 128,64,64, 128,-64,64
@@ -191,11 +190,11 @@ siege_tank:
 		Type: light
 	Mobile:
 		Speed: 43
-		ROT: 3
+		TurnSpeed: 3
 	RevealsShroud:
-		Range: 8c0
+		Range: 6c768
 	Turreted:
-		ROT: 3
+		TurnSpeed: 3
 		Offset: 0,0,-32
 	Armament:
 		Weapon: 155mm
@@ -205,12 +204,12 @@ siege_tank:
 		MuzzleSequence: muzzle
 	AttackFrontal:
 	WithMuzzleOverlay:
-	WithTurret:
+	WithSpriteTurret:
 	Explodes:
 		Weapon: UnitExplodeMed
 		EmptyWeapon: UnitExplodeMed
 	AutoTarget:
-		InitialStance: Defend
+		InitialStanceAI: Defend
 	Selectable:
 		Class: siegetank
 	SpawnActorOnDeath:
@@ -233,19 +232,19 @@ missile_tank:
 		Value: 441
 	Mobile:
 		Speed: 64
-		ROT: 5
+		TurnSpeed: 5
 	Health:
 		HP: 1300
 	Armor:
 		Type: wood
 	RevealsShroud:
-		Range: 9c0
+		Range: 6c768
 	Armament:
 		Weapon: mtank_pri
 		LocalOffset: -128,128,171, -128,-128,171
 	AttackFrontal:
 	AutoTarget:
-		InitialStance: Defend
+		InitialStanceAI: Defend
 	Explodes:
 		Weapon: UnitExplodeMed
 		EmptyWeapon: UnitExplodeMed
@@ -274,10 +273,10 @@ sonic_tank:
 	Armor:
 		Type: light
 	Mobile:
-		ROT: 3
+		TurnSpeed: 3
 		Speed: 31
 	RevealsShroud:
-		Range: 6c0
+		Range: 5c768
 	Armament:
 		Weapon: Sound
 		LocalOffset: 600,0,427
@@ -290,6 +289,8 @@ sonic_tank:
 		Actor: sonic_tank.husk
 	AttractsWorms:
 		Intensity: 600
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4, Sonictank
 
 devastator:
 	Inherits: ^Tank
@@ -309,11 +310,11 @@ devastator:
 	Armor:
 		Type: heavy
 	Mobile:
-		ROT: 3
+		TurnSpeed: 3
 		Speed: 31
 		Crushes: crate, infantry, spicebloom, wall
 	RevealsShroud:
-		Range: 7c0
+		Range: 4c768
 	Armament:
 		Weapon: DevBullet
 		LocalOffset: 640,0,32
@@ -333,8 +334,8 @@ devastator:
 		VisualBounds: 44,38,0,0
 	SelfHealing:
 		Step: 5
-		Ticks: 3
-		HealIfBelow: 50%
+		Delay: 3
+		HealIfBelow: 50
 
 raider:
 	Inherits: ^Vehicle
@@ -354,10 +355,10 @@ raider:
 	Armor:
 		Type: wood
 	Mobile:
-		ROT: 10
+		TurnSpeed: 10
 		Speed: 149
 	RevealsShroud:
-		Range: 7c0
+		Range: 4c768
 	WithMuzzleOverlay:
 	Armament@damage:
 		Weapon: HMGo
@@ -394,6 +395,7 @@ stealth_raider:
 		IsPlayerPalette: true
 	AutoTarget:
 		InitialStance: HoldFire
+		InitialStanceAI: ReturnFire
 	-MustBeDestroyed:
 
 deviator:
@@ -410,20 +412,20 @@ deviator:
 		BuildPaletteOrder: 50
 		Prerequisites: ~heavy.ordos, research_centre, ~techlevel.high
 	Mobile:
-		ROT: 3
+		TurnSpeed: 3
 		Speed: 53
 	Health:
 		HP: 1100
 	Armor:
 		Type: wood
 	RevealsShroud:
-		Range: 5c0
+		Range: 4c768
 	Armament:
 		Weapon: DeviatorMissile
 		LocalOffset: -299,0,85
 	AttackFrontal:
 	AutoTarget:
-		InitialStance: Defend
+		InitialStanceAI: Defend
 	Explodes:
 		Weapon: UnitExplodeLarge
 		EmptyWeapon: UnitExplodeLarge
@@ -450,11 +452,11 @@ deviator:
 		Type: heavy
 	Mobile:
 		Speed: 75
-		ROT: 5
+		TurnSpeed: 5
 	RevealsShroud:
-		Range: 8c0
+		Range: 5c768
 	Turreted:
-		ROT: 5
+		TurnSpeed: 5
 		RealignDelay: 0
 	Armament:
 		Weapon: 80mm_A
@@ -464,7 +466,7 @@ deviator:
 		MuzzleSequence: muzzle
 	AttackTurreted:
 	WithMuzzleOverlay:
-	WithTurret:
+	WithSpriteTurret:
 	AutoTarget:
 	Explodes:
 		Weapon: UnitExplodeMed
@@ -491,8 +493,6 @@ combat_tank_h:
 		Weapon: 80mm_H
 	Mobile:
 		Speed: 64
-	RevealsShroud:
-		Range: 7c0
 	Health:
 		HP: 2700
 	SpawnActorOnDeath:
@@ -503,14 +503,12 @@ combat_tank_o:
 	Buildable:
 		Prerequisites: ~heavy.ordos
 	Turreted:
-		ROT: 5
+		TurnSpeed: 5
 	Armament:
 		Weapon: 80mm_O
 	Mobile:
 		Speed: 85
-		ROT: 5
 	Health:
 		HP: 1800
 	SpawnActorOnDeath:
 		Actor: combat_tank_o.husk
-

@@ -137,7 +137,7 @@ Cursors:
 		deploy-blocked:
 			Start: 119
 			Length: 1
-		undeploy: #TODO: unused
+		undeploy:
 			Start: 120
 			Length: 9
 		goldwrench:
@@ -146,12 +146,18 @@ Cursors:
 		goldwrench-blocked: #TODO
 			Start: 213
 			Length: 1
-		nuke:
+		ioncannon:
 			Start: 279
 			Length: 20
-		ioncannon:
+		nuke:
 			Start: 319
 			Length: 9
+		emp:
+			Start: 357
+			Length: 19
+		emp-blocked:
+			Start: 377
+			Length: 1
 		sell:
 			Start: 129
 			Length: 10
@@ -167,7 +173,7 @@ Cursors:
 		repair-blocked:
 			Start: 190
 			Length: 1
-		sell2:
+		sell2: # TODO: unused
 			Start: 139
 			Length: 10
 		powerdown-blocked:
@@ -194,4 +200,3 @@ Cursors:
 			Start: 385
 		joystick-tl-blocked:
 			Start: 386
-

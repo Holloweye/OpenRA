@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -25,7 +26,6 @@ namespace OpenRA.Mods.Common.Activities
 		static readonly List<CPos> NoPath = new List<CPos>();
 
 		readonly Mobile mobile;
-		readonly IDisableMove[] moveDisablers;
 		readonly WDist nearEnough;
 		readonly Func<List<CPos>> getPath;
 		readonly Actor ignoredActor;
@@ -43,7 +43,6 @@ namespace OpenRA.Mods.Common.Activities
 		public Move(Actor self, CPos destination)
 		{
 			mobile = self.Trait<Mobile>();
-			moveDisablers = self.TraitsImplementing<IDisableMove>().ToArray();
 
 			getPath = () =>
 			{
@@ -55,17 +54,12 @@ namespace OpenRA.Mods.Common.Activities
 				return path;
 			};
 			this.destination = destination;
-			this.nearEnough = WDist.Zero;
+			nearEnough = WDist.Zero;
 		}
-
-		// HACK: for legacy code
-		public Move(Actor self, CPos destination, int nearEnough)
-			: this(self, destination, WDist.FromCells(nearEnough)) { }
 
 		public Move(Actor self, CPos destination, WDist nearEnough)
 		{
 			mobile = self.Trait<Mobile>();
-			moveDisablers = self.TraitsImplementing<IDisableMove>().ToArray();
 
 			getPath = () => self.World.WorldActor.Trait<IPathFinder>()
 				.FindUnitPath(mobile.ToCell, destination, self);
@@ -76,7 +70,6 @@ namespace OpenRA.Mods.Common.Activities
 		public Move(Actor self, CPos destination, SubCell subCell, WDist nearEnough)
 		{
 			mobile = self.Trait<Mobile>();
-			moveDisablers = self.TraitsImplementing<IDisableMove>().ToArray();
 
 			getPath = () => self.World.WorldActor.Trait<IPathFinder>()
 				.FindUnitPathToRange(mobile.FromCell, subCell, self.World.Map.CenterOfSubCell(destination, subCell), nearEnough, self);
@@ -87,7 +80,6 @@ namespace OpenRA.Mods.Common.Activities
 		public Move(Actor self, CPos destination, Actor ignoredActor)
 		{
 			mobile = self.Trait<Mobile>();
-			moveDisablers = self.TraitsImplementing<IDisableMove>().ToArray();
 
 			getPath = () =>
 			{
@@ -100,14 +92,13 @@ namespace OpenRA.Mods.Common.Activities
 			};
 
 			this.destination = destination;
-			this.nearEnough = WDist.Zero;
+			nearEnough = WDist.Zero;
 			this.ignoredActor = ignoredActor;
 		}
 
 		public Move(Actor self, Target target, WDist range)
 		{
 			mobile = self.Trait<Mobile>();
-			moveDisablers = self.TraitsImplementing<IDisableMove>().ToArray();
 
 			getPath = () =>
 			{
@@ -125,7 +116,6 @@ namespace OpenRA.Mods.Common.Activities
 		public Move(Actor self, Func<List<CPos>> getPath)
 		{
 			mobile = self.Trait<Mobile>();
-			moveDisablers = self.TraitsImplementing<IDisableMove>().ToArray();
 
 			this.getPath = getPath;
 
@@ -155,7 +145,7 @@ namespace OpenRA.Mods.Common.Activities
 			if (IsCanceled)
 				return NextActivity;
 
-			if (moveDisablers.Any(d => d.MoveDisabled(self)))
+			if (mobile.IsTraitDisabled)
 				return this;
 
 			if (destination == mobile.ToCell)
@@ -189,15 +179,15 @@ namespace OpenRA.Mods.Common.Activities
 			if (firstFacing != mobile.Facing)
 			{
 				path.Add(nextCell.Value.First);
-				return Util.SequenceActivities(new Turn(self, firstFacing), this);
+				return ActivityUtils.SequenceActivities(new Turn(self, firstFacing), this);
 			}
 			else
 			{
 				mobile.SetLocation(mobile.FromCell, mobile.FromSubCell, nextCell.Value.First, nextCell.Value.Second);
 				var from = self.World.Map.CenterOfSubCell(mobile.FromCell, mobile.FromSubCell);
 				var to = Util.BetweenCells(self.World, mobile.FromCell, mobile.ToCell) +
-					(self.World.Map.OffsetOfSubCell(mobile.FromSubCell) +
-					self.World.Map.OffsetOfSubCell(mobile.ToSubCell)) / 2;
+					(self.World.Map.Grid.OffsetOfSubCell(mobile.FromSubCell) +
+					self.World.Map.Grid.OffsetOfSubCell(mobile.ToSubCell)) / 2;
 				var move = new MoveFirstHalf(
 					this,
 					from,
@@ -227,12 +217,14 @@ namespace OpenRA.Mods.Common.Activities
 
 			var nextCell = path[path.Count - 1];
 
+			var containsTemporaryBlocker = WorldUtils.ContainsTemporaryBlocker(self.World, nextCell, self);
+
 			// Next cell in the move is blocked by another actor
-			if (!mobile.CanMoveFreelyInto(nextCell, ignoredActor, true))
+			if (containsTemporaryBlocker || !mobile.CanMoveFreelyInto(nextCell, ignoredActor, true))
 			{
 				// Are we close enough?
 				var cellRange = nearEnough.Length / 1024;
-				if ((mobile.ToCell - destination.Value).LengthSquared <= cellRange * cellRange)
+				if (!containsTemporaryBlocker && (mobile.ToCell - destination.Value).LengthSquared <= cellRange * cellRange)
 				{
 					path.Clear();
 					return null;
@@ -385,15 +377,15 @@ namespace OpenRA.Mods.Common.Activities
 
 			protected override MovePart OnComplete(Actor self, Mobile mobile, Move parent)
 			{
-				var fromSubcellOffset = self.World.Map.OffsetOfSubCell(mobile.FromSubCell);
-				var toSubcellOffset = self.World.Map.OffsetOfSubCell(mobile.ToSubCell);
+				var fromSubcellOffset = self.World.Map.Grid.OffsetOfSubCell(mobile.FromSubCell);
+				var toSubcellOffset = self.World.Map.Grid.OffsetOfSubCell(mobile.ToSubCell);
 
 				var nextCell = parent.PopPath(self);
 				if (nextCell != null)
 				{
 					if (IsTurn(mobile, nextCell.Value.First))
 					{
-						var nextSubcellOffset = self.World.Map.OffsetOfSubCell(nextCell.Value.Second);
+						var nextSubcellOffset = self.World.Map.Grid.OffsetOfSubCell(nextCell.Value.Second);
 						var ret = new MoveFirstHalf(
 							Move,
 							Util.BetweenCells(self.World, mobile.FromCell, mobile.ToCell) + (fromSubcellOffset + toSubcellOffset) / 2,
@@ -434,24 +426,6 @@ namespace OpenRA.Mods.Common.Activities
 				mobile.SetPosition(self, mobile.ToCell);
 				return null;
 			}
-		}
-	}
-
-	public static class ActorExtensionsForMove
-	{
-		public static bool IsMoving(this Actor self)
-		{
-			var a = self.GetCurrentActivity();
-			if (a == null)
-				return false;
-
-			// HACK: Dirty, but it suffices until we do something better:
-			if (a.GetType() == typeof(Move)) return true;
-			if (a.GetType() == typeof(MoveAdjacentTo)) return true;
-			if (a.GetType() == typeof(AttackMoveActivity)) return true;
-
-			// Not a move:
-			return false;
 		}
 	}
 }

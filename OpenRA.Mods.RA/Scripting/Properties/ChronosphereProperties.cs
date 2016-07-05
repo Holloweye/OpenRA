@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -28,8 +29,13 @@ namespace OpenRA.Mods.RA.Scripting
 			{
 				Actor actor;
 				CPos cell;
-				if (!kv.Key.TryGetClrValue<Actor>(out actor) || !kv.Value.TryGetClrValue<CPos>(out cell))
-					throw new LuaException("Chronoshift requires a table of Actor,CPos pairs. Received {0},{1}".F(kv.Key.WrappedClrType().Name, kv.Value.WrappedClrType().Name));
+				using (kv.Key)
+				using (kv.Value)
+				{
+					if (!kv.Key.TryGetClrValue(out actor) || !kv.Value.TryGetClrValue(out cell))
+						throw new LuaException("Chronoshift requires a table of Actor,CPos pairs. Received {0},{1}".F(
+							kv.Key.WrappedClrType().Name, kv.Value.WrappedClrType().Name));
+				}
 
 				var cs = actor.TraitOrDefault<Chronoshiftable>();
 				if (cs != null && cs.CanChronoshiftTo(actor, cell))

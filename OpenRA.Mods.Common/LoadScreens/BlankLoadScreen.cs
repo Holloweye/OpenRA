@@ -1,19 +1,18 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using OpenRA.FileFormats;
-using OpenRA.FileSystem;
 using OpenRA.Mods.Common.Widgets.Logic;
 using OpenRA.Widgets;
 
@@ -23,7 +22,7 @@ namespace OpenRA.Mods.Common.LoadScreens
 	{
 		public LaunchArguments Launch;
 
-		public virtual void Init(Manifest m, Dictionary<string, string> info) { }
+		public virtual void Init(ModData m, Dictionary<string, string> info) { }
 
 		public virtual void Display()
 		{
@@ -40,6 +39,19 @@ namespace OpenRA.Mods.Common.LoadScreens
 			Launch = new LaunchArguments(args);
 			Ui.ResetAll();
 			Game.Settings.Save();
+
+			if (Launch.Benchmark)
+			{
+				Log.AddChannel("cpu", "cpu.csv");
+				Log.Write("cpu", "tick;time [ms]");
+
+				Log.AddChannel("render", "render.csv");
+				Log.Write("render", "frame;time [ms]");
+
+				Console.WriteLine("Saving benchmark data into {0}".F(Path.Combine(Platform.SupportDir, "Logs")));
+
+				Game.BenchmarkMode = true;
+			}
 
 			// Join a server directly
 			var connect = Launch.GetConnectAddress();
@@ -78,6 +90,12 @@ namespace OpenRA.Mods.Common.LoadScreens
 			Game.Settings.Save();
 		}
 
-		public virtual void Dispose() { }
+		protected virtual void Dispose(bool disposing) { }
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
 	}
 }

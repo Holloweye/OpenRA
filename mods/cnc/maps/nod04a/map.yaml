@@ -1,10 +1,8 @@
-MapFormat: 7
+MapFormat: 11
 
 RequiresMod: cnc
 
-Title: Mao Civil War (a)
-
-Description: A small village friendly to our cause has been increasingly harassed by GDI, and the Brotherhood wishes you to assist them in their efforts.\n\nSeek out the enemy village and destroy it. The event will be disguised as a GDI attack.
+Title: 04a: Mao Civil War
 
 Author: Westwood Studios
 
@@ -16,23 +14,9 @@ Bounds: 11,6,46,34
 
 Visibility: MissionSelector
 
-Type: Campaign
+Categories: Campaign
 
-Videos:
-	Briefing: nod4b.vqa
-	GameStart: retro.vqa
-	GameLost: deskill.vqa
-
-Options:
-	Crates: False
-	Creeps: False
-	Fog: True
-	Shroud: True
-	AllyBuildRadius: False
-	FragileAlliances: False
-	StartingCash: 0
-	ConfigurableStartingUnits: False
-	ShortGame: False
+LockPreview: True
 
 Players:
 	PlayerReference@Neutral:
@@ -47,7 +31,7 @@ Players:
 	PlayerReference@GDI:
 		Name: GDI
 		Faction: gdi
-		ColorRamp: 31,222,183
+		Color: F5D378
 		Enemies: Nod
 	PlayerReference@Nod:
 		Name: Nod
@@ -57,7 +41,7 @@ Players:
 		LockFaction: True
 		Faction: nod
 		LockColor: True
-		ColorRamp: 3,255,127
+		Color: FE1100
 		LockSpawn: True
 		LockTeam: True
 		Enemies: GDI
@@ -550,156 +534,4 @@ Actors:
 		Facing: 160
 		SubCell: 2
 
-Smudges:
-	sc6 37,24 0:
-	sc6 36,18 0:
-
-Rules:
-	Player:
-		-ConquestVictoryConditions:
-		MissionObjectives:
-			EarlyGameOver: true
-		EnemyWatcher:
-	World:
-		-CrateSpawner:
-		-SpawnMPUnits:
-		-MPStartLocations:
-		LuaScript:
-			Scripts: nod04a.lua
-		ObjectivesPanel:
-			PanelName: MISSION_OBJECTIVES
-		MusicPlaylist:
-			StartingMusic: valkyrie
-			VictoryMusic: nod_win1
-	^Vehicle:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Tank:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Helicopter:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Infantry:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-		AnnounceOnSeen:
-	^Plane:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Ship:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Building:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Wall:
-		Tooltip:
-			ShowOwnerRow: false
-	^CivBuilding:
-		Tooltip:
-			ShowOwnerRow: false
-		AnnounceOnSeen:
-	^CivBuildingHusk:
-		Tooltip:
-			ShowOwnerRow: false
-		AnnounceOnSeen:
-	^Husk:
-		Tooltip:
-			GenericVisibility: Enemy, Ally, Neutral
-			GenericStancePrefix: false
-			ShowOwnerRow: false
-	NUK2:
-		Buildable:
-			Prerequisites: ~disabled
-	GUN:
-		Buildable:
-			Prerequisites: ~disabled
-	CYCL:
-		Buildable:
-			Prerequisites: ~disabled
-	FIX:
-		Buildable:
-			Prerequisites: ~disabled
-	HPAD:
-		Buildable:
-			Prerequisites: ~disabled
-	OBLI:
-		Buildable:
-			Prerequisites: ~disabled
-	BRIK:
-		Buildable:
-			Prerequisites: ~disabled
-	TMPL:
-		Buildable:
-			Prerequisites: ~disabled
-	FTNK:
-		Buildable:
-			Prerequisites: ~disabled
-	STNK:
-		Buildable:
-			Prerequisites: ~disabled
-	ARTY:
-		Buildable:
-			Prerequisites: ~disabled
-	E5:
-		Buildable:
-			Prerequisites: ~disabled
-	RMBO:
-		Buildable:
-			Prerequisites: ~disabled
-	MLRS:
-		Buildable:
-			Prerequisites: ~disabled
-	MCV:
-		Buildable:
-			Prerequisites: ~disabled
-	LST:
-		Buildable:
-			Prerequisites: ~disabled
-	C17:
-		Buildable:
-			Prerequisites: ~disabled
-	SAM:
-		Buildable:
-			Prerequisites: ~disabled
-	AFLD:
-		Buildable:
-			Prerequisites: ~disabled
-	E4:
-		Buildable:
-			Prerequisites: ~disabled
-	SBAG:
-		Buildable:
-			Prerequisites: ~disabled
-	GTWR:
-		Buildable:
-			Prerequisites: ~disabled
-	WEAP:
-		Buildable:
-			Prerequisites: ~disabled
-	EYE:
-		Buildable:
-			Prerequisites: ~disabled
-	ATWR:
-		Buildable:
-			Prerequisites: ~disabled
-
-Sequences:
-
-VoxelSequences:
-
-Weapons:
-
-Voices:
-
-Notifications:
-
-Translations:
+Rules: cnc|rules/campaign-maprules.yaml, cnc|rules/campaign-tooltips.yaml, cnc|rules/campaign-palettes.yaml, rules.yaml

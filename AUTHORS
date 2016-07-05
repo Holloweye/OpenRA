@@ -35,6 +35,7 @@ Also thanks to:
     * Arik Lirette (Angusm3)
     * Barnaby Smith (mvi)
     * Bellator
+    * Biofreak
     * Braxton Williams (Buddytex)
     * Bryan Wilbur
     * Bugra Cuhadaroglu (BugraC)
@@ -43,6 +44,7 @@ Also thanks to:
     * clem
     * Cody Brittain (Generalcamo)
     * D2k Sardaukar
+    * D'Arcy Rush (r34ch)
     * Daniel Derejvanik (Harisson)
     * Danny Keary (Dan9550)
     * David Jiménez (Rydra)
@@ -53,6 +55,7 @@ Also thanks to:
     * Eric Bajumpaa (SteelPhase)
     * Evgeniy Sergeev (evgeniysergeev)
     * Fahrradkette
+    * Florian Wiesbauer (FiveAces)
     * Frank Razenberg (zzattack)
     * Gareth Needham (Ripley`)
     * Glen Anderson (GlenAnderson)
@@ -60,6 +63,7 @@ Also thanks to:
     * Gordon Martin (Happy0)
     * Guido Lipke (LipkeGu)
     * Gyula Zimmermann (Graion Dilach)
+    * Hervé Matysiak (Herve-M)
     * Huw Pascoe
     * Ian T. Jacobsen (Smilex)
     * Imago
@@ -72,9 +76,12 @@ Also thanks to:
     * Jeff Harris (jeff_1amstudios)
     * Jes
     * Joakim Lindberg (booom3)
+    * John Turner (whinis)
+    * Jonas A. Lind (SoScared)
     * Joppy Furr
     * Kanar
     * Kenny Hoxworth (hoxworth)
+    * Kevin Azzam (ChaoticMind)
     * Krishnakanth Mallik
     * Kyrre Soerensen (zypres)
     * Lawrence Wang
@@ -87,6 +94,7 @@ Also thanks to:
     * Matthijs Benschop (Nerdie)
     * Max621
     * Max Ugrumov (katzsmile)
+    * Michael Rätzel
     * Michael Sztolcman (s1w_)
     * Mustafa Alperen Seki (MustaphaTR)
     * Neil Shivkar (havok13888)
@@ -98,12 +106,16 @@ Also thanks to:
     * Paul Dovydaitis (pdovy)
     * Pavlos Touboulidis (pav)
     * Pizzaoverhead
+    * Piët Delport (pjdelport)
     * Psydev
+    * Raphael Vogt (TheRaffy, Yellow)
     * Raymond Bedrossian (Squiggles211)
     * Raymond Martineau (mart0258)
     * Riderr3
+    * riiga
     * Rikhardur Bjarni Einarsson (WolfGaming)
     * Sascha Biedermann (bidifx)
+    * Sean Hunt (coppro)
     * Sebastien Kerguen (xanax)
     * Shawn Collins (UberWaffe)
     * Simon Verbeke (Saticmotion)
@@ -136,11 +148,8 @@ distributed under the CC BY-SA 3.0 license.
 Using SharpFont created by Robert Rouhani and
 distributed under the MIT license.
 
-Using the Open Toolkit distributed under the
-MIT license.
-
-Using SDL2# created by Ethan Lee and released
-under the zlib license.
+Using SDL2-CS and OpenAL-CS created by Ethan
+Lee and released under the zlib license.
 
 Using Eluant created by Chris Howie and released
 under the MIT license.
@@ -161,4 +170,3 @@ distributed under the LGPL version 2.1 or later.
 Finally, special thanks goes to the original teams
 at Westwood Studios and EA for creating the classic
 games which OpenRA aims to reimagine.
-

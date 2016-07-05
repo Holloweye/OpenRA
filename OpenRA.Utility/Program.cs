@@ -1,20 +1,38 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenRA.FileSystem;
+using System.Runtime.Serialization;
 
 namespace OpenRA.Utility
 {
+	[Serializable]
+	public class NoSuchCommandException : Exception
+	{
+		public readonly string Command;
+		public NoSuchCommandException(string command)
+			: base("No such command '{0}'".F(command))
+		{
+			Command = command;
+		}
+
+		public override void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			base.GetObjectData(info, context);
+			info.AddValue("Command", Command);
+		}
+	}
+
 	class Program
 	{
 		static void Main(string[] args)
@@ -24,8 +42,6 @@ namespace OpenRA.Utility
 				PrintUsage(null);
 				return;
 			}
-
-			AppDomain.CurrentDomain.AssemblyResolve += GlobalFileSystem.ResolveAssembly;
 
 			Log.AddChannel("perf", null);
 			Log.AddChannel("debug", null);
@@ -56,11 +72,12 @@ namespace OpenRA.Utility
 
 			try
 			{
-				if (!actions.ContainsKey(args[0]))
-					throw new ArgumentException();
+				var command = args[0];
+				if (!actions.ContainsKey(command))
+					throw new NoSuchCommandException(command);
 
-				var action = actions[args[0]].Key;
-				var validateActionArgs = actions[args[0]].Value;
+				var action = actions[command].Key;
+				var validateActionArgs = actions[command].Value;
 
 				if (validateActionArgs.Invoke(args))
 				{
@@ -68,8 +85,8 @@ namespace OpenRA.Utility
 				}
 				else
 				{
-					Console.WriteLine("Invalid arguments for '{0}'", args[0]);
-					GetActionUsage(args[0], action);
+					Console.WriteLine("Invalid arguments for '{0}'", command);
+					GetActionUsage(command, action);
 				}
 			}
 			catch (Exception e)
@@ -78,13 +95,13 @@ namespace OpenRA.Utility
 				Log.Write("utility", "Received args: {0}", args.JoinWith(" "));
 				Log.Write("utility", "{0}", e);
 
-			    if (e is ArgumentException)
-			        Console.WriteLine("No such command '{0}'", args[0]);
-			    else
-			    {
-                    Console.WriteLine("Error: Utility application crashed. See utility.log for details");
-                    throw;
-			    }
+				if (e is NoSuchCommandException)
+					Console.WriteLine(e.Message);
+				else
+				{
+					Console.WriteLine("Error: Utility application crashed. See utility.log for details");
+					throw;
+				}
 			}
 		}
 

@@ -1,15 +1,16 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System.Collections.Generic;
-using System.Linq;
+using System.Drawing;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Warheads
@@ -33,6 +34,9 @@ namespace OpenRA.Mods.Common.Warheads
 		public readonly int Delay = 0;
 		int IWarhead.Delay { get { return Delay; } }
 
+		[Desc("The color used for this warhead's visualization in the world's `WarheadDebugOverlay` trait.")]
+		public readonly Color DebugOverlayColor = Color.Red;
+
 		public bool IsValidTarget(IEnumerable<string> targetTypes)
 		{
 			return ValidTargets.Overlaps(targetTypes) && !InvalidTargets.Overlaps(targetTypes);
@@ -52,8 +56,7 @@ namespace OpenRA.Mods.Common.Warheads
 				return false;
 
 			// A target type is valid if it is in the valid targets list, and not in the invalid targets list.
-			var targetable = victim.TraitsImplementing<ITargetable>().Where(Exts.IsTraitEnabled);
-			if (!IsValidTarget(targetable.SelectMany(t => t.TargetTypes)))
+			if (!IsValidTarget(victim.GetEnabledTargetTypes()))
 				return false;
 
 			return true;

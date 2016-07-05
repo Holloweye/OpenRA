@@ -1,15 +1,17 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using OpenRA.Graphics;
 using OpenRA.Widgets;
 
@@ -20,12 +22,16 @@ namespace OpenRA.Mods.Common.LoadScreens
 		Sprite sprite;
 		Rectangle bounds;
 
-		public void Init(Manifest m, Dictionary<string, string> info)
+		public void Init(ModData modData, Dictionary<string, string> info)
 		{
-			var sheet = new Sheet(SheetType.BGRA, info["Image"]);
 			var res = Game.Renderer.Resolution;
 			bounds = new Rectangle(0, 0, res.Width, res.Height);
-			sprite = new Sprite(sheet, new Rectangle(0, 0, 1024, 480), TextureChannel.Alpha);
+
+			using (var stream = modData.DefaultFileSystem.Open(info["Image"]))
+			{
+				var sheet = new Sheet(SheetType.BGRA, stream);
+				sprite = new Sprite(sheet, new Rectangle(0, 0, 1024, 480), TextureChannel.Alpha);
+			}
 		}
 
 		public void Display()
@@ -44,14 +50,7 @@ namespace OpenRA.Mods.Common.LoadScreens
 			var widgetArgs = new WidgetArgs();
 
 			Ui.LoadWidget("MODCHOOSER_BACKGROUND", Ui.Root, widgetArgs);
-
-			if (args != null && args.Contains("installMusic"))
-			{
-				widgetArgs.Add("modId", args.GetValue("installMusic", ""));
-				Ui.OpenWindow("INSTALL_MUSIC_PANEL", widgetArgs);
-			}
-			else
-				Ui.OpenWindow("MODCHOOSER_DIALOG", widgetArgs);
+			Ui.OpenWindow("MODCHOOSER_DIALOG", widgetArgs);
 		}
 
 		public void Dispose()

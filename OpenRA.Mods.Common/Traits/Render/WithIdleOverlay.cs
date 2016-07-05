@@ -1,20 +1,21 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.Common.Traits
+namespace OpenRA.Mods.Common.Traits.Render
 {
 	[Desc("Renders a decorative animation on units and buildings.")]
 	public class WithIdleOverlayInfo : UpgradableTraitInfo, IRenderActorPreviewSpritesInfo, Requires<RenderSpritesInfo>, Requires<BodyOrientationInfo>
@@ -46,14 +47,28 @@ namespace OpenRA.Mods.Common.Traits
 			if (Palette != null)
 				p = init.WorldRenderer.Palette(Palette);
 
-			var body = init.Actor.TraitInfo<BodyOrientationInfo>();
-			var facing = init.Contains<FacingInit>() ? init.Get<FacingInit, int>() : 0;
-			var anim = new Animation(init.World, image, () => facing);
+			Func<int> facing;
+			if (init.Contains<DynamicFacingInit>())
+				facing = init.Get<DynamicFacingInit, Func<int>>();
+			else
+			{
+				var f = init.Contains<FacingInit>() ? init.Get<FacingInit, int>() : 0;
+				facing = () => f;
+			}
+
+			var anim = new Animation(init.World, image, facing);
 			anim.PlayRepeating(RenderSprites.NormalizeSequence(anim, init.GetDamageState(), Sequence));
 
-			var orientation = body.QuantizeOrientation(new WRot(WAngle.Zero, WAngle.Zero, WAngle.FromFacing(facing)), facings);
-			var offset = body.LocalToWorld(Offset.Rotate(orientation));
-			yield return new SpriteActorPreview(anim, offset, offset.Y + offset.Z + 1, p, rs.Scale);
+			var body = init.Actor.TraitInfo<BodyOrientationInfo>();
+			Func<WRot> orientation = () => body.QuantizeOrientation(WRot.FromFacing(facing()), facings);
+			Func<WVec> offset = () => body.LocalToWorld(Offset.Rotate(orientation()));
+			Func<int> zOffset = () =>
+			{
+				var tmpOffset = offset();
+				return tmpOffset.Y + tmpOffset.Z + 1;
+			};
+
+			yield return new SpriteActorPreview(anim, offset, zOffset, p, rs.Scale);
 		}
 	}
 
@@ -69,7 +84,8 @@ namespace OpenRA.Mods.Common.Traits
 			var body = self.Trait<BodyOrientation>();
 
 			buildComplete = !self.Info.HasTraitInfo<BuildingInfo>(); // always render instantly for units
-			overlay = new Animation(self.World, rs.GetImage(self));
+			overlay = new Animation(self.World, rs.GetImage(self),
+				() => (info.PauseOnLowPower && self.IsDisabled()) || !buildComplete);
 			if (info.StartSequence != null)
 				overlay.PlayThen(RenderSprites.NormalizeSequence(overlay, self.GetDamageState(), info.StartSequence),
 					() => overlay.PlayRepeating(RenderSprites.NormalizeSequence(overlay, self.GetDamageState(), info.Sequence)));
@@ -79,8 +95,7 @@ namespace OpenRA.Mods.Common.Traits
 			var anim = new AnimationWithOffset(overlay,
 				() => body.LocalToWorld(info.Offset.Rotate(body.QuantizeOrientation(self, self.Orientation))),
 				() => IsTraitDisabled || !buildComplete,
-				() => (info.PauseOnLowPower && self.IsDisabled()) || !buildComplete,
-				p => WithTurret.ZOffsetFromCenter(self, p, 1));
+				p => RenderUtils.ZOffsetFromCenter(self, p, 1));
 
 			rs.Add(anim, info.Palette, info.IsPlayerPalette);
 		}

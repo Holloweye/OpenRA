@@ -71,3 +71,10 @@ StyleCopViolations.xml
 # SublimeText
 *.sublime-project
 *.sublime-workspace
+
+# NUnit
+/TestResult.xml
+/lib/
+
+# Support directory
+/Support

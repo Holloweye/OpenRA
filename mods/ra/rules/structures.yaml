@@ -1,5 +1,5 @@
 MSLO:
-	Inherits: ^Building
+	Inherits: ^ScienceBuilding
 	Valued:
 		Cost: 2500
 	Tooltip:
@@ -40,6 +40,8 @@ MSLO:
 		CameraActor: camera
 		FlashType: Nuke
 	CanPowerDown:
+		PowerupSound: EnablePower
+		PowerdownSound: DisablePower
 	RequiresPower:
 	DisabledOverlay:
 	SupportPowerChargeBar:
@@ -49,7 +51,7 @@ MSLO:
 		RequiredForShortGame: false
 
 GAP:
-	Inherits: ^Building
+	Inherits: ^ScienceBuilding
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -58,14 +60,11 @@ GAP:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 110
-		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
-	Building:
-		Footprint: _ x
-		Dimensions: 1,2
+		Prerequisites: atek, ~structures.allies, ~techlevel.high
 	Selectable:
-		Bounds: 24,28,0,12
+		Bounds: 24,24
 	SelectionDecorations:
-		VisualBounds: 24,40,0,0
+		VisualBounds: 24,48,0,-12
 	RequiresPower:
 	CanPowerDown:
 	DisabledOverlay:
@@ -86,6 +85,8 @@ GAP:
 		Amount: -60
 	MustBeDestroyed:
 		RequiredForShortGame: false
+	WithBuildingExplosion:
+		Sequences: building, building_napalm, large_explosion, self_destruct
 
 SPEN:
 	Inherits: ^Building
@@ -101,7 +102,7 @@ SPEN:
 		BuildPaletteOrder: 50
 		Prerequisites: anypower, ~structures.soviet, ~techlevel.low
 	Targetable:
-		TargetTypes: Ground, Water, C4, DetonateAttack, SpyInfiltrate
+		TargetTypes: Ground, Water, Structure, C4, DetonateAttack, SpyInfiltrate
 	Building:
 		Footprint: xxx xxx xxx
 		Dimensions: 3,3
@@ -167,6 +168,14 @@ SPEN:
 	ProvidesPrerequisite@buildingname:
 	EditorTilesetFilter:
 		ExcludeTilesets: INTERIOR
+	WithDecoration@primary:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
+		ReferencePoint: Top
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 SYRD:
 	Inherits: ^Building
@@ -182,7 +191,7 @@ SYRD:
 		Name: Shipyard
 		Description: Produces and repairs ships\nand transports.
 	Targetable:
-		TargetTypes: Ground, Water, C4, DetonateAttack, SpyInfiltrate
+		TargetTypes: Ground, Water, Structure, C4, DetonateAttack, SpyInfiltrate
 	Building:
 		Footprint: xxx xxx xxx
 		Dimensions: 3,3
@@ -254,9 +263,17 @@ SYRD:
 	ProvidesPrerequisite@buildingname:
 	EditorTilesetFilter:
 		ExcludeTilesets: INTERIOR
+	WithDecoration@primary:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
+		ReferencePoint: Top
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 IRON:
-	Inherits: ^Building
+	Inherits: ^ScienceBuilding
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
@@ -272,6 +289,8 @@ IRON:
 		Dimensions: 2,1
 	RequiresPower:
 	CanPowerDown:
+		PowerupSound: EnablePower
+		PowerdownSound: DisablePower
 	DisabledOverlay:
 	Selectable:
 		Bounds: 48,28,0,2
@@ -304,7 +323,7 @@ IRON:
 		RequiredForShortGame: false
 
 PDOX:
-	Inherits: ^Building
+	Inherits: ^ScienceBuilding
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 120
@@ -320,6 +339,8 @@ PDOX:
 		Dimensions: 2,2
 	RequiresPower:
 	CanPowerDown:
+		PowerupSound: EnablePower
+		PowerdownSound: DisablePower
 	DisabledOverlay:
 	Health:
 		HP: 1000
@@ -383,18 +404,14 @@ TSLA:
 	Tooltip:
 		Name: Tesla Coil
 		Description: Advanced base defense.\nRequires power to operate.\nCan detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
-	Building:
-		Footprint: _ x
-		Dimensions: 1,2
 	RequiresPower:
-		UpgradeTypes: tesla
-		UpgradeMaxEnabledLevel: 2
-		UpgradeMaxAcceptedLevel: 3
 	Selectable:
-		Bounds: 24,24,0,16
+		Bounds: 24,24
 	SelectionDecorations:
-		VisualBounds: 24,36,0,4
+		VisualBounds: 24,40,0,-8
 	CanPowerDown:
+		PowerupSound: EnablePower
+		PowerdownSound: DisablePower
 	DisabledOverlay:
 	Health:
 		HP: 400
@@ -406,28 +423,19 @@ TSLA:
 		HasMinibib: Yes
 	WithChargeAnimation:
 	Armament:
-		UpgradeTypes: tesla
-		UpgradeMaxEnabledLevel: 1
-		UpgradeMaxAcceptedLevel: 3
 		Weapon: TeslaZap
-		LocalOffset: 0,0,427
-	Armament@Upgraded:
-		UpgradeTypes: tesla
-		UpgradeMinEnabledLevel: 2
-		UpgradeMaxAcceptedLevel: 3
-		Weapon: TeslaZap.Upgraded
-		LocalOffset: 0,0,427
+		LocalOffset: 0,0,896
 	AttackCharge:
 		ChargeAudio: tslachg2.aud
 		MaxCharges: 3
-		ReloadTime: 120
+		ReloadDelay: 120
 	Power:
 		Amount: -100
 	DetectCloaked:
 		Range: 8c0
 	ProvidesPrerequisite@buildingname:
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, TeslaBoost
+	WithBuildingExplosion:
+		Sequences: building, building_napalm, large_explosion, self_destruct
 
 AGUN:
 	Inherits: ^Defense
@@ -440,15 +448,14 @@ AGUN:
 	Tooltip:
 		Name: AA Gun
 		Description: Anti-Air base defense.\nRequires power to operate.\nCan detect cloaked units.\n  Strong vs Aircraft\n  Weak vs Ground units
-	Building:
-		Footprint: _ x
-		Dimensions: 1,2
 	Selectable:
-		Bounds: 24,28,0,16
+		Bounds: 24,24
 	SelectionDecorations:
-		VisualBounds: 24,36,0,12
+		VisualBounds: 24,32,0,-4
 	RequiresPower:
 	CanPowerDown:
+		PowerupSound: EnablePower
+		PowerdownSound: DisablePower
 	DisabledOverlay:
 	Health:
 		HP: 400
@@ -459,7 +466,7 @@ AGUN:
 	Bib:
 		HasMinibib: Yes
 	Turreted:
-		ROT: 15
+		TurnSpeed: 15
 		InitialFacing: 224
 	-WithSpriteBody:
 	WithTurretedSpriteBody:
@@ -475,6 +482,10 @@ AGUN:
 		Amount: -50
 	DetectCloaked:
 		Range: 6c0
+	WithBuildingExplosion:
+		Sequences: building, building_napalm, large_explosion, self_destruct
+	BodyOrientation:
+		UseClassicFacingFudge: True
 
 DOME:
 	Inherits: ^Building
@@ -491,9 +502,11 @@ DOME:
 		Footprint: xx xx
 		Dimensions: 2,2
 	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, SpyInfiltrate
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate
 	RequiresPower:
 	CanPowerDown:
+		PowerupSound: EnablePower
+		PowerdownSound: DisablePower
 	DisabledOverlay:
 	Health:
 		HP: 1000
@@ -532,7 +545,7 @@ PBOX:
 	Bib:
 		HasMinibib: Yes
 	Turreted:
-		ROT: 255
+		TurnSpeed: 255
 	-QuantizeFacingsFromSequence:
 	BodyOrientation:
 		QuantizedFacings: 8
@@ -546,13 +559,15 @@ PBOX:
 		Armaments: garrisoned
 		PortOffsets: 384,0,128, 224,-341,128, -224,-341,128, -384,0,128, -224,341,128, 224,341,128
 		PortYaws: 0, 176, 341, 512, 682, 853
-		PortCones: 86, 86, 86, 86, 86, 86
+		PortCones: 88, 88, 88, 88, 88, 88
 	RenderRangeCircle:
 		FallbackRange: 6c0
 	Power:
 		Amount: -15
 	DetectCloaked:
 		Range: 6c0
+	WithBuildingExplosion:
+		Sequences: building, building_napalm, large_explosion, self_destruct
 
 HBOX:
 	Inherits: ^Defense
@@ -577,7 +592,7 @@ HBOX:
 		CloakDelay: 60
 		IsPlayerPalette: true
 	Turreted:
-		ROT: 255
+		TurnSpeed: 255
 	-QuantizeFacingsFromSequence:
 	BodyOrientation:
 		QuantizedFacings: 8
@@ -595,10 +610,12 @@ HBOX:
 		Armaments: garrisoned
 		PortOffsets: 384,0,128, 224,-341,128, -224,-341,128, -384,0,128, -224,341,128, 224,341,128
 		PortYaws: 0, 176, 341, 512, 682, 853
-		PortCones: 86, 86, 86, 86, 86, 86
+		PortCones: 88, 88, 88, 88, 88, 88
 	Power:
 		Amount: -15
 	-MustBeDestroyed:
+	WithBuildingExplosion:
+		Sequences: building, building_napalm, large_explosion, self_destruct
 
 GUN:
 	Inherits: ^Defense
@@ -621,8 +638,8 @@ GUN:
 	Bib:
 		HasMinibib: Yes
 	Turreted:
-		ROT: 12
-		InitialFacing: 50
+		TurnSpeed: 12
+		InitialFacing: 56
 	-WithSpriteBody:
 	WithTurretedSpriteBody:
 	Armament:
@@ -635,6 +652,10 @@ GUN:
 		Amount: -40
 	DetectCloaked:
 		Range: 7c0
+	WithBuildingExplosion:
+		Sequences: building, building_napalm, large_explosion, self_destruct
+	BodyOrientation:
+		UseClassicFacingFudge: True
 
 FTUR:
 	Inherits: ^Defense
@@ -657,7 +678,7 @@ FTUR:
 	Bib:
 		HasMinibib: Yes
 	Turreted:
-		ROT: 255
+		TurnSpeed: 255
 		Offset: 0,0,112
 	Armament:
 		Weapon: FireballLauncher
@@ -671,6 +692,8 @@ FTUR:
 	DetectCloaked:
 		Range: 6c0
 	ProvidesPrerequisite@buildingname:
+	WithBuildingExplosion:
+		Sequences: building, building_napalm, large_explosion, self_destruct
 
 SAM:
 	Inherits: ^Defense
@@ -698,7 +721,7 @@ SAM:
 	Bib:
 		HasMinibib: Yes
 	Turreted:
-		ROT: 30
+		TurnSpeed: 30
 		InitialFacing: 0
 	-WithSpriteBody:
 	WithTurretedSpriteBody:
@@ -713,13 +736,15 @@ SAM:
 		Amount: -40
 	DetectCloaked:
 		Range: 5c0
+	BodyOrientation:
+		UseClassicFacingFudge: True
 
 ATEK:
-	Inherits: ^Building
+	Inherits: ^ScienceBuilding
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 140
-		Prerequisites: weap, dome, ~structures.allies, ~techlevel.unrestricted
+		Prerequisites: weap, dome, ~structures.allies, ~techlevel.high
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -742,7 +767,7 @@ ATEK:
 		OneShot: yes
 		ChargeTime: 480
 		Description: GPS Satellite
-		LongDesc: Reveals map terrain and provides tactical\ninformation.
+		LongDesc: Reveals map terrain and provides tactical\ninformation. Requires power and active radar.
 		RevealDelay: 15
 		LaunchSound: satlnch1.aud
 		DisplayTimer: True
@@ -845,6 +870,14 @@ WEAP:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
 	InfiltrateForSupportPower:
 		Proxy: vehicles.upgraded
+	WithDecoration@primary:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
+		ReferencePoint: Top
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 FACT:
 	Inherits: ^Building
@@ -907,7 +940,7 @@ FACT:
 		ProductionType: Building
 	ProductionBar@Defense:
 		ProductionType: Defense
-		Color: 138,138,138
+		Color: 8A8A8A
 	BaseProvider:
 		Range: 16c0
 	WithBuildingPlacedAnimation:
@@ -939,7 +972,7 @@ PROC:
 	SelectionDecorations:
 		VisualBounds: 72,70,0,-2
 	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, SpyInfiltrate
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate
 	Health:
 		HP: 900
 	Armor:
@@ -962,8 +995,7 @@ PROC:
 		Facing: 64
 	InfiltrateForCash:
 		Percentage: 50
-		Minimum: 500
-		SoundToVictim: credit1.aud
+		Notification: CreditsStolen
 	WithIdleOverlay@TOP:
 		Sequence: idle-top
 	Power:
@@ -1003,6 +1035,8 @@ SILO:
 	-EmitInfantryOnSell:
 	Power:
 		Amount: -10
+	WithBuildingExplosion:
+		Sequences: building, building_napalm, large_explosion, self_destruct
 
 HPAD:
 	Inherits: ^Building
@@ -1029,6 +1063,7 @@ HPAD:
 		SpawnOffset: 0,-256,0
 		ExitCell: 0,0
 		MoveIntoWorld: false
+		Facing: 224
 	RallyPoint:
 	Production:
 		Produces: Aircraft, Helicopter
@@ -1072,6 +1107,14 @@ HPAD:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
 	InfiltrateForSupportPower:
 		Proxy: aircraft.upgraded
+	WithDecoration@primary:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
+		ReferencePoint: Top
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 AFLD:
 	Inherits: ^Building
@@ -1094,7 +1137,6 @@ AFLD:
 	RevealsShroud:
 		Range: 7c0
 	Exit@1:
-		SpawnOffset: 0,170,0
 		ExitCell: 1,1
 		Facing: 192
 		MoveIntoWorld: false
@@ -1135,7 +1177,7 @@ AFLD:
 		LongDesc: Reveals an area of the map\nand cloaked enemy units.
 		SelectTargetSound: slcttgt1.aud
 		EndChargeSound: spypln1.aud
-		CameraActor: camera
+		CameraActor: camera.spyplane
 		CameraRemoveDelay: 150
 		UnitType: u2
 		QuantizedFacings: 8
@@ -1181,6 +1223,14 @@ AFLD:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
 	InfiltrateForSupportPower:
 		Proxy: aircraft.upgraded
+	WithDecoration@primary:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
+		ReferencePoint: Top
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 POWR:
 	Inherits: ^Building
@@ -1210,7 +1260,7 @@ POWR:
 	InfiltrateForPowerOutage:
 	AffectedByPowerOutage:
 	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, SpyInfiltrate
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate
 	ScalePowerWithHealth:
 	DisabledOverlay:
 	WithDeathAnimation:
@@ -1233,12 +1283,12 @@ APWR:
 	ProvidesPrerequisite:
 		Prerequisite: anypower
 	Building:
-		Footprint: ___ xxx xxx
-		Dimensions: 3,3
+		Footprint: xxx xxx
+		Dimensions: 3,2
 	Selectable:
-		Bounds: 72,48,0,12
+		Bounds: 72,48
 	SelectionDecorations:
-		VisualBounds: 72,64,0,-2
+		VisualBounds: 72,68,0,-10
 	Health:
 		HP: 700
 	Armor:
@@ -1251,7 +1301,7 @@ APWR:
 	InfiltrateForPowerOutage:
 	AffectedByPowerOutage:
 	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, SpyInfiltrate
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate
 	ScalePowerWithHealth:
 	DisabledOverlay:
 	WithDeathAnimation:
@@ -1261,11 +1311,11 @@ APWR:
 		Delay: 1
 
 STEK:
-	Inherits: ^Building
+	Inherits: ^ScienceBuilding
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 150
-		Prerequisites: weap, dome, ~structures.soviet, ~techlevel.unrestricted
+		Prerequisites: weap, dome, ~structures.soviet, ~techlevel.high
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -1311,7 +1361,7 @@ BARR:
 	RallyPoint:
 	Exit@1:
 		SpawnOffset: -170,810,0
-		ExitCell: 0,2
+		ExitCell: 1,2
 	Exit@2:
 		SpawnOffset: -725,640,0
 		ExitCell: 0,2
@@ -1352,12 +1402,20 @@ BARR:
 		Proxy: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
+	WithDecoration@primary:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
+		ReferencePoint: Top
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 KENN:
 	Inherits: ^Building
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 25
+		BuildPaletteOrder: 175
 		Prerequisites: anypower, ~structures.soviet, ~techlevel.infonly
 	Valued:
 		Cost: 100
@@ -1376,9 +1434,12 @@ KENN:
 		HasMinibib: True
 	RallyPoint:
 		Offset: 0,2
-	Exit:
+	Exit@1:
 		SpawnOffset: -280,400,0
 		ExitCell: 0,1
+	Exit@2:
+		SpawnOffset: -280,400,0
+		ExitCell: -1,0
 	Production:
 		Produces: Infantry, Dog
 	PrimaryBuilding:
@@ -1387,6 +1448,16 @@ KENN:
 	Power:
 		Amount: -10
 	ProvidesPrerequisite@buildingname:
+	WithBuildingExplosion:
+		Sequences: building, building_napalm, large_explosion, self_destruct
+	WithDecoration@primary:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
+		ReferencePoint: Top
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 TENT:
 	Inherits: ^Building
@@ -1412,7 +1483,7 @@ TENT:
 	RallyPoint:
 	Exit@1:
 		SpawnOffset: -42,810,0
-		ExitCell: 0,2
+		ExitCell: 1,2
 	Exit@2:
 		SpawnOffset: -725,640,0
 		ExitCell: 0,2
@@ -1459,6 +1530,14 @@ TENT:
 		Proxy: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
+	WithDecoration@primary:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
+		ReferencePoint: Top
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1
 
 FIX:
 	Inherits: ^Building
@@ -1577,12 +1656,44 @@ BRIK:
 	WithWallSpriteBody:
 		Type: concrete
 
+VGATE:
+	Inherits: ^Gate
+	Gate:
+		Footprint: x x x
+		Dimensions: 1,3
+	WithGateSpriteBody:
+		WallConnections: 0,-1, 0,3
+	LineBuildNode:
+		Connections: 0,-1, 0,1
+	Tooltip:
+		Name: Vertical Gate
+
+HGATE:
+	Inherits: ^Gate
+	Gate:
+		Footprint: xxx
+		Dimensions: 3,1
+	WithGateSpriteBody:
+		WallConnections: -1,0, 3,0
+	LineBuildNode:
+		Connections: -1,0, 1,0
+	Tooltip:
+		Name: Horizontal Gate
+	RenderSprites:
+		Image: agate
+		FactionImages:
+			allies: agate
+			england: agate
+			france: agate
+			germany: agate
+			soviet: sgate
+			russia: sgate
+			ukraine: sgate
+
 CYCL:
 	Inherits: ^Wall
 	Tooltip:
 		Name: Chain-Link Barrier
-	Health:
-		HP: 100
 	Armor:
 		Type: Wood
 	LineBuild:
@@ -1596,8 +1707,6 @@ BARB:
 	Inherits: ^Wall
 	Tooltip:
 		Name: Barbed-Wire Fence
-	Health:
-		HP: 100
 	Armor:
 		Type: Wood
 	LineBuild:
@@ -1611,8 +1720,6 @@ WOOD:
 	Inherits: ^Wall
 	Tooltip:
 		Name: Wooden Fence
-	Health:
-		HP: 100
 	Armor:
 		Type: Wood
 	LineBuild:
@@ -1639,4 +1746,3 @@ ANYPOWER:
 	Tooltip:
 		Name: Power Plant
 		Description: Power Plant
-

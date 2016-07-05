@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -15,54 +16,70 @@ using OpenRA.FileFormats;
 
 namespace OpenRA.FileSystem
 {
-	public sealed class InstallShieldPackage : IFolder
+	public sealed class InstallShieldPackage : IReadOnlyPackage
 	{
-		readonly Dictionary<uint, PackageEntry> index = new Dictionary<uint, PackageEntry>();
-		readonly List<string> filenames;
+		public struct Entry
+		{
+			public readonly uint Offset;
+			public readonly uint Length;
+
+			public Entry(uint offset, uint length)
+			{
+				Offset = offset;
+				Length = length;
+			}
+		}
+
+		public string Name { get; private set; }
+		public IEnumerable<string> Contents { get { return index.Keys; } }
+
+		readonly Dictionary<string, Entry> index = new Dictionary<string, Entry>();
 		readonly Stream s;
 		readonly long dataStart = 255;
-		readonly int priority;
-		readonly string filename;
 
-		public InstallShieldPackage(string filename, int priority)
+		public InstallShieldPackage(FileSystem context, string filename)
 		{
-			this.filename = filename;
-			this.priority = priority;
+			Name = filename;
 
-			filenames = new List<string>();
-
-			s = GlobalFileSystem.Open(filename);
+			s = context.Open(filename);
 			try
 			{
 				// Parse package header
-				var reader = new BinaryReader(s);
-				var signature = reader.ReadUInt32();
+				var signature = s.ReadUInt32();
 				if (signature != 0x8C655D13)
 					throw new InvalidDataException("Not an Installshield package");
 
-				reader.ReadBytes(8);
-				/*var FileCount = */reader.ReadUInt16();
-				reader.ReadBytes(4);
-				/*var ArchiveSize = */reader.ReadUInt32();
-				reader.ReadBytes(19);
-				var tocAddress = reader.ReadInt32();
-				reader.ReadBytes(4);
-				var dirCount = reader.ReadUInt16();
+				s.Position += 8;
+				/*var FileCount = */s.ReadUInt16();
+				s.Position += 4;
+				/*var ArchiveSize = */s.ReadUInt32();
+				s.Position += 19;
+				var tocAddress = s.ReadInt32();
+				s.Position += 4;
+				var dirCount = s.ReadUInt16();
 
 				// Parse the directory list
-				s.Seek(tocAddress, SeekOrigin.Begin);
-				var tocReader = new BinaryReader(s);
-
-				var fileCountInDirs = new List<uint>();
+				s.Position = tocAddress;
 
 				// Parse directories
+				var directories = new Dictionary<string, uint>();
 				for (var i = 0; i < dirCount; i++)
-					fileCountInDirs.Add(ParseDirectory(tocReader));
+				{
+					// Parse directory header
+					var fileCount = s.ReadUInt16();
+					var chunkSize = s.ReadUInt16();
+					var nameLength = s.ReadUInt16();
+					var dirName = s.ReadASCII(nameLength);
+
+					// Skip to the end of the chunk
+					s.ReadBytes(chunkSize - nameLength - 6);
+					directories.Add(dirName, fileCount);
+				}
 
 				// Parse files
-				foreach (var fileCount in fileCountInDirs)
-					for (var i = 0; i < fileCount; i++)
-						ParseFile(reader);
+				foreach (var dir in directories)
+					for (var i = 0; i < dir.Value; i++)
+						ParseFile(s, dir.Key);
 			}
 			catch
 			{
@@ -71,84 +88,46 @@ namespace OpenRA.FileSystem
 			}
 		}
 
-		static uint ParseDirectory(BinaryReader reader)
-		{
-			// Parse directory header
-			var fileCount = reader.ReadUInt16();
-			var chunkSize = reader.ReadUInt16();
-			var nameLength = reader.ReadUInt16();
-			reader.ReadChars(nameLength); // var DirName = new String(reader.ReadChars(NameLength));
-
-			// Skip to the end of the chunk
-			reader.ReadBytes(chunkSize - nameLength - 6);
-			return fileCount;
-		}
-
 		uint accumulatedData = 0;
-		void ParseFile(BinaryReader reader)
+		void ParseFile(Stream s, string dirName)
 		{
-			reader.ReadBytes(7);
-			var compressedSize = reader.ReadUInt32();
-			reader.ReadBytes(12);
-			var chunkSize = reader.ReadUInt16();
-			reader.ReadBytes(4);
-			var nameLength = reader.ReadByte();
-			var fileName = new string(reader.ReadChars(nameLength));
+			s.Position += 7;
+			var compressedSize = s.ReadUInt32();
+			s.Position += 12;
+			var chunkSize = s.ReadUInt16();
+			s.Position += 4;
+			var nameLength = s.ReadByte();
+			var fileName = dirName + "\\" + s.ReadASCII(nameLength);
 
-			var hash = PackageEntry.HashFilename(fileName, PackageHashType.Classic);
-			if (!index.ContainsKey(hash))
-				index.Add(hash, new PackageEntry(hash, accumulatedData, compressedSize));
-			filenames.Add(fileName);
+			// Use index syntax to overwrite any duplicate entries with the last value
+			index[fileName] = new Entry(accumulatedData, compressedSize);
 			accumulatedData += compressedSize;
 
 			// Skip to the end of the chunk
-			reader.ReadBytes(chunkSize - nameLength - 30);
+			s.Position += chunkSize - nameLength - 30;
 		}
 
-		public Stream GetContent(uint hash)
+		public Stream GetStream(string filename)
 		{
-			PackageEntry e;
-			if (!index.TryGetValue(hash, out e))
+			Entry e;
+			if (!index.TryGetValue(filename, out e))
 				return null;
 
 			s.Seek(dataStart + e.Offset, SeekOrigin.Begin);
-			var data = s.ReadBytes((int)e.Length);
 
-			return new MemoryStream(Blast.Decompress(data));
+			var ret = new MemoryStream();
+			Blast.Decompress(s, ret);
+			ret.Seek(0, SeekOrigin.Begin);
+
+			return ret;
 		}
 
-		public Stream GetContent(string filename)
+		public bool Contains(string filename)
 		{
-			return GetContent(PackageEntry.HashFilename(filename, PackageHashType.Classic));
+			return index.ContainsKey(filename);
 		}
 
-		public IEnumerable<uint> ClassicHashes()
-		{
-			return index.Keys;
-		}
-
-		public IEnumerable<uint> CrcHashes()
-		{
-			yield break;
-		}
-
-		public IEnumerable<string> AllFileNames()
-		{
-			return filenames;
-		}
-
-		public bool Exists(string filename)
-		{
-			return index.ContainsKey(PackageEntry.HashFilename(filename, PackageHashType.Classic));
-		}
-
-		public int Priority { get { return 2000 + priority; } }
-		public string Name { get { return filename; } }
-
-		public void Write(Dictionary<string, byte[]> contents)
-		{
-			throw new NotImplementedException("Cannot save InstallShieldPackages.");
-		}
+		public IReadOnlyDictionary<string, Entry> Index { get { return new ReadOnlyDictionary<string, Entry>(index); } }
 
 		public void Dispose()
 		{

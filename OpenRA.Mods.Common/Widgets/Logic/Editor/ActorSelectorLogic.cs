@@ -1,44 +1,40 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
-using System.Drawing;
 using System.Linq;
-using OpenRA.FileFormats;
 using OpenRA.Graphics;
-using OpenRA.Mods.Common;
-using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Traits;
-using OpenRA.Mods.Common.Widgets;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets.Logic
 {
-	public class ActorSelectorLogic
+	public class ActorSelectorLogic : ChromeLogic
 	{
 		readonly EditorViewportControllerWidget editor;
 		readonly DropDownButtonWidget ownersDropDown;
 		readonly ScrollPanelWidget panel;
 		readonly ScrollItemWidget itemTemplate;
-		readonly Ruleset modRules;
+		readonly Ruleset mapRules;
 		readonly World world;
 		readonly WorldRenderer worldRenderer;
 
 		PlayerReference selectedOwner;
 
 		[ObjectCreator.UseCtor]
-		public ActorSelectorLogic(Widget widget, World world, WorldRenderer worldRenderer, Ruleset modRules)
+		public ActorSelectorLogic(Widget widget, World world, WorldRenderer worldRenderer)
 		{
-			this.modRules = modRules;
+			mapRules = world.Map.Rules;
 			this.world = world;
 			this.worldRenderer = worldRenderer;
 
@@ -86,7 +82,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		{
 			panel.RemoveChildren();
 
-			var actors = modRules.Actors.Where(a => !a.Value.Name.Contains('^'))
+			var actors = mapRules.Actors.Where(a => !a.Value.Name.Contains('^'))
 				.Select(a => a.Value);
 
 			foreach (var a in actors)
@@ -101,9 +97,9 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				var filter = actor.TraitInfoOrDefault<EditorTilesetFilterInfo>();
 				if (filter != null)
 				{
-					if (filter.ExcludeTilesets != null && filter.ExcludeTilesets.Contains(world.TileSet.Id))
+					if (filter.ExcludeTilesets != null && filter.ExcludeTilesets.Contains(world.Map.Rules.TileSet.Id))
 						continue;
-					if (filter.RequireTilesets != null && !filter.RequireTilesets.Contains(world.TileSet.Id))
+					if (filter.RequireTilesets != null && !filter.RequireTilesets.Contains(world.Map.Rules.TileSet.Id))
 						continue;
 				}
 
@@ -126,7 +122,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					// Scale templates to fit within the panel
 					var scale = 1f;
 					if (scale * preview.IdealPreviewSize.X > itemTemplate.Bounds.Width)
-						scale = (float)(itemTemplate.Bounds.Width - panel.ItemSpacing) / (float)preview.IdealPreviewSize.X;
+						scale = (itemTemplate.Bounds.Width - panel.ItemSpacing) / (float)preview.IdealPreviewSize.X;
 
 					preview.GetScale = () => scale;
 					preview.Bounds.Width = (int)(scale * preview.IdealPreviewSize.X);
@@ -136,15 +132,15 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					item.Bounds.Height = preview.Bounds.Height + 2 * preview.Bounds.Y;
 					item.IsVisible = () => true;
 
-					var tooltip = actor.TraitInfoOrDefault<TooltipInfo>();
-					item.GetTooltipText = () => tooltip == null ? actor.Name : tooltip.Name + " (" + actor.Name + ")";
+					var tooltip = actor.TraitInfoOrDefault<EditorOnlyTooltipInfo>() as TooltipInfoBase ?? actor.TraitInfoOrDefault<TooltipInfo>();
+					item.GetTooltipText = () => (tooltip == null ? "Type: " : tooltip.Name + "\nType: ") + actor.Name;
 
 					panel.AddChild(item);
 				}
 				catch
 				{
 					Log.Write("debug", "Map editor ignoring actor {0}, because of missing sprites for tileset {1}.",
-						actor.Name, world.TileSet.Id);
+						actor.Name, world.Map.Rules.TileSet.Id);
 					continue;
 				}
 			}

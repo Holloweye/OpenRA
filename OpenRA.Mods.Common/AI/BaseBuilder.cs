@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -59,13 +60,8 @@ namespace OpenRA.Mods.Common.AI
 			// If failed to place something N consecutive times, wait M ticks until resuming building production
 			if (failCount >= ai.Info.MaximumFailedPlacementAttempts && --failRetryTicks <= 0)
 			{
-				var currentBuildings = world.ActorsWithTrait<Building>()
-					.Where(a => a.Actor.Owner == player)
-					.Count();
-
-				var baseProviders = world.ActorsWithTrait<BaseProvider>()
-					.Where(a => a.Actor.Owner == player)
-					.Count();
+				var currentBuildings = world.ActorsHavingTrait<Building>().Count(a => a.Owner == player);
+				var baseProviders = world.ActorsHavingTrait<BaseProvider>().Count(a => a.Owner == player);
 
 				// Only bother resetting failCount if either a) the number of buildings has decreased since last failure M ticks ago,
 				// or b) number of BaseProviders (construction yard or similar) has increased since then.
@@ -89,9 +85,7 @@ namespace OpenRA.Mods.Common.AI
 
 			if (waterState == Water.NotEnoughWater && --checkForBasesTicks <= 0)
 			{
-				var currentBases = world.ActorsWithTrait<BaseProvider>()
-					.Where(a => a.Actor.Owner == player)
-					.Count();
+				var currentBases = world.ActorsHavingTrait<BaseProvider>().Count(a => a.Owner == player);
 
 				if (currentBases > cachedBases)
 				{
@@ -104,10 +98,7 @@ namespace OpenRA.Mods.Common.AI
 			if (--waitTicks > 0)
 				return;
 
-			playerBuildings = world.ActorsWithTrait<Building>()
-				.Where(a => a.Actor.Owner == player)
-				.Select(a => a.Actor)
-				.ToArray();
+			playerBuildings = world.ActorsHavingTrait<Building>().Where(a => a.Owner == player).ToArray();
 
 			var active = false;
 			foreach (var queue in ai.FindQueues(category))
@@ -158,13 +149,8 @@ namespace OpenRA.Mods.Common.AI
 					// If we just reached the maximum fail count, cache the number of current structures
 					if (failCount == ai.Info.MaximumFailedPlacementAttempts)
 					{
-						cachedBuildings = world.ActorsWithTrait<Building>()
-							.Where(a => a.Actor.Owner == player)
-							.Count();
-
-						cachedBases = world.ActorsWithTrait<BaseProvider>()
-							.Where(a => a.Actor.Owner == player)
-							.Count();
+						cachedBuildings = world.ActorsHavingTrait<Building>().Count(a => a.Owner == player);
+						cachedBases = world.ActorsHavingTrait<BaseProvider>().Count(a => a.Owner == player);
 					}
 				}
 				else
@@ -185,12 +171,8 @@ namespace OpenRA.Mods.Common.AI
 			return true;
 		}
 
-		ActorInfo GetProducibleBuilding(string commonName, IEnumerable<ActorInfo> buildables, Func<ActorInfo, int> orderBy = null)
+		ActorInfo GetProducibleBuilding(HashSet<string> actors, IEnumerable<ActorInfo> buildables, Func<ActorInfo, int> orderBy = null)
 		{
-			HashSet<string> actors;
-			if (!ai.Info.BuildingCommonNames.TryGetValue(commonName, out actors))
-				return null;
-
 			var available = buildables.Where(actor =>
 			{
 				// Are we able to build this?
@@ -220,7 +202,7 @@ namespace OpenRA.Mods.Common.AI
 			var buildableThings = queue.BuildableItems();
 
 			// This gets used quite a bit, so let's cache it here
-			var power = GetProducibleBuilding("Power", buildableThings,
+			var power = GetProducibleBuilding(ai.Info.BuildingCommonNames.Power, buildableThings,
 				a => a.TraitInfos<PowerInfo>().Where(i => i.UpgradeMinEnabledLevel < 1).Sum(p => p.Amount));
 
 			// First priority is to get out of a low power situation
@@ -236,7 +218,7 @@ namespace OpenRA.Mods.Common.AI
 			// Next is to build up a strong economy
 			if (!ai.HasAdequateProc() || !ai.HasMinimumProc())
 			{
-				var refinery = GetProducibleBuilding("Refinery", buildableThings);
+				var refinery = GetProducibleBuilding(ai.Info.BuildingCommonNames.Refinery, buildableThings);
 				if (refinery != null && HasSufficientPowerForActor(refinery))
 				{
 					HackyAI.BotDebug("AI: {0} decided to build {1}: Priority override (refinery)", queue.Actor.Owner, refinery.Name);
@@ -253,7 +235,7 @@ namespace OpenRA.Mods.Common.AI
 			// Make sure that we can spend as fast as we are earning
 			if (ai.Info.NewProductionCashThreshold > 0 && playerResources.Resources > ai.Info.NewProductionCashThreshold)
 			{
-				var production = GetProducibleBuilding("Production", buildableThings);
+				var production = GetProducibleBuilding(ai.Info.BuildingCommonNames.Production, buildableThings);
 				if (production != null && HasSufficientPowerForActor(production))
 				{
 					HackyAI.BotDebug("AI: {0} decided to build {1}: Priority override (production)", queue.Actor.Owner, production.Name);
@@ -272,7 +254,7 @@ namespace OpenRA.Mods.Common.AI
 				&& playerResources.Resources > ai.Info.NewProductionCashThreshold
 				&& ai.CloseEnoughToWater())
 			{
-				var navalproduction = GetProducibleBuilding("NavalProduction", buildableThings);
+				var navalproduction = GetProducibleBuilding(ai.Info.BuildingCommonNames.NavalProduction, buildableThings);
 				if (navalproduction != null && HasSufficientPowerForActor(navalproduction))
 				{
 					HackyAI.BotDebug("AI: {0} decided to build {1}: Priority override (navalproduction)", queue.Actor.Owner, navalproduction.Name);
@@ -287,9 +269,9 @@ namespace OpenRA.Mods.Common.AI
 			}
 
 			// Create some head room for resource storage if we really need it
-			if (playerResources.AlertSilo)
+			if (playerResources.Resources > 0.8 * playerResources.ResourceCapacity)
 			{
-				var silo = GetProducibleBuilding("Silo", buildableThings);
+				var silo = GetProducibleBuilding(ai.Info.BuildingCommonNames.Silo, buildableThings);
 				if (silo != null && HasSufficientPowerForActor(silo))
 				{
 					HackyAI.BotDebug("AI: {0} decided to build {1}: Priority override (silo)", queue.Actor.Owner, silo.Name);
@@ -323,8 +305,7 @@ namespace OpenRA.Mods.Common.AI
 				// If we're considering to build a naval structure, check whether there is enough water inside the base perimeter
 				// and any structure providing buildable area close enough to that water.
 				// TODO: Extend this check to cover any naval structure, not just production.
-				if (ai.Info.BuildingCommonNames.ContainsKey("NavalProduction")
-					&& ai.Info.BuildingCommonNames["NavalProduction"].Contains(name)
+				if (ai.Info.BuildingCommonNames.NavalProduction.Contains(name)
 					&& (waterState == Water.NotEnoughWater || !ai.CloseEnoughToWater()))
 					continue;
 

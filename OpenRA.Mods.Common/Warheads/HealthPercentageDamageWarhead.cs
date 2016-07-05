@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -28,7 +29,7 @@ namespace OpenRA.Mods.Common.Warheads
 			{
 				var devMode = world.LocalPlayer.PlayerActor.TraitOrDefault<DeveloperMode>();
 				if (devMode != null && devMode.ShowCombatGeometry)
-					world.WorldActor.Trait<WarheadDebugOverlay>().AddImpact(pos, Spread);
+					world.WorldActor.Trait<WarheadDebugOverlay>().AddImpact(pos, Spread, DebugOverlayColor);
 			}
 
 			var range = Spread[0];
@@ -42,6 +43,9 @@ namespace OpenRA.Mods.Common.Warheads
 
 		public override void DoImpact(Actor victim, Actor firedBy, IEnumerable<int> damageModifiers)
 		{
+			if (!IsValidAgainst(victim, firedBy))
+				return;
+
 			var healthInfo = victim.Info.TraitInfoOrDefault<HealthInfo>();
 			if (healthInfo == null)
 				return;

@@ -1,19 +1,18 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
-using System;
 using System.Drawing;
-using System.Linq;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.Common.Traits
+namespace OpenRA.Mods.Common.Traits.Render
 {
 	[Desc("Visualizes the remaining time for an upgrade.")]
 	class TimedUpgradeBarInfo : ITraitInfo, Requires<UpgradeManagerInfo>
@@ -49,7 +48,7 @@ namespace OpenRA.Mods.Common.Traits
 			value = remaining * 1f / duration;
 		}
 
-		public float GetValue()
+		float ISelectionBar.GetValue()
 		{
 			if (!self.Owner.IsAlliedWith(self.World.RenderPlayer))
 				return 0;
@@ -57,6 +56,6 @@ namespace OpenRA.Mods.Common.Traits
 			return value;
 		}
 
-		public Color GetColor() { return info.Color; }
+		Color ISelectionBar.GetColor() { return info.Color; }
 	}
 }

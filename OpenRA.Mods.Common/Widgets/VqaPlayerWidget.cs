@@ -1,18 +1,18 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
 using System.Drawing;
-using OpenRA.FileFormats;
-using OpenRA.FileSystem;
 using OpenRA.Graphics;
+using OpenRA.Mods.Common.FileFormats;
 using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets
@@ -38,19 +38,11 @@ namespace OpenRA.Mods.Common.Widgets
 
 		Action onComplete;
 
-		readonly World world;
-
-		[ObjectCreator.UseCtor]
-		public VqaPlayerWidget(World world)
-		{
-			this.world = world;
-		}
-
 		public void Load(string filename)
 		{
 			if (filename == cachedVideo)
 				return;
-			var video = new VqaReader(GlobalFileSystem.Open(filename));
+			var video = new VqaReader(Game.ModData.DefaultFileSystem.Open(filename));
 
 			cachedVideo = filename;
 			Open(video);
@@ -87,7 +79,7 @@ namespace OpenRA.Mods.Common.Widgets
 				RenderBounds.X + (RenderBounds.Width - scale * video.Width) / 2,
 				RenderBounds.Y + (RenderBounds.Height - scale * video.Height * AspectRatio) / 2);
 
-			// Round size to integer pixels. Round up to be consistent with the scale calcuation.
+			// Round size to integer pixels. Round up to be consistent with the scale calculation.
 			videoSize = new float2((int)Math.Ceiling(video.Width * scale), (int)Math.Ceiling(video.Height * AspectRatio * scale));
 
 			if (!DrawOverlay)
@@ -202,7 +194,7 @@ namespace OpenRA.Mods.Common.Widgets
 			Game.Sound.StopVideo();
 			video.Reset();
 			videoSprite.Sheet.GetTexture().SetData(video.FrameData);
-			world.AddFrameEndTask(_ => onComplete());
+			Game.RunAfterTick(onComplete);
 		}
 
 		public void CloseVideo()

@@ -1,16 +1,16 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using OpenRA.Activities;
 using OpenRA.Mods.Common.Pathfinder;
 using OpenRA.Mods.Common.Traits;
@@ -57,7 +57,7 @@ namespace OpenRA.Mods.Common.Activities
 			var deliver = new DeliverResources(self);
 
 			if (harv.IsFull)
-				return Util.SequenceActivities(deliver, NextActivity);
+				return ActivityUtils.SequenceActivities(deliver, NextActivity);
 
 			var closestHarvestablePosition = ClosestHarvestablePos(self);
 
@@ -68,20 +68,13 @@ namespace OpenRA.Mods.Common.Activities
 				if (!harv.IsEmpty)
 					return deliver;
 
-				var cachedPosition = self.Location;
-				harv.UnblockRefinery(self);
-
-				// Only do this if UnblockRefinery did nothing.
-				if (self.Location == cachedPosition)
-				{
-					var unblockCell = harv.LastHarvestedCell ?? (self.Location + harvInfo.UnblockCell);
-					var moveTo = mobile.NearestMoveableCell(unblockCell, 2, 5);
-					self.QueueActivity(mobile.MoveTo(moveTo, 1));
-					self.SetTargetLine(Target.FromCell(self.World, moveTo), Color.Gray, false);
-				}
+				var unblockCell = harv.LastHarvestedCell ?? (self.Location + harvInfo.UnblockCell);
+				var moveTo = mobile.NearestMoveableCell(unblockCell, 2, 5);
+				self.QueueActivity(mobile.MoveTo(moveTo, 1));
+				self.SetTargetLine(Target.FromCell(self.World, moveTo), Color.Gray, false);
 
 				var randFrames = self.World.SharedRandom.Next(100, 175);
-				return Util.SequenceActivities(NextActivity, new Wait(randFrames), this);
+				return ActivityUtils.SequenceActivities(NextActivity, new Wait(randFrames), this);
 			}
 			else
 			{
@@ -91,7 +84,7 @@ namespace OpenRA.Mods.Common.Activities
 				if (territory != null)
 				{
 					if (!territory.ClaimResource(self, closestHarvestablePosition.Value))
-						return Util.SequenceActivities(new Wait(25), next);
+						return ActivityUtils.SequenceActivities(new Wait(25), next);
 				}
 
 				// If not given a direct order, assume ordered to the first resource location we find:
@@ -105,7 +98,7 @@ namespace OpenRA.Mods.Common.Activities
 				foreach (var n in notify)
 					n.MovingToResources(self, closestHarvestablePosition.Value, next);
 
-				return Util.SequenceActivities(mobile.MoveTo(closestHarvestablePosition.Value, 1), new HarvestResource(self), next);
+				return ActivityUtils.SequenceActivities(mobile.MoveTo(closestHarvestablePosition.Value, 1), new HarvestResource(self), next);
 			}
 		}
 
@@ -124,7 +117,7 @@ namespace OpenRA.Mods.Common.Activities
 			var searchRadiusSquared = searchRadius * searchRadius;
 
 			// Find any harvestable resources:
-			var passable = (uint)mobileInfo.GetMovementClass(self.World.TileSet);
+			var passable = (uint)mobileInfo.GetMovementClass(self.World.Map.Rules.TileSet);
 			List<CPos> path;
 			using (var search = PathSearch.Search(self.World, mobileInfo, self, true,
 				loc => domainIndex.IsPassable(self.Location, loc, passable) && self.CanHarvestAt(loc, resLayer, harvInfo, territory))

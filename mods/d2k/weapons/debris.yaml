@@ -9,7 +9,7 @@ Debris:
 		Image: shrapnel
 	Warhead@1Dam: SpreadDamage
 		Spread: 320
-		Falloff: 100, 100, 100, 95, 60, 25, 0
+		Falloff: 100, 60, 30, 15, 0
 		Damage: 150
 		Versus:
 			none: 20
@@ -26,8 +26,8 @@ Debris:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: SandCrater
 	Warhead@3Eff: CreateEffect
-		Explosion: small_explosion
-		ImpactSound: EXPLLG5.WAV
+		Explosions: small_explosion
+		ImpactSounds: EXPLLG5.WAV
 
 Debris2:
 	ReloadDelay: 60
@@ -38,12 +38,12 @@ Debris2:
 		Angle: 30, 90
 		Inaccuracy: 1c256
 		Image: shrapnel2
-		Trail: bazooka_trail
+		TrailImage: bazooka_trail
 		TrailPalette: effect75alpha
 		TrailInterval: 2
 	Warhead@1Dam: SpreadDamage
 		Spread: 320
-		Falloff: 100, 100, 100, 95, 60, 25, 0
+		Falloff: 100, 60, 30, 15, 0
 		Damage: 250
 		Versus:
 			none: 90
@@ -60,8 +60,8 @@ Debris2:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: SandCrater
 	Warhead@3Eff: CreateEffect
-		Explosion: med_explosion
-		ImpactSound: EXPLLG5.WAV
+		Explosions: med_explosion
+		ImpactSounds: EXPLLG5.WAV
 
 Debris3:
 	ReloadDelay: 60
@@ -72,12 +72,12 @@ Debris3:
 		Angle: 30, 90
 		Inaccuracy: 1c256
 		Image: shrapnel3
-		Trail: large_trail
+		TrailImage: large_trail
 		TrailPalette: effect75alpha
 		TrailInterval: 1
 	Warhead@1Dam: SpreadDamage
 		Spread: 320
-		Falloff: 100, 100, 100, 95, 60, 25, 0
+		Falloff: 100, 60, 30, 15, 0
 		Damage: 150
 		Versus:
 			none: 90
@@ -94,8 +94,8 @@ Debris3:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: SandCrater
 	Warhead@3Eff: CreateEffect
-		Explosion: med_explosion
-		ImpactSound: EXPLLG5.WAV
+		Explosions: med_explosion
+		ImpactSounds: EXPLLG5.WAV
 
 Debris4:
 	ReloadDelay: 60
@@ -106,12 +106,12 @@ Debris4:
 		Angle: 30, 90
 		Inaccuracy: 1c256
 		Image: shrapnel4
-		Trail: large_trail
+		TrailImage: large_trail
 		TrailPalette: effect75alpha
 		TrailInterval: 1
 	Warhead@1Dam: SpreadDamage
 		Spread: 320
-		Falloff: 100, 100, 100, 95, 60, 25, 0
+		Falloff: 100, 60, 30, 15, 0
 		Damage: 250
 		Versus:
 			none: 90
@@ -128,5 +128,5 @@ Debris4:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: SandCrater
 	Warhead@3Eff: CreateEffect
-		Explosion: large_explosion
-		ImpactSound: EXPLLG5.WAV
+		Explosions: large_explosion
+		ImpactSounds: EXPLLG5.WAV

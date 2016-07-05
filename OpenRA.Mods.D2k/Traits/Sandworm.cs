@@ -1,11 +1,12 @@
 #region Copyright & License Information
 /*
-* Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
-* This file is part of OpenRA, which is free software. It is made
-* available to you under the terms of the GNU General Public License
-* as published by the Free Software Foundation. For more information,
-* see COPYING.
-*/
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
+ * This file is part of OpenRA, which is free software. It is made
+ * available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
+ */
 #endregion
 
 using System;
@@ -15,39 +16,29 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.D2k.Traits
 {
-	class SandwormInfo : WandersInfo, Requires<MobileInfo>, Requires<WithSpriteBodyInfo>, Requires<AttackBaseInfo>
+	class SandwormInfo : WandersInfo, Requires<MobileInfo>, Requires<AttackBaseInfo>
 	{
 		[Desc("Time between rescanning for targets (in ticks).")]
-		public readonly int TargetRescanInterval = 32;
+		public readonly int TargetRescanInterval = 125;
 
 		[Desc("The radius in which the worm \"searches\" for targets.")]
-		public readonly WDist MaxSearchRadius = WDist.FromCells(27);
+		public readonly WDist MaxSearchRadius = WDist.FromCells(20);
 
 		[Desc("The range at which the worm launches an attack regardless of noise levels.")]
 		public readonly WDist IgnoreNoiseAttackRange = WDist.FromCells(3);
 
 		[Desc("The chance this actor has of disappearing after it attacks (in %).")]
-		public readonly int ChanceToDisappear = 80;
-
-		[Desc("Name of the sequence that is used when the actor is idle or moving (not attacking).")]
-		[SequenceReference] public readonly string IdleSequence = "idle";
-
-		[Desc("Name of the sequence that is used when the actor is attacking.")]
-		[SequenceReference] public readonly string MouthSequence = "mouth";
-
-		[Desc("Name of the sequence that is used when the actor is burrowed.")]
-		[SequenceReference] public readonly string BurrowedSequence = "burrowed";
+		public readonly int ChanceToDisappear = 100;
 
 		public override object Create(ActorInitializer init) { return new Sandworm(init.Self, this); }
 	}
 
 	class Sandworm : Wanders, ITick, INotifyActorDisposing
 	{
-		public readonly SandwormInfo Info;
+		public readonly SandwormInfo WormInfo;
 
 		readonly WormManager manager;
 		readonly Mobile mobile;
-		readonly WithSpriteBody withSpriteBody;
 		readonly AttackBase attackTrait;
 
 		public bool IsMovingTowardTarget { get; private set; }
@@ -59,19 +50,10 @@ namespace OpenRA.Mods.D2k.Traits
 		public Sandworm(Actor self, SandwormInfo info)
 			: base(self, info)
 		{
-			Info = info;
+			WormInfo = info;
 			mobile = self.Trait<Mobile>();
-			withSpriteBody = self.Trait<WithSpriteBody>();
 			attackTrait = self.Trait<AttackBase>();
 			manager = self.World.WorldActor.Trait<WormManager>();
-		}
-
-		public override void OnBecomingIdle(Actor self)
-		{
-			if (withSpriteBody.DefaultAnimation.CurrentSequence.Name != Info.IdleSequence)
-				withSpriteBody.DefaultAnimation.PlayRepeating(Info.IdleSequence);
-
-			base.OnBecomingIdle(self);
 		}
 
 		public override void DoAction(Actor self, CPos targetCell)
@@ -96,10 +78,11 @@ namespace OpenRA.Mods.D2k.Traits
 
 		void RescanForTargets(Actor self)
 		{
-			targetCountdown = Info.TargetRescanInterval;
+			targetCountdown = WormInfo.TargetRescanInterval;
 
 			// If close enough, we don't care about other actors.
-			var target = self.World.FindActorsInCircle(self.CenterPosition, Info.IgnoreNoiseAttackRange).FirstOrDefault(x => x.Info.HasTraitInfo<AttractsWormsInfo>());
+			var target = self.World.FindActorsInCircle(self.CenterPosition, WormInfo.IgnoreNoiseAttackRange)
+				.FirstOrDefault(x => attackTrait.HasAnyValidWeapons(Target.FromActor(x)));
 			if (target != null)
 			{
 				self.CancelActivity();
@@ -115,7 +98,7 @@ namespace OpenRA.Mods.D2k.Traits
 				return mobile.CanEnterCell(a.Location, null, false);
 			};
 
-			var actorsInRange = self.World.FindActorsInCircle(self.CenterPosition, Info.MaxSearchRadius)
+			var actorsInRange = self.World.FindActorsInCircle(self.CenterPosition, WormInfo.MaxSearchRadius)
 				.Where(isValidTarget).SelectMany(a => a.TraitsImplementing<AttractsWorms>());
 
 			var noiseDirection = actorsInRange.Aggregate(WVec.Zero, (a, b) => a + b.AttractionAtPosition(self.CenterPosition));

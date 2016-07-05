@@ -1,15 +1,15 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -23,6 +23,7 @@ namespace OpenRA.Graphics
 	{
 		public static bool Includes(this ScrollDirection d, ScrollDirection s)
 		{
+			// PERF: Enum.HasFlag is slower and requires allocations.
 			return (d & s) == s;
 		}
 
@@ -53,8 +54,15 @@ namespace OpenRA.Graphics
 
 		ProjectedCellRegion allCells;
 		bool allCellsDirty = true;
+		readonly float[] availableZoomSteps = new[] { 2f, 1f, 0.5f, 0.25f };
 
 		float zoom = 1f;
+
+		public float[] AvailableZoomSteps
+		{
+			get { return availableZoomSteps; }
+		}
+
 		public float Zoom
 		{
 			get
@@ -64,7 +72,8 @@ namespace OpenRA.Graphics
 
 			set
 			{
-				zoom = value;
+				var newValue = ClosestTo(AvailableZoomSteps, value);
+				zoom = newValue;
 				viewportSize = (1f / zoom * new float2(Game.Renderer.Resolution)).ToInt2();
 				cellsDirty = true;
 				allCellsDirty = true;
@@ -73,6 +82,23 @@ namespace OpenRA.Graphics
 
 		public static int TicksSinceLastMove = 0;
 		public static int2 LastMousePos;
+
+		float ClosestTo(float[] collection, float target)
+		{
+			var closestValue = collection.First();
+			var subtractResult = Math.Abs(closestValue - target);
+
+			foreach (var element in collection)
+			{
+				if (Math.Abs(element - target) < subtractResult)
+				{
+					subtractResult = Math.Abs(element - target);
+					closestValue = element;
+				}
+			}
+
+			return closestValue;
+		}
 
 		public ScrollDirection GetBlockedDirections()
 		{
@@ -100,7 +126,7 @@ namespace OpenRA.Graphics
 				// The full map is visible in the editor
 				var width = map.MapSize.X * grid.TileSize.Width;
 				var height = map.MapSize.Y * grid.TileSize.Height;
-				if (wr.World.Map.Grid.Type == TileShape.Diamond)
+				if (wr.World.Map.Grid.Type == MapGridType.RectangularIsometric)
 					height /= 2;
 
 				mapBounds = new Rectangle(0, 0, width, height);
@@ -123,7 +149,7 @@ namespace OpenRA.Graphics
 			var world = worldRenderer.Viewport.ViewToWorldPx(view);
 			var map = worldRenderer.World.Map;
 			var candidates = CandidateMouseoverCells(world).ToList();
-			var tileSet = worldRenderer.World.TileSet;
+			var tileSet = worldRenderer.World.Map.Rules.TileSet;
 
 			foreach (var uv in candidates)
 			{
@@ -135,13 +161,12 @@ namespace OpenRA.Graphics
 					var ramp = 0;
 					if (map.Contains(uv))
 					{
-						var tile = map.MapTiles.Value[uv];
-						var ti = tileSet.GetTileInfo(tile);
+						var ti = tileSet.GetTileInfo(map.Tiles[uv]);
 						if (ti != null)
 							ramp = ti.RampType;
 					}
 
-					var corners = map.CellCorners[ramp];
+					var corners = map.Grid.CellCorners[ramp];
 					var pos = map.CenterOfCell(uv.ToCPos(map));
 					var screen = corners.Select(c => worldRenderer.ScreenPxPosition(pos + c)).ToArray();
 
@@ -240,10 +265,9 @@ namespace OpenRA.Graphics
 			var tl = (PPos)map.CellContaining(worldRenderer.ProjectedPosition(TopLeft)).ToMPos(map);
 			var br = (PPos)map.CellContaining(worldRenderer.ProjectedPosition(BottomRight)).ToMPos(map);
 
-			// Diamond tile shapes don't have straight edges, and so we need
-			// an additional cell margin to include the cells that are half
-			// visible on each edge.
-			if (map.Grid.Type == TileShape.Diamond)
+			// RectangularIsometric maps don't have straight edges, and so we need an additional
+			// cell margin to include the cells that are half visible on each edge.
+			if (map.Grid.Type == MapGridType.RectangularIsometric)
 			{
 				tl = new PPos(tl.U - 1, tl.V - 1);
 				br = new PPos(br.U + 1, br.V + 1);

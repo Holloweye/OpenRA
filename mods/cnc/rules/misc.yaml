@@ -25,23 +25,35 @@ CRATE:
 		NoBaseSelectionShares: 120
 		Units: mcv
 
+WCRATE:
+	Inherits: ^Crate
+	Tooltip:
+		Name: Wooden Crate
+
+SCRATE:
+	Inherits: ^Crate
+	Tooltip:
+		Name: Steel Crate
+
 mpspawn:
+	EditorOnlyTooltip:
+		Name: (multiplayer player starting point)
 	AlwaysVisible:
 	Immobile:
 		OccupiesSpace: false
 	WithSpriteBody:
 	RenderSpritesEditorOnly:
-		Palette: chrome
 	BodyOrientation:
 		QuantizedFacings: 1
 
 waypoint:
+	EditorOnlyTooltip:
+		Name: (waypoint for scripted behavior)
 	AlwaysVisible:
 	Immobile:
 		OccupiesSpace: false
 	WithSpriteBody:
 	RenderSpritesEditorOnly:
-		Palette: chrome
 	BodyOrientation:
 		QuantizedFacings: 1
 
@@ -52,7 +64,13 @@ waypoint:
 		Palette: colorpicker
 
 CAMERA:
+	EditorOnlyTooltip:
+		Name: (reveals area to owner)
 	AlwaysVisible:
+	WithSpriteBody:
+	RenderSpritesEditorOnly:
+	BodyOrientation:
+		QuantizedFacings: 1
 	Immobile:
 		OccupiesSpace: false
 	Health:
@@ -62,7 +80,14 @@ CAMERA:
 		Type: CenterPosition
 
 CAMERA.small:
+	EditorOnlyTooltip:
+		Name: (reveals small area to owner)
 	AlwaysVisible:
+	WithSpriteBody:
+	RenderSpritesEditorOnly:
+		Image: camera
+	BodyOrientation:
+		QuantizedFacings: 1
 	Immobile:
 		OccupiesSpace: false
 	Health:
@@ -79,12 +104,14 @@ FLARE:
 		Type: CenterPosition
 	RenderSprites:
 		Image: smokland
+		Palette: terrain
 	WithSpriteBody:
 		StartSequence: open
 	HiddenUnderFog:
 		Type: CenterPosition
 	Tooltip:
 		Name: Flare
+		ShowOwnerRow: false
 	BodyOrientation:
 		QuantizedFacings: 1
-
+	AutoSelectionSize:

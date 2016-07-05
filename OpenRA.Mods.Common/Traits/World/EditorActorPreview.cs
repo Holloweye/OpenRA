@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -40,7 +41,7 @@ namespace OpenRA.Mods.Common.Traits
 		{
 			ID = id;
 			this.actor = actor;
-			this.Owner = owner;
+			Owner = owner;
 			this.worldRenderer = worldRenderer;
 
 			if (!actor.InitDict.Contains<FactionInit>())
@@ -69,8 +70,9 @@ namespace OpenRA.Mods.Common.Traits
 				Footprint = new ReadOnlyDictionary<CPos, SubCell>(footprint);
 			}
 
-			var tooltip = Info.TraitInfoOrDefault<TooltipInfo>();
-			Tooltip = tooltip == null ? ID + ": " + Info.Name : ID + ": " + tooltip.Name + " (" + Info.Name + ")";
+			var tooltip = Info.TraitInfoOrDefault<EditorOnlyTooltipInfo>() as TooltipInfoBase ?? Info.TraitInfoOrDefault<TooltipInfo>();
+			Tooltip = (tooltip == null ? " < " + Info.Name + " >" : tooltip.Name) + "\n" + owner.Name + " (" + owner.Faction + ")"
+				+ "\nID: " + ID + "\nType: " + Info.Name;
 
 			GeneratePreviews();
 
@@ -159,6 +161,16 @@ namespace OpenRA.Mods.Common.Traits
 			previews = Info.TraitInfos<IRenderActorPreviewInfo>()
 				.SelectMany(rpi => rpi.RenderPreview(init))
 				.ToArray();
+		}
+
+		public ActorReference Export()
+		{
+			return new ActorReference(actor.Type, actor.Save().ToDictionary());
+		}
+
+		public override string ToString()
+		{
+			return "{0} {1}".F(Info.Name, ID);
 		}
 	}
 }

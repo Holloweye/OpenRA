@@ -1,9 +1,9 @@
-if Map.Difficulty == "Easy" then
+if Map.LobbyOption("difficulty") == "easy" then
 	TanyaType = "e7"
 	ReinforceCash = 5000
 	HoldAITime = DateTime.Minutes(3)
 	SpecialCameras = true
-elseif Map.Difficulty == "Normal" then
+elseif Map.LobbyOption("difficulty") == "normal" then
 	TanyaType = "e7.noautotarget"
 	ChangeStance = true
 	ReinforceCash = 2250
@@ -29,9 +29,9 @@ HeliReinforcements = { "medi", "mech", "mech" }
 
 GreeceReinforcements =
 {
-	{ { "2tnk", "2tnk", "2tnk", "arty", "arty" }, { SpyEntry.Location, SpyLoadout.Location } },
-	{ { "e3", "e3", "e3", "e6", "e6" }, { SpyEntry.Location, GreeceLoadout1.Location } },
-	{ { "jeep", "jeep", "e1", "e1", "2tnk" }, { SpyEntry.Location, GreeceLoadout2.Location } }
+	{ types = { "2tnk", "2tnk", "2tnk", "arty", "arty" }, entry = { SpyEntry.Location, SpyLoadout.Location } },
+	{ types = { "e3", "e3", "e3", "e6", "e6" }, entry = { SpyEntry.Location, GreeceLoadout1.Location } },
+	{ types = { "jeep", "jeep", "e1", "e1", "2tnk" }, entry = { SpyEntry.Location, GreeceLoadout2.Location } }
 }
 
 DogPatrol = { Dog1, Dog2 }
@@ -83,7 +83,7 @@ Tick = function()
 	end
 
 	if ussr.HasNoRequiredUnits() then
-		if not greece.IsObjectiveCompleted(KillAll) and Map.Difficulty == "Real tough guy" then
+		if not greece.IsObjectiveCompleted(KillAll) and Map.LobbyOption("difficulty") == "tough" then
 			SendWaterExtraction()
 		end
 		greece.MarkCompletedObjective(KillAll)
@@ -104,8 +104,8 @@ SendReinforcements = function()
 	Camera.Position = ReinforceCamera.CenterPosition
 	greece.Cash = greece.Cash + ReinforceCash
 
-	Utils.Do(GreeceReinforcements, function(reinforceTable)
-		Reinforcements.ReinforceWithTransport(greece, InsertionTransport, reinforceTable[1], reinforceTable[2], { SpyEntry.Location })
+	Utils.Do(GreeceReinforcements, function(reinforcements)
+		Reinforcements.ReinforceWithTransport(greece, InsertionTransport, reinforcements.types, reinforcements.entry, { SpyEntry.Location })
 	end)
 
 	Media.PlaySpeechNotification(greece, "AlliedReinforcementsArrived")
@@ -174,8 +174,8 @@ end
 FreeTanya = function()
 	TanyasColt.Destroy()
 	Tanya = Actor.Create(TanyaType, true, { Owner = greece, Location = Prison.Location + CVec.New(1, 1) })
-	Tanya.Scatter()
 	Tanya.Demolish(Prison)
+	Tanya.Move(Tanya.Location + CVec.New(Utils.RandomInteger(-1, 2), 1))
 
 	if ChangeStance then
 		Tanya.Stance = "HoldFire"
@@ -186,7 +186,7 @@ FreeTanya = function()
 
 	Trigger.OnKilled(Tanya, function() ussr.MarkCompletedObjective(ussrObj) end)
 
-	if Map.Difficulty == "Real tough guy" then
+	if Map.LobbyOption("difficulty") == "tough" then
 		KillSams = greece.AddPrimaryObjective("Destroy all four SAM Sites that block\nour reinforcements' helicopter.")
 
 		greece.MarkCompletedObjective(mainObj)
@@ -213,6 +213,10 @@ SendSpy = function()
 		SpyCameraA = Actor.Create("camera", true, { Owner = greece, Location = SpyCamera1.Location })
 		SpyCameraB = Actor.Create("camera", true, { Owner = greece, Location = SpyCamera2.Location })
 	end
+
+	Trigger.AfterDelay(DateTime.Seconds(3), function()
+		Media.DisplayMessage("Commander! You have to disguise me in order to get through the enemy patrols.", "Spy")
+	end)
 end
 
 ActivatePatrols = function()
@@ -221,11 +225,6 @@ ActivatePatrols = function()
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		GroupPatrol(PatrolA, PatrolAPath, DateTime.Seconds(7))
 		GroupPatrol(PatrolB, PatrolBPath, DateTime.Seconds(6))
-	end)
-
-	local units = Map.ActorsInBox(Map.TopLeft, Map.BottomRight, function(self) return self.Owner == soviets and self.HasProperty("AutoTarget") end)
-	Utils.Do(units, function(unit)
-		unit.Stance = "Defend"
 	end)
 end
 
@@ -273,7 +272,7 @@ InitTriggers = function()
 		end
 	end)
 
-	if Map.Difficulty ~= "Real tough guy" then
+	if Map.LobbyOption("difficulty") ~= "tough" then
 		Trigger.OnKilled(Mammoth, function()
 			Trigger.AfterDelay(HoldAITime - DateTime.Seconds(45), function() HoldProduction = false end)
 			Trigger.AfterDelay(HoldAITime, function() Attacking = true end)
@@ -295,7 +294,7 @@ InitTriggers = function()
 		Trigger.AfterDelay(DateTime.Seconds(7), flare.Destroy)
 		Media.PlaySpeechNotification(greece, "SignalFlare")
 
-		if Map.Difficulty == "Real tough guy" then
+		if Map.LobbyOption("difficulty") == "tough" then
 			Reinforcements.ReinforceWithTransport(greece, InsertionHeliType, HeliReinforcements, ExtractionPath, { ExtractionPath[1] })
 			if not Harvester.IsDead then
 				Harvester.FindResources()

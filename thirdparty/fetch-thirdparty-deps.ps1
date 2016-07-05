@@ -38,21 +38,19 @@ if (!(Test-Path "ICSharpCode.SharpZipLib.dll"))
 if (!(Test-Path "MaxMind.GeoIP2.dll"))
 {
 	echo "Fetching MaxMind.GeoIP2 from NuGet."
-	./nuget.exe install MaxMind.GeoIP2 -Version 2.3.1 -ExcludeVersion
-	cp MaxMind.Db/lib/net40/MaxMind.Db.* .
+	./nuget.exe install MaxMind.GeoIP2 -Version 2.6.0 -ExcludeVersion
+	cp MaxMind.Db/lib/net45/MaxMind.Db.* .
 	rmdir MaxMind.Db -Recurse
-	cp MaxMind.GeoIP2/lib/net40/MaxMind.GeoIP2* .
+	cp MaxMind.GeoIP2/lib/net45/MaxMind.GeoIP2* .
 	rmdir MaxMind.GeoIP2 -Recurse
-	cp Newtonsoft.Json/lib/net40/Newtonsoft.Json* .
+	cp Newtonsoft.Json/lib/net45/Newtonsoft.Json* .
 	rmdir Newtonsoft.Json -Recurse
-	cp RestSharp/lib/net4-client/RestSharp* .
-	rmdir RestSharp -Recurse
 }
 
 if (!(Test-Path "SharpFont.dll"))
 {
 	echo "Fetching SharpFont from NuGet."
-	./nuget.exe install SharpFont -Version 3.0.0 -ExcludeVersion
+	./nuget.exe install SharpFont -Version 3.1.0 -ExcludeVersion
 	cp SharpFont/lib/net20/SharpFont* .
 	cp SharpFont/config/SharpFont.dll.config .
 	rmdir SharpFont -Recurse
@@ -62,26 +60,38 @@ if (!(Test-Path "SharpFont.dll"))
 if (!(Test-Path "nunit.framework.dll"))
 {
 	echo "Fetching NUnit from NuGet."
-	./nuget.exe install NUnit -Version 2.6.4 -ExcludeVersion
-	cp NUnit/lib/nunit.framework* .
+	./nuget.exe install NUnit -Version 3.0.1 -ExcludeVersion
+	cp NUnit/lib/net40/nunit.framework* .
 	rmdir NUnit -Recurse
 }
 
 if (!(Test-Path "windows/SDL2.dll"))
 {
-	echo "Fetching SDL2 from NuGet."
-	./nuget.exe install sdl2 -Version 2.0.3 -ExcludeVersion
-	cp sdl2.redist/build/native/bin/Win32/dynamic/SDL2.dll ./windows/
-	rmdir sdl2 -Recurse
-	rmdir sdl2.redist -Recurse
+	echo "Fetching SDL2 from libsdl.org"
+	
+	# Download zip:
+	$zipFileName = "SDL2-2.0.4-win32-x86.zip"
+	$target = Join-Path $pwd.ToString() $zipFileName
+	(New-Object System.Net.WebClient).DownloadFile("https://www.libsdl.org/release/" + $zipFileName, $target)
+	
+	# Extract zip:
+	$shell_app=new-object -com shell.application
+	$currentPath = (Get-Location).Path
+	$zipFile = $shell_app.namespace($currentPath + "\$zipFileName")
+	$destination = $shell_app.namespace($currentPath + "\windows")
+	$destination.Copyhere($zipFile.items())
+	
+	# Remove junk files:
+	rm SDL2-2.0.4-win32-x86.zip
+	rm -path "$currentPath\windows\README-SDL.txt"
 }
 
-if (!(Test-Path "Mono.Nat.dll"))
+if (!(Test-Path "Open.Nat.dll"))
 {
-	echo "Fetching Mono.Nat from NuGet."
-	./nuget.exe install Mono.Nat -Version 1.2.21 -ExcludeVersion
-	cp Mono.Nat/lib/net40/Mono.Nat.dll .
-	rmdir Mono.Nat -Recurse
+	echo "Fetching Open.Nat from NuGet."
+	./nuget.exe install Open.Nat -Version 2.0.16 -ExcludeVersion
+	cp Open.Nat/lib/net45/Open.Nat.dll .
+	rmdir Open.Nat -Recurse
 }
 
 if (!(Test-Path "windows/lua51.dll"))
@@ -118,16 +128,23 @@ if (!(Test-Path "FuzzyLogicLibrary.dll"))
 
 if (!(Test-Path "SDL2-CS.dll"))
 {
-	echo "Fetching SDL2 C# from GitHub."
+	echo "Fetching SDL2-CS from GitHub."
 	$target = Join-Path $pwd.ToString() "SDL2-CS.dll"
-	(New-Object System.Net.WebClient).DownloadFile("https://github.com/OpenRA/SDL2-CS/releases/download/20150709/SDL2-CS.dll", $target)
+	(New-Object System.Net.WebClient).DownloadFile("https://github.com/OpenRA/SDL2-CS/releases/download/20151227/SDL2-CS.dll", $target)
+}
+
+if (!(Test-Path "OpenAL-CS.dll"))
+{
+	echo "Fetching OpenAL-CS from GitHub."
+	$target = Join-Path $pwd.ToString() "OpenAL-CS.dll"
+	(New-Object System.Net.WebClient).DownloadFile("https://github.com/OpenRA/OpenAL-CS/releases/download/20151227/OpenAL-CS.dll", $target)
 }
 
 if (!(Test-Path "Eluant.dll"))
 {
 	echo "Fetching Eluant from GitHub."
 	$target = Join-Path $pwd.ToString() "Eluant.dll"
-	(New-Object System.Net.WebClient).DownloadFile("https://github.com/OpenRA/Eluant/releases/download/20140425/Eluant.dll", $target)
+	(New-Object System.Net.WebClient).DownloadFile("https://github.com/OpenRA/Eluant/releases/download/20160124/Eluant.dll", $target)
 }
 
 if (!(Test-Path "GeoLite2-Country.mmdb.gz") -Or (((get-date) - (get-item "GeoLite2-Country.mmdb.gz").LastWriteTime) -gt (new-timespan -days 30)))

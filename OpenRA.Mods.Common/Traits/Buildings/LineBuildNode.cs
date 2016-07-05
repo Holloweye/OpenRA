@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -18,6 +19,9 @@ namespace OpenRA.Mods.Common.Traits
 	{
 		[Desc("This actor is of LineBuild 'NodeType'...")]
 		public readonly HashSet<string> Types = new HashSet<string> { "wall" };
+
+		[Desc("Cells (outside the footprint) that contain cells that can connect to this actor.")]
+		public readonly CVec[] Connections = new[] { new CVec(1, 0), new CVec(0, 1), new CVec(-1, 0), new CVec(0, -1) };
 	}
 
 	public class LineBuildNode { }

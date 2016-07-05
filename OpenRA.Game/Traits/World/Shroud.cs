@@ -1,32 +1,51 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Network;
 
 namespace OpenRA.Traits
 {
 	[Desc("Required for shroud and fog visibility checks. Add this to the player actor.")]
-	public class ShroudInfo : ITraitInfo
+	public class ShroudInfo : ITraitInfo, ILobbyOptions
 	{
-		public object Create(ActorInitializer init) { return new Shroud(init.Self); }
+		[Desc("Default value of the fog checkbox in the lobby.")]
+		public bool FogEnabled = true;
+
+		[Desc("Prevent the fog enabled state from being changed in the lobby.")]
+		public bool FogLocked = false;
+
+		[Desc("Default value of the explore map checkbox in the lobby.")]
+		public bool ExploredMapEnabled = false;
+
+		[Desc("Prevent the explore map enabled state from being changed in the lobby.")]
+		public bool ExploredMapLocked = false;
+
+		IEnumerable<LobbyOption> ILobbyOptions.LobbyOptions(Ruleset rules)
+		{
+			yield return new LobbyBooleanOption("explored", "Explored Map", ExploredMapEnabled, ExploredMapLocked);
+			yield return new LobbyBooleanOption("fog", "Fog of War", FogEnabled, FogLocked);
+		}
+
+		public object Create(ActorInitializer init) { return new Shroud(init.Self, this); }
 	}
 
-	public class Shroud : ISync
+	public class Shroud : ISync, INotifyCreated
 	{
-		[Sync] public bool Disabled;
-
 		public event Action<IEnumerable<PPos>> CellsChanged;
 
 		readonly Actor self;
+		readonly ShroudInfo info;
 		readonly Map map;
 
 		readonly CellLayer<short> visibleCount;
@@ -38,16 +57,49 @@ namespace OpenRA.Traits
 		readonly Dictionary<Actor, PPos[]> visibility = new Dictionary<Actor, PPos[]>();
 		readonly Dictionary<Actor, PPos[]> generation = new Dictionary<Actor, PPos[]>();
 
+		[Sync] bool disabled;
+		public bool Disabled
+		{
+			get
+			{
+				return disabled;
+			}
+
+			set
+			{
+				if (disabled == value)
+					return;
+
+				disabled = value;
+				Invalidate(map.ProjectedCellBounds);
+			}
+		}
+
+		bool fogEnabled;
+		public bool FogEnabled { get { return !Disabled && fogEnabled; } }
+		public bool ExploreMapEnabled { get; private set; }
+
 		public int Hash { get; private set; }
 
-		public Shroud(Actor self)
+		public Shroud(Actor self, ShroudInfo info)
 		{
 			this.self = self;
+			this.info = info;
 			map = self.World.Map;
 
 			visibleCount = new CellLayer<short>(map);
 			generatedShroudCount = new CellLayer<short>(map);
 			explored = new CellLayer<bool>(map);
+		}
+
+		void INotifyCreated.Created(Actor self)
+		{
+			var gs = self.World.LobbyInfo.GlobalSettings;
+			fogEnabled = gs.OptionOrDefault("fog", info.FogEnabled);
+
+			ExploreMapEnabled = gs.OptionOrDefault("explored", info.ExploredMapEnabled);
+			if (ExploreMapEnabled)
+				self.World.AddFrameEndTask(w => ExploreAll());
 		}
 
 		void Invalidate(IEnumerable<PPos> changed)
@@ -212,7 +264,7 @@ namespace OpenRA.Traits
 			Invalidate(changed);
 		}
 
-		public void ExploreAll(World world)
+		public void ExploreAll()
 		{
 			var changed = new List<PPos>();
 			foreach (var puv in map.ProjectedCellBounds)
@@ -269,14 +321,12 @@ namespace OpenRA.Traits
 
 		public bool IsExplored(PPos puv)
 		{
-			if (!ShroudEnabled)
-				return true;
+			if (Disabled)
+				return map.Contains(puv);
 
 			var uv = (MPos)puv;
 			return explored.Contains(uv) && explored[uv] && (generatedShroudCount[uv] == 0 || visibleCount[uv] > 0);
 		}
-
-		public bool ShroudEnabled { get { return !Disabled; } }
 
 		public bool IsVisible(WPos pos)
 		{
@@ -304,13 +354,11 @@ namespace OpenRA.Traits
 		public bool IsVisible(PPos puv)
 		{
 			if (!FogEnabled)
-				return true;
+				return map.Contains(puv);
 
 			var uv = (MPos)puv;
 			return visibleCount.Contains(uv) && visibleCount[uv] > 0;
 		}
-
-		public bool FogEnabled { get { return !Disabled && self.World.LobbyInfo.GlobalSettings.Fog; } }
 
 		public bool Contains(PPos uv)
 		{

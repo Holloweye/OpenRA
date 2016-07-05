@@ -1,18 +1,19 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Runtime.InteropServices;
-using OpenRA.FileSystem;
 
 namespace OpenRA.Graphics
 {
@@ -47,9 +48,8 @@ namespace OpenRA.Graphics
 			Size = texture.Size;
 		}
 
-		public Sheet(SheetType type, string filename)
+		public Sheet(SheetType type, Stream stream)
 		{
-			using (var stream = GlobalFileSystem.Open(filename))
 			using (var bitmap = (Bitmap)Image.FromStream(stream))
 			{
 				Size = bitmap.Size;

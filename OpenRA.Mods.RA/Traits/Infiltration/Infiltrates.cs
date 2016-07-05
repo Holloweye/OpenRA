@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -12,7 +13,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using OpenRA.Mods.Common;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Orders;
+using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.RA.Activities;
 using OpenRA.Traits;
 
@@ -27,21 +30,28 @@ namespace OpenRA.Mods.RA.Traits
 		[Desc("What diplomatic stances can be infiltrated by this actor.")]
 		public readonly Stance ValidStances = Stance.Neutral | Stance.Enemy;
 
+		[Desc("Behaviour when entering the structure.",
+			"Possible values are Exit, Suicide, Dispose.")]
+		public readonly EnterBehaviour EnterBehaviour = EnterBehaviour.Dispose;
+
+		[Desc("Notification to play when a building is infiltrated.")]
+		public readonly string Notification = "BuildingInfiltrated";
+
 		public object Create(ActorInitializer init) { return new Infiltrates(this); }
 	}
 
 	class Infiltrates : IIssueOrder, IResolveOrder, IOrderVoice
 	{
-		public readonly InfiltratesInfo Info;
+		readonly InfiltratesInfo info;
 
 		public Infiltrates(InfiltratesInfo info)
 		{
-			Info = info;
+			this.info = info;
 		}
 
 		public IEnumerable<IOrderTargeter> Orders
 		{
-			get { yield return new InfiltrationOrderTargeter(Info); }
+			get { yield return new InfiltrationOrderTargeter(info); }
 		}
 
 		public Order IssueOrder(Actor self, IOrderTargeter order, Target target, bool queued)
@@ -77,16 +87,15 @@ namespace OpenRA.Mods.RA.Traits
 				targetTypes = frozen.TargetTypes;
 			}
 			else
-				targetTypes = order.TargetActor.TraitsImplementing<ITargetable>().Where(Exts.IsTraitEnabled)
-					.SelectMany(t => t.TargetTypes);
+				targetTypes = order.TargetActor.GetEnabledTargetTypes();
 
-			return Info.Types.Overlaps(targetTypes);
+			return info.Types.Overlaps(targetTypes);
 		}
 
 		public string VoicePhraseForOrder(Actor self, Order order)
 		{
 			return order.OrderString == "Infiltrate" && IsValidOrder(self, order)
-				? Info.Voice : null;
+				? info.Voice : null;
 		}
 
 		public void ResolveOrder(Actor self, Order order)
@@ -96,14 +105,14 @@ namespace OpenRA.Mods.RA.Traits
 
 			var target = self.ResolveFrozenActorOrder(order, Color.Red);
 			if (target.Type != TargetType.Actor
-				|| !Info.Types.Overlaps(target.Actor.TraitsImplementing<ITargetable>().SelectMany(t => t.TargetTypes)))
+				|| !info.Types.Overlaps(target.Actor.GetAllTargetTypes()))
 				return;
 
 			if (!order.Queued)
 				self.CancelActivity();
 
 			self.SetTargetLine(target, Color.Red);
-			self.QueueActivity(new Infiltrate(self, target.Actor));
+			self.QueueActivity(new Infiltrate(self, target.Actor, info.EnterBehaviour, info.ValidStances, info.Notification));
 		}
 	}
 
@@ -124,7 +133,7 @@ namespace OpenRA.Mods.RA.Traits
 			if (!info.ValidStances.HasStance(stance))
 				return false;
 
-			return target.TraitsImplementing<ITargetable>().Any(t => t.TargetTypes.Overlaps(info.Types));
+			return info.Types.Overlaps(target.GetAllTargetTypes());
 		}
 
 		public override bool CanTargetFrozenActor(Actor self, FrozenActor target, TargetModifiers modifiers, ref string cursor)
@@ -134,7 +143,7 @@ namespace OpenRA.Mods.RA.Traits
 			if (!info.ValidStances.HasStance(stance))
 				return false;
 
-			return target.Info.TraitInfos<ITargetableInfo>().Any(t => info.Types.Overlaps(t.GetTargetTypes()));
+			return info.Types.Overlaps(target.Info.TraitInfos<ITargetableInfo>().SelectMany(ti => ti.GetTargetTypes()));
 		}
 	}
 }

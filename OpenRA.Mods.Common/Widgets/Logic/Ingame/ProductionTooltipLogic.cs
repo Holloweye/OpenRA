@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -17,7 +18,7 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets.Logic
 {
-	public class ProductionTooltipLogic
+	public class ProductionTooltipLogic : ChromeLogic
 	{
 		[ObjectCreator.UseCtor]
 		public ProductionTooltipLogic(Widget widget, TooltipContainerWidget tooltipContainer, ProductionPaletteWidget palette, World world)
@@ -81,7 +82,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				powerIcon.IsVisible = () => power != 0;
 
 				var lowpower = pm.PowerState != PowerState.Normal;
-				var time = palette.CurrentQueue == null ? 0 : palette.CurrentQueue.GetBuildTime(actor.Name)
+				var time = palette.CurrentQueue == null ? 0 : palette.CurrentQueue.GetBuildTime(actor, buildable)
 					* (lowpower ? palette.CurrentQueue.Info.LowPowerSlowdown : 1);
 				var timeString = WidgetUtils.FormatTime(time, world.Timestep);
 				timeLabel.GetText = () => timeString;

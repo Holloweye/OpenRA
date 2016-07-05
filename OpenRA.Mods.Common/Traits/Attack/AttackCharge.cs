@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -21,7 +22,7 @@ namespace OpenRA.Mods.Common.Traits
 		public readonly int MaxCharges = 1;
 
 		[Desc("Reload time for all charges (in ticks).")]
-		public readonly int ReloadTime = 120;
+		public readonly int ReloadDelay = 120;
 
 		[Desc("Delay for initial charge attack (in ticks).")]
 		public readonly int InitialChargeDelay = 22;
@@ -63,23 +64,17 @@ namespace OpenRA.Mods.Common.Traits
 			return base.CanAttack(self, target);
 		}
 
-		public void Attacking(Actor self, Target target, Armament a, Barrel barrel)
+		void INotifyAttack.Attacking(Actor self, Target target, Armament a, Barrel barrel)
 		{
 			--charges;
-			timeToRecharge = info.ReloadTime;
+			timeToRecharge = info.ReloadDelay;
 		}
+
+		void INotifyAttack.PreparingAttack(Actor self, Target target, Armament a, Barrel barrel) { }
 
 		public override Activity GetAttackActivity(Actor self, Target newTarget, bool allowMove, bool forceAttack)
 		{
 			return new ChargeAttack(this, newTarget);
-		}
-
-		public override void ResolveOrder(Actor self, Order order)
-		{
-			base.ResolveOrder(self, order);
-
-			if (order.OrderString == "Stop")
-				self.CancelActivity();
 		}
 
 		class ChargeAttack : Activity
@@ -107,7 +102,7 @@ namespace OpenRA.Mods.Common.Traits
 				if (!string.IsNullOrEmpty(attack.info.ChargeAudio))
 					Game.Sound.Play(attack.info.ChargeAudio, self.CenterPosition);
 
-				return Util.SequenceActivities(new Wait(attack.info.InitialChargeDelay), new ChargeFire(attack, target), this);
+				return ActivityUtils.SequenceActivities(new Wait(attack.info.InitialChargeDelay), new ChargeFire(attack, target), this);
 			}
 		}
 
@@ -132,7 +127,7 @@ namespace OpenRA.Mods.Common.Traits
 
 				attack.DoAttack(self, target);
 
-				return Util.SequenceActivities(new Wait(attack.info.ChargeDelay), this);
+				return ActivityUtils.SequenceActivities(new Wait(attack.info.ChargeDelay), this);
 			}
 		}
 	}

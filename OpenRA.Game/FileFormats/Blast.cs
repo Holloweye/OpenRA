@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  *
  * This file is based on the blast routines (version 1.1 by Mark Adler)
  * included in zlib/contrib
@@ -56,16 +57,19 @@ namespace OpenRA.FileFormats
 		static Huffman lencode = new Huffman(lenlen, lenlen.Length, 16);
 		static Huffman distcode = new Huffman(distlen, distlen.Length, 64);
 
-		// Decode PKWare Compression Library stream.
-		public static byte[] Decompress(byte[] src)
+		/// <summary>PKWare Compression Library stream.</summary>
+		/// <param name="input">Compressed input stream.</param>
+		/// <param name="output">Stream to write the decompressed output.</param>
+		/// <param name="onProgress">Progress callback, invoked with (read bytes, written bytes).</param>
+		public static void Decompress(Stream input, Stream output, Action<long, long> onProgress = null)
 		{
-			var br = new BitReader(src);
+			var br = new BitReader(input);
 
 			// Are literals coded?
 			var coded = br.ReadBits(8);
 
 			if (coded < 0 || coded > 1)
-				throw new NotImplementedException("Invalid datastream");
+				throw new NotImplementedException("Invalid data stream");
 			var encodedLiterals = coded == 1;
 
 			// log2(dictionary size) - 6
@@ -77,7 +81,9 @@ namespace OpenRA.FileFormats
 			ushort next = 0; // index of next write location in out[]
 			var first = true; // true to check distances (for first 4K)
 			var outBuffer = new byte[MAXWIN]; // output buffer and sliding window
-			var ms = new MemoryStream();
+
+			var inputStart = input.Position;
+			var outputStart = output.Position;
 
 			// decode literals and length/distance pairs
 			do
@@ -93,7 +99,10 @@ namespace OpenRA.FileFormats
 					if (len == 519)
 					{
 						for (var i = 0; i < next; i++)
-							ms.WriteByte(outBuffer[i]);
+							output.WriteByte(outBuffer[i]);
+
+						if (onProgress != null)
+							onProgress(input.Position - inputStart, output.Position - outputStart);
 						break;
 					}
 
@@ -136,9 +145,12 @@ namespace OpenRA.FileFormats
 						if (next == MAXWIN)
 						{
 							for (var i = 0; i < next; i++)
-								ms.WriteByte(outBuffer[i]);
+								output.WriteByte(outBuffer[i]);
 							next = 0;
 							first = false;
+
+							if (onProgress != null)
+								onProgress(input.Position - inputStart, output.Position - outputStart);
 						}
 					} while (len != 0);
 				}
@@ -150,17 +162,18 @@ namespace OpenRA.FileFormats
 					if (next == MAXWIN)
 					{
 						for (var i = 0; i < next; i++)
-							ms.WriteByte(outBuffer[i]);
+							output.WriteByte(outBuffer[i]);
 						next = 0;
 						first = false;
+
+						if (onProgress != null)
+							onProgress(input.Position - inputStart, output.Position - outputStart);
 					}
 				}
 			} while (true);
-
-			return ms.ToArray();
 		}
 
-		// Decode a code using huffman table h.
+		// Decode a code using Huffman table h.
 		static int Decode(Huffman h, BitReader br)
 		{
 			var code = 0; // len bits being decoded
@@ -184,14 +197,13 @@ namespace OpenRA.FileFormats
 
 	class BitReader
 	{
-		readonly byte[] src;
-		int offset = 0;
-		int bitBuffer = 0;
+		readonly Stream stream;
+		byte bitBuffer = 0;
 		int bitCount = 0;
 
-		public BitReader(byte[] src)
+		public BitReader(Stream stream)
 		{
-			this.src = src;
+			this.stream = stream;
 		}
 
 		public int ReadBits(int count)
@@ -202,7 +214,7 @@ namespace OpenRA.FileFormats
 			{
 				if (bitCount == 0)
 				{
-					bitBuffer = src[offset++];
+					bitBuffer = stream.ReadUInt8();
 					bitCount = 8;
 				}
 

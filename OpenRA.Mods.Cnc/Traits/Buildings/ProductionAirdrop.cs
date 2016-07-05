@@ -1,15 +1,17 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System.Linq;
 using OpenRA.Activities;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
@@ -21,8 +23,8 @@ namespace OpenRA.Mods.Cnc.Traits
 	public class ProductionAirdropInfo : ProductionInfo
 	{
 		public readonly string ReadyAudio = "Reinforce";
-		[Desc("Cargo aircraft used.")]
-		[ActorReference] public readonly string ActorType = "c17";
+		[Desc("Cargo aircraft used for delivery. Must have the `Aircraft` trait.")]
+		[ActorReference(typeof(AircraftInfo))] public readonly string ActorType = "c17";
 
 		public override object Create(ActorInitializer init) { return new ProductionAirdrop(init, this); }
 	}
@@ -63,7 +65,7 @@ namespace OpenRA.Mods.Cnc.Traits
 					new FacingInit(64)
 				});
 
-				actor.QueueActivity(new Fly(actor, Target.FromCell(w, self.Location + new CVec(9, 0))));
+				actor.QueueActivity(new Fly(actor, Target.FromCell(w, self.Location + new CVec(12, 0))));
 				actor.QueueActivity(new Land(actor, Target.FromActor(self)));
 				actor.QueueActivity(new CallFunc(() =>
 				{

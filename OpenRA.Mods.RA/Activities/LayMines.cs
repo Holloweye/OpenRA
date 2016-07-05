@@ -1,14 +1,14 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Activities;
@@ -53,7 +53,7 @@ namespace OpenRA.Mods.RA.Activities
 				if (rearmTarget == null)
 					return new Wait(20);
 
-				return Util.SequenceActivities(
+				return ActivityUtils.SequenceActivities(
 					new MoveAdjacentTo(self, Target.FromActor(rearmTarget)),
 					movement.MoveTo(self.World.Map.CellContaining(rearmTarget.CenterPosition), rearmTarget),
 					new Rearm(self),
@@ -64,7 +64,7 @@ namespace OpenRA.Mods.RA.Activities
 			if (minelayer.Minefield.Contains(self.Location) && ShouldLayMine(self, self.Location))
 			{
 				LayMine(self);
-				return Util.SequenceActivities(new Wait(20), this); // A little wait after placing each mine, for show
+				return ActivityUtils.SequenceActivities(new Wait(20), this); // A little wait after placing each mine, for show
 			}
 
 			if (minelayer.Minefield.Length > 0)
@@ -74,7 +74,7 @@ namespace OpenRA.Mods.RA.Activities
 				{
 					var p = minelayer.Minefield.Random(self.World.SharedRandom);
 					if (ShouldLayMine(self, p))
-						return Util.SequenceActivities(movement.MoveTo(p, 0), this);
+						return ActivityUtils.SequenceActivities(movement.MoveTo(p, 0), this);
 				}
 			}
 
@@ -85,7 +85,7 @@ namespace OpenRA.Mods.RA.Activities
 		static bool ShouldLayMine(Actor self, CPos p)
 		{
 			// If there is no unit (other than me) here, we want to place a mine here
-			return self.World.ActorMap.GetUnitsAt(p).All(a => a == self);
+			return self.World.ActorMap.GetActorsAt(p).All(a => a == self);
 		}
 
 		void LayMine(Actor self)

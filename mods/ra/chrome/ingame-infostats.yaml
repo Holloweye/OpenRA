@@ -3,28 +3,31 @@ Container@SKIRMISH_STATS:
 	Width: PARENT_RIGHT
 	Logic: GameInfoStatsLogic
 	Children:
-		Label@MISSION:
-			X: 20
-			Y: 20
-			Width: 482
-			Height: 25
-			Font: MediumBold
-			Text: Mission:
-		Label@STATS_STATUS:
-			X: 100
-			Y: 20
-			Width: PARENT_RIGHT - 10
-			Height: 25
-			Font: MediumBold
-		Checkbox@STATS_CHECKBOX:
-			X: 20
-			Y: 55
-			Width: 482
-			Height: 20
-			Font: Bold
-			Text: Destroy all opposition!
-			Disabled: yes
-			TextColorDisabled: 255,255,255
+		Container@OBJECTIVE:
+			Height: 75
+			Children:
+				Label@MISSION:
+					X: 20
+					Y: 20
+					Width: 482
+					Height: 25
+					Font: MediumBold
+					Text: Mission:
+				Label@STATS_STATUS:
+					X: 100
+					Y: 20
+					Width: PARENT_RIGHT - 10
+					Height: 25
+					Font: MediumBold
+				Checkbox@STATS_CHECKBOX:
+					X: 20
+					Y: 55
+					Width: 482
+					Height: 20
+					Font: Bold
+					Text: Destroy all opposition!
+					Disabled: yes
+					TextColorDisabled: FFFFFF
 		Container@STATS_HEADERS:
 			X: 22
 			Y: 80
@@ -82,6 +85,12 @@ Container@SKIRMISH_STATS:
 							X: 10
 							Width: 150
 							Height: 25
+						ClientTooltipRegion@CLIENT_REGION:
+							TooltipContainer: TOOLTIP_CONTAINER
+							Template: INGAME_CLIENT_TOOLTIP
+							X: 10
+							Width: 150
+							Height: 25
 						Image@FACTIONFLAG:
 							X: 159
 							Y: 6
@@ -106,4 +115,3 @@ Container@SKIRMISH_STATS:
 							Width: 70
 							Height: 25
 							Align: Center
-

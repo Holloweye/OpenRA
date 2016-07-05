@@ -1,10 +1,11 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2014 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -17,11 +18,11 @@ using OpenRA.Primitives;
 
 namespace OpenRA.Mods.D2k.UtilityCommands
 {
-	class D2kMapImporter
+	public class D2kMapImporter
 	{
 		const int MapCordonWidth = 2;
 
-		readonly Dictionary<int, Pair<string, string>> actorDataByActorCode = new Dictionary<int, Pair<string, string>>
+		public static Dictionary<int, Pair<string, string>> ActorDataByActorCode = new Dictionary<int, Pair<string, string>>
 		{
 			{ 20, Pair.New("wormspawner", "Creeps") },
 			{ 23, Pair.New("mpspawn", "Neutral") },
@@ -93,7 +94,7 @@ namespace OpenRA.Mods.D2k.UtilityCommands
 			{ 370, Pair.New("missile_tank", "Harkonnen") },
 			{ 371, Pair.New("siege_tank", "Harkonnen") },
 			{ 372, Pair.New("carryall", "Harkonnen") },
-			{ 374, Pair.New("devast", "Harkonnen") },
+			{ 374, Pair.New("devastator", "Harkonnen") },
 
 			// Ordos:
 			{ 404, Pair.New("wall", "Ordos") },
@@ -125,7 +126,7 @@ namespace OpenRA.Mods.D2k.UtilityCommands
 			{ 570, Pair.New("missile_tank", "Ordos") },
 			{ 571, Pair.New("siege_tank", "Ordos") },
 			{ 572, Pair.New("carryall", "Ordos") },
-			{ 574, Pair.New("deviatortank", "Ordos") },
+			{ 574, Pair.New("deviator", "Ordos") },
 
 			// Corrino:
 			{ 580, Pair.New("wall", "Corrino") },
@@ -167,7 +168,7 @@ namespace OpenRA.Mods.D2k.UtilityCommands
 			{ 624, Pair.New("refinery", "Fremen") },
 			{ 625, Pair.New("outpost", "Fremen") },
 			{ 627, Pair.New("light_factory", "Fremen") },
-			{ 628, Pair.New("palacec", "Fremen") },
+			{ 628, Pair.New("palace", "Fremen") },
 			{ 629, Pair.New("silo", "Fremen") },
 			{ 630, Pair.New("heavy_factory", "Fremen") },
 			{ 631, Pair.New("repair_pad", "Fremen") },
@@ -262,6 +263,7 @@ namespace OpenRA.Mods.D2k.UtilityCommands
 		Size mapSize;
 		TileSet tileSet;
 		List<TerrainTemplateInfo> tileSetsFromYaml;
+		int playerCount;
 
 		D2kMapImporter(string filename, string tileset, Ruleset rules)
 		{
@@ -292,13 +294,12 @@ namespace OpenRA.Mods.D2k.UtilityCommands
 
 		public static Map Import(string filename, string mod, string tileset, Ruleset rules)
 		{
-			var map = new D2kMapImporter(filename, tileset, rules).map;
+			var importer = new D2kMapImporter(filename, tileset, rules);
+			var map = importer.map;
 			if (map == null)
 				return null;
 
 			map.RequiresMod = mod;
-			var players = new MapPlayers(map.Rules, map.SpawnPoints.Value.Length);
-			map.PlayerDefinitions = players.ToMiniYaml();
 
 			return map;
 		}
@@ -307,9 +308,9 @@ namespace OpenRA.Mods.D2k.UtilityCommands
 		{
 			mapSize = new Size(stream.ReadUInt16(), stream.ReadUInt16());
 
-			tileSet = rules.TileSets["ARRAKIS"];
+			tileSet = Game.ModData.DefaultTileSets["ARRAKIS"];
 
-			map = new Map(tileSet, mapSize.Width + 2 * MapCordonWidth, mapSize.Height + 2 * MapCordonWidth)
+			map = new Map(Game.ModData, tileSet, mapSize.Width + 2 * MapCordonWidth, mapSize.Height + 2 * MapCordonWidth)
 			{
 				Title = Path.GetFileNameWithoutExtension(mapFile),
 				Author = "Westwood Studios"
@@ -323,6 +324,9 @@ namespace OpenRA.Mods.D2k.UtilityCommands
 			// Each frame is a tile from the Dune 2000 tileset files, with the Frame ID being the index of the tile in the original file
 			tileSetsFromYaml = tileSet.Templates.Where(t => t.Value.Frames != null
 				&& t.Value.Images[0].ToLower() == tilesetName.ToLower()).Select(ts => ts.Value).ToList();
+
+			var players = new MapPlayers(map.Rules, playerCount);
+			map.PlayerDefinitions = players.ToMiniYaml();
 		}
 
 		void FillMap()
@@ -335,18 +339,18 @@ namespace OpenRA.Mods.D2k.UtilityCommands
 
 				var locationOnMap = GetCurrentTilePositionOnMap();
 
-				map.MapTiles.Value[locationOnMap] = tile;
+				map.Tiles[locationOnMap] = tile;
 
 				// Spice
 				if (tileSpecialInfo == 1)
-					map.MapResources.Value[locationOnMap] = new ResourceTile(1, 1);
+					map.Resources[locationOnMap] = new ResourceTile(1, 1);
 				if (tileSpecialInfo == 2)
-					map.MapResources.Value[locationOnMap] = new ResourceTile(1, 2);
+					map.Resources[locationOnMap] = new ResourceTile(1, 2);
 
 				// Actors
-				if (actorDataByActorCode.ContainsKey(tileSpecialInfo))
+				if (ActorDataByActorCode.ContainsKey(tileSpecialInfo))
 				{
-					var kvp = actorDataByActorCode[tileSpecialInfo];
+					var kvp = ActorDataByActorCode[tileSpecialInfo];
 					if (!rules.Actors.ContainsKey(kvp.First.ToLower()))
 						throw new InvalidOperationException("Actor with name {0} could not be found in the rules YAML file!".F(kvp.First));
 
@@ -355,7 +359,11 @@ namespace OpenRA.Mods.D2k.UtilityCommands
 						new LocationInit(locationOnMap),
 						new OwnerInit(kvp.Second)
 					};
+
 					map.ActorDefinitions.Add(new MiniYamlNode("Actor" + map.ActorDefinitions.Count, a.Save()));
+
+					if (kvp.First == "mpspawn")
+						playerCount++;
 				}
 			}
 		}

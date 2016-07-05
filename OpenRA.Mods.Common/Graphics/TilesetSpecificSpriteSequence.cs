@@ -1,16 +1,15 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using OpenRA.Graphics;
 
@@ -69,16 +68,16 @@ namespace OpenRA.Mods.Common.Graphics
 
 			var spriteName = sprite ?? sequence;
 
-			if (LoadField<bool>(d, "UseTilesetCode", false))
+			if (LoadField(d, "UseTilesetCode", false))
 			{
 				string code;
 				if (loader.TilesetCodes.TryGetValue(ResolveTilesetId(tileSet, d), out code))
 					spriteName = spriteName.Substring(0, 1) + code + spriteName.Substring(2, spriteName.Length - 2);
 			}
 
-			if (LoadField<bool>(d, "AddExtension", true))
+			if (LoadField(d, "AddExtension", true))
 			{
-				var useTilesetExtension = LoadField<bool>(d, "UseTilesetExtension", false);
+				var useTilesetExtension = LoadField(d, "UseTilesetExtension", false);
 
 				string tilesetExtension;
 				if (useTilesetExtension && loader.TilesetExtensions.TryGetValue(ResolveTilesetId(tileSet, d), out tilesetExtension))

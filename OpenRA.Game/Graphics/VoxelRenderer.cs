@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -25,7 +26,7 @@ namespace OpenRA.Graphics
 
 		public VoxelRenderProxy(Sprite sprite, Sprite shadowSprite, float2[] projectedShadowBounds, float shadowDirection)
 		{
-			this.Sprite = sprite;
+			Sprite = sprite;
 			ShadowSprite = shadowSprite;
 			ProjectedShadowBounds = projectedShadowBounds;
 			ShadowDirection = shadowDirection;
@@ -93,6 +94,8 @@ namespace OpenRA.Graphics
 			var invShadowTransform = Util.MatrixInverse(shadowTransform);
 			var cameraTransform = Util.MakeFloatMatrix(camera.AsMatrix());
 			var invCameraTransform = Util.MatrixInverse(cameraTransform);
+			if (invCameraTransform == null)
+				throw new InvalidOperationException("Failed to invert the cameraTransform matrix during RenderAsync.");
 
 			// Sprite rectangle
 			var tl = new float2(float.MaxValue, float.MaxValue);
@@ -154,14 +157,14 @@ namespace OpenRA.Graphics
 				screenCorners[j] = new float2(corners[j][0], corners[j][1]);
 			}
 
-			// Shadows are rendered at twice the resolution to reduce artefacts
+			// Shadows are rendered at twice the resolution to reduce artifacts
 			Size spriteSize, shadowSpriteSize;
 			int2 spriteOffset, shadowSpriteOffset;
 			CalculateSpriteGeometry(tl, br, 1, out spriteSize, out spriteOffset);
 			CalculateSpriteGeometry(stl, sbr, 2, out shadowSpriteSize, out shadowSpriteOffset);
 
-			var sprite = sheetBuilder.Allocate(spriteSize, spriteOffset);
-			var shadowSprite = sheetBuilder.Allocate(shadowSpriteSize, shadowSpriteOffset);
+			var sprite = sheetBuilder.Allocate(spriteSize, 0, spriteOffset);
+			var shadowSprite = sheetBuilder.Allocate(shadowSpriteSize, 0, shadowSpriteOffset);
 			var sb = sprite.Bounds;
 			var ssb = shadowSprite.Bounds;
 			var spriteCenter = new float2(sb.Left + sb.Width / 2, sb.Top + sb.Height / 2);
@@ -198,9 +201,12 @@ namespace OpenRA.Graphics
 					{
 						var rd = v.Voxel.RenderData(i);
 						var t = v.Voxel.TransformationMatrix(i, frame);
+						var it = Util.MatrixInverse(t);
+						if (it == null)
+							throw new InvalidOperationException("Failed to invert the transformed matrix of frame {0} during RenderAsync.".F(i));
 
 						// Transform light vector from shadow -> world -> limb coords
-						var lightDirection = ExtractRotationVector(Util.MatrixMultiply(Util.MatrixInverse(t), lightTransform));
+						var lightDirection = ExtractRotationVector(Util.MatrixMultiply(it, lightTransform));
 
 						Render(rd, Util.MatrixMultiply(transform, t), lightDirection,
 							lightAmbientColor, lightDiffuseColor, color.TextureMidIndex, normals.TextureMidIndex);
@@ -263,7 +269,7 @@ namespace OpenRA.Graphics
 			shader.SetVec("AmbientLight", ambientLight, 3);
 			shader.SetVec("DiffuseLight", diffuseLight, 3);
 
-			shader.Render(() => renderer.DrawBatch(Game.ModData.VoxelLoader.VertexBuffer, renderData.Start, renderData.Count, PrimitiveType.QuadList));
+			shader.Render(() => renderer.DrawBatch(Game.ModData.VoxelLoader.VertexBuffer, renderData.Start, renderData.Count, PrimitiveType.TriangleList));
 		}
 
 		public void BeginFrame()
@@ -331,7 +337,7 @@ namespace OpenRA.Graphics
 
 			var size = new Size(renderer.SheetSize, renderer.SheetSize);
 			var framebuffer = renderer.Device.CreateFrameBuffer(size);
-			var sheet = new Sheet(SheetType.DualIndexed, framebuffer.Texture);
+			var sheet = new Sheet(SheetType.BGRA, framebuffer.Texture);
 			mappedBuffers.Add(sheet, framebuffer);
 
 			return sheet;

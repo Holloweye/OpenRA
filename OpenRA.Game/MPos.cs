@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -41,12 +42,12 @@ namespace OpenRA
 			return ToCPos(map.Grid.Type);
 		}
 
-		public CPos ToCPos(TileShape shape)
+		public CPos ToCPos(MapGridType gridType)
 		{
-			if (shape == TileShape.Rectangle)
+			if (gridType == MapGridType.Rectangular)
 				return new CPos(U, V);
 
-			// Convert from rectangular map position to diamond cell position
+			// Convert from rectangular map position to RectangularIsometric cell position
 			//  - The staggered rows make this fiddly (hint: draw a diagram!)
 			// (a) Consider the relationships:
 			//  - +1u (even -> odd) adds (1, -1) to (x, y)

@@ -1,20 +1,19 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Meebey.SmartIrc4net;
-using OpenRA;
 using OpenRA.Primitives;
 
 namespace OpenRA.Chat
@@ -66,7 +65,7 @@ namespace OpenRA.Chat
 		}
 	}
 
-	public class GlobalChat : IDisposable
+	public sealed class GlobalChat : IDisposable
 	{
 		readonly IrcClient client = new IrcClient();
 		volatile Channel channel;
@@ -107,6 +106,8 @@ namespace OpenRA.Chat
 			client.OnDevoice += (_, e) => SetUserVoiced(e.Whom, false);
 			client.OnPart += OnPart;
 			client.OnQuit += OnQuit;
+
+			TrySetNickname(Game.Settings.Player.Name);
 		}
 
 		void SetUserOp(string whom, bool isOp)
@@ -150,7 +151,7 @@ namespace OpenRA.Chat
 				}
 
 				client.Listen();
-			}) { Name = "IrcListenThread" }.Start();
+			}) { Name = "IrcListenThread", IsBackground = true }.Start();
 		}
 
 		void AddNotification(string text)
@@ -225,14 +226,22 @@ namespace OpenRA.Chat
 
 		void OnKick(object sender, KickEventArgs e)
 		{
-			Disconnect();
-			connectionStatus = ChatConnectionStatus.Error;
-			AddNotification("Error: You were kicked from the chat by {0}".F(e.Who));
+			if (e.Whom == client.Nickname)
+			{
+				Disconnect();
+				connectionStatus = ChatConnectionStatus.Error;
+				AddNotification("You were kicked from the chat by {0}. ({1})".F(e.Who, e.KickReason));
+			}
+			else
+			{
+				Users.Remove(e.Whom);
+				AddNotification("{0} was kicked from the chat by {1}. ({2})".F(e.Whom, e.Who, e.KickReason));
+			}
 		}
 
 		void OnJoin(object sender, JoinEventArgs e)
 		{
-			if (e.Who == client.Nickname || e.Channel != channel.Name)
+			if (e.Who == client.Nickname || channel == null || e.Channel != channel.Name)
 				return;
 
 			AddNotification("{0} joined the chat.".F(e.Who));
@@ -275,7 +284,7 @@ namespace OpenRA.Chat
 
 		void OnPart(object sender, PartEventArgs e)
 		{
-			if (e.Data.Channel != channel.Name)
+			if (channel == null || e.Data.Channel != channel.Name)
 				return;
 
 			AddNotification("{0} left the chat.".F(e.Who));
@@ -364,8 +373,19 @@ namespace OpenRA.Chat
 
 		public void Dispose()
 		{
-			if (client.IsConnected)
-				client.Disconnect();
+			// HACK: The IRC library we are using has terrible thread-handling code that relies on Thread.Abort.
+			// There is a thread reading from the network socket which is aborted, however on Windows this is inside
+			// native code so this abort call hangs until the network socket reads something and returns to managed
+			// code where it can then be aborted.
+			//
+			// This means we may hang for several seconds during shutdown (until we receive something over IRC!) before
+			// closing.
+			//
+			// Since our IRC client currently lives forever, the only time we call this Dispose method is during the
+			// shutdown of our process. Therefore, we can work around the problem by just not bothering to disconnect
+			// properly. Since our process is about to die anyway, it's not like anyone will care.
+			////if (client.IsConnected)
+			////	client.Disconnect();
 		}
 	}
 }

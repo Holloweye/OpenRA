@@ -1,18 +1,19 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenRA.Activities;
 using OpenRA.Graphics;
+using OpenRA.Mods.Common.Traits.Render;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
@@ -82,7 +83,7 @@ namespace OpenRA.Mods.Common.Traits
 		public AttackGarrisoned(Actor self, AttackGarrisonedInfo info)
 			: base(self, info)
 		{
-			this.Info = info;
+			Info = info;
 			coords = Exts.Lazy(() => self.Trait<BodyOrientation>());
 			armaments = new List<Armament>();
 			muzzles = new List<AnimationWithOffset>();
@@ -93,7 +94,7 @@ namespace OpenRA.Mods.Common.Traits
 			getArmaments = () => armaments;
 		}
 
-		public void PassengerEntered(Actor self, Actor passenger)
+		void INotifyPassengerEntered.OnPassengerEntered(Actor self, Actor passenger)
 		{
 			paxFacing.Add(passenger, passenger.Trait<IFacing>());
 			paxPos.Add(passenger, passenger.Trait<IPositionable>());
@@ -103,7 +104,7 @@ namespace OpenRA.Mods.Common.Traits
 				.Where(a => Info.Armaments.Contains(a.Info.Name)));
 		}
 
-		public void PassengerExited(Actor self, Actor passenger)
+		void INotifyPassengerExited.OnPassengerExited(Actor self, Actor passenger)
 		{
 			paxFacing.Remove(passenger);
 			paxPos.Remove(passenger);
@@ -140,7 +141,7 @@ namespace OpenRA.Mods.Common.Traits
 				return;
 
 			var pos = self.CenterPosition;
-			var targetYaw = WAngle.FromFacing(OpenRA.Traits.Util.GetFacing(target.CenterPosition - self.CenterPosition, 0));
+			var targetYaw = (target.CenterPosition - self.CenterPosition).Yaw;
 
 			foreach (var a in Armaments)
 			{
@@ -160,13 +161,12 @@ namespace OpenRA.Mods.Common.Traits
 					var sequence = a.Info.MuzzleSequence;
 
 					if (a.Info.MuzzleSplitFacings > 0)
-						sequence += OpenRA.Traits.Util.QuantizeFacing(muzzleFacing, a.Info.MuzzleSplitFacings).ToString();
+						sequence += Util.QuantizeFacing(muzzleFacing, a.Info.MuzzleSplitFacings).ToString();
 
 					var muzzleFlash = new AnimationWithOffset(muzzleAnim,
 						() => PortOffset(self, port),
 						() => false,
-						() => false,
-						p => WithTurret.ZOffsetFromCenter(self, p, 1024));
+						p => RenderUtils.ZOffsetFromCenter(self, p, 1024));
 
 					muzzles.Add(muzzleFlash);
 					muzzleAnim.PlayThen(sequence, () => muzzles.Remove(muzzleFlash));

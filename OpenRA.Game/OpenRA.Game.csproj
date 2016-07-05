@@ -31,6 +31,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -62,11 +63,8 @@
       <HintPath>..\thirdparty\download\SharpFont.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Mono.Nat">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-      <Package>mono.nat</Package>
-      <HintPath>..\thirdparty\download\Mono.Nat.dll</HintPath>
+    <Reference Include="Open.Nat">
+      <HintPath>..\thirdparty\download\Open.Nat.dll</HintPath>
     </Reference>
     <Reference Include="Eluant">
       <HintPath>..\thirdparty\download\Eluant.dll</HintPath>
@@ -86,6 +84,7 @@
     </Reference>
     <Reference Include="SmarIrc4net">
       <HintPath>..\thirdparty\download\SmarIrc4net.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -94,18 +93,16 @@
     <Compile Include="Actor.cs" />
     <Compile Include="CacheStorage.cs" />
     <Compile Include="FileSystem\IdxEntry.cs" />
+    <Compile Include="FileSystem\IPackage.cs" />
     <Compile Include="LogProxy.cs" />
     <Compile Include="FileFormats\IdxReader.cs" />
     <Compile Include="FileSystem\BagFile.cs" />
     <Compile Include="Map\MapGrid.cs" />
     <Compile Include="Map\MapPlayers.cs" />
-    <Compile Include="ContentInstaller.cs" />
     <Compile Include="MPos.cs" />
-    <Compile Include="Graphics\QuadRenderer.cs" />
     <Compile Include="Download.cs" />
     <Compile Include="Effects\AsyncAction.cs" />
     <Compile Include="Effects\DelayedAction.cs" />
-    <Compile Include="Effects\FlashTarget.cs" />
     <Compile Include="Effects\IEffect.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameRules\ActorInfo.cs" />
@@ -118,9 +115,7 @@
     <Compile Include="Graphics\CursorProvider.cs" />
     <Compile Include="Graphics\CursorSequence.cs" />
     <Compile Include="Graphics\HardwarePalette.cs" />
-    <Compile Include="Graphics\LineRenderer.cs" />
     <Compile Include="Graphics\MappedImage.cs" />
-    <Compile Include="Graphics\Minimap.cs" />
     <Compile Include="Graphics\SequenceProvider.cs" />
     <Compile Include="Graphics\Sheet.cs" />
     <Compile Include="Graphics\SheetBuilder.cs" />
@@ -153,6 +148,8 @@
     <Compile Include="Orders\UnitOrderGenerator.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Primitives\MergedStream.cs" />
+    <Compile Include="Primitives\PlayerDictionary.cs" />
+    <Compile Include="Primitives\SegmentStream.cs" />
     <Compile Include="Primitives\SpatiallyPartitioned.cs" />
     <Compile Include="Primitives\ConcurrentCache.cs" />
     <Compile Include="SelectableExts.cs" />
@@ -169,17 +166,12 @@
     <Compile Include="Support\Program.cs" />
     <Compile Include="Sync.cs" />
     <Compile Include="TraitDictionary.cs" />
-    <Compile Include="Traits\DrawLineToTarget.cs" />
-    <Compile Include="Traits\EditorTilesetFilter.cs" />
     <Compile Include="Traits\LintAttributes.cs" />
-    <Compile Include="Traits\RejectsOrders.cs" />
     <Compile Include="Traits\Player\DeveloperMode.cs" />
     <Compile Include="Traits\Player\PlayerResources.cs" />
     <Compile Include="Traits\Selectable.cs" />
     <Compile Include="Traits\Target.cs" />
     <Compile Include="Traits\TraitsInterfaces.cs" />
-    <Compile Include="Traits\Util.cs" />
-    <Compile Include="Traits\ValidateOrder.cs" />
     <Compile Include="Traits\World\Faction.cs" />
     <Compile Include="Traits\World\ResourceType.cs" />
     <Compile Include="Traits\World\ScreenShaker.cs" />
@@ -187,7 +179,7 @@
     <Compile Include="World.cs" />
     <Compile Include="WorldUtils.cs" />
     <Compile Include="VoiceExts.cs" />
-    <Compile Include="Network\ReplayRecorderConnection.cs" />
+    <Compile Include="Network\ReplayRecorder.cs" />
     <Compile Include="Traits\DebugPauseState.cs" />
     <Compile Include="Network\UPnP.cs" />
     <Compile Include="Graphics\Renderable.cs" />
@@ -214,7 +206,6 @@
     <Compile Include="Primitives\ReadOnlyList.cs" />
     <Compile Include="ModMetadata.cs" />
     <Compile Include="GameRules\Ruleset.cs" />
-    <Compile Include="GameRules\RulesetCache.cs" />
     <Compile Include="Support\MersenneTwister.cs" />
     <Compile Include="GameInformation.cs" />
     <Compile Include="Map\CellLayer.cs" />
@@ -226,7 +217,6 @@
     <Compile Include="Graphics\IGraphicsDevice.cs" />
     <Compile Include="Sound\Sound.cs" />
     <Compile Include="Sound\SoundDevice.cs" />
-    <Compile Include="Effects\SpriteEffect.cs" />
     <Compile Include="Graphics\SelectionBarsRenderable.cs" />
     <Compile Include="Graphics\TargetLineRenderable.cs" />
     <Compile Include="Graphics\UISpriteRenderable.cs" />
@@ -240,7 +230,6 @@
     <Compile Include="Widgets\WidgetLoader.cs" />
     <Compile Include="Widgets\ChromeMetrics.cs" />
     <Compile Include="Widgets\WidgetUtils.cs" />
-    <Compile Include="Widgets\WorldInteractionControllerWidget.cs" />
     <Compile Include="Graphics\PaletteReference.cs" />
     <Compile Include="Graphics\TerrainSpriteLayer.cs" />
     <Compile Include="Map\ProjectedCellRegion.cs" />
@@ -250,6 +239,13 @@
     <Compile Include="GameSpeed.cs" />
     <Compile Include="GlobalChat.cs" />
     <Compile Include="Primitives\ObservableList.cs" />
+    <Compile Include="Graphics\RgbaColorRenderer.cs" />
+    <Compile Include="Traits\Player\IndexedPlayerPalette.cs" />
+    <Compile Include="Traits\ActivityUtils.cs" />
+    <Compile Include="FileSystem\ZipFolder.cs" />
+    <Compile Include="Primitives\float3.cs" />
+    <Compile Include="ModContent.cs" />
+    <Compile Include="Migrations.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileSystem\D2kSoundResources.cs" />
@@ -267,22 +263,14 @@
     <Compile Include="FieldSaver.cs" />
     <Compile Include="Manifest.cs" />
     <Compile Include="Graphics\Vertex.cs" />
-    <Compile Include="FileFormats\ImaAdpcmLoader.cs" />
-    <Compile Include="FileFormats\AudLoader.cs" />
     <Compile Include="FileFormats\Blast.cs" />
     <Compile Include="FileFormats\Blowfish.cs" />
     <Compile Include="FileFormats\BlowfishKeyProvider.cs" />
     <Compile Include="FileFormats\CRC32.cs" />
-    <Compile Include="FileFormats\Format2.cs" />
-    <Compile Include="FileFormats\Format40.cs" />
-    <Compile Include="FileFormats\Format80.cs" />
-    <Compile Include="FileFormats\IniFile.cs" />
-    <Compile Include="FileFormats\WavLoader.cs" />
     <Compile Include="FileFormats\XccGlobalDatabase.cs" />
     <Compile Include="FileFormats\XccLocalDatabase.cs" />
     <Compile Include="FileFormats\HvaReader.cs" />
     <Compile Include="FileFormats\PngLoader.cs" />
-    <Compile Include="FileFormats\VqaReader.cs" />
     <Compile Include="FileFormats\VxlReader.cs" />
     <Compile Include="Primitives\ActionQueue.cs" />
     <Compile Include="Primitives\Bits.cs" />
@@ -319,7 +307,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Graphics\PlayerColorRemap.cs" />
     <Compile Include="Graphics\Palette.cs" />
-    <Compile Include="FileSystem\GlobalFileSystem.cs" />
+    <Compile Include="FileSystem\FileSystem.cs" />
     <Compile Include="FileFormats\ReplayMetadata.cs" />
   </ItemGroup>
   <ItemGroup>

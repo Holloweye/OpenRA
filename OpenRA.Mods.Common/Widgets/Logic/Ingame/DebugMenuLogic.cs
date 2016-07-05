@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -14,7 +15,7 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets.Logic
 {
-	public class DebugMenuLogic
+	public class DebugMenuLogic : ChromeLogic
 	{
 		[ObjectCreator.UseCtor]
 		public DebugMenuLogic(Widget widget, World world)
@@ -125,6 +126,25 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			{
 				showAstarCostCheckbox.IsChecked = () => dbgOverlay != null ? dbgOverlay.Visible : false;
 				showAstarCostCheckbox.OnClick = () => { if (dbgOverlay != null) dbgOverlay.Visible ^= true; };
+			}
+
+			var showActorTagsCheckbox = widget.GetOrNull<CheckboxWidget>("SHOW_ACTOR_TAGS");
+			if (showActorTagsCheckbox != null)
+			{
+				showActorTagsCheckbox.IsChecked = () => devTrait.ShowActorTags;
+				showActorTagsCheckbox.OnClick = () => devTrait.ShowActorTags ^= true;
+			}
+
+			var showCustomTerrainCheckbox = widget.GetOrNull<CheckboxWidget>("SHOW_CUSTOMTERRAIN_OVERLAY");
+			if (showCustomTerrainCheckbox != null)
+			{
+				var customTerrainDebugTrait = world.WorldActor.TraitOrDefault<CustomTerrainDebugOverlay>();
+				showCustomTerrainCheckbox.Disabled = customTerrainDebugTrait == null;
+				if (customTerrainDebugTrait != null)
+				{
+					showCustomTerrainCheckbox.IsChecked = () => customTerrainDebugTrait.Enabled;
+					showCustomTerrainCheckbox.OnClick = () => customTerrainDebugTrait.Enabled ^= true;
+				}
 			}
 		}
 

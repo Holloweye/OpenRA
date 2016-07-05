@@ -1,8 +1,8 @@
 AlliedUnits =
 {
-	{ 0, { "1tnk", "1tnk", "2tnk", "2tnk" } },
-	{ DateTime.Seconds(3), { "e1", "e1", "e1", "e3", "e3" } },
-	{ DateTime.Seconds(7), { "e6" } }
+	{ delay = 0, types = { "1tnk", "1tnk", "2tnk", "2tnk" } },
+	{ delay = DateTime.Seconds(3), types = { "e1", "e1", "e1", "e3", "e3" } },
+	{ delay = DateTime.Seconds(7), types = { "e6" } }
 }
 ReinforceBaseUnits = { "1tnk", "1tnk", "2tnk", "arty", "arty" }
 CivilianEvacuees = { "c1", "c2", "c5", "c7", "c8" }
@@ -102,20 +102,31 @@ SendAlliedUnits = function()
 
 	Media.PlaySpeechNotification(player, "ReinforcementsArrived")
 	Utils.Do(AlliedUnits, function(table)
-		Trigger.AfterDelay(table[1], function()
-			Reinforcements.Reinforce(player, table[2], { StartEntryPoint.Location, StartMovePoint.Location }, 18)
+		Trigger.AfterDelay(table.delay, function()
+			local units = Reinforcements.Reinforce(player, table.types, { StartEntryPoint.Location, StartMovePoint.Location }, 18)
+
+			Utils.Do(units, function(unit)
+				if unit.Type == "e6" then
+					Engineer = unit
+					Trigger.OnKilled(unit, LandingPossible)
+				end
+			end)
 		end)
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function() InitialUnitsArrived = true end)
 end
 
-SuperTankDomeInfiltrated = function()
-	turkey.SetStance(player, "Ally")
-	turkey.SetStance(neutral, "Ally")
+LandingPossible = function()
+	if not beachReached and (USSRSpen.IsDead or Engineer.IsDead) and LstProduced < 1 then
+		 player.MarkFailedObjective(CrossRiver)
+	end
+end
 
+SuperTankDomeInfiltrated = function()
 	SuperTankAttack = true
 	Utils.Do(SuperTanks, function(tnk)
+		tnk.Owner = friendlyMadTanks
 		if not tnk.IsDead then
 			Trigger.ClearAll(tnk)
 			tnk.Stop()
@@ -157,9 +168,7 @@ SuperTankDomeInfiltrated = function()
 end
 
 SuperTanksDestruction = function()
-	local badGuys = Map.ActorsInBox(Map.TopLeft, Map.BottomRight,
-		function(self) return self.Owner == badguy and self.HasProperty("Health") end)
-
+	local badGuys = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == badguy and self.HasProperty("Health") end)
 	Utils.Do(badGuys, function(unit)
 		unit.Kill()
 	end)
@@ -263,6 +272,7 @@ InitPlayers = function()
 	ussr = Player.GetPlayer("USSR")
 	ukraine = Player.GetPlayer("Ukraine")
 	turkey = Player.GetPlayer("Turkey")
+	friendlyMadTanks = Player.GetPlayer("FriendlyMadTanks")
 
 	player.Cash = 0
 	ussr.Cash = 2000
@@ -278,7 +288,7 @@ InitObjectives = function()
 	end)
 
 	EliminateSuperTanks = player.AddPrimaryObjective("Eliminate these super tanks.")
-	CrossRiver = player.AddPrimaryObjective("Find a way to transport your forces to the mainland.")
+	CrossRiver = player.AddPrimaryObjective("Secure transport to the mainland.")
 	FindOutpost = player.AddPrimaryObjective("Find our outpost and start repairs on it.")
 	RescueCivilians = player.AddSecondaryObjective("Evacuate all civilians from the hospital.")
 	BadGuyObj = badguy.AddPrimaryObjective("Deny the destruction of the super tanks.")
@@ -398,6 +408,18 @@ InitTriggers = function()
 				if TestCamera.IsInWorld then TestCamera.Destroy() end
 				Trigger.RemoveProximityTrigger(id)
 			end
+		end
+	end)
+
+	LstProduced = 0
+	Trigger.OnKilled(USSRSpen, LandingPossible)
+	Trigger.OnProduction(USSRSpen, function(self, produced)
+		if produced.Type == "lst" then
+			LstProduced = LstProduced + 1
+			Trigger.OnKilled(produced, function()
+				LstProduced = LstProduced - 1
+				LandingPossible()
+			end)
 		end
 	end)
 end

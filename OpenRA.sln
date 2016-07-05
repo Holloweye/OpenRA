@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRA.Game", "OpenRA.Game\OpenRA.Game.csproj", "{0DFB103F-2962-400F-8C6D-E2C28CCBA633}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRA.Mods.Cnc", "OpenRA.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRA.Utility", "OpenRA.Utility\OpenRA.Utility.csproj", "{F33337BE-CB69-4B24-850F-07D23E408DDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRA.Platforms.Null", "OpenRA.Platforms.Null\OpenRA.Platforms.Null.csproj", "{0C4AEC1A-E7D5-4114-8CCD-3EEC82872981}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRA.Server", "OpenRA.Server\OpenRA.Server.csproj", "{76F621A1-3D8E-4A99-9F7E-B071EB657817}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRA.Mods.D2k", "OpenRA.Mods.D2k\OpenRA.Mods.D2k.csproj", "{C0B0465C-6BE2-409C-8770-3A9BF64C4344}"
 EndProject
@@ -23,6 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRA.Mods.Common", "OpenR
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tiberian Dawn Lua scripts", "Tiberian Dawn Lua scripts", "{62FCD0D0-6D24-435D-9DD8-3CCADCF7ECAB}"
 	ProjectSection(SolutionItems) = preProject
+		mods\cnc\maps\cnc64gdi01\cnc64gdi01.lua = mods\cnc\maps\cnc64gdi01\cnc64gdi01.lua
 		mods\cnc\maps\gdi01\gdi01.lua = mods\cnc\maps\gdi01\gdi01.lua
 		mods\cnc\maps\gdi02\gdi02.lua = mods\cnc\maps\gdi02\gdi02.lua
 		mods\cnc\maps\gdi03\gdi03.lua = mods\cnc\maps\gdi03\gdi03.lua
@@ -31,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tiberian Dawn Lua scripts",
 		mods\cnc\maps\gdi04c\gdi04c.lua = mods\cnc\maps\gdi04c\gdi04c.lua
 		mods\cnc\maps\gdi05a\gdi05a.lua = mods\cnc\maps\gdi05a\gdi05a.lua
 		mods\cnc\maps\gdi05b\gdi05b.lua = mods\cnc\maps\gdi05b\gdi05b.lua
+		mods\cnc\maps\gdi06\gdi06.lua = mods\cnc\maps\gdi06\gdi06.lua
+		mods\cnc\maps\gdi07\gdi07.lua = mods\cnc\maps\gdi07\gdi07.lua
 		mods\cnc\maps\nod01\nod01.lua = mods\cnc\maps\nod01\nod01.lua
 		mods\cnc\maps\nod02a\nod02a.lua = mods\cnc\maps\nod02a\nod02a.lua
 		mods\cnc\maps\nod02b\nod02b.lua = mods\cnc\maps\nod02b\nod02b.lua
@@ -42,8 +45,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tiberian Dawn Lua scripts",
 		mods\cnc\maps\nod06a\nod06a.lua = mods\cnc\maps\nod06a\nod06a.lua
 		mods\cnc\maps\nod06b\nod06b.lua = mods\cnc\maps\nod06b\nod06b.lua
 		mods\cnc\maps\nod06c\nod06c.lua = mods\cnc\maps\nod06c\nod06c.lua
+		mods\cnc\maps\nod07a\nod07a-AI.lua = mods\cnc\maps\nod07a\nod07a-AI.lua
+		mods\cnc\maps\nod07a\nod07a.lua = mods\cnc\maps\nod07a\nod07a.lua
+		mods\cnc\maps\nod07b\nod07b-AI.lua = mods\cnc\maps\nod07b\nod07b-AI.lua
+		mods\cnc\maps\nod07b\nod07b.lua = mods\cnc\maps\nod07b\nod07b.lua
+		mods\cnc\maps\nod07c\nod07c.lua = mods\cnc\maps\nod07c\nod07c.lua
+		mods\cnc\maps\nod08a\nod08a-AI.lua = mods\cnc\maps\nod08a\nod08a-AI.lua
+		mods\cnc\maps\nod08a\nod08a.lua = mods\cnc\maps\nod08a\nod08a.lua
+		mods\cnc\maps\nod08b\nod08b-AI.lua = mods\cnc\maps\nod08b\nod08b-AI.lua
+		mods\cnc\maps\nod08b\nod08b.lua = mods\cnc\maps\nod08b\nod08b.lua
+		mods\cnc\maps\nod09\nod09-AI.lua = mods\cnc\maps\nod09\nod09-AI.lua
+		mods\cnc\maps\nod09\nod09.lua = mods\cnc\maps\nod09\nod09.lua
 		mods\cnc\maps\funpark01\scj01ea.lua = mods\cnc\maps\funpark01\scj01ea.lua
-		mods\cnc\maps\cnc64gdi01\cnc64gdi01.lua = mods\cnc\maps\cnc64gdi01\cnc64gdi01.lua
 		mods\cnc\maps\shellmap\shellmap.lua = mods\cnc\maps\shellmap\shellmap.lua
 	EndProjectSection
 EndProject
@@ -53,32 +66,36 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Red Alert Lua scripts", "Re
 		mods\ra\maps\allies-02\allies02.lua = mods\ra\maps\allies-02\allies02.lua
 		mods\ra\maps\allies-03a\allies03a.lua = mods\ra\maps\allies-03a\allies03a.lua
 		mods\ra\maps\allies-03b\allies03b.lua = mods\ra\maps\allies-03b\allies03b.lua
-		mods\ra\maps\allies-05a\allies05a.lua = mods\ra\maps\allies-05a\allies05a.lua
 		mods\ra\maps\allies-05a\allies05a-AI.lua = mods\ra\maps\allies-05a\allies05a-AI.lua
+		mods\ra\maps\allies-05a\allies05a.lua = mods\ra\maps\allies-05a\allies05a.lua
+		mods\ra\maps\desert-shellmap\desert-shellmap.lua = mods\ra\maps\desert-shellmap\desert-shellmap.lua
+		mods\ra\maps\fort-lonestar\fort-lonestar-AI.lua = mods\ra\maps\fort-lonestar\fort-lonestar-AI.lua
+		mods\ra\maps\fort-lonestar\fort-lonestar.lua = mods\ra\maps\fort-lonestar\fort-lonestar.lua
+		mods\ra\maps\intervention\intervention.lua = mods\ra\maps\intervention\intervention.lua
+		mods\ra\maps\monster-tank-madness\monster-tank-madness.lua = mods\ra\maps\monster-tank-madness\monster-tank-madness.lua
+		mods\ra\maps\evacuation\evacuation.lua = mods\ra\maps\evacuation\evacuation.lua
 		mods\ra\maps\soviet-01\soviet01.lua = mods\ra\maps\soviet-01\soviet01.lua
 		mods\ra\maps\soviet-02a\soviet02a.lua = mods\ra\maps\soviet-02a\soviet02a.lua
 		mods\ra\maps\soviet-02b\soviet02b.lua = mods\ra\maps\soviet-02b\soviet02b.lua
 		mods\ra\maps\soviet-03\soviet03.lua = mods\ra\maps\soviet-03\soviet03.lua
-		mods\ra\maps\soviet-04a\soviet04a.lua = mods\ra\maps\soviet-04a\soviet04a.lua
 		mods\ra\maps\soviet-04a\soviet04a-AI.lua = mods\ra\maps\soviet-04a\soviet04a-AI.lua
 		mods\ra\maps\soviet-04a\soviet04a-reinforcements_teams.lua = mods\ra\maps\soviet-04a\soviet04a-reinforcements_teams.lua
-		mods\ra\maps\soviet-04b\soviet04b.lua = mods\ra\maps\soviet-04b\soviet04b.lua
+		mods\ra\maps\soviet-04a\soviet04a.lua = mods\ra\maps\soviet-04a\soviet04a.lua
 		mods\ra\maps\soviet-04b\soviet04b-AI.lua = mods\ra\maps\soviet-04b\soviet04b-AI.lua
 		mods\ra\maps\soviet-04b\soviet04b-reinforcements_teams.lua = mods\ra\maps\soviet-04b\soviet04b-reinforcements_teams.lua
-		mods\ra\maps\soviet-05\soviet05.lua = mods\ra\maps\soviet-05\soviet05.lua
+		mods\ra\maps\soviet-04b\soviet04b.lua = mods\ra\maps\soviet-04b\soviet04b.lua
 		mods\ra\maps\soviet-05\soviet05-AI.lua = mods\ra\maps\soviet-05\soviet05-AI.lua
 		mods\ra\maps\soviet-05\soviet05-reinforcements_teams.lua = mods\ra\maps\soviet-05\soviet05-reinforcements_teams.lua
-		mods\ra\maps\soviet-06a\soviet06a.lua = mods\ra\maps\soviet-06a\soviet06a.lua
+		mods\ra\maps\soviet-05\soviet05.lua = mods\ra\maps\soviet-05\soviet05.lua
 		mods\ra\maps\soviet-06a\soviet06a-AI.lua = mods\ra\maps\soviet-06a\soviet06a-AI.lua
-		mods\ra\maps\soviet-06b\soviet06b.lua = mods\ra\maps\soviet-06b\soviet06b.lua
+		mods\ra\maps\soviet-06a\soviet06a-reinforcements_teams.lua = mods\ra\maps\soviet-06a\soviet06a-reinforcements_teams.lua
+		mods\ra\maps\soviet-06a\soviet06a.lua = mods\ra\maps\soviet-06a\soviet06a.lua
 		mods\ra\maps\soviet-06b\soviet06b-AI.lua = mods\ra\maps\soviet-06b\soviet06b-AI.lua
+		mods\ra\maps\soviet-06b\soviet06b-reinforcements_teams.lua = mods\ra\maps\soviet-06b\soviet06b-reinforcements_teams.lua
+		mods\ra\maps\soviet-06b\soviet06b.lua = mods\ra\maps\soviet-06b\soviet06b.lua
 		mods\ra\maps\soviet-07\soviet07.lua = mods\ra\maps\soviet-07\soviet07.lua
 		mods\ra\maps\survival01\survival01.lua = mods\ra\maps\survival01\survival01.lua
 		mods\ra\maps\survival02\survival02.lua = mods\ra\maps\survival02\survival02.lua
-		mods\ra\maps\fort-lonestar\fort-lonestar.lua = mods\ra\maps\fort-lonestar\fort-lonestar.lua
-		mods\ra\maps\intervention\intervention.lua = mods\ra\maps\intervention\intervention.lua
-		mods\ra\maps\monster-tank-madness\monster-tank-madness.lua = mods\ra\maps\monster-tank-madness\monster-tank-madness.lua
-		mods\ra\maps\desert-shellmap\desert-shellmap.lua = mods\ra\maps\desert-shellmap\desert-shellmap.lua
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dune 2000 Lua scripts", "Dune 2000 Lua scripts", "{06B1AE07-DDB0-4287-8700-A8CD9A0E652E}"
@@ -87,6 +104,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dune 2000 Lua scripts", "Du
 		mods\d2k\maps\atreides-01b\atreides01b.lua = mods\d2k\maps\atreides-01b\atreides01b.lua
 		mods\d2k\maps\atreides-02a\atreides02a.lua = mods\d2k\maps\atreides-02a\atreides02a.lua
 		mods\d2k\maps\atreides-02b\atreides02b.lua = mods\d2k\maps\atreides-02b\atreides02b.lua
+		mods\d2k\maps\atreides-03a\atreides03a-AI.lua = mods\d2k\maps\atreides-03a\atreides03a-AI.lua
+		mods\d2k\maps\atreides-03a\atreides03a.lua = mods\d2k\maps\atreides-03a\atreides03a.lua
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "System Lua scripts", "System Lua scripts", "{A4D6AEA4-8009-4256-903B-8D227E50452B}"
@@ -99,6 +118,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRA.GameMonitor", "OpenRA.GameMonitor\OpenRA.GameMonitor.csproj", "{68295755-7902-4602-AC2C-9A8AC36D5EF7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRA.Test", "OpenRA.Test\OpenRA.Test.csproj", "{6CB8E1B7-6B36-4D93-8633-7C573E194AC4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tiberian Sun Lua scripts", "Tiberian Sun Lua scripts", "{85159569-F5BD-458E-B5C0-EB16690C432B}"
+	ProjectSection(SolutionItems) = preProject
+		mods\ts\maps\fields-of-green\fields-of-green.lua = mods\ts\maps\fields-of-green\fields-of-green.lua
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -122,10 +146,10 @@ Global
 		{F33337BE-CB69-4B24-850F-07D23E408DDF}.Debug|x86.Build.0 = Debug|x86
 		{F33337BE-CB69-4B24-850F-07D23E408DDF}.Release|x86.ActiveCfg = Release|x86
 		{F33337BE-CB69-4B24-850F-07D23E408DDF}.Release|x86.Build.0 = Release|x86
-		{0C4AEC1A-E7D5-4114-8CCD-3EEC82872981}.Debug|x86.ActiveCfg = Debug|x86
-		{0C4AEC1A-E7D5-4114-8CCD-3EEC82872981}.Debug|x86.Build.0 = Debug|x86
-		{0C4AEC1A-E7D5-4114-8CCD-3EEC82872981}.Release|x86.ActiveCfg = Release|x86
-		{0C4AEC1A-E7D5-4114-8CCD-3EEC82872981}.Release|x86.Build.0 = Release|x86
+		{76F621A1-3D8E-4A99-9F7E-B071EB657817}.Debug|x86.ActiveCfg = Debug|x86
+		{76F621A1-3D8E-4A99-9F7E-B071EB657817}.Debug|x86.Build.0 = Debug|x86
+		{76F621A1-3D8E-4A99-9F7E-B071EB657817}.Release|x86.ActiveCfg = Release|x86
+		{76F621A1-3D8E-4A99-9F7E-B071EB657817}.Release|x86.Build.0 = Release|x86
 		{C0B0465C-6BE2-409C-8770-3A9BF64C4344}.Debug|x86.ActiveCfg = Debug|x86
 		{C0B0465C-6BE2-409C-8770-3A9BF64C4344}.Debug|x86.Build.0 = Debug|x86
 		{C0B0465C-6BE2-409C-8770-3A9BF64C4344}.Release|x86.ActiveCfg = Release|x86

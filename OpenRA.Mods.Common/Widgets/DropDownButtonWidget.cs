@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -26,10 +27,11 @@ namespace OpenRA.Mods.Common.Widgets
 		Widget panelRoot;
 
 		public string PanelRoot;
+		public string SelectedItem;
 
 		[ObjectCreator.UseCtor]
-		public DropDownButtonWidget(Ruleset modRules)
-			: base(modRules) { }
+		public DropDownButtonWidget(ModData modData)
+			: base(modData) { }
 
 		protected DropDownButtonWidget(DropDownButtonWidget widget)
 			: base(widget)
@@ -90,7 +92,7 @@ namespace OpenRA.Mods.Common.Widgets
 			// Mask to prevent any clicks from being sent to other widgets
 			fullscreenMask = new MaskWidget();
 			fullscreenMask.Bounds = new Rectangle(0, 0, Game.Renderer.Resolution.Width, Game.Renderer.Resolution.Height);
-			fullscreenMask.OnMouseDown += mi => { Game.Sound.PlayNotification(this.ModRules, null, "Sounds", "ClickSound", null); RemovePanel(); };
+			fullscreenMask.OnMouseDown += mi => { Game.Sound.PlayNotification(ModRules, null, "Sounds", "ClickSound", null); RemovePanel(); };
 			if (onCancel != null)
 				fullscreenMask.OnMouseDown += _ => onCancel();
 

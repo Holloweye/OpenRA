@@ -1,14 +1,14 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.GameRules;
@@ -18,7 +18,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.Common.Traits
 {
 	[Desc("This actor explodes when killed.")]
-	public class ExplodesInfo : ITraitInfo, IRulesetLoaded
+	public class ExplodesInfo : ITraitInfo, IRulesetLoaded, Requires<HealthInfo>
 	{
 		[WeaponReference, FieldLoader.Require, Desc("Weapon to use for explosion if ammo/payload is loaded.")]
 		public readonly string Weapon = "UnitExplode";
@@ -32,13 +32,16 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("Chance that this actor will explode at all.")]
 		public readonly int Chance = 100;
 
-		[Desc("DeathType(s) to apply upon explosion.")]
-		public readonly HashSet<string> DeathType = new HashSet<string>();
+		[Desc("Health level at which actor will explode.")]
+		public readonly int DamageThreshold = 0;
+
+		[Desc("DeathType(s) that trigger the explosion. Leave empty to always trigger an explosion.")]
+		public readonly HashSet<string> DeathTypes = new HashSet<string>();
 
 		public WeaponInfo WeaponInfo { get; private set; }
 		public WeaponInfo EmptyWeaponInfo { get; private set; }
 
-		public object Create(ActorInitializer init) { return new Explodes(this); }
+		public object Create(ActorInitializer init) { return new Explodes(this, init.Self); }
 		public void RulesetLoaded(Ruleset rules, ActorInfo ai)
 		{
 			WeaponInfo = string.IsNullOrEmpty(Weapon) ? null : rules.Weapons[Weapon.ToLowerInvariant()];
@@ -46,11 +49,17 @@ namespace OpenRA.Mods.Common.Traits
 		}
 	}
 
-	public class Explodes : INotifyKilled
+	public class Explodes : INotifyKilled, INotifyDamage
 	{
 		readonly ExplodesInfo info;
 
-		public Explodes(ExplodesInfo info) { this.info = info; }
+		readonly Health health;
+
+		public Explodes(ExplodesInfo info, Actor self)
+		{
+			this.info = info;
+			health = self.Trait<Health>();
+		}
 
 		public void Killed(Actor self, AttackInfo e)
 		{
@@ -61,7 +70,7 @@ namespace OpenRA.Mods.Common.Traits
 				return;
 
 			var warhead = e.Warhead as DamageWarhead;
-			if (info.DeathType.Count > 0 && warhead != null && !warhead.DamageTypes.Overlaps(info.DeathType))
+			if (info.DeathTypes.Count > 0 && warhead != null && !warhead.DamageTypes.Overlaps(info.DeathTypes))
 				return;
 
 			var weapon = ChooseWeaponForExplosion(self);
@@ -80,6 +89,15 @@ namespace OpenRA.Mods.Common.Traits
 			var shouldExplode = self.TraitsImplementing<IExplodeModifier>().All(a => a.ShouldExplode(self));
 			var useFullExplosion = self.World.SharedRandom.Next(100) <= info.LoadedChance;
 			return (shouldExplode && useFullExplosion) ? info.WeaponInfo : info.EmptyWeaponInfo;
+		}
+
+		public void Damaged(Actor self, AttackInfo e)
+		{
+			if (info.DamageThreshold == 0)
+				return;
+
+			if (health.HP * 100 < info.DamageThreshold * health.MaxHP)
+				self.World.AddFrameEndTask(w => self.Kill(e.Attacker));
 		}
 	}
 }

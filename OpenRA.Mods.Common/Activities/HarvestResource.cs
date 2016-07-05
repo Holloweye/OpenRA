@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -21,12 +22,14 @@ namespace OpenRA.Mods.Common.Activities
 		readonly IFacing facing;
 		readonly ResourceClaimLayer territory;
 		readonly ResourceLayer resLayer;
+		readonly BodyOrientation body;
 
 		public HarvestResource(Actor self)
 		{
 			harv = self.Trait<Harvester>();
 			harvInfo = self.Info.TraitInfo<HarvesterInfo>();
 			facing = self.Trait<IFacing>();
+			body = self.Trait<BodyOrientation>();
 			territory = self.World.WorldActor.TraitOrDefault<ResourceClaimLayer>();
 			resLayer = self.World.WorldActor.Trait<ResourceLayer>();
 		}
@@ -53,9 +56,9 @@ namespace OpenRA.Mods.Common.Activities
 			if (harvInfo.HarvestFacings != 0)
 			{
 				var current = facing.Facing;
-				var desired = Util.QuantizeFacing(current, harvInfo.HarvestFacings) * (256 / harvInfo.HarvestFacings);
+				var desired = body.QuantizeFacing(current, harvInfo.HarvestFacings);
 				if (desired != current)
-					return Util.SequenceActivities(new Turn(self, desired), this);
+					return ActivityUtils.SequenceActivities(new Turn(self, desired), this);
 			}
 
 			var resource = resLayer.Harvest(self.Location);
@@ -71,7 +74,7 @@ namespace OpenRA.Mods.Common.Activities
 			foreach (var t in self.TraitsImplementing<INotifyHarvesterAction>())
 				t.Harvested(self, resource);
 
-			return Util.SequenceActivities(new Wait(harvInfo.LoadTicksPerBale), this);
+			return ActivityUtils.SequenceActivities(new Wait(harvInfo.BaleLoadDelay), this);
 		}
 	}
 }

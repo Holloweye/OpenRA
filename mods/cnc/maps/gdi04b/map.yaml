@@ -1,10 +1,8 @@
-MapFormat: 7
+MapFormat: 11
 
 RequiresMod: cnc
 
-Title: Get the Rods back (b)
-
-Description: Nod has captured classified GDI property.\n\nYou must find and retrieve the stolen equipment.\n\nIt is being transported in a shipping crate.\n\nUse the new APC to strategically transport infantry through Nod forces.
+Title: 04b: Get the Rods back
 
 Author: Westwood Studios
 
@@ -16,31 +14,15 @@ Bounds: 5,11,50,38
 
 Visibility: MissionSelector
 
-Type: Campaign
+Categories: Campaign
 
-Videos:
-	BackgroundInfo: bkground.vqa
-	Briefing: gdi4b.vqa
-	GameStart: nitejump.vqa
-	GameWon: burdet1.vqa
-	GameLost: gameover.vqa
-
-Options:
-	Crates: False
-	Creeps: False
-	Fog: True
-	Shroud: True
-	AllyBuildRadius: False
-	FragileAlliances: False
-	StartingCash: 0
-	ConfigurableStartingUnits: False
-	ShortGame: False
+LockPreview: True
 
 Players:
 	PlayerReference@Nod:
 		Name: Nod
 		Faction: nod
-		ColorRamp: 3,255,127
+		Color: FE1100
 		Allies: Nod
 		Enemies: GDI
 	PlayerReference@GDI:
@@ -51,7 +33,7 @@ Players:
 		LockFaction: True
 		Faction: gdi
 		LockColor: True
-		ColorRamp: 31,222,183
+		Color: F5D378
 		LockSpawn: True
 		LockTeam: True
 		Allies: GDI
@@ -492,7 +474,7 @@ Actors:
 		Owner: Nod
 		Facing: 96
 	HandOfNod: hand
-		Location: 15,14
+		Location: 15,15
 		Owner: Nod
 	Hunter1: bggy
 		Location: 27,37
@@ -544,74 +526,6 @@ Actors:
 		Location: 50,45
 		Owner: Neutral
 
-Smudges:
+Rules: cnc|rules/campaign-maprules.yaml, cnc|rules/campaign-tooltips.yaml, cnc|rules/campaign-palettes.yaml, rules.yaml
 
-Rules:
-	World:
-		-SpawnMPUnits:
-		-MPStartLocations:
-		-CrateSpawner:
-		LuaScript:
-			Scripts: gdi04b.lua
-		ObjectivesPanel:
-			PanelName: MISSION_OBJECTIVES
-		MusicPlaylist:
-			StartingMusic: fist226m
-	Player:
-		-ConquestVictoryConditions:
-		MissionObjectives:
-			EarlyGameOver: true
-	^Vehicle:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Tank:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Helicopter:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Infantry:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Plane:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Ship:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Building:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Wall:
-		Tooltip:
-			ShowOwnerRow: false
-	^Husk:
-		Tooltip:
-			GenericVisibility: Enemy, Ally, Neutral
-			GenericStancePrefix: false
-			ShowOwnerRow: false
-	E3:
-		AutoTarget:
-			ScanRadius: 5
-
-Sequences:
-
-VoxelSequences:
-
-Weapons:
-	Tiberium:
-		Warhead@1Dam: SpreadDamage
-			Damage: 4
-
-Voices:
-
-Notifications:
-
-Translations:
+Weapons: weapons.yaml

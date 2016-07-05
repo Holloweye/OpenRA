@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -16,6 +17,7 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using OpenRA.Graphics;
 using OpenRA.Primitives;
@@ -24,6 +26,7 @@ namespace OpenRA
 {
 	public static class FieldLoader
 	{
+		[Serializable]
 		public class MissingFieldsException : YamlException
 		{
 			public readonly string[] Missing;
@@ -41,6 +44,13 @@ namespace OpenRA
 			{
 				Header = missing.Length > 1 ? header : headerSingle ?? header;
 				Missing = missing;
+			}
+
+			public override void GetObjectData(SerializationInfo info, StreamingContext context)
+			{
+				base.GetObjectData(info, context);
+				info.AddValue("Missing", Missing);
+				info.AddValue("Header", Header);
 			}
 		}
 
@@ -212,21 +222,9 @@ namespace OpenRA
 			}
 			else if (fieldType == typeof(Color))
 			{
-				if (value != null)
-				{
-					var parts = value.Split(',');
-					if (parts.Length == 3)
-						return Color.FromArgb(
-							Exts.ParseIntegerInvariant(parts[0]).Clamp(0, 255),
-							Exts.ParseIntegerInvariant(parts[1]).Clamp(0, 255),
-							Exts.ParseIntegerInvariant(parts[2]).Clamp(0, 255));
-					if (parts.Length == 4)
-						return Color.FromArgb(
-							Exts.ParseIntegerInvariant(parts[0]).Clamp(0, 255),
-							Exts.ParseIntegerInvariant(parts[1]).Clamp(0, 255),
-							Exts.ParseIntegerInvariant(parts[2]).Clamp(0, 255),
-							Exts.ParseIntegerInvariant(parts[3]).Clamp(0, 255));
-				}
+				Color color;
+				if (value != null && HSLColor.TryParseRGB(value, out color))
+					return color;
 
 				return InvalidValueAction(value, fieldType, fieldName);
 			}
@@ -235,20 +233,11 @@ namespace OpenRA
 				if (value != null)
 				{
 					var parts = value.Split(',');
-
-					if (parts.Length % 4 != 0)
-						return InvalidValueAction(value, fieldType, fieldName);
-
-					var colors = new Color[parts.Length / 4];
+					var colors = new Color[parts.Length];
 
 					for (var i = 0; i < colors.Length; i++)
-					{
-						colors[i] = Color.FromArgb(
-							Exts.ParseIntegerInvariant(parts[4 * i]).Clamp(0, 255),
-							Exts.ParseIntegerInvariant(parts[4 * i + 1]).Clamp(0, 255),
-							Exts.ParseIntegerInvariant(parts[4 * i + 2]).Clamp(0, 255),
-							Exts.ParseIntegerInvariant(parts[4 * i + 3]).Clamp(0, 255));
-					}
+						if (!HSLColor.TryParseRGB(parts[i], out colors[i]))
+							return InvalidValueAction(value, fieldType, fieldName);
 
 					return colors;
 				}
@@ -259,9 +248,12 @@ namespace OpenRA
 			{
 				if (value != null)
 				{
-					var parts = value.Split(',');
+					Color rgb;
+					if (HSLColor.TryParseRGB(value, out rgb))
+						return new HSLColor(rgb);
 
-					// Allow old ColorRamp format to be parsed as HSLColor
+					// Allow old HSLColor/ColorRamp formats to be parsed as HSLColor
+					var parts = value.Split(',');
 					if (parts.Length == 3 || parts.Length == 4)
 						return new HSLColor(
 							(byte)Exts.ParseIntegerInvariant(parts[0]).Clamp(0, 255),
@@ -382,6 +374,28 @@ namespace OpenRA
 
 				return InvalidValueAction(value, fieldType, fieldName);
 			}
+			else if (fieldType == typeof(CVec[]))
+			{
+				if (value != null)
+				{
+					var parts = value.Split(',');
+
+					if (parts.Length % 2 != 0)
+						return InvalidValueAction(value, fieldType, fieldName);
+
+					var vecs = new CVec[parts.Length / 2];
+					for (var i = 0; i < vecs.Length; i++)
+					{
+						int rx, ry;
+						if (int.TryParse(parts[2 * i], out rx) && int.TryParse(parts[2 * i + 1], out ry))
+							vecs[i] = new CVec(rx, ry);
+					}
+
+					return vecs;
+				}
+
+				return InvalidValueAction(value, fieldType, fieldName);
+			}
 			else if (fieldType.IsEnum)
 			{
 				try
@@ -490,6 +504,26 @@ namespace OpenRA
 					if (float.TryParse(parts[1].Replace("%", ""), NumberStyles.Float, NumberFormatInfo.InvariantInfo, out res))
 						yy = res * (parts[1].Contains('%') ? 0.01f : 1f);
 					return new float2(xx, yy);
+				}
+
+				return InvalidValueAction(value, fieldType, fieldName);
+			}
+			else if (fieldType == typeof(float3))
+			{
+				if (value != null)
+				{
+					var parts = value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+					float x = 0;
+					float y = 0;
+					float z = 0;
+					float.TryParse(parts[0], NumberStyles.Float, NumberFormatInfo.InvariantInfo, out x);
+					float.TryParse(parts[1], NumberStyles.Float, NumberFormatInfo.InvariantInfo, out y);
+
+					// z component is optional for compatibility with older float2 definitions
+					if (parts.Length > 2)
+						float.TryParse(parts[2], NumberStyles.Float, NumberFormatInfo.InvariantInfo, out z);
+
+					return new float3(x, y, z);
 				}
 
 				return InvalidValueAction(value, fieldType, fieldName);
@@ -722,7 +756,7 @@ namespace OpenRA
 		}
 	}
 
-	// mirrors DescriptionAttribute from System.ComponentModel but we dont want to have to use that everywhere.
+	// Mirrors DescriptionAttribute from System.ComponentModel but we don't want to have to use that everywhere.
 	[AttributeUsage(AttributeTargets.All)]
 	public sealed class DescAttribute : Attribute
 	{

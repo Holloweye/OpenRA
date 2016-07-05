@@ -1,25 +1,38 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using OpenRA.FileFormats;
 using OpenRA.FileSystem;
 using OpenRA.GameRules;
 using OpenRA.Primitives;
-using OpenRA.Traits;
 
 namespace OpenRA
 {
+	public interface ISoundLoader
+	{
+		bool TryParseSound(Stream stream, out ISoundFormat sound);
+	}
+
+	public interface ISoundFormat
+	{
+		int Channels { get; }
+		int SampleBits { get; }
+		int SampleRate { get; }
+		float LengthInSeconds { get; }
+		Stream GetPCMInputStream();
+	}
+
 	public sealed class Sound : IDisposable
 	{
 		readonly ISoundEngine soundEngine;
@@ -46,35 +59,32 @@ namespace OpenRA
 			throw new InvalidOperationException("Platform DLL is missing PlatformAttribute to tell us what type to use!");
 		}
 
-		ISoundSource LoadSound(string filename)
+		ISoundSource LoadSound(ISoundLoader[] loaders, IReadOnlyFileSystem fileSystem, string filename)
 		{
-			if (!GlobalFileSystem.Exists(filename))
+			if (!fileSystem.Exists(filename))
 			{
 				Log.Write("sound", "LoadSound, file does not exist: {0}", filename);
 				return null;
 			}
 
-			if (filename.ToLowerInvariant().EndsWith("wav"))
-				using (var s = GlobalFileSystem.Open(filename))
-					return LoadWave(new WavLoader(s));
+			using (var stream = fileSystem.Open(filename))
+			{
+				ISoundFormat soundFormat;
+				foreach (var loader in Game.ModData.SoundLoaders)
+				{
+					stream.Position = 0;
+					if (loader.TryParseSound(stream, out soundFormat))
+						return soundEngine.AddSoundSourceFromMemory(
+							soundFormat.GetPCMInputStream().ReadAllBytes(), soundFormat.Channels, soundFormat.SampleBits, soundFormat.SampleRate);
+				}
+			}
 
-			using (var s = GlobalFileSystem.Open(filename))
-				return LoadSoundRaw(AudLoader.LoadSound(s), 1, 16, 22050);
+			throw new InvalidDataException(filename + " is not a valid sound file!");
 		}
 
-		ISoundSource LoadWave(WavLoader wave)
+		public void Initialize(ISoundLoader[] loaders, IReadOnlyFileSystem fileSystem)
 		{
-			return soundEngine.AddSoundSourceFromMemory(wave.RawOutput, wave.Channels, wave.BitsPerSample, wave.SampleRate);
-		}
-
-		ISoundSource LoadSoundRaw(byte[] rawData, int channels, int sampleBits, int sampleRate)
-		{
-			return soundEngine.AddSoundSourceFromMemory(rawData, channels, sampleBits, sampleRate);
-		}
-
-		public void Initialize()
-		{
-			sounds = new Cache<string, ISoundSource>(LoadSound);
+			sounds = new Cache<string, ISoundSource>(s => LoadSound(loaders, fileSystem, s));
 			music = null;
 			currentMusic = null;
 			video = null;
@@ -84,7 +94,6 @@ namespace OpenRA
 		{
 			var defaultDevices = new[]
 			{
-				new SoundDevice("Default", null, "Default Output"),
 				new SoundDevice("Null", null, "Output Disabled")
 			};
 
@@ -113,6 +122,16 @@ namespace OpenRA
 			soundEngine.StopAllSounds();
 		}
 
+		public void MuteAudio()
+		{
+			soundEngine.Volume = 0f;
+		}
+
+		public void UnmuteAudio()
+		{
+			soundEngine.Volume = 1f;
+		}
+
 		public ISound Play(string name) { return Play(null, name, true, WPos.Zero, 1f); }
 		public ISound Play(string name, WPos pos) { return Play(null, name, false, pos, 1f); }
 		public ISound Play(string name, float volumeModifier) { return Play(null, name, true, WPos.Zero, volumeModifier); }
@@ -124,7 +143,7 @@ namespace OpenRA
 
 		public void PlayVideo(byte[] raw, int channels, int sampleBits, int sampleRate)
 		{
-			rawSource = LoadSoundRaw(raw, channels, sampleBits, sampleRate);
+			rawSource = soundEngine.AddSoundSourceFromMemory(raw, channels, sampleBits, sampleRate);
 			video = soundEngine.Play2D(rawSource, false, true, WPos.Zero, InternalSoundVolume, false);
 		}
 

@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -18,7 +19,7 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("How long (in ticks) the actor should panic for.")]
 		public readonly int PanicLength = 25 * 10;
 
-		[Desc("Panic movement speed as a precentage of the normal speed.")]
+		[Desc("Panic movement speed as a percentage of the normal speed.")]
 		public readonly int PanicSpeedModifier = 200;
 
 		[Desc("Chance (out of 100) the unit has to enter panic mode when attacked.")]
@@ -81,11 +82,13 @@ namespace OpenRA.Mods.Common.Traits
 				Panic();
 		}
 
-		public void Attacking(Actor self, Target target, Armament a, Barrel barrel)
+		void INotifyAttack.Attacking(Actor self, Target target, Armament a, Barrel barrel)
 		{
 			if (self.World.SharedRandom.Next(100 / info.AttackPanicChance) == 0)
 				Panic();
 		}
+
+		void INotifyAttack.PreparingAttack(Actor self, Target target, Armament a, Barrel barrel) { }
 
 		public int GetSpeedModifier()
 		{

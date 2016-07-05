@@ -1,6 +1,7 @@
 fb4:
 	idle:
 		Length: 4
+		ZOffset: 1023
 
 fire:
 	1: fire1
@@ -12,8 +13,48 @@ fire:
 		Offset: 0,-3
 		ZOffset: 1023
 
+burn-l:
+	idle:
+		Length: *
+		ZOffset: 512
+	loop:
+		Start: 16
+		Length: 44
+		ZOffset: 512
+	end:
+		Start: 60
+		Length: 6
+		ZOffset: 512
+
+burn-m:
+	idle:
+		Length: *
+		ZOffset: 512
+	loop:
+		Start: 16
+		Length: 44
+		ZOffset: 512
+	end:
+		Start: 60
+		Length: 6
+		ZOffset: 512
+
+burn-s:
+	idle:
+		Length: *
+		ZOffset: 512
+	loop:
+		Start: 12
+		Length: 46
+		ZOffset: 512
+	end:
+		Start: 59
+		Length: 5
+		ZOffset: 512
+
 120mm:
 	idle:
+		ZOffset: 1023
 
 smoke_m:
 	idle:
@@ -26,81 +67,84 @@ smoke_m:
 		Offset: 2, -5
 		ZOffset: 512
 	end:
-		Length: 26
+		Start: 26
+		Length: -26
 		Offset: 2, -5
 		ZOffset: 512
 
 laserfire:
 	idle:veh-hit3
 		Length: *
+		ZOffset: 511
 
 dragon:
 	idle:
 		Facings: 32
+		ZOffset: 1023
 
 smokey:
 	idle:
 		Length: *
+		ZOffset: 1023
 
 bomb:
 	idle:
 		Length: *
+		ZOffset: 1023
 
 missile:
 	idle:
 		Facings: 32
+		ZOffset: 1023
 
 patriot:
 	idle:
 		Facings: 32
+		ZOffset: 1023
 
 explosion:
+	Defaults:
+		Length: *
+		ZOffset: 511
 	nuke_explosion: atomsfx
-		Length: *
 	piff: piff
-		Length: *
 	piffs: piffpiff
-		Length: *
-	chemball: chemball		#same size as small_napalm, but bright green.
-		Length: *
-	small_napalm: napalm1		#not used by much. currently used for flamethrower.
-		Length: *
-	med_napalm: napalm2		#explosion for bomblets
-		Length: *
-	big_napalm: napalm3		#huge; not used. (SSM used this explosion in C&C Gold?)
-		Length: *
-	small_frag: veh-hit3		#the most common weapon-hit explosion. For rockets, tank shells, etc. 
-		Length: *
-	med_frag: frag1			#fragmentation-style; quite large. (MLRS used this explosion in C&C Gold?)
-		Length: *
-	big_frag: frag3			#Same as med_frag, except fire hangs around longer.
-		Length: *
-	small_poof: veh-hit2		#for Grenades; tower missiles; boat missiles; APC AA gun.
-		Length: *
-	poof: art-exp1			#For UnitExplode (artillery); artillery shell hit; GrenadierExplode, 
-		Length: *
-	small_building: veh-hit1	#like "building' explosion, but much smaller. (Used for heli-explosion in C&C Gold?)
-		Length: *
-	building: fball1		#Large explosion, for when a building explodes. 
-		Length: *
+	chemball: chemball # Same size as small_napalm, but bright green.
+	small_napalm: napalm1 # Not used by much. Currently used for flamethrower.
+	med_napalm: napalm2 # Explosion for bomblets
+	big_napalm: napalm3 # Huge; not used. (SSM used this explosion in C&C Gold?)
+	small_frag: veh-hit3 # The most common weapon-hit explosion. For rockets, tank shells, etc.
+	med_frag: frag1 # Fragmentation-style; quite large. (MLRS used this explosion in C&C Gold?)
+	big_frag: frag3 # Same as med_frag, except fire hangs around longer.
+	small_poof: veh-hit2 # For Grenades, tower missiles, boat missiles and APC AA gun.
+	poof: art-exp1 # For UnitExplode (artillery), artillery shell hit, building explosion and GrenadierExplode
+	small_building: veh-hit1 # Used for heli-explosion in C&C Gold?
+	building: fball1
+	building_napalm: napalm2
+		FlipX: true
 
 rank:
 	rank:
 		Length: *
 
 rallypoint:
-	flag:flagfly
+	flag: flagfly
 		Length: *
 		Offset: 10,-5
-	circles:fpls
+		ZOffset: 2535
+	circles: fpls
 		Length: *
+		ZOffset: 2047
 
 beacon:
+	Defaults:
+		ZOffset: 2535
 	arrow: mouse2
 		Start: 5
 		Offset: 1,-12
 	circles: fpls
 		Length: *
+		ZOffset: 2047
 	airstrike: bombicon
 		Offset: 0,-42
 	atomic: atomicon
@@ -117,6 +161,7 @@ allyrepair:
 	repair:
 		Length: *
 		Tick: 160
+		ZOffset: 2047
 
 crate:
 	idle:
@@ -142,63 +187,51 @@ xcrated:
 		ZOffset: -511
 
 crate-effects:
+	Defaults:
+		Length: *
+		ZOffset: 2047
 	airstrike: deviator
-		Length: *
 	nuke: missile2
-		Length: *
 	dollar: dollar
-		Length: *
 	reveal-map: radarcrate
-		Length: *
 	hide-map: empulse
-		Length: *
 	heal: healcrate
-		Length: *
 	mine: mine
-		Length: *
 	redskull: rapid
-		Length: *
 	cloak: cloakcrate
-		Length: *
 	levelup: levelup
-		Length: *
 		Tick: 200
 	firepowerup: firepowercrate
-		Length: *
 	armorup: armorcrate
-		Length: *
 	speedup: speedcrate
-		Length: *
-
-atomicup:
-	idle:
-		Length: *
-
-atomicdn:
-	idle:
-		Length: *
 
 atomic:
+	Defaults:
+		Length: *
+		ZOffset: 1023
 	up: atomicup
-		Length: *
 	down: atomicdn
-		Length: *
 
 ionsfx:
 	idle:
 		Length: *
 		Offset: 0, -78
-		ZOffset: 1
+		ZOffset: 1023
 
 bomblet:
 	idle:
 		Length: *
+		ZOffset: 1023
 
 mpspawn:
 	idle:
 		Length: *
 
 waypoint:
+	idle:
+		Length: *
+
+camera:
 	idle:
 		Length: *
 
@@ -217,7 +250,11 @@ pips:
 		Start: 4
 	pip-blue:
 		Start: 5
+	pip-heal: pip-heal
+		Length: *
 	groups: pdigits
+		Length: *
+	pip-hazmat: pip-hazmat
 		Length: *
 
 overlay:
@@ -240,23 +277,30 @@ overlay:
 	target-invalid:
 		Start: 1
 
+editor-overlay:
+	copy: overlay
+		Start: 0
+	paste: overlay
+		Start: 1
+
 poweroff:
 	offline:
 		Length: *
 		Tick: 160
+		ZOffset: 2047
 
 icon:
+	Defaults:
+		AddExtension: False
 	airstrike: bombicnh.tem
-		AddExtension: False
 	ioncannon: ionicnh.tem
-		AddExtension: False
 	abomb: atomicnh.tem
-		AddExtension: False
 
 moveflsh:
 	idle:
 		Length: *
 		Tick: 80
+		ZOffset: 2047
 
 resources:
 	Defaults:

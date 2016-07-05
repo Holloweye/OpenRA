@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -42,29 +43,22 @@ namespace OpenRA.Mods.Common.Activities
 			if (dest == null)
 			{
 				var rearmBuildings = heli.Info.RearmBuildings;
-				var nearestHpad = self.World.ActorsWithTrait<Reservable>()
-									.Where(a => a.Actor.Owner == self.Owner && rearmBuildings.Contains(a.Actor.Info.Name))
-									.Select(a => a.Actor)
+				var nearestHpad = self.World.ActorsHavingTrait<Reservable>()
+									.Where(a => a.Owner == self.Owner && rearmBuildings.Contains(a.Info.Name))
 									.ClosestTo(self);
 
 				if (nearestHpad == null)
-					return Util.SequenceActivities(new Turn(self, initialFacing), new HeliLand(self, true), NextActivity);
+					return ActivityUtils.SequenceActivities(new Turn(self, initialFacing), new HeliLand(self, true), NextActivity);
 				else
-					return Util.SequenceActivities(new HeliFly(self, Target.FromActor(nearestHpad)));
+					return ActivityUtils.SequenceActivities(new HeliFly(self, Target.FromActor(nearestHpad)));
 			}
 
-			var res = dest.TraitOrDefault<Reservable>();
-
-			if (res != null)
-			{
-				heli.UnReserve();
-				heli.Reservation = res.Reserve(dest, self, heli);
-			}
+			heli.MakeReservation(dest);
 
 			var exit = dest.Info.TraitInfos<ExitInfo>().FirstOrDefault();
 			var offset = (exit != null) ? exit.SpawnOffset : WVec.Zero;
 
-			return Util.SequenceActivities(
+			return ActivityUtils.SequenceActivities(
 				new HeliFly(self, Target.FromPos(dest.CenterPosition + offset)),
 				new Turn(self, initialFacing),
 				new HeliLand(self, false),

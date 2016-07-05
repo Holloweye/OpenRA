@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -16,13 +17,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenRA.FileFormats;
-using OpenRA.Mods.Common.Widgets;
 using OpenRA.Primitives;
+using OpenRA.Traits;
 using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets.Logic
 {
-	public class ReplayBrowserLogic
+	public class ReplayBrowserLogic : ChromeLogic
 	{
 		static Filter filter = new Filter();
 
@@ -32,6 +33,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		readonly List<ReplayMetadata> replays = new List<ReplayMetadata>();
 		readonly Dictionary<ReplayMetadata, ReplayState> replayState = new Dictionary<ReplayMetadata, ReplayState>();
 		readonly Action onStart;
+		readonly ModData modData;
 
 		Dictionary<CPos, SpawnOccupant> selectedSpawns;
 		ReplayMetadata selectedReplay;
@@ -39,11 +41,13 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		volatile bool cancelLoadingReplays;
 
 		[ObjectCreator.UseCtor]
-		public ReplayBrowserLogic(Widget widget, Action onExit, Action onStart)
+		public ReplayBrowserLogic(Widget widget, ModData modData, Action onExit, Action onStart)
 		{
 			panel = widget;
 
+			this.modData = modData;
 			this.onStart = onStart;
+			Game.BeforeGameStart += OnGameStart;
 
 			playerList = panel.Get<ScrollPanelWidget>("PLAYER_LIST");
 			playerHeader = playerList.Get<ScrollItemWidget>("HEADER");
@@ -55,7 +59,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			replayList = panel.Get<ScrollPanelWidget>("REPLAY_LIST");
 			var template = panel.Get<ScrollItemWidget>("REPLAY_TEMPLATE");
 
-			var mod = Game.ModData.Manifest.Mod;
+			var mod = modData.Manifest.Mod;
 			var dir = Platform.ResolvePath("^", "Replays", mod.Id, mod.Version);
 
 			if (Directory.Exists(dir))
@@ -71,13 +75,22 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			preview.SpawnOccupants = () => selectedSpawns;
 			preview.Preview = () => selectedReplay != null ? selectedReplay.GameInfo.MapPreview : null;
 
-			var title = panel.GetOrNull<LabelWidget>("MAP_TITLE");
-			if (title != null)
-				title.GetText = () => selectedReplay != null ? selectedReplay.GameInfo.MapPreview.Title : null;
+			var titleLabel = panel.GetOrNull<LabelWidget>("MAP_TITLE");
+			if (titleLabel != null)
+			{
+				titleLabel.IsVisible = () => selectedReplay != null;
+
+				var font = Game.Renderer.Fonts[titleLabel.Font];
+				var title = new CachedTransform<MapPreview, string>(m => WidgetUtils.TruncateText(m.Title, titleLabel.Bounds.Width, font));
+				titleLabel.GetText = () => title.Update(selectedReplay.GameInfo.MapPreview);
+			}
 
 			var type = panel.GetOrNull<LabelWidget>("MAP_TYPE");
 			if (type != null)
-				type.GetText = () => selectedReplay.GameInfo.MapPreview.Type;
+			{
+				var mapType = new CachedTransform<MapPreview, string>(m => m.Categories.FirstOrDefault() ?? "");
+				type.GetText = () => mapType.Update(selectedReplay.GameInfo.MapPreview);
+			}
 
 			panel.Get<LabelWidget>("DURATION").GetText = () => WidgetUtils.FormatTimeSeconds((int)selectedReplay.GameInfo.Duration.TotalSeconds);
 
@@ -396,17 +409,17 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 			Action<ReplayMetadata, Action> onDeleteReplay = (r, after) =>
 			{
-				ConfirmationDialogs.PromptConfirmAction(
-					"Delete selected replay?",
-					"Delete replay '{0}'?".F(Path.GetFileNameWithoutExtension(r.FilePath)),
-					() =>
+				ConfirmationDialogs.ButtonPrompt(
+					title: "Delete selected replay?",
+					text: "Delete replay '{0}'?".F(Path.GetFileNameWithoutExtension(r.FilePath)),
+					onConfirm: () =>
 					{
 						DeleteReplay(r);
 						if (after != null)
 							after.Invoke();
 					},
-					null,
-					"Delete");
+					confirmText: "Delete",
+					onCancel: () => { });
 			};
 
 			{
@@ -437,17 +450,17 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 						return;
 					}
 
-					ConfirmationDialogs.PromptConfirmAction(
-						"Delete all selected replays?",
-						"Delete {0} replays?".F(list.Count),
-						() =>
+					ConfirmationDialogs.ButtonPrompt(
+						title: "Delete all selected replays?",
+						text: "Delete {0} replays?".F(list.Count),
+						onConfirm: () =>
 						{
 							list.ForEach(DeleteReplay);
 							if (selectedReplay == null)
 								SelectFirstVisibleReplay();
 						},
-						null,
-						"Delete All");
+						confirmText: "Delete All",
+						onCancel: () => { });
 				};
 			}
 		}
@@ -633,12 +646,15 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 						var item = ScrollItemWidget.Setup(playerTemplate, () => false, () => { });
 
 						var label = item.Get<LabelWidget>("LABEL");
-						label.GetText = () => o.Name;
+						var font = Game.Renderer.Fonts[label.Font];
+						var name = WidgetUtils.TruncateText(o.Name, label.Bounds.Width, font);
+						label.GetText = () => name;
 						label.GetColor = () => color;
 
 						var flag = item.Get<ImageWidget>("FLAG");
 						flag.GetImageCollection = () => "flags";
-						flag.GetImageName = () => o.FactionId;
+						var factionInfo = modData.DefaultRules.Actors["world"].TraitInfos<FactionInfo>();
+						flag.GetImageName = () => (factionInfo != null && factionInfo.Any(f => f.InternalName == o.FactionId)) ? o.FactionId : "Random";
 
 						playerList.AddChild(item);
 					}
@@ -653,16 +669,11 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 		void WatchReplay()
 		{
-			Action startReplay = () =>
+			if (selectedReplay != null && ReplayUtils.PromptConfirmReplayCompatibility(selectedReplay))
 			{
 				cancelLoadingReplays = true;
 				Game.JoinReplay(selectedReplay.FilePath);
-				Ui.CloseWindow();
-				onStart();
-			};
-
-			if (selectedReplay != null && ReplayUtils.PromptConfirmReplayCompatibility(selectedReplay))
-				startReplay();
+			}
 		}
 
 		void AddReplay(ReplayMetadata replay, ScrollItemWidget template)
@@ -684,6 +695,24 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			item.Get<LabelWidget>("TITLE").GetText = () => item.Text;
 			item.IsVisible = () => replayState[replay].Visible;
 			replayList.AddChild(item);
+		}
+
+		void OnGameStart()
+		{
+			Ui.CloseWindow();
+			onStart();
+		}
+
+		bool disposed;
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && !disposed)
+			{
+				disposed = true;
+				Game.BeforeGameStart -= OnGameStart;
+			}
+
+			base.Dispose(disposing);
 		}
 
 		class ReplayState

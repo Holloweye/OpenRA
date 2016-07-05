@@ -20,7 +20,7 @@ GuardTanks = { Heavy1, Heavy2, Heavy3 }
 CheckpointGuards = { USSRCheckpointGuard1, USSRCheckpointGuard2 }
 CheckpointGuardWaypoints = { CheckpointGuardWaypoint1, CheckpointGuardWaypoint2 }
 
-if Map.Difficulty == "Easy" then
+if Map.LobbyOption("difficulty") == "easy" then
 	TanyaType = "e7"
 else
 	TanyaType = "e7.noautotarget"
@@ -348,7 +348,7 @@ InitTriggers = function()
 	end)
 
 	Trigger.AfterDelay(0, function()
-		local bridges = Map.ActorsInBox(Map.TopLeft, Map.BottomRight, function(self) return self.Type == "bridge1" or self.Type == "bridge2" end)
+		local bridges = Utils.Where(Map.ActorsInWorld, function(actor) return actor.Type == "bridge1" or actor.Type == "bridge2" end)
 		ExplodingBridge = bridges[1]
 
 		Trigger.OnAllKilled(bridges, function()

@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -16,7 +17,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Activities
 {
-	public class HarvesterDockSequence : Activity
+	public abstract class HarvesterDockSequence : Activity
 	{
 		protected enum State { Wait, Turn, Dock, Loop, Undock, Complete }
 
@@ -53,8 +54,8 @@ namespace OpenRA.Mods.Common.Activities
 				case State.Turn:
 					dockingState = State.Dock;
 					if (IsDragRequired)
-						return Util.SequenceActivities(new Turn(self, DockAngle), new Drag(self, StartDrag, EndDrag, DragLength), this);
-					return Util.SequenceActivities(new Turn(self, DockAngle), this);
+						return ActivityUtils.SequenceActivities(new Turn(self, DockAngle), new Drag(self, StartDrag, EndDrag, DragLength), this);
+					return ActivityUtils.SequenceActivities(new Turn(self, DockAngle), this);
 				case State.Dock:
 					if (Refinery.IsInWorld && !Refinery.IsDead)
 						foreach (var nd in Refinery.TraitsImplementing<INotifyDocking>())
@@ -73,7 +74,7 @@ namespace OpenRA.Mods.Common.Activities
 					Harv.LastLinkedProc = Harv.LinkedProc;
 					Harv.LinkProc(self, null);
 					if (IsDragRequired)
-						return Util.SequenceActivities(new Drag(self, EndDrag, StartDrag, DragLength), NextActivity);
+						return ActivityUtils.SequenceActivities(new Drag(self, EndDrag, StartDrag, DragLength), NextActivity);
 					return NextActivity;
 			}
 
@@ -91,14 +92,8 @@ namespace OpenRA.Mods.Common.Activities
 			yield return Target.FromActor(Refinery);
 		}
 
-		public virtual Activity OnStateDock(Actor self)
-		{
-			throw new NotImplementedException("Base class HarvesterDockSequence does not implement method OnStateDock!");
-		}
+		public abstract Activity OnStateDock(Actor self);
 
-		public virtual Activity OnStateUndock(Actor self)
-		{
-			throw new NotImplementedException("Base class HarvesterDockSequence does not implement method OnStateUndock!");
-		}
+		public abstract Activity OnStateUndock(Actor self);
 	}
 }

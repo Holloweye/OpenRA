@@ -1,36 +1,10 @@
-GADPSA:
-	Inherits: ^DeployedVehicle
-	Valued:
-		Cost: 950
-	Tooltip:
-		Name: Deployed Sensor Array
-	Health:
-		HP: 600
-	Armor:
-		Type: Wood
-	RevealsShroud:
-		Range: 8c0
-	Transforms:
-		IntoActor: lpst
-		Facing: 159
-		TransformSounds: place2.aud
-		NoTransformSounds:
-		Voice: Move
-	-AutoTarget:
-	-DrawLineToTarget:
-	-AttackTurreted:
-	-RenderRangeCircle:
-	RenderDetectionCircle:
-	DetectCloaked:
-		Range: 6c0
-
 NAPULS:
 	Inherits: ^Defense
 	Valued:
 		Cost: 1000
 	Tooltip:
-		Name: EMP Cannon
-		Description: Disables vehicles.\nRequires power to operate.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
+		Name: E.M. Pulse Cannon
+		Description: Disables mechanical units in an area.\nRequires power to operate.
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 90
@@ -48,13 +22,16 @@ NAPULS:
 		Type: Heavy
 	RevealsShroud:
 		Range: 8c0
+	-AutoTarget:
 	Turreted:
-		ROT: 10
-		InitialFacing: 300
+		TurnSpeed: 10
+		InitialFacing: 224
 	AttackTurreted:
 	Armament:
 		Weapon: EMPulseCannon
-	WithTurret:
+		LocalOffset: 150,0,1250
+		LocalYaw: 0,100
+	WithSpriteTurret:
 		Sequence: turret
 	Power:
 		Amount: -150
@@ -65,4 +42,13 @@ NAPULS:
 		FactionImages:
 			gdi: napuls.gdi
 			nod: napuls.nod
-
+	ProvidesPrerequisite@gdi:
+		ResetOnOwnerChange: true
+	AttackOrderPower:
+		Cursor: emp
+		Icon: emp
+		ChargeTime: 135
+		Description: E.M. Pulse
+		LongDesc: Fires a pulse blast which disables\nall mechanical units in the area.
+		EndChargeSpeechNotification: EmPulseCannonReady
+		SelectTargetSpeechNotification: SelectTarget

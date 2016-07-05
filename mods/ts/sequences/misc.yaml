@@ -7,29 +7,37 @@ overlay:
 		Start: 1
 	target-select:
 
+editor-overlay:
+	Defaults: place
+		Offset: 0, -12
+	copy:
+	paste:
+		Start: 1
+
 poweroff:
 	offline:
 		Length: *
 		Tick: 160
+		ZOffset: 2047
 
 allyrepair:
 	repair: wrench
 		Length: *
 		Tick: 160
+		ZOffset: 2047
 
 rallypoint:
 	flag: mouse
 		Start: 221
 		Length: 8
+		ZOffset: 3072
 	circles: null
 
 beacon:
-	arrow: mouse
-		Start: 6
-		Offset: 1,-12
-	circles: ring
-		Length: 12
-		BlendMode: Additive
+	idle:
+		Length: 5
+		Tick: 200
+		ZOffset: 2047
 
 crate:
 	idle:
@@ -40,6 +48,7 @@ crate:
 crate-effects:
 	Defaults:
 		Length: *
+		ZOffset: 2047
 	dollar: money
 	reveal-map: reveal
 	hide-map: shroudx
@@ -55,11 +64,15 @@ rank:
 		Start: 7
 		Length: 2
 
-mpspawn: # TODO: backfall to RA asset
+mpspawn:
 	idle:
 		Length: *
 
-waypoint: # TODO: backfall to RA asset
+waypoint:
+	idle:
+		Length: *
+
+camera:
 	idle:
 		Length: *
 
@@ -72,13 +85,11 @@ darken:
 		Length: 1
 
 pips:
-	medic: 
+	medic:
 		Start: 6
 	groups: pipsra #TODO: backfall to RA asset
 		Start: 8
 		Length: 10
-	tag-primary: pipsra #TODO: backfall to RA asset
-		Start: 2
 	pip-empty: pips2
 	pip-green: pips2
 		Start: 1
@@ -96,6 +107,8 @@ pips:
 	pip-disguise: pip-disguise
 		Length: *
 		Tick: 300
+		Offset: 0, -6
+
 # TODO:
 	pip-empty-building:
 	pip-green-building:
@@ -112,6 +125,7 @@ pips:
 explosion:
 	Defaults:
 		Length: *
+		ZOffset: 511
 	building: twlt070
 	ionring: ring1
 		BlendMode: Additive
@@ -154,58 +168,74 @@ explosion:
 	small_grey_explosion: xgrysml2
 	medium_grey_explosion: xgrymed1
 	large_grey_explosion: xgrymed2
+	veins: veinatac
+		Length: 12
+		UseTilesetExtension: true
+		ZOffset: 1023
 
 discus:
 	idle:
 		Length: *
+		ZOffset: 1023
 
 canister:
 	idle:
 		Length: *
+		ZOffset: 1023
 
 pulsball:
 	idle:
 		Length: *
 		BlendMode: Additive
+		ZOffset: 1023
 
 dragon:
 	idle:
 		Facings: 32
+		ZOffset: 1023
 
 crystal4:
 	idle:
 		Length: 15
 		ShadowStart: 15
 		UseTilesetExtension: true
+		ZOffset: 1023
 
 120mm:
 	idle:
+		ZOffset: 1023
 
 torpedo:
 	idle:
 		Length: *
+		ZOffset: 1023
 
 flameall:
 	idle:
 		Length: 19
 		Facings: -8
 		Tick: 160
+		ZOffset: 1023
 
 largesmoke:
 	idle: lgrysmk1
 		Length: *
+		ZOffset: 1023
 
 smallsmoke:
 	idle: sgrysmk1
 		Length: *
+		ZOffset: 1023
 
 large_smoke_trail:
 	idle: smokey
 		Length: *
+		ZOffset: 1023
 
 small_smoke_trail:
 	idle: smokey2
 		Length: *
+		ZOffset: 1023
 
 largefire:
 	idle: fire1
@@ -227,16 +257,13 @@ moveflsh:
 	idle: ring
 		Length: *
 		Tick: 30
+		ZOffset: 2047
 
 wake:
 	idle: wake2
 		Length: *
 		Tick: 180
-
-emp:
-	idle: emp_fx01
-		Length: *
-		BlendMode: Additive
+		ZOffset: -512
 
 resources:
 	Defaults:
@@ -244,6 +271,7 @@ resources:
 		Length: 12
 		ShadowStart: 12
 		Offset: 0, -12
+		ZRamp: 1
 	tib01: tib01
 	tib02: tib02
 	tib03: tib03
@@ -268,10 +296,12 @@ resources:
 		Length: 1
 		Start: 52
 		ShadowStart: -1
+		Tick: 180
 
 shroud:
 	Defaults:
 		Offset: 0, -1
+		ZRamp: 1
 	shroud:
 		Length: *
 	fog: fog
@@ -335,6 +365,7 @@ icon:
 	clustermissile: mltiicon
 	ioncannon: ioncicon
 	hunterseeker: detnicon
+	emp: pulsicon
 
 clustermissile:
 	up: null # TODO
@@ -345,7 +376,7 @@ ionbeam:
 	idle:
 		Length: *
 		Offset: 0, -78
-		ZOffset: 1
+		ZOffset: 1023
 
 trock01:
 	idle:
@@ -408,48 +439,34 @@ srock05:
 		Offset: 0, -12
 
 dbrissm:
+	Defaults:
+		ZOffset: 1023
+		Length:*
 	1: dbris1sm
-		Length:*
 	2: dbris2sm
-		Length:*
 	3: dbris3sm
-		Length:*
 	4: dbris4sm
-		Length:*
 	5: dbris5sm
-		Length:*
 	6: dbris6sm
-		Length:*
 	7: dbris7sm
-		Length:*
 	8: dbris8sm
-		Length:*
 	9: dbris9sm
-		Length:*
 	10: dbrs10sm
-		Length:*
 
 dbrislg:
+	Defaults:
+		ZOffset: 1023
+		Length:*
 	1: dbris1lg
-		Length:*
 	2: dbris2lg
-		Length:*
 	3: dbris3lg
-		Length:*
 	4: dbris4lg
-		Length:*
 	5: dbris5lg
-		Length:*
 	6: dbris6lg
-		Length:*
 	7: dbris7lg
-		Length:*
 	8: dbris8lg
-		Length:*
 	9: dbris9lg
-		Length:*
 	10: dbrs10lg
-		Length:*
 
 crat01:
 	idle:
@@ -577,19 +594,10 @@ tuntop01:
 		ShadowStart: 1
 
 tuntop02:
-	idle:
-		Offset: 0, -13
-		UseTilesetExtension: true
-		ShadowStart: 1
+	Inherits: tuntop01
 
 tuntop03:
-	idle:
-		Offset: 0, -13
-		UseTilesetExtension: true
-		ShadowStart: 1
+	Inherits: tuntop01
 
 tuntop04:
-	idle:
-		Offset: 0, -13
-		UseTilesetExtension: true
-		ShadowStart: 1
+	Inherits: tuntop01

@@ -1,17 +1,16 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
 using System.Drawing;
-using System.Linq;
-using OpenRA.FileFormats;
 using OpenRA.Graphics;
 using OpenRA.Widgets;
 
@@ -20,7 +19,6 @@ namespace OpenRA.Mods.Common.Widgets
 	public class TerrainTemplatePreviewWidget : Widget
 	{
 		public Func<float> GetScale = () => 1f;
-		public string Palette = "terrain";
 
 		readonly WorldRenderer worldRenderer;
 		readonly TileSet tileset;
@@ -42,9 +40,7 @@ namespace OpenRA.Mods.Common.Widgets
 					return;
 
 				var grid = Game.ModData.Manifest.Get<MapGrid>();
-				var ts = grid.TileSize;
-				var shape = grid.Type;
-				bounds = worldRenderer.Theater.TemplateBounds(template, ts, shape);
+				bounds = worldRenderer.Theater.TemplateBounds(template, grid.TileSize, grid.Type);
 			}
 		}
 
@@ -52,14 +48,14 @@ namespace OpenRA.Mods.Common.Widgets
 		public TerrainTemplatePreviewWidget(WorldRenderer worldRenderer, World world)
 		{
 			this.worldRenderer = worldRenderer;
-			tileset = world.Map.Rules.TileSets[world.Map.Tileset];
+			tileset = world.Map.Rules.TileSet;
 		}
 
 		protected TerrainTemplatePreviewWidget(TerrainTemplatePreviewWidget other)
 			: base(other)
 		{
 			worldRenderer = other.worldRenderer;
-			tileset = other.worldRenderer.World.Map.Rules.TileSets[other.worldRenderer.World.Map.Tileset];
+			tileset = other.worldRenderer.World.Map.Rules.TileSet;
 			Template = other.Template;
 			GetScale = other.GetScale;
 		}
@@ -73,7 +69,7 @@ namespace OpenRA.Mods.Common.Widgets
 
 			var grid = Game.ModData.Manifest.Get<MapGrid>();
 			var ts = grid.TileSize;
-			var shape = grid.Type;
+			var gridType = grid.Type;
 			var scale = GetScale();
 
 			var sb = new Rectangle((int)(scale * bounds.X), (int)(scale * bounds.Y), (int)(scale * bounds.Width), (int)(scale * bounds.Height));
@@ -94,10 +90,11 @@ namespace OpenRA.Mods.Common.Widgets
 					var sprite = worldRenderer.Theater.TileSprite(tile, 0);
 					var size = new float2(sprite.Size.X * scale, sprite.Size.Y * scale);
 
-					var u = shape == TileShape.Rectangle ? x : (x - y) / 2f;
-					var v = shape == TileShape.Rectangle ? y : (x + y) / 2f;
+					var u = gridType == MapGridType.Rectangular ? x : (x - y) / 2f;
+					var v = gridType == MapGridType.Rectangular ? y : (x + y) / 2f;
 					var pos = origin + scale * (new float2(u * ts.Width, (v - 0.5f * tileInfo.Height) * ts.Height) - 0.5f * sprite.Size);
-					Game.Renderer.SpriteRenderer.DrawSprite(sprite, pos, worldRenderer.Palette(Palette), size);
+					var palette = Template.Palette ?? TileSet.TerrainPaletteInternalName;
+					Game.Renderer.SpriteRenderer.DrawSprite(sprite, pos, worldRenderer.Palette(palette), size);
 				}
 			}
 		}

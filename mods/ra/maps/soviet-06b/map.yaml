@@ -1,10 +1,8 @@
-MapFormat: 7
+MapFormat: 11
 
 RequiresMod: ra
 
 Title: 06b: Bridge over the River VizchGoi
-
-Description: There is a special cargo that needs to be transported to a nearby Soviet base in the northeast.\n\nMake sure the trucks reach their destination intact. Along the way, there is a bridge which the Allies may have destroyed.\n\nIf so, use the Naval options at your disposal. Our attack subs will make short work of any Allied boats you discover.
 
 Author: Westwood Studios
 
@@ -16,23 +14,9 @@ Bounds: 18,10,81,58
 
 Visibility: MissionSelector
 
-Type: Campaign
+Categories: Campaign
 
-Videos:
-	Briefing: soviet6.vqa
-	GameStart: onthprwl.vqa
-	GameWon: sitduck.vqa
-	GameLost: dpthchrg.vqa
-
-Options:
-	Crates: False
-	Fog: True
-	Shroud: True
-	AllyBuildRadius: False
-	FragileAlliances: False
-	StartingCash: 11500
-	ConfigurableStartingUnits: False
-	ShortGame: False
+LockPreview: True
 
 Players:
 	PlayerReference@Neutral:
@@ -40,13 +24,10 @@ Players:
 		OwnsWorld: True
 		NonCombatant: True
 		Faction: allies
-	PlayerReference@Creeps:
-		Name: Creeps
-		NonCombatant: True
 	PlayerReference@Greece:
 		Name: Greece
 		Faction: allies
-		ColorRamp: 161,134,236
+		Color: E2E6F5
 		Enemies: USSR
 	PlayerReference@USSR:
 		Name: USSR
@@ -56,10 +37,10 @@ Players:
 		LockFaction: True
 		Faction: soviet
 		LockColor: True
-		ColorRamp: 3,255,127
+		Color: FE1100
 		LockSpawn: True
 		LockTeam: True
-		Enemies: Greece, Creeps
+		Enemies: Greece
 
 Actors:
 	Actor0: cycl
@@ -325,9 +306,6 @@ Actors:
 		Location: 61,48
 		Owner: Greece
 		Facing: 160
-	Actor95: dome
-		Location: 67,49
-		Owner: Greece
 	Actor103: 2tnk
 		Location: 76,30
 		Owner: Greece
@@ -429,6 +407,9 @@ Actors:
 	Actor147: silo
 		Owner: Greece
 		Location: 73,49
+	Actor148: sbag
+		Owner: Greece
+		Location: 65,51
 	waypoint69: waypoint
 		Location: 21,28
 		Owner: Neutral
@@ -450,6 +431,10 @@ Actors:
 	waypoint94: waypoint
 		Location: 49,16
 		Owner: Neutral
+	AGun: agun
+		Owner: Greece
+		Location: 69,49
+		TurretFacing: 92
 	APCWaypoint1: waypoint
 		Location: 39,62
 		Owner: Neutral
@@ -457,10 +442,10 @@ Actors:
 		Location: 46,66
 		Owner: Neutral
 	Apwr: apwr
-		Location: 76,40
+		Location: 76,41
 		Owner: Greece
 	Apwr2: apwr
-		Location: 77,44
+		Location: 77,45
 		Owner: Greece
 	AttackWaypoint1: waypoint
 		Owner: Neutral
@@ -480,6 +465,21 @@ Actors:
 	CYardLocation: waypoint
 		Owner: Neutral
 		Location: 71,49
+	Dome: dome
+		Location: 67,49
+		Owner: Greece
+	EnemyEntry1: waypoint
+		Owner: Neutral
+		Location: 53,10
+	EnemyEntry2: waypoint
+		Owner: Neutral
+		Location: 18,62
+	EnemyRally1: waypoint
+		Owner: Neutral
+		Location: 53,31
+	EnemyRally2: waypoint
+		Owner: Neutral
+		Location: 25,62
 	Harvester: harv
 		Location: 77,39
 		Owner: Greece
@@ -519,142 +519,4 @@ Actors:
 		Location: 67,41
 		Owner: Greece
 
-Smudges:
-
-Rules:
-	Player:
-		-ConquestVictoryConditions:
-		MissionObjectives:
-			EarlyGameOver: true
-		-EnemyWatcher:
-	World:
-		-CrateSpawner:
-		-SpawnMPUnits:
-		-MPStartLocations:
-		LuaScript:
-			Scripts: soviet06b.lua, soviet06b-AI.lua
-		ObjectivesPanel:
-			PanelName: MISSION_OBJECTIVES
-	^Building:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Infantry:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Vehicle:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Ship:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Plane:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Wall:
-		Tooltip:
-			ShowOwnerRow: false
-	^TechBuilding:
-		Tooltip:
-			ShowOwnerRow: false
-	^Crate:
-		Tooltip:
-			ShowOwnerRow: false
-	^Husk:
-		Tooltip:
-			GenericVisibility: Enemy, Ally, Neutral
-			GenericStancePrefix: false
-			ShowOwnerRow: false
-	APWR:
-		Buildable:
-			Prerequisites: ~disabled
-	ARTY:
-		Buildable:
-			Prerequisites: ~vehicles.allies, ~techlevel.low
-	BRIK:
-		Buildable:
-			Prerequisites: ~disabled
-	TSLA:
-		Buildable:
-			Prerequisites: ~disabled
-	SAM:
-		Buildable:
-			Prerequisites: ~disabled
-	IRON:
-		Buildable:
-			Prerequisites: ~disabled
-	MSLO:
-		Buildable:
-			Prerequisites: ~disabled
-	E3:
-		Buildable:
-			Prerequisites: ~tent
-	SHOK:
-		Buildable:
-			Prerequisites: ~disabled
-	SNIPER:
-		Buildable:
-			Prerequisites: ~disabled
-	HIJACKER:
-		Buildable:
-			Prerequisites: ~disabled
-	MIG:
-		Buildable:
-			Prerequisites: ~disabled
-	FTRK:
-		Buildable:
-			Prerequisites: ~disabled
-	2TNK:
-		Buildable:
-			Prerequisites: ~vehicles.allies, ~techlevel.low
-	4TNK:
-		Buildable:
-			Prerequisites: ~disabled
-	APC:
-		Buildable:
-			Prerequisites: ~disabled
-	TRUK:
-		-SpawnActorOnDeath:
-		-SupplyTruck:
-		Buildable:
-			Prerequisites: ~disabled
-	QTNK:
-		Buildable:
-			Prerequisites: ~disabled
-	MCV:
-		Buildable:
-			Prerequisites: ~disabled
-	MSUB:
-		Buildable:
-			Prerequisites: ~disabled
-	STEK:
-		Buildable:
-			Prerequisites: ~disabled
-	DOG:
-		Health:
-			HP: 25
-		AutoTarget:
-			ScanRadius: 5
-	HARV:
-		Harvester:
-			SearchFromProcRadius: 50
-			SearchFromOrderRadius: 50
-	AFLD:
-		ParatroopersPower@paratroopers:
-			DropItems: E1,E1,E1,E1,E1
-
-Sequences:
-
-VoxelSequences:
-
-Weapons:
-
-Voices:
-
-Notifications:
-
-Translations:
+Rules: ra|rules/campaign-rules.yaml, ra|rules/campaign-tooltips.yaml, rules.yaml

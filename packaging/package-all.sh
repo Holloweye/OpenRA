@@ -31,9 +31,9 @@ markdown DOCUMENTATION.md > DOCUMENTATION.html
 markdown Lua-API.md > Lua-API.html
 
 # List of files that are packaged on all platforms
-FILES=('OpenRA.Game.exe' 'OpenRA.Game.exe.config' 'OpenRA.Utility.exe' \
-'OpenRA.Platforms.Default.dll' 'OpenRA.Platforms.Null.dll' \
- 'lua' 'glsl' 'mods/common' 'mods/ra' 'mods/cnc' 'mods/d2k' 'mods/modchooser' \
+FILES=('OpenRA.Game.exe' 'OpenRA.Game.exe.config' 'OpenRA.Utility.exe' 'OpenRA.Server.exe' 
+'OpenRA.Platforms.Default.dll' \
+'lua' 'glsl' 'mods/common' 'mods/ra' 'mods/cnc' 'mods/d2k' 'mods/modchooser' \
 'AUTHORS' 'COPYING' 'README.html' 'CONTRIBUTING.html' 'DOCUMENTATION.html' 'CHANGELOG.html' \
 'global mix database.dat' 'GeoLite2-Country.mmdb.gz')
 
@@ -53,7 +53,9 @@ cp thirdparty/download/SharpFont* packaging/built
 
 # SDL2-CS
 cp thirdparty/download/SDL2-CS* packaging/built
-cp thirdparty/SDL2-CS* packaging/built
+
+# OpenAL-CS
+cp thirdparty/download/OpenAL-CS* packaging/built
 
 # Mono.NAT for UPnP support
 cp thirdparty/download/Mono.Nat.dll packaging/built

@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -68,7 +69,7 @@ namespace OpenRA.Traits
 					return;
 
 				var oldActors = currentActors;
-				currentActors = Footprint.SelectMany(actorMap.GetUnitsAt).ToList();
+				currentActors = Footprint.SelectMany(actorMap.GetActorsAt).ToList();
 
 				var entered = currentActors.Except(oldActors);
 				var exited = oldActors.Except(currentActors);
@@ -97,22 +98,26 @@ namespace OpenRA.Traits
 
 			WPos position;
 			WDist range;
+			WDist vRange;
+
 			IEnumerable<Actor> currentActors = Enumerable.Empty<Actor>();
 
-			public ProximityTrigger(WPos pos, WDist range, Action<Actor> onActorEntered, Action<Actor> onActorExited)
+			public ProximityTrigger(WPos pos, WDist range, WDist vRange, Action<Actor> onActorEntered, Action<Actor> onActorExited)
 			{
 				this.onActorEntered = onActorEntered;
 				this.onActorExited = onActorExited;
 
-				Update(pos, range);
+				Update(pos, range, vRange);
 			}
 
-			public void Update(WPos newPos, WDist newRange)
+			public void Update(WPos newPos, WDist newRange, WDist newVRange)
 			{
 				position = newPos;
 				range = newRange;
+				vRange = newVRange;
 
-				var offset = new WVec(newRange, newRange, WDist.Zero);
+				var offset = new WVec(newRange, newRange, newVRange);
+
 				TopLeft = newPos - offset;
 				BottomRight = newPos + offset;
 
@@ -127,7 +132,8 @@ namespace OpenRA.Traits
 				var oldActors = currentActors;
 				var delta = new WVec(range, range, WDist.Zero);
 				currentActors = am.ActorsInBox(position - delta, position + delta)
-					.Where(a => (a.CenterPosition - position).HorizontalLengthSquared < range.LengthSquared)
+					.Where(a => (a.CenterPosition - position).HorizontalLengthSquared < range.LengthSquared
+						&& (vRange.Length == 0 || (a.World.Map.DistanceAboveTerrain(a.CenterPosition).LengthSquared <= vRange.LengthSquared)))
 					.ToList();
 
 				var entered = currentActors.Except(oldActors);
@@ -183,14 +189,14 @@ namespace OpenRA.Traits
 				for (var col = 0; col < cols; col++)
 					bins[row * cols + col] = new Bin();
 
-			// Cache this delegate so it does not have to be allocated repeatedly.
+			// PERF: Cache this delegate so it does not have to be allocated repeatedly.
 			actorShouldBeRemoved = removeActorPosition.Contains;
 		}
 
-		sealed class UnitsAtEnumerator : IEnumerator<Actor>
+		sealed class ActorsAtEnumerator : IEnumerator<Actor>
 		{
 			InfluenceNode node;
-			public UnitsAtEnumerator(InfluenceNode node) { this.node = node; }
+			public ActorsAtEnumerator(InfluenceNode node) { this.node = node; }
 			public void Reset() { throw new NotSupportedException(); }
 			public Actor Current { get; private set; }
 			object IEnumerator.Current { get { return Current; } }
@@ -209,23 +215,24 @@ namespace OpenRA.Traits
 			}
 		}
 
-		sealed class UnitsAtEnumerable : IEnumerable<Actor>
+		sealed class ActorsAtEnumerable : IEnumerable<Actor>
 		{
 			readonly InfluenceNode node;
-			public UnitsAtEnumerable(InfluenceNode node) { this.node = node; }
-			public IEnumerator<Actor> GetEnumerator() { return new UnitsAtEnumerator(node); }
+			public ActorsAtEnumerable(InfluenceNode node) { this.node = node; }
+			public IEnumerator<Actor> GetEnumerator() { return new ActorsAtEnumerator(node); }
 			IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
 		}
 
-		public IEnumerable<Actor> GetUnitsAt(CPos a)
+		public IEnumerable<Actor> GetActorsAt(CPos a)
 		{
+			// PERF: Custom enumerator for efficiency - using `yield` is slower.
 			var uv = a.ToMPos(map);
 			if (!influence.Contains(uv))
 				return Enumerable.Empty<Actor>();
-			return new UnitsAtEnumerable(influence[uv]);
+			return new ActorsAtEnumerable(influence[uv]);
 		}
 
-		public IEnumerable<Actor> GetUnitsAt(CPos a, SubCell sub)
+		public IEnumerable<Actor> GetActorsAt(CPos a, SubCell sub)
 		{
 			var uv = a.ToMPos(map);
 			if (!influence.Contains(uv))
@@ -243,14 +250,14 @@ namespace OpenRA.Traits
 
 		public SubCell FreeSubCell(CPos cell, SubCell preferredSubCell = SubCell.Any, bool checkTransient = true)
 		{
-			if (preferredSubCell > SubCell.Any && !AnyUnitsAt(cell, preferredSubCell, checkTransient))
+			if (preferredSubCell > SubCell.Any && !AnyActorsAt(cell, preferredSubCell, checkTransient))
 				return preferredSubCell;
 
-			if (!AnyUnitsAt(cell))
-				return map.DefaultSubCell;
+			if (!AnyActorsAt(cell))
+				return map.Grid.DefaultSubCell;
 
-			for (var i = (int)SubCell.First; i < map.SubCellOffsets.Length; i++)
-				if (i != (int)preferredSubCell && !AnyUnitsAt(cell, (SubCell)i, checkTransient))
+			for (var i = (int)SubCell.First; i < map.Grid.SubCellOffsets.Length; i++)
+				if (i != (int)preferredSubCell && !AnyActorsAt(cell, (SubCell)i, checkTransient))
 					return (SubCell)i;
 
 			return SubCell.Invalid;
@@ -258,20 +265,20 @@ namespace OpenRA.Traits
 
 		public SubCell FreeSubCell(CPos cell, SubCell preferredSubCell, Func<Actor, bool> checkIfBlocker)
 		{
-			if (preferredSubCell > SubCell.Any && !AnyUnitsAt(cell, preferredSubCell, checkIfBlocker))
+			if (preferredSubCell > SubCell.Any && !AnyActorsAt(cell, preferredSubCell, checkIfBlocker))
 				return preferredSubCell;
 
-			if (!AnyUnitsAt(cell))
-				return map.DefaultSubCell;
+			if (!AnyActorsAt(cell))
+				return map.Grid.DefaultSubCell;
 
-			for (var i = (int)SubCell.First; i < map.SubCellOffsets.Length; i++)
-				if (i != (int)preferredSubCell && !AnyUnitsAt(cell, (SubCell)i, checkIfBlocker))
+			for (var i = (int)SubCell.First; i < map.Grid.SubCellOffsets.Length; i++)
+				if (i != (int)preferredSubCell && !AnyActorsAt(cell, (SubCell)i, checkIfBlocker))
 					return (SubCell)i;
 			return SubCell.Invalid;
 		}
 
 		// NOTE: always includes transients with influence
-		public bool AnyUnitsAt(CPos a)
+		public bool AnyActorsAt(CPos a)
 		{
 			var uv = a.ToMPos(map);
 			if (!influence.Contains(uv))
@@ -281,7 +288,7 @@ namespace OpenRA.Traits
 		}
 
 		// NOTE: can not check aircraft
-		public bool AnyUnitsAt(CPos a, SubCell sub, bool checkTransient = true)
+		public bool AnyActorsAt(CPos a, SubCell sub, bool checkTransient = true)
 		{
 			var uv = a.ToMPos(map);
 			if (!influence.Contains(uv))
@@ -305,7 +312,7 @@ namespace OpenRA.Traits
 		}
 
 		// NOTE: can not check aircraft
-		public bool AnyUnitsAt(CPos a, SubCell sub, Func<Actor, bool> withCondition)
+		public bool AnyActorsAt(CPos a, SubCell sub, Func<Actor, bool> withCondition)
 		{
 			var uv = a.ToMPos(map);
 			if (!influence.Contains(uv))
@@ -437,10 +444,10 @@ namespace OpenRA.Traits
 			}
 		}
 
-		public int AddProximityTrigger(WPos pos, WDist range, Action<Actor> onEntry, Action<Actor> onExit)
+		public int AddProximityTrigger(WPos pos, WDist range, WDist vRange, Action<Actor> onEntry, Action<Actor> onExit)
 		{
 			var id = nextTriggerId++;
-			var t = new ProximityTrigger(pos, range, onEntry, onExit);
+			var t = new ProximityTrigger(pos, range, vRange, onEntry, onExit);
 			proximityTriggers.Add(id, t);
 
 			foreach (var bin in BinsInBox(t.TopLeft, t.BottomRight))
@@ -461,7 +468,7 @@ namespace OpenRA.Traits
 			t.Dispose();
 		}
 
-		public void UpdateProximityTrigger(int id, WPos newPos, WDist newRange)
+		public void UpdateProximityTrigger(int id, WPos newPos, WDist newRange, WDist newVRange)
 		{
 			ProximityTrigger t;
 			if (!proximityTriggers.TryGetValue(id, out t))
@@ -470,7 +477,7 @@ namespace OpenRA.Traits
 			foreach (var bin in BinsInBox(t.TopLeft, t.BottomRight))
 				bin.ProximityTriggers.Remove(t);
 
-			t.Update(newPos, newRange);
+			t.Update(newPos, newRange, newVRange);
 
 			foreach (var bin in BinsInBox(t.TopLeft, t.BottomRight))
 				bin.ProximityTriggers.Add(t);
@@ -534,6 +541,7 @@ namespace OpenRA.Traits
 
 		public IEnumerable<Actor> ActorsInBox(WPos a, WPos b)
 		{
+			// PERF: Inline BinsInBox here to avoid allocations as this method is called often.
 			var left = Math.Min(a.X, b.X);
 			var top = Math.Min(a.Y, b.Y);
 			var right = Math.Max(a.X, b.X);
@@ -558,11 +566,6 @@ namespace OpenRA.Traits
 					}
 				}
 			}
-		}
-
-		public IEnumerable<Actor> ActorsInWorld()
-		{
-			return bins.SelectMany(bin => bin.Actors.Where(actor => actor.IsInWorld));
 		}
 	}
 }

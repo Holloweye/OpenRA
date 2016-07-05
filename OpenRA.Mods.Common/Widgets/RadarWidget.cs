@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -19,7 +20,7 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.Common.Widgets
 {
-	public class RadarWidget : Widget
+	public sealed class RadarWidget : Widget, IDisposable
 	{
 		public string WorldInteractionController = null;
 		public int AnimationLength = 5;
@@ -33,7 +34,7 @@ namespace OpenRA.Mods.Common.Widgets
 		readonly World world;
 		readonly WorldRenderer worldRenderer;
 		readonly RadarPings radarPings;
-		readonly bool isDiamond;
+		readonly bool isRectangularIsometric;
 		readonly int cellWidth;
 		readonly int previewWidth;
 		readonly int previewHeight;
@@ -64,11 +65,11 @@ namespace OpenRA.Mods.Common.Widgets
 			this.worldRenderer = worldRenderer;
 			radarPings = world.WorldActor.TraitOrDefault<RadarPings>();
 
-			isDiamond = world.Map.Grid.Type == TileShape.Diamond;
-			cellWidth = isDiamond ? 2 : 1;
+			isRectangularIsometric = world.Map.Grid.Type == MapGridType.RectangularIsometric;
+			cellWidth = isRectangularIsometric ? 2 : 1;
 			previewWidth = world.Map.MapSize.X;
 			previewHeight = world.Map.MapSize.Y;
-			if (isDiamond)
+			if (isRectangularIsometric)
 				previewWidth = 2 * previewWidth - 1;
 		}
 
@@ -87,7 +88,7 @@ namespace OpenRA.Mods.Common.Widgets
 			foreach (var cell in world.Map.AllCells)
 				UpdateTerrainCell(cell);
 
-			world.Map.MapTiles.Value.CellEntryChanged += UpdateTerrainCell;
+			world.Map.Tiles.CellEntryChanged += UpdateTerrainCell;
 			world.Map.CustomTerrain.CellEntryChanged += UpdateTerrainCell;
 		}
 
@@ -139,12 +140,12 @@ namespace OpenRA.Mods.Common.Widgets
 			int leftColor, rightColor;
 			if (custom == byte.MaxValue)
 			{
-				var type = world.TileSet.GetTileInfo(world.Map.MapTiles.Value[uv]);
+				var type = world.Map.Rules.TileSet.GetTileInfo(world.Map.Tiles[uv]);
 				leftColor = type != null ? type.LeftColor.ToArgb() : Color.Black.ToArgb();
 				rightColor = type != null ? type.RightColor.ToArgb() : Color.Black.ToArgb();
 			}
 			else
-				leftColor = rightColor = world.TileSet[custom].Color.ToArgb();
+				leftColor = rightColor = world.Map.Rules.TileSet[custom].Color.ToArgb();
 
 			var stride = radarSheet.Size.Width;
 
@@ -153,7 +154,7 @@ namespace OpenRA.Mods.Common.Widgets
 				fixed (byte* colorBytes = &radarData[0])
 				{
 					var colors = (int*)colorBytes;
-					if (isDiamond)
+					if (isRectangularIsometric)
 					{
 						// Odd rows are shifted right by 1px
 						var dx = uv.V & 1;
@@ -189,7 +190,7 @@ namespace OpenRA.Mods.Common.Widgets
 					var colors = (int*)colorBytes;
 					foreach (var uv in world.Map.Unproject(puv))
 					{
-						if (isDiamond)
+						if (isRectangularIsometric)
 						{
 							// Odd rows are shifted right by 1px
 							var dx = uv.V & 1;
@@ -208,6 +209,8 @@ namespace OpenRA.Mods.Common.Widgets
 
 		void MarkShroudDirty(IEnumerable<PPos> projectedCellsChanged)
 		{
+			// PERF: Many cells in the shroud change every tick. We only track the changes here and defer the real work
+			// we need to do until we render. This allows us to avoid wasted work.
 			dirtyShroudCells.UnionWith(projectedCellsChanged);
 		}
 
@@ -217,16 +220,17 @@ namespace OpenRA.Mods.Common.Widgets
 				return null;
 
 			var cell = MinimapPixelToCell(pos);
-			var location = worldRenderer.Viewport.WorldToViewPx(worldRenderer.ScreenPxPosition(world.Map.CenterOfCell(cell)));
+			var worldPixel = worldRenderer.ScreenPxPosition(world.Map.CenterOfCell(cell));
+			var location = worldRenderer.Viewport.WorldToViewPx(worldPixel);
 
 			var mi = new MouseInput
 			{
 				Location = location,
-				Button = MouseButton.Right,
+				Button = Game.Settings.Game.MouseButtonPreference.Action,
 				Modifiers = Game.GetModifierKeys()
 			};
 
-			var cursor = world.OrderGenerator.GetCursor(world, cell, mi);
+			var cursor = world.OrderGenerator.GetCursor(world, cell, worldPixel, mi);
 			if (cursor == null)
 				return "default";
 
@@ -243,17 +247,20 @@ namespace OpenRA.Mods.Common.Widgets
 
 			var cell = MinimapPixelToCell(mi.Location);
 			var pos = world.Map.CenterOfCell(cell);
-			if ((mi.Event == MouseInputEvent.Down || mi.Event == MouseInputEvent.Move) && mi.Button == MouseButton.Left)
+			if ((mi.Event == MouseInputEvent.Down || mi.Event == MouseInputEvent.Move)
+				&& mi.Button == Game.Settings.Game.MouseButtonPreference.Cancel)
+			{
 				worldRenderer.Viewport.Center(pos);
+			}
 
-			if (mi.Event == MouseInputEvent.Down && mi.Button == MouseButton.Right)
+			if (mi.Event == MouseInputEvent.Down && mi.Button == Game.Settings.Game.MouseButtonPreference.Action)
 			{
 				// fake a mousedown/mouseup here
 				var location = worldRenderer.Viewport.WorldToViewPx(worldRenderer.ScreenPxPosition(pos));
 				var fakemi = new MouseInput
 				{
 					Event = MouseInputEvent.Down,
-					Button = MouseButton.Right,
+					Button = Game.Settings.Game.MouseButtonPreference.Action,
 					Modifiers = mi.Modifiers,
 					Location = location
 				};
@@ -302,7 +309,7 @@ namespace OpenRA.Mods.Common.Widgets
 
 				Game.Renderer.EnableScissor(mapRect);
 				DrawRadarPings();
-				Game.Renderer.LineRenderer.DrawRect(tl, br, Color.White);
+				Game.Renderer.RgbaColorRenderer.DrawRect(tl, br, 1, Color.White);
 				Game.Renderer.DisableScissor();
 			}
 		}
@@ -312,22 +319,13 @@ namespace OpenRA.Mods.Common.Widgets
 			if (radarPings == null)
 				return;
 
-			var lr = Game.Renderer.LineRenderer;
-			var oldWidth = lr.LineWidth;
-			lr.LineWidth = 2;
-
 			foreach (var radarPing in radarPings.Pings.Where(e => e.IsVisible()))
 			{
 				var c = radarPing.Color;
 				var pingCell = world.Map.CellContaining(radarPing.Position);
 				var points = radarPing.Points(CellToMinimapPixel(pingCell)).ToArray();
-
-				lr.DrawLine(points[0], points[1], c);
-				lr.DrawLine(points[1], points[2], c);
-				lr.DrawLine(points[2], points[0], c);
+				Game.Renderer.RgbaColorRenderer.DrawPolygon(points, 2, c);
 			}
-
-			lr.LineWidth = oldWidth;
 		}
 
 		public override void Tick()
@@ -381,7 +379,7 @@ namespace OpenRA.Mods.Common.Widgets
 
 								var uv = cell.First.ToMPos(world.Map.Grid.Type);
 								var color = cell.Second.ToArgb();
-								if (isDiamond)
+								if (isRectangularIsometric)
 								{
 									// Odd rows are shifted right by 1px
 									var dx = uv.V & 1;
@@ -430,7 +428,7 @@ namespace OpenRA.Mods.Common.Widgets
 			var dy = (int)(previewScale * (uv.V - world.Map.Bounds.Top));
 
 			// Odd rows are shifted right by 1px
-			if (isDiamond && (uv.V & 1) == 1)
+			if (isRectangularIsometric && (uv.V & 1) == 1)
 				dx += 1;
 
 			return new int2(mapRect.X + dx, mapRect.Y + dy);
@@ -441,6 +439,19 @@ namespace OpenRA.Mods.Common.Widgets
 			var u = (int)((p.X - mapRect.X) / (previewScale * cellWidth)) + world.Map.Bounds.Left;
 			var v = (int)((p.Y - mapRect.Y) / previewScale) + world.Map.Bounds.Top;
 			return new MPos(u, v).ToCPos(world.Map);
+		}
+
+		public override void Removed()
+		{
+			base.Removed();
+			world.Map.Tiles.CellEntryChanged -= UpdateTerrainCell;
+			world.Map.CustomTerrain.CellEntryChanged -= UpdateTerrainCell;
+			Dispose();
+		}
+
+		public void Dispose()
+		{
+			radarSheet.Dispose();
 		}
 	}
 }

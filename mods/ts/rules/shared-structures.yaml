@@ -28,6 +28,7 @@ GACNST:
 		IntoActor: mcv
 		Offset: 1,1
 		Facing: 96
+		DeployCursor: undeploy
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -75,6 +76,7 @@ PROC:
 	TiberianSunRefinery:
 		DockAngle: 160
 		DockOffset: 2,1
+		DiscardExcessResources: true
 	StoresResources:
 		PipColor: Green
 		PipCount: 15
@@ -83,15 +85,16 @@ PROC:
 		Value: 600
 	FreeActor:
 		Actor: HARV
-		SpawnOffset: 3,1
+		SpawnOffset: 2,1
 		Facing: 160
 	WithIdleOverlay@REDLIGHTS:
 		Sequence: idle-redlights
 	WithIdleOverlay@BIB:
 		Sequence: bib
-	WithDockingOverlay@flame:
+	WithDockedOverlay@FLAME:
 		Sequence: flame
 		Palette: effect
+	WithDockingOverlay@UNLOAD:
 	Power:
 		Amount: -30
 	ProvidesPrerequisite@buildingname:
@@ -174,4 +177,3 @@ TECH:
 	Tooltip:
 		Name: Tech Center
 		Description: Tech Center
-

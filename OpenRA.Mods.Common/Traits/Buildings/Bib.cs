@@ -1,16 +1,18 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System.Collections.Generic;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
+using OpenRA.Mods.Common.Traits.Render;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
@@ -18,7 +20,7 @@ namespace OpenRA.Mods.Common.Traits
 	public class BibInfo : ITraitInfo, Requires<BuildingInfo>, IRenderActorPreviewSpritesInfo, Requires<RenderSpritesInfo>
 	{
 		[SequenceReference] public readonly string Sequence = "bib";
-		[PaletteReference] public readonly string Palette = "terrain";
+		[PaletteReference] public readonly string Palette = TileSet.TerrainPaletteInternalName;
 		public readonly bool HasMinibib = false;
 
 		public object Create(ActorInitializer init) { return new Bib(init.Self, this); }
@@ -59,7 +61,7 @@ namespace OpenRA.Mods.Common.Traits
 
 				// Z-order is one set to the top of the footprint
 				var offset = map.CenterOfCell(cell) - map.CenterOfCell(location) - centerOffset;
-				yield return new SpriteActorPreview(anim, offset, -(offset.Y + centerOffset.Y + 512), p, rs.Scale);
+				yield return new SpriteActorPreview(anim, () => offset, () => -(offset.Y + centerOffset.Y + 512), p, rs.Scale);
 			}
 		}
 	}

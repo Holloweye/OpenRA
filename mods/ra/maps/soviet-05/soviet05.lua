@@ -15,15 +15,11 @@ CheckForCYard = function()
 end
 
 CheckForSPen = function()
-	SPens = Map.ActorsInBox(Map.TopLeft, Map.BottomRight, function(actor)
-		return actor.Type == "spen"
-	end)
-
-	return #SPens >=1
+	return Utils.Any(Map.ActorsInWorld, function(actor) return actor.Type == "spen" end)
 end
 
 RunInitialActivities = function()
-	if Map.Difficulty == "Hard" then
+	if Map.LobbyOption("difficulty") == "hard" then
 		Expand()
 		ExpansionCheck = true
 	else
@@ -36,7 +32,7 @@ RunInitialActivities = function()
 		IdlingUnits()
 		Media.PlaySpeechNotification(player, "ReinforcementsArrived")
 
-		local buildings = Map.ActorsInBox(NWIdlePoint.CenterPosition, Map.BottomRight, function(self) return self.Owner == Greece and self.HasProperty("StartBuildingRepairs") end)
+		local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == Greece and self.HasProperty("StartBuildingRepairs") end)
 		Utils.Do(buildings, function(actor)
 			Trigger.OnDamaged(actor, function(building)
 				if building.Owner == Greece and building.Health < building.MaxHealth * 3/4 then
@@ -61,7 +57,7 @@ RunInitialActivities = function()
 	ProduceInfantry()
 	Trigger.AfterDelay(DateTime.Minutes(2), ProduceShips)
 
-	if Map.Difficulty == "Hard" or Map.Difficulty == "Medium" then
+	if Map.LobbyOption("difficulty") == "hard" or Map.LobbyOption("difficulty") == "medium" then
 		Trigger.AfterDelay(DateTime.Seconds(25), ReinfInf)
 	end
 	Trigger.AfterDelay(DateTime.Minutes(2), ReinfInf)
@@ -174,9 +170,9 @@ Tick = function()
 
 	if not RCheck then
 		RCheck = true
-		if Map.Difficulty == "Easy" and ReinfCheck then
+		if Map.LobbyOption("difficulty") == "easy" and ReinfCheck then
 			Trigger.AfterDelay(DateTime.Minutes(6), ReinfArmor)
-		elseif Map.Difficulty == "Medium" then
+		elseif Map.LobbyOption("difficulty") == "medium" then
 			Trigger.AfterDelay(DateTime.Minutes(4), ReinfArmor)
 		else
 			Trigger.AfterDelay(DateTime.Minutes(3), ReinfArmor)

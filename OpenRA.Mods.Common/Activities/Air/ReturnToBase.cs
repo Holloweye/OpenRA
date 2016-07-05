@@ -1,14 +1,16 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Activities;
 using OpenRA.Mods.Common.Traits;
@@ -34,11 +36,10 @@ namespace OpenRA.Mods.Common.Activities
 		public static Actor ChooseAirfield(Actor self, bool unreservedOnly)
 		{
 			var rearmBuildings = self.Info.TraitInfo<AircraftInfo>().RearmBuildings;
-			return self.World.ActorsWithTrait<Reservable>()
-				.Where(a => a.Actor.Owner == self.Owner)
-				.Where(a => rearmBuildings.Contains(a.Actor.Info.Name)
-					&& (!unreservedOnly || !Reservable.IsReserved(a.Actor)))
-				.Select(a => a.Actor)
+			return self.World.ActorsHavingTrait<Reservable>()
+				.Where(a => a.Owner == self.Owner
+					&& rearmBuildings.Contains(a.Info.Name)
+					&& (!unreservedOnly || !Reservable.IsReserved(a)))
 				.ClosestTo(self);
 		}
 
@@ -50,12 +51,7 @@ namespace OpenRA.Mods.Common.Activities
 			if (dest == null)
 				return;
 
-			var res = dest.TraitOrDefault<Reservable>();
-			if (res != null)
-			{
-				plane.UnReserve();
-				plane.Reservation = res.Reserve(dest, self, plane);
-			}
+			plane.MakeReservation(dest);
 
 			var landPos = dest.CenterPosition;
 			var altitude = planeInfo.CruiseAltitude.Length;
@@ -68,7 +64,7 @@ namespace OpenRA.Mods.Common.Activities
 
 			// Add 10% to the turning radius to ensure we have enough room
 			var speed = plane.MovementSpeed * 32 / 35;
-			var turnRadius = (int)(141 * speed / planeInfo.ROT / (float)Math.PI);
+			var turnRadius = CalculateTurnRadius(speed);
 
 			// Find the center of the turning circles for clockwise and counterclockwise turns
 			var angle = WAngle.FromFacing(plane.Facing);
@@ -112,17 +108,29 @@ namespace OpenRA.Mods.Common.Activities
 
 				self.CancelActivity();
 				if (nearestAfld != null)
-					return Util.SequenceActivities(new Fly(self, Target.FromActor(nearestAfld)), new FlyCircle(self));
+					return ActivityUtils.SequenceActivities(new Fly(self, Target.FromActor(nearestAfld)), new FlyCircle(self));
 				else
 					return new FlyCircle(self);
 			}
 
-			return Util.SequenceActivities(
-				new Fly(self, Target.FromPos(w1)),
-				new Fly(self, Target.FromPos(w2)),
-				new Fly(self, Target.FromPos(w3)),
-				new Land(self, Target.FromActor(dest)),
-				NextActivity);
+			List<Activity> landingProcedures = new List<Activity>();
+
+			var turnRadius = CalculateTurnRadius(planeInfo.Speed);
+
+			landingProcedures.Add(new Fly(self, Target.FromPos(w1), WDist.Zero, new WDist(turnRadius * 3)));
+			landingProcedures.Add(new Fly(self, Target.FromPos(w2)));
+
+			// Fix a problem when the airplane is send to resupply near the airport
+			landingProcedures.Add(new Fly(self, Target.FromPos(w3), WDist.Zero, new WDist(turnRadius / 2)));
+			landingProcedures.Add(new Land(self, Target.FromActor(dest)));
+			landingProcedures.Add(NextActivity);
+
+			return ActivityUtils.SequenceActivities(landingProcedures.ToArray());
+		}
+
+		int CalculateTurnRadius(int speed)
+		{
+			return 45 * speed / planeInfo.TurnSpeed;
 		}
 	}
 }

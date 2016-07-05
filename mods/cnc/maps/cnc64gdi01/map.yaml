@@ -1,10 +1,8 @@
-MapFormat: 7
+MapFormat: 11
 
 RequiresMod: cnc
 
 Title: C&C64 Special Ops - GDI 1
-
-Description: Nod is experimenting on civilians with Tiberium. Use the commando to take out the SAM sites surrounding the dropoff area. With the SAMs gone you will then get an airstrike.  Take out the Obelisk and an MCV will be delivered to help you to locate and destroy the biochem facility.
 
 Author: Westwood Studios
 
@@ -16,29 +14,15 @@ Bounds: 2,9,48,53
 
 Visibility: MissionSelector
 
-Type: Campaign
+Categories: Campaign
 
-Videos:
-	GameStart: obel.vqa
-	GameWon: orcabomb.vqa
-	GameLost: cutout.vqa
-
-Options:
-	Crates: False
-	Creeps: False
-	Fog: True
-	Shroud: True
-	AllyBuildRadius: False
-	FragileAlliances: False
-	StartingCash: 10000
-	ConfigurableStartingUnits: False
-	ShortGame: False
+LockPreview: True
 
 Players:
 	PlayerReference@Nod:
 		Name: Nod
 		Faction: nod
-		ColorRamp: 3,255,127
+		Color: FE1100
 		Allies: Nod
 		Enemies: GDI
 	PlayerReference@GDI:
@@ -49,7 +33,7 @@ Players:
 		LockFaction: True
 		Faction: gdi
 		LockColor: True
-		ColorRamp: 31,222,183
+		Color: F5D378
 		LockSpawn: True
 		LockTeam: True
 		Allies: GDI
@@ -293,7 +277,7 @@ Actors:
 		Location: 38,27
 		Owner: Neutral
 	Actor77: split3
-		Location: 31,27
+		Location: 31,28
 		Owner: Neutral
 	Actor78: tc01
 		Location: 29,27
@@ -332,13 +316,13 @@ Actors:
 		Location: 21,9
 		Owner: Neutral
 	Actor90: split2
-		Location: 19,59
+		Location: 19,60
 		Owner: Neutral
 	Actor91: split3
-		Location: 22,58
+		Location: 22,59
 		Owner: Neutral
 	Actor92: split3
-		Location: 42,56
+		Location: 42,57
 		Owner: Neutral
 	Actor93: tc05
 		Location: 44,59
@@ -428,16 +412,16 @@ Actors:
 		Location: 4,14
 		Owner: Neutral
 	Actor122: split3
-		Location: 7,28
+		Location: 7,29
 		Owner: Neutral
 	Actor123: split3
-		Location: 7,32
+		Location: 7,33
 		Owner: Neutral
 	Actor124: split3
-		Location: 3,33
+		Location: 3,34
 		Owner: Neutral
 	Actor125: split3
-		Location: 22,41
+		Location: 22,42
 		Owner: Neutral
 	AttackTrigger1: proc
 		Location: 46,42
@@ -490,10 +474,10 @@ Actors:
 		Location: 20,49
 		Owner: Nod
 	Actor142: obli
-		Location: 20,30
+		Location: 20,31
 		Owner: Nod
 	AttackTrigger4: obli
-		Location: 24,29
+		Location: 24,30
 		Owner: Nod
 	NodHQ: hq
 		Location: 47,46
@@ -549,13 +533,13 @@ Actors:
 		Location: 18,42
 		Owner: Nod
 	Obelisk01: obli
-		Location: 15,52
+		Location: 15,53
 		Owner: Nod
 	HandOfNod: hand
-		Location: 42,44
+		Location: 42,45
 		Owner: Nod
 	Actor163: obli
-		Location: 16,16
+		Location: 16,17
 		Owner: Nod
 	Actor164: nuk2
 		Location: 4,9
@@ -728,117 +712,6 @@ Actors:
 		Owner: Nod
 		Location: 26,14
 
-Smudges:
+Rules: cnc|rules/campaign-maprules.yaml, cnc|rules/campaign-tooltips.yaml, cnc|rules/campaign-palettes.yaml, rules.yaml
 
-Rules:
-	World:
-		-SpawnMPUnits:
-		-MPStartLocations:
-		-CrateSpawner:
-		LuaScript:
-			Scripts: cnc64gdi01.lua
-		ObjectivesPanel:
-			PanelName: MISSION_OBJECTIVES
-		MusicPlaylist:
-			StartingMusic: aoi
-	Player:
-		-ConquestVictoryConditions:
-		MissionObjectives:
-			EarlyGameOver: true
-	^Vehicle:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Tank:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Helicopter:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Infantry:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Plane:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Ship:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Building:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Wall:
-		Tooltip:
-			ShowOwnerRow: false
-	^Husk:
-		Tooltip:
-			GenericVisibility: Enemy, Ally, Neutral
-			GenericStancePrefix: false
-			ShowOwnerRow: false
-	BIO.Husk:
-		Tooltip:
-			ShowOwnerRow: false
-	EYE:
-		IonCannonPower:
-			Prerequisites: ~disabled
-	FLARE:
-		RevealsShroud:
-			Range: 5c0
-	STNK:
-		Buildable:
-			Prerequisites: ~techlevel.high
-	TRAN:
-		Buildable:
-			Prerequisites: ~disabled
-	RMBO:
-		Buildable:
-			Prerequisites: ~disabled
-	OLDLST:
-		Inherits: LST
-		-WithRoof:
-		-Selectable:
-		RejectsOrders:
-	airstrike.proxy:
-		AlwaysVisible:
-		AirstrikePower:
-			Icon: airstrike
-			StartFullyCharged: True
-			ChargeTime: 120
-			SquadSize: 3
-			QuantizedFacings: 8
-			Description: Air Strike
-			LongDesc: Deploy an aerial napalm strike.\nBurns buildings and infantry along a line.
-			EndChargeSound: airredy1.aud
-			SelectTargetSound: select1.aud
-			InsufficientPowerSound: nopower1.aud
-			IncomingSound: enemya.aud
-			UnitType: a10
-			DisplayBeacon: True
-			BeaconPoster: airstrike
-			DisplayRadarPing: True
-			CameraActor: camera
-
-Sequences:
-	oldlst:
-		idle: lst
-			Start: 0
-			Facings: 1
-			ZOffset: -1024
-		icon: lsticnh.tem
-			AddExtension: False
-
-VoxelSequences:
-
-Weapons:
-
-Voices:
-
-Notifications:
-
-Translations:
+Sequences: sequences.yaml

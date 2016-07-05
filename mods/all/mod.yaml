@@ -5,7 +5,9 @@ Metadata:
 	Hidden: true
 	Description: Depending on all DLLs.
 
-Folders:
+RequiresMods:
+
+Packages:
 	.
 
 Cursors:
@@ -29,7 +31,7 @@ ChromeMetrics:
 
 Fonts:
 
-LobbyDefaults:
+SoundFormats:
 
 SpriteFormats:
 

@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -14,7 +15,7 @@ using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.Common.Traits
+namespace OpenRA.Mods.Common.Traits.Render
 {
 	[Desc("Displays the player name above the unit")]
 	class RenderNameTagInfo : ITraitInfo
@@ -51,7 +52,7 @@ namespace OpenRA.Mods.Common.Traits
 			var spaceBuffer = (int)(10 / wr.Viewport.Zoom);
 			var effectPos = wr.ProjectedPosition(new int2(pos.X, bounds.Y - spaceBuffer));
 
-			yield return new TextRenderable(font, effectPos, 0, color, name);
+			return new IRenderable[] { new TextRenderable(font, effectPos, 0, color, name) };
 		}
 	}
 }

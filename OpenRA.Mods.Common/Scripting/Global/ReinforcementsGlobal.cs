@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -71,7 +72,7 @@ namespace OpenRA.Mods.Common.Scripting
 			var actors = new List<Actor>();
 			for (var i = 0; i < actorTypes.Length; i++)
 			{
-				var af = actionFunc != null ? actionFunc.CopyReference() as LuaFunction : null;
+				var af = actionFunc != null ? (LuaFunction)actionFunc.CopyReference() : null;
 				var actor = CreateActor(owner, actorTypes[i], false, entryPath[0], entryPath.Length > 1 ? entryPath[1] : (CPos?)null);
 				actors.Add(actor);
 
@@ -86,8 +87,9 @@ namespace OpenRA.Mods.Common.Scripting
 					{
 						actor.QueueActivity(new CallFunc(() =>
 						{
-							af.Call(actor.ToLuaValue(Context));
-							af.Dispose();
+							using (af)
+							using (var a = actor.ToLuaValue(Context))
+								af.Call(a);
 						}));
 					}
 				};
@@ -128,11 +130,12 @@ namespace OpenRA.Mods.Common.Scripting
 
 			if (actionFunc != null)
 			{
-				var af = actionFunc.CopyReference() as LuaFunction;
+				var af = (LuaFunction)actionFunc.CopyReference();
 				transport.QueueActivity(new CallFunc(() =>
 				{
-					af.Call(transport.ToLuaValue(Context), passengers.ToArray().ToLuaValue(Context));
-					af.Dispose();
+					using (af)
+					using (LuaValue t = transport.ToLuaValue(Context), p = passengers.ToArray().ToLuaValue(Context))
+						af.Call(t, p);
 				}));
 			}
 			else
@@ -164,11 +167,12 @@ namespace OpenRA.Mods.Common.Scripting
 
 			if (exitFunc != null)
 			{
-				var ef = exitFunc.CopyReference() as LuaFunction;
+				var ef = (LuaFunction)exitFunc.CopyReference();
 				transport.QueueActivity(new CallFunc(() =>
 				{
-					ef.Call(transport.ToLuaValue(Context));
-					ef.Dispose();
+					using (ef)
+					using (var t = transport.ToLuaValue(Context))
+						ef.Call(t);
 				}));
 			}
 			else if (exitPath != null)
@@ -180,8 +184,16 @@ namespace OpenRA.Mods.Common.Scripting
 			}
 
 			var ret = Context.CreateTable();
-			ret.Add(1, transport.ToLuaValue(Context));
-			ret.Add(2, passengers.ToArray().ToLuaValue(Context));
+			using (LuaValue
+				tKey = 1,
+				tValue = transport.ToLuaValue(Context),
+				pKey = 2,
+				pValue = passengers.ToArray().ToLuaValue(Context))
+			{
+				ret.Add(tKey, tValue);
+				ret.Add(pKey, pValue);
+			}
+
 			return ret;
 		}
 	}

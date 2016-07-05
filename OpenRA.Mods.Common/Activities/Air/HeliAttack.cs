@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -61,32 +62,28 @@ namespace OpenRA.Mods.Common.Activities
 
 				self.CancelActivity();
 				self.SetTargetLine(newTarget, Color.Green);
-				return Util.SequenceActivities(new HeliFly(self, newTarget));
+				return ActivityUtils.SequenceActivities(new HeliFly(self, newTarget));
 			}
 
-			// If all ammo pools are depleted and none reload automatically, return to helipad to reload and then move to next activity
-			// TODO: This should check whether there is ammo left that is actually suitable for the target
-			if (ammoPools.All(x => !x.Info.SelfReloads && !x.HasAmmo()))
-				return Util.SequenceActivities(new HeliReturnToBase(self), NextActivity);
+			// If any AmmoPool is depleted and no weapon is valid against target, return to helipad to reload and then move to next activity
+			if (ammoPools.Any(x => !x.Info.SelfReloads && !x.HasAmmo()) && !attackHeli.HasAnyValidWeapons(target))
+				return ActivityUtils.SequenceActivities(new HeliReturnToBase(self), NextActivity);
 
 			var dist = target.CenterPosition - self.CenterPosition;
 
 			// Can rotate facing while ascending
-			var desiredFacing = Util.GetFacing(dist, helicopter.Facing);
-			helicopter.Facing = Util.TickFacing(helicopter.Facing, desiredFacing, helicopter.ROT);
+			var desiredFacing = dist.HorizontalLengthSquared != 0 ? dist.Yaw.Facing : helicopter.Facing;
+			helicopter.Facing = Util.TickFacing(helicopter.Facing, desiredFacing, helicopter.TurnSpeed);
 
 			if (HeliFly.AdjustAltitude(self, helicopter, helicopter.Info.CruiseAltitude))
 				return this;
 
 			// Fly towards the target
-			// TODO: Fix that the helicopter won't do anything if it has multiple weapons with different ranges
-			// and the weapon with the longest range is out of ammo
-			if (!target.IsInRange(self.CenterPosition, attackHeli.GetMaximumRange()))
+			if (!target.IsInRange(self.CenterPosition, attackHeli.GetMaximumRangeVersusTarget(target)))
 				helicopter.SetPosition(self, helicopter.CenterPosition + helicopter.FlyStep(desiredFacing));
 
 			// Fly backwards from the target
-			// TODO: Same problem as with MaximumRange
-			if (target.IsInRange(self.CenterPosition, attackHeli.GetMinimumRange()))
+			if (target.IsInRange(self.CenterPosition, attackHeli.GetMinimumRangeVersusTarget(target)))
 			{
 				// Facing 0 doesn't work with the following position change
 				var facing = 1;

@@ -1,10 +1,8 @@
-MapFormat: 7
+MapFormat: 11
 
 RequiresMod: cnc
 
-Title: Destroy The SAM Sites
-
-Description: Build up forces to destroy Nod base.\n\nOnce all Nod SAM sites are neutralized then air support will be provided to combat obstacles such as turrets.\n\nDestroy all units and structures to complete the mission objective.
+Title: 03:   Destroy the SAM Sites
 
 Author: Westwood Studios
 
@@ -16,30 +14,15 @@ Bounds: 1,25,45,37
 
 Visibility: MissionSelector
 
-Type: Campaign
+Categories: Campaign
 
-Videos:
-	Briefing: gdi3.vqa
-	GameStart: samdie.vqa
-	GameWon: bombaway.vqa
-	GameLost: gameover.vqa
-
-Options:
-	Crates: False
-	Creeps: False
-	Fog: True
-	Shroud: True
-	AllyBuildRadius: False
-	FragileAlliances: False
-	StartingCash: 5000
-	ConfigurableStartingUnits: False
-	ShortGame: False
+LockPreview: True
 
 Players:
 	PlayerReference@Nod:
 		Name: Nod
 		Faction: nod
-		ColorRamp: 3,255,127
+		Color: FE1100
 		Allies: Nod
 		Enemies: GDI
 	PlayerReference@Neutral:
@@ -55,7 +38,7 @@ Players:
 		LockFaction: True
 		Faction: gdi
 		LockColor: True
-		ColorRamp: 31,222,183
+		Color: F5D378
 		LockSpawn: True
 		LockTeam: True
 		Allies: GDI
@@ -396,7 +379,7 @@ Actors:
 		Location: 29,26
 		Owner: Nod
 	NodBarracks: hand
-		Location: 24,26
+		Location: 24,27
 		Owner: Nod
 	Actor112: silo
 		Location: 33,26
@@ -714,142 +697,4 @@ Actors:
 		Location: 37,51
 		Owner: Neutral
 
-Smudges:
-
-Rules:
-	World:
-		-SpawnMPUnits:
-		-MPStartLocations:
-		-CrateSpawner:
-		LuaScript:
-			Scripts: gdi03.lua
-		ObjectivesPanel:
-			PanelName: MISSION_OBJECTIVES
-		MusicPlaylist:
-			StartingMusic: crep226m
-	Player:
-		-ConquestVictoryConditions:
-		MissionObjectives:
-			EarlyGameOver: true
-	^Vehicle:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Tank:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Helicopter:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Infantry:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Plane:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Ship:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Building:
-		Tooltip:
-			GenericVisibility: Enemy
-			ShowOwnerRow: false
-	^Wall:
-		Tooltip:
-			ShowOwnerRow: false
-	SBAG:
-		-Crushable:
-	^Husk:
-		Tooltip:
-			GenericVisibility: Enemy, Ally, Neutral
-			GenericStancePrefix: false
-			ShowOwnerRow: false
-	WEAP:
-		Buildable:
-			Prerequisites: ~disabled
-	NUK2:
-		Buildable:
-			Prerequisites: ~disabled
-	FIX:
-		Buildable:
-			Prerequisites: ~disabled
-	HPAD:
-		Buildable:
-			Prerequisites: ~disabled
-	EYE:
-		Buildable:
-			Prerequisites: ~disabled
-	GUN:
-		Buildable:
-			Prerequisites: ~disabled
-	ATWR:
-		Buildable:
-			Prerequisites: ~disabled
-	E3:
-		Buildable:
-			Prerequisites: ~disabled
-	E4:
-		Buildable:
-			Prerequisites: ~disabled
-	E5:
-		Buildable:
-			Prerequisites: ~disabled
-	RMBO:
-		Buildable:
-			Prerequisites: ~disabled
-	AFLD:
-		Buildable:
-			Prerequisites: ~disabled
-	TMPL:
-		Buildable:
-			Prerequisites: ~disabled
-	OBLI:
-		Buildable:
-			Prerequisites: ~disabled
-	SAM:
-		Buildable:
-			Prerequisites: ~disabled
-		Building:
-		Power:
-			Amount: -10
-		-Capturable:
-	HQ:
-		Tooltip:
-			Description: Provides an overview of the battlefield.\n  Requires power to operate.
-		-AirstrikePower:
-	airstrike.proxy:
-		AlwaysVisible:
-		AirstrikePower:
-			Icon: airstrike
-			StartFullyCharged: True
-			ChargeTime: 120
-			SquadSize: 3
-			QuantizedFacings: 8
-			Description: Air Strike
-			LongDesc: Deploy an aerial napalm strike.\nBurns buildings and infantry along a line.
-			EndChargeSound: airredy1.aud
-			SelectTargetSound: select1.aud
-			InsufficientPowerSound: nopower1.aud
-			IncomingSound: enemya.aud
-			UnitType: a10
-			DisplayBeacon: True
-			BeaconPoster: airstrike
-			DisplayRadarPing: True
-			CameraActor: camera
-
-Sequences:
-
-VoxelSequences:
-
-Weapons:
-
-Voices:
-
-Notifications:
-
-Translations:
+Rules: cnc|rules/campaign-maprules.yaml, cnc|rules/campaign-tooltips.yaml, cnc|rules/campaign-palettes.yaml, rules.yaml

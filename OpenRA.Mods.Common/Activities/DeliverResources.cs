@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -55,7 +56,7 @@ namespace OpenRA.Mods.Common.Activities
 
 			// No refineries exist; check again after delay defined in Harvester.
 			if (harv.LinkedProc == null)
-				return Util.SequenceActivities(new Wait(harv.Info.SearchForDeliveryBuildingDelay), this);
+				return ActivityUtils.SequenceActivities(new Wait(harv.Info.SearchForDeliveryBuildingDelay), this);
 
 			var proc = harv.LinkedProc;
 			var iao = proc.Trait<IAcceptResources>();
@@ -68,7 +69,7 @@ namespace OpenRA.Mods.Common.Activities
 				foreach (var n in notify)
 					n.MovingToRefinery(self, proc.Location + iao.DeliveryOffset, next);
 
-				return Util.SequenceActivities(movement.MoveTo(proc.Location + iao.DeliveryOffset, 0), this);
+				return ActivityUtils.SequenceActivities(movement.MoveTo(proc.Location + iao.DeliveryOffset, 0), this);
 			}
 
 			if (!isDocking)
@@ -77,7 +78,7 @@ namespace OpenRA.Mods.Common.Activities
 				iao.OnDock(self, this);
 			}
 
-			return Util.SequenceActivities(new Wait(10), this);
+			return ActivityUtils.SequenceActivities(new Wait(10), this);
 		}
 
 		// Cannot be cancelled

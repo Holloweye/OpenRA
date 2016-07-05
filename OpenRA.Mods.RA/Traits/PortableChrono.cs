@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -20,8 +21,8 @@ namespace OpenRA.Mods.RA.Traits
 {
 	class PortableChronoInfo : ITraitInfo
 	{
-		[Desc("Cooldown in seconds until the unit can teleport.")]
-		public readonly int ChargeTime = 20;
+		[Desc("Cooldown in ticks until the unit can teleport.")]
+		public readonly int ChargeDelay = 500;
 
 		[Desc("Can the unit teleport only a certain distance?")]
 		public readonly bool HasDistanceLimit = true;
@@ -32,21 +33,24 @@ namespace OpenRA.Mods.RA.Traits
 		[Desc("Sound to play when teleporting.")]
 		public readonly string ChronoshiftSound = "chrotnk1.aud";
 
-		[Desc("Display rectangles indicating the current charge status")]
-		public readonly int Pips = 2;
-
 		[Desc("Cursor to display when able to deploy the actor.")]
 		public readonly string DeployCursor = "deploy";
 
 		[Desc("Cursor to display when unable to deploy the actor.")]
 		public readonly string DeployBlockedCursor = "deploy-blocked";
 
+		[Desc("Cursor to display when targeting a teleport location.")]
+		public readonly string TargetCursor = "chrono-target";
+
+		[Desc("Cursor to display when the targeted location is blocked.")]
+		public readonly string TargetBlockedCursor = "move-blocked";
+
 		[VoiceReference] public readonly string Voice = "Action";
 
 		public object Create(ActorInitializer init) { return new PortableChrono(this); }
 	}
 
-	class PortableChrono : IIssueOrder, IResolveOrder, ITick, IPips, IOrderVoice, ISync
+	class PortableChrono : IIssueOrder, IResolveOrder, ITick, ISelectionBar, IOrderVoice, ISync
 	{
 		[Sync] int chargeTick = 0;
 		public readonly PortableChronoInfo Info;
@@ -66,7 +70,7 @@ namespace OpenRA.Mods.RA.Traits
 		{
 			get
 			{
-				yield return new PortableChronoOrderTargeter();
+				yield return new PortableChronoOrderTargeter(Info.TargetCursor);
 				yield return new DeployOrderTargeter("PortableChronoDeploy", 5,
 					() => CanTeleport ? Info.DeployCursor : Info.DeployBlockedCursor);
 			}
@@ -75,7 +79,7 @@ namespace OpenRA.Mods.RA.Traits
 		public Order IssueOrder(Actor self, IOrderTargeter order, Target target, bool queued)
 		{
 			if (order.OrderID == "PortableChronoDeploy" && CanTeleport)
-				self.World.OrderGenerator = new PortableChronoOrderGenerator(self);
+				self.World.OrderGenerator = new PortableChronoOrderGenerator(self, Info);
 
 			if (order.OrderID == "PortableChronoTeleport")
 				return new Order(order.OrderID, self, queued) { TargetLocation = self.World.Map.CellContaining(target.CenterPosition) };
@@ -100,7 +104,7 @@ namespace OpenRA.Mods.RA.Traits
 
 		public void ResetChargeTime()
 		{
-			chargeTick = 25 * Info.ChargeTime;
+			chargeTick = Info.ChargeDelay;
 		}
 
 		public bool CanTeleport
@@ -108,29 +112,29 @@ namespace OpenRA.Mods.RA.Traits
 			get { return chargeTick <= 0; }
 		}
 
-		public IEnumerable<PipType> GetPips(Actor self)
+		float ISelectionBar.GetValue()
 		{
-			for (var i = 0; i < Info.Pips; i++)
-			{
-				if ((1 - chargeTick * 1.0f / (25 * Info.ChargeTime)) * Info.Pips < i + 1)
-				{
-					yield return PipType.Transparent;
-					continue;
-				}
-
-				yield return PipType.Blue;
-			}
+			return (float)(Info.ChargeDelay - chargeTick) / Info.ChargeDelay;
 		}
+
+		Color ISelectionBar.GetColor() { return Color.Magenta; }
 	}
 
 	class PortableChronoOrderTargeter : IOrderTargeter
 	{
+		readonly string targetCursor;
+
+		public PortableChronoOrderTargeter(string targetCursor)
+		{
+			this.targetCursor = targetCursor;
+		}
+
 		public string OrderID { get { return "PortableChronoTeleport"; } }
 		public int OrderPriority { get { return 5; } }
 		public bool IsQueued { get; protected set; }
-		public bool OverrideSelection { get { return true; } }
+		public bool TargetOverridesSelection(TargetModifiers modifiers) { return true; }
 
-		public bool CanTarget(Actor self, Target target, List<Actor> othersAtTarget, TargetModifiers modifiers, ref string cursor)
+		public bool CanTarget(Actor self, Target target, List<Actor> othersAtTarget, ref TargetModifiers modifiers, ref string cursor)
 		{
 			// TODO: When target modifiers are configurable this needs to be revisited
 			if (modifiers.HasModifier(TargetModifiers.ForceMove) || modifiers.HasModifier(TargetModifiers.ForceQueue))
@@ -141,7 +145,7 @@ namespace OpenRA.Mods.RA.Traits
 
 				if (self.IsInWorld && self.Owner.Shroud.IsExplored(xy))
 				{
-					cursor = "chrono-target";
+					cursor = targetCursor;
 					return true;
 				}
 
@@ -155,13 +159,15 @@ namespace OpenRA.Mods.RA.Traits
 	class PortableChronoOrderGenerator : IOrderGenerator
 	{
 		readonly Actor self;
+		readonly PortableChronoInfo info;
 
-		public PortableChronoOrderGenerator(Actor self)
+		public PortableChronoOrderGenerator(Actor self, PortableChronoInfo info)
 		{
 			this.self = self;
+			this.info = info;
 		}
 
-		public IEnumerable<Order> Order(World world, CPos xy, MouseInput mi)
+		public IEnumerable<Order> Order(World world, CPos cell, int2 worldPixel, MouseInput mi)
 		{
 			if (mi.Button == Game.Settings.Game.MouseButtonPreference.Cancel)
 			{
@@ -169,11 +175,11 @@ namespace OpenRA.Mods.RA.Traits
 				yield break;
 			}
 
-			if (self.IsInWorld && self.Location != xy
-				&& self.Trait<PortableChrono>().CanTeleport && self.Owner.Shroud.IsExplored(xy))
+			if (self.IsInWorld && self.Location != cell
+				&& self.Trait<PortableChrono>().CanTeleport && self.Owner.Shroud.IsExplored(cell))
 			{
 				world.CancelInputMode();
-				yield return new Order("PortableChronoTeleport", self, mi.Modifiers.HasModifier(Modifiers.Shift)) { TargetLocation = xy };
+				yield return new Order("PortableChronoTeleport", self, mi.Modifiers.HasModifier(Modifiers.Shift)) { TargetLocation = cell };
 			}
 		}
 
@@ -204,13 +210,13 @@ namespace OpenRA.Mods.RA.Traits
 				Color.FromArgb(96, Color.Black));
 		}
 
-		public string GetCursor(World world, CPos xy, MouseInput mi)
+		public string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)
 		{
-			if (self.IsInWorld && self.Location != xy
-				&& self.Trait<PortableChrono>().CanTeleport && self.Owner.Shroud.IsExplored(xy))
-				return "chrono-target";
+			if (self.IsInWorld && self.Location != cell
+				&& self.Trait<PortableChrono>().CanTeleport && self.Owner.Shroud.IsExplored(cell))
+				return info.TargetCursor;
 			else
-				return "move-blocked";
+				return info.TargetBlockedCursor;
 		}
 	}
 }

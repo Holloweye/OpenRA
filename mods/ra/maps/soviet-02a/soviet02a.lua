@@ -36,7 +36,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.AfterDelay(0, function()
-		local buildings = Map.ActorsInBox(Map.TopLeft, Map.BottomRight, function(self) return self.Owner == germany and self.HasProperty("StartBuildingRepairs") end)
+		local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == germany and self.HasProperty("StartBuildingRepairs") end)
 		Utils.Do(buildings, function(actor)
 			Trigger.OnDamaged(actor, function(building, attacker)
 				if building.Owner == germany and building.Health < building.MaxHealth * 0.8 then
@@ -57,7 +57,7 @@ WorldLoaded = function()
 	end)
 
 	-- Discover the area around the bridge exposing the two german soldiers
-	-- When the two infantry near the bridge are discovered move them accross the bridge to waypoint4
+	-- When the two infantry near the bridge are discovered move them across the bridge to waypoint4
 	-- in the meanwhile one USSR soldier hunts them down
 	Trigger.AfterDelay(DateTime.Seconds(1), function()
 		Actor.Create("camera", true, { Owner = player, Location = waypoint23.Location })
@@ -89,11 +89,11 @@ WorldLoaded = function()
 				return
 			end
 
-			-- Don't "shoot" at the barrels if there is noone to shoot
+			-- Don't "shoot" at the barrels if there is no-one to shoot
 			if not FleeingUnits[1].IsDead then
-				FleeingUnits[1].Attack(Barrel)
+				FleeingUnits[1].Attack(Barrel, true, true)
 			elseif not FleeingUnits[2].IsDead then
-				FleeingUnits[2].Attack(Barrel)
+				FleeingUnits[2].Attack(Barrel, true, true)
 			end
 		end
 	end)

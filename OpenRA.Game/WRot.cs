@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -70,7 +71,7 @@ namespace OpenRA
 			// Theoretically 1024 *  * 2, but may differ slightly due to rounding
 			var lsq = q[0] * q[0] + q[1] * q[1] + q[2] * q[2] + q[3] * q[3];
 
-			// Quarternion components use 10 bits, so there's no risk of overflow
+			// Quaternion components use 10 bits, so there's no risk of overflow
 			var mtx = new int[16];
 			mtx[0] = lsq - 2 * (q[1] * q[1] + q[2] * q[2]);
 			mtx[1] = 2 * (q[0] * q[1] + q[2] * q[3]);

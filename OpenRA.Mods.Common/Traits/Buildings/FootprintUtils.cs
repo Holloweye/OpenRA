@@ -1,10 +1,11 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2015 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2016 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation. For more information,
- * see COPYING.
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -16,9 +17,9 @@ namespace OpenRA.Mods.Common.Traits
 {
 	public static class FootprintUtils
 	{
-		public static IEnumerable<CPos> Tiles(Ruleset rules, string name, BuildingInfo buildingInfo, CPos topLeft)
+		public static IEnumerable<CPos> Tiles(Ruleset rules, string name, BuildingInfo buildingInfo, CPos topLeft, bool includePassable = false)
 		{
-			var dim = (CVec)buildingInfo.Dimensions;
+			var dim = buildingInfo.Dimensions;
 
 			var footprint = buildingInfo.Footprint.Where(x => !char.IsWhiteSpace(x));
 
@@ -29,7 +30,7 @@ namespace OpenRA.Mods.Common.Traits
 				footprint = footprint.Concat(new char[dim.X]);
 			}
 
-			return TilesWhere(name, dim, footprint.ToArray(), a => a != '_').Select(t => t + topLeft);
+			return TilesWhere(name, dim, footprint.ToArray(), a => includePassable || a != '_').Select(t => t + topLeft);
 		}
 
 		public static IEnumerable<CPos> Tiles(Actor a)
@@ -37,10 +38,15 @@ namespace OpenRA.Mods.Common.Traits
 			return Tiles(a.World.Map.Rules, a.Info.Name, a.Info.TraitInfo<BuildingInfo>(), a.Location);
 		}
 
+		public static IEnumerable<CPos> FrozenUnderFogTiles(Actor a)
+		{
+			return Tiles(a.World.Map.Rules, a.Info.Name, a.Info.TraitInfo<BuildingInfo>(), a.Location, true);
+		}
+
 		public static IEnumerable<CPos> UnpathableTiles(string name, BuildingInfo buildingInfo, CPos position)
 		{
 			var footprint = buildingInfo.Footprint.Where(x => !char.IsWhiteSpace(x)).ToArray();
-			foreach (var tile in TilesWhere(name, (CVec)buildingInfo.Dimensions, footprint, a => a == 'x'))
+			foreach (var tile in TilesWhere(name, buildingInfo.Dimensions, footprint, a => a == 'x'))
 				yield return tile + position;
 		}
 
