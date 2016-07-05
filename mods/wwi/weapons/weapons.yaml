@@ -11,6 +11,7 @@ Rifleman:
 			stone_building: 10
 			wood_building: 25
 			vehicle: 30
+			howitzer: 50
 			artillery: 30
 			light_tank: 30
 			medium_tank: 20
@@ -37,6 +38,7 @@ Austro:
 			stone_building: 10
 			wood_building: 20
 			vehicle: 40
+			howitzer: 40
 			artillery: 40
 			light_tank: 30
 			medium_tank: 20
@@ -63,6 +65,7 @@ Jppa:
 			stone_building: 30
 			wood_building: 40
 			vehicle: 50
+			howitzer: 70
 			artillery: 50
 			light_tank: 60
 			medium_tank: 30
@@ -121,6 +124,7 @@ Grenadier:
 			wood_building: 100
 			stone_building: 100
 			vehicle: 20
+			howitzer: 30
 			artillery: 20
 			light_tank: 20
 			medium_tank: 30
@@ -150,6 +154,7 @@ Machinegunner:
 			stone_building: 10
 			wood_building: 25
 			vehicle: 30
+			howitzer: 40
 			artillery: 30
 			light_tank: 30
 			medium_tank: 20
@@ -181,6 +186,7 @@ Flamethrower:
 			stone_building: 5
 			wood_building: 100
 			vehicle: 20
+			howitzer: 30
 			artillery: 20
 			light_tank: 15
 			medium_tank: 10
@@ -210,6 +216,7 @@ Medic:
 			light_tank: 0
 			medium_tank: 0
 			heavy_tank: 0
+			howitzer: 0
 
 Plane:
 	ReloadDelay: 3
@@ -228,6 +235,7 @@ Plane:
 			stone_building: 2
 			wood_building: 5
 			vehicle: 8
+			howitzer: 20
 			artillery: 10
 			light_tank: 8
 			medium_tank: 5

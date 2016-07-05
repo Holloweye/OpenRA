@@ -24,7 +24,7 @@ wwi_lancia:
 	icon: wwi_jppa1_icon
 
 wwi_trade:
-	idle: wwi_adp
+	idle: wwi_trader
 		Facings: 16
 	icon: wwi_adp_icon
 

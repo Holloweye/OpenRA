@@ -3,10 +3,15 @@ UnitExplodeSmall:
 		Spread: 426
 		Damage: 40
 		Versus:
-			None: 90
-			Wood: 75
-			Light: 60
-			Heavy: 25
+			flesh: 80
+			stone_building: 10
+			wood_building: 25
+			vehicle: 30
+			howitzer: 50
+			artillery: 30
+			light_tank: 30
+			medium_tank: 20
+			heavy_tank: 10
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: large_explosion
@@ -23,10 +28,15 @@ UnitExplode:
 		Damage: 50
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Versus:
-			None: 90
-			Wood: 75
-			Light: 60
-			Heavy: 25
+			flesh: 80
+			stone_building: 10
+			wood_building: 25
+			vehicle: 30
+			howitzer: 50
+			artillery: 30
+			light_tank: 30
+			medium_tank: 20
+			heavy_tank: 10
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
 		Explosion: self_destruct
