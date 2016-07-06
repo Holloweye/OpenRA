@@ -1,0 +1,78 @@
+WWI_PLANE:
+	Inherits: ^Plane
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Plane
+		BuildPaletteOrder: 30
+		Prerequisites: Pop2
+	Valued:
+		Cost: 500
+	Population:
+		Amount: -2
+	Tooltip:
+		Name: Fighter Plane
+		Description: Anti-Air Plane.
+	Health:
+		HP: 60
+	Armor:
+		Type: air
+	RevealsShroud:
+		Range: 4c0
+		Type: CenterPosition
+	Armament@PRIMARY:
+		Weapon: Plane
+		LocalOffset: 256,-213,0
+		MuzzleSequence: muzzle
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: Plane
+		LocalOffset: 256,213,0
+		MuzzleSequence: muzzle
+	AttackPlane:
+		FacingTolerance: 20
+	Aircraft:
+		CruiseAltitude: 2560
+		RearmBuildings: wwi_airstrip
+		InitialFacing: 192
+		ROT: 2
+		Speed: 100
+		RepulsionSpeed: 40
+		MaximumPitch: 56
+	AmmoPool:
+		Ammo: 18
+		PipCount: 6
+		ReloadTicks: 11
+	AutoTarget:
+		TargetWhenIdle: false
+		TargetWhenDamaged: false
+		EnableStances: false
+	ReturnOnIdle:
+	SelectionDecorations:
+		VisualBounds: 30,28,0,2
+	WithMuzzleOverlay:
+	Contrail:
+		Offset: -853,0,0
+	SpawnActorOnDeath:
+		Actor: WWI_PLANE.Husk
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,0
+		Interval: 2
+
+WWI_PLANE.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Fighter Plane
+	Contrail:
+		Offset: -853,0,0
+	Aircraft:
+		ROT: 2
+		Speed: 100
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,0
+		Interval: 2
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 4c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: wwi_plane

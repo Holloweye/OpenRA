@@ -1,0 +1,57 @@
+WWI_STABLE:
+	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 60
+		Prerequisites: powerplant
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Stable
+		Description: Produces mounted troops.
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Health:
+		HP: 600
+	Armor:
+		Type: wood_building
+	RevealsShroud:
+		Range: 4c0
+	Bib:
+	RallyPoint:
+	Exit@1:
+		SpawnOffset: 0,1300,0
+		ExitCell: 1,2
+	Production:
+		Produces: Mounted
+	ProvidesPrerequisite@stable:
+		Prerequisite: stable
+	ProvidesPrerequisite@austria:
+		Factions: austria
+		Prerequisite: mounted.austria
+	ProvidesPrerequisite@ottoman:
+		Factions: ottoman
+		Prerequisite: mounted.ottoman
+	ProvidesPrerequisite@germany:
+		Factions: germany
+		Prerequisite: mounted.germany
+	ProvidesPrerequisite@uk:
+		Factions: uk
+		Prerequisite: mounted.uk
+	ProvidesPrerequisite@france:
+		Factions: france
+		Prerequisite: mounted.france
+	ProvidesPrerequisite@russia:
+		Factions: russia
+		Prerequisite: mounted.russia
+	ProvidesPrerequisite@usa:
+		Factions: usa
+		Prerequisite: mounted.usa
+	ProvidesPrerequisite@italy:
+		Factions: italy
+		Prerequisite: mounted.italy
+	PrimaryBuilding:
+	ProductionBar:
+	Power:
+		Amount: -30

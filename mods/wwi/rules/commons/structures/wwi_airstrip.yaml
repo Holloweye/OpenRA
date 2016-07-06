@@ -1,0 +1,59 @@
+WWI_AIRSTRIP:
+	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 50
+		Prerequisites: reconnaissance
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Airstrip
+		Description: Produces aircrafts.
+	Building:
+		Footprint: xx xx xx
+		Dimensions: 2,3
+	Health:
+		HP: 1000
+	Armor:
+		Type: stone_building
+	RevealsShroud:
+		Range: 7c0
+	Bib:
+	Exit@1:
+		SpawnOffset: 0,170,0
+		ExitCell: 1,1
+		Facing: 192
+		MoveIntoWorld: false
+	RallyPoint:
+	Production:
+		Produces: Aircraft, Plane
+	Reservable:
+	ProvidesPrerequisite@austria:
+		Factions: austria
+		Prerequisite: air.austria
+	ProvidesPrerequisite@germany:
+		Factions: germany
+		Prerequisite: air.germany
+	ProvidesPrerequisite@ottoman:
+		Factions: ottoman
+		Prerequisite: air.ottoman
+	ProvidesPrerequisite@uk:
+		Factions: uk
+		Prerequisite: air.uk
+	ProvidesPrerequisite@france:
+		Factions: france
+		Prerequisite: air.france
+	ProvidesPrerequisite@usa:
+		Factions: usa
+		Prerequisite: air.usa
+	ProvidesPrerequisite@russia:
+		Factions: russia
+		Prerequisite: air.russia
+	ProvidesPrerequisite@italy:
+		Factions: italy
+		Prerequisite: air.italy
+	ProductionBar:
+	SupportPowerChargeBar:
+	PrimaryBuilding:
+	Power:
+		Amount: -20

@@ -74,6 +74,22 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Eluant.dll" />
+    <Content Include="freetype6.dll" />
+    <Content Include="FuzzyLogicLibrary.dll" />
+    <Content Include="ICSharpCode.SharpZipLib.dll" />
+    <Content Include="lua51.dll" />
+    <Content Include="MaxMind.Db.dll" />
+    <Content Include="MaxMind.GeoIP2.dll" />
+    <Content Include="Mono.Nat.dll" />
+    <Content Include="Newtonsoft.Json.dll" />
+    <Content Include="RestSharp.dll" />
+    <Content Include="SDL2-CS.dll" />
+    <Content Include="SDL2.dll" />
+    <Content Include="SharpFont.dll" />
+    <Content Include="soft_oal.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

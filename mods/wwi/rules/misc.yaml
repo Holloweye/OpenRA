@@ -1,0 +1,16 @@
+mpspawn:
+	EditorOnlyTooltip:
+		Name: (multiplayer player starting point)
+	AlwaysVisible:
+	Immobile:
+		OccupiesSpace: false
+	WithSpriteBody:
+	RenderSpritesEditorOnly:
+	BodyOrientation:
+		QuantizedFacings: 1
+
+^fact.colorpicker:
+	Inherits: WWI_BARR
+	RenderSprites:
+		Image: wwi_barr
+		Palette: colorpicker

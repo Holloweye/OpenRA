@@ -1,0 +1,29 @@
+WWI_FENCE:
+	Inherits: ^Wall
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 20
+	Valued:
+		Cost: 25
+	CustomSellValue:
+		Value: 0
+	Tooltip:
+		Name: Wire Fence
+		Description: Stops infantry and blocks enemy fire.\nCan be crushed by tanks.
+	Health:
+		HP: 100
+	Armor:
+		Type: wood_building
+	LineBuild:
+		Range: 8
+		NodeTypes: fence
+	LineBuildNode:
+		Types: fence
+	WithWallSpriteBody:
+		Type: fence
+	Passable:
+		CrushesClasses: crush_fench
+		PassableClasses: pass_fench
+		PassingDamage:20
+	CellModifier:
+		DamageModifier:10

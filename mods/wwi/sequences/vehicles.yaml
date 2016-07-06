@@ -1,0 +1,76 @@
+wwi_adp:
+	idle:
+		Facings: 16
+	turret: wwi_adp_turret
+		Facings: 16
+	muzzle: gunfire2
+		Length: 2
+	icon: wwi_adp_icon
+
+wwi_jppa1:
+	idle:
+		Facings: 16
+	muzzle: gunfire2
+		Length: 2
+	icon: wwi_jppa1_icon
+
+wwi_lancia:
+	idle:
+		Facings: 16
+	turret: wwi_lancia_turret
+		Facings: 16
+	muzzle: gunfire2
+		Length: 2
+	icon: wwi_jppa1_icon
+
+wwi_trade:
+	idle: wwi_trader
+		Facings: 16
+	icon: wwi_adp_icon
+
+wwi_plane:
+	idle:
+		Facings: 8
+	muzzle: minigun
+		Length: 6
+		Facings: 8
+	icon: wwi_adp_icon
+
+wwi_balloon:
+	idle:
+		Facings: 1
+	icon: wwi_adp_icon
+
+wwi_field_gun:
+	idle:
+		Facings: 8
+	muzzle: gunfire2
+		Length: 5
+	icon: wwi_adp_icon
+	run:
+		Start: 8
+		Length: 5
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 48
+		Length: 5
+		Facings: 8
+		Tick: 100
+
+wwi_howitzer:
+	idle:
+		Facings: 8
+	muzzle: gunfire2
+		Length: 5
+	icon: wwi_adp_icon
+	run:
+		Start: 8
+		Length: 5
+		Facings: 8
+		Tick: 100
+	shoot:
+		Start: 48
+		Length: 5
+		Facings: 8
+		Tick: 100

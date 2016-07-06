@@ -1,0 +1,48 @@
+UnitExplodeSmall:
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 40
+		Versus:
+			flesh: 80
+			stone_building: 10
+			wood_building: 25
+			vehicle: 30
+			howitzer: 50
+			artillery: 30
+			light_tank: 30
+			medium_tank: 20
+			heavy_tank: 10
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water
+
+UnitExplode:
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 50
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Versus:
+			flesh: 80
+			stone_building: 10
+			wood_building: 25
+			vehicle: 30
+			howitzer: 50
+			artillery: 30
+			light_tank: 30
+			medium_tank: 20
+			heavy_tank: 10
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Eff: CreateEffect
+		Explosion: self_destruct
+		ImpactSound: kaboom22.aud
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosion: large_splash
+		ImpactSound: splash9.aud
+		ValidImpactTypes: Water

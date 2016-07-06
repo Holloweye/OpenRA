@@ -1,0 +1,31 @@
+WWI_JPPA1:
+	Inherits: ^Tank
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 40
+		Prerequisites: tanks.austria, Pop5
+	Valued:
+		Cost: 850
+	Population:
+		Amount: -5
+	Tooltip:
+		Name: Junovicz Panzerwagen PA1
+		Description: Medium tank.
+	Health:
+		HP: 200
+	Armor:
+		Type: medium_tank
+	Mobile:
+		Speed: 55
+		Crushes: mine, crush_fench
+	RevealsShroud:
+		Range: 4c0
+	AttackFrontal:
+	Armament@PRIMARY:
+		Weapon: Jppa
+		LocalOffset: 300,-513,0
+		MuzzleSequence: muzzle
+	WithMuzzleOverlay:
+	AutoTarget:
+	SelectionDecorations:
+		VisualBounds: 30,30,0,-7

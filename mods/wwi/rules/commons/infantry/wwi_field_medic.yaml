@@ -1,0 +1,32 @@
+WWI_FIELD_MEDIC:
+	Inherits: ^Soldier
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 40
+		Prerequisites: Pop1
+	Valued:
+		Cost: 200
+	Population:
+		Amount: -1
+	Tooltip:
+		Name: Medic
+		Description: Heals nearby infantry.\n  Unarmed
+	Health:
+		HP: 80
+	RevealsShroud:
+		Range: 3c0
+	Passenger:
+		PipType: Yellow
+	Armament:
+		Weapon: Medic
+		Cursor: heal
+		OutsideRangeCursor: heal
+		TargetStances: Ally
+		ForceTargetStances: None
+	AttackFrontal:
+	WithInfantryBody:
+		StandSequences: stand
+		AttackSequence: heal
+	Voiced:
+		VoiceSet: MedicVoice

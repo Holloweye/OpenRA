@@ -1,0 +1,27 @@
+WWI_HOUSE:
+	Inherits: ^Building
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 20
+		Prerequisites: powerplant
+	Health:
+		HP: 400
+	Armor:
+		Type: wood_building
+	RevealsShroud:
+		Range: 5c0
+	Bib:
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: House
+		Description: Increases max population by 15.
+	Power:
+		Amount: -10
+	Population:
+		Amount: 15
+	WithBuildingExplosion:
+		Delay: 1

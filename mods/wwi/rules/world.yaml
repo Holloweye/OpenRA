@@ -1,0 +1,139 @@
+^BaseWorld:
+	Inherits: ^Palettes
+	AlwaysVisible:
+	ActorMap:
+	ScreenMap:
+	MusicPlaylist:
+		VictoryMusic: score
+		DefeatMusic: map
+	TerrainGeometryOverlay:
+	LoadWidgetAtGameStart:
+	ShroudRenderer:
+		FogVariants: shroud
+		Index: 255, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 20, 40, 56, 65, 97, 130, 148, 194, 24, 33, 66, 132, 28, 41, 67, 134, 1, 2, 4, 8, 3, 6, 12, 9, 7, 14, 13, 11, 5, 10, 15, 255
+		UseExtendedIndex: true
+	Faction@0:
+		Name: Germany
+		InternalName: germany
+		Side: CentralPowers
+		Selectable: True
+	Faction@1:
+		Name: Austria & Hungary
+		InternalName: austria
+		Side: CentralPowers
+		Selectable: True
+	Faction@2:
+		Name: Ottoman Empire
+		InternalName: ottoman
+		Side: CentralPowers
+		Selectable: True
+	Faction@3:
+		Name: United Kingdom
+		InternalName: uk
+		Side: Allies
+		Selectable: True
+	Faction@4:
+		Name: France
+		InternalName: france
+		Side: Allies
+		Selectable: True
+	Faction@5:
+		Name: Italy
+		InternalName: italy
+		Side: Allies
+		Selectable: True
+	Faction@6:
+		Name: Russia
+		InternalName: russia
+		Side: Allies
+		Selectable: True
+	Faction@7:
+		Name: USA
+		InternalName: usa
+		Side: Allies
+		Selectable: True
+	Faction@random:
+		Name: Any
+		InternalName: Random
+		RandomFactionMembers: germany, austria, ottoman, uk, france, italy, russia, usa
+		Side: Random
+		Description: A random country.
+	ResourceType@ore:
+		ResourceType: 1
+		Palette: player
+		Variants: gold01,gold02,gold03,gold04
+		MaxDensity: 12
+		ValuePerUnit: 25
+		Name: Ore
+		PipColor: Yellow
+		AllowedTerrainTypes: Clear,Road
+		AllowUnderActors: true
+		TerrainType: Ore
+	ResourceType@gem:
+		ResourceType: 2
+		Palette: player
+		Variants: gem01,gem02,gem03,gem04
+		MaxDensity: 3
+		ValuePerUnit: 50
+		Name: Gems
+		PipColor: Red
+		AllowedTerrainTypes: Clear,Road
+		AllowUnderActors: true
+		TerrainType: Gems
+
+World:
+	Inherits: ^BaseWorld
+	ChatCommands:
+	DevCommands:
+	PlayerCommands:
+	HelpCommand:
+	ScreenShaker:
+	BuildingInfluence:
+	ProductionQueueFromSelection:
+		ProductionPaletteWidget: PRODUCTION_PALETTE
+	BridgeLayer:
+		Bridges:
+	DomainIndex:
+	SmudgeLayer@SCORCH:
+		Type: Scorch
+		Sequence: scorches
+		SmokePercentage: 50
+	SmudgeLayer@CRATER:
+		Type: Crater
+		Sequence: craters
+	ResourceLayer:
+	ResourceClaimLayer:
+	PathfinderDebugOverlay:
+	SpawnMapActors:
+	MapBuildRadius:
+	MapOptions:
+	CreateMPPlayers:
+	MPStartLocations:
+	MPStartUnits@default:
+		Class: none
+		ClassName: Default
+		Factions:germany, ottoman, uk, france, italy, russia
+		BaseActor:mpspawn
+	MPStartUnits@default.austria:
+		Class: none
+		ClassName: Default
+		Factions:austria
+		BaseActor:WWI_AUS_HQ
+	MPStartUnits@default.usa:
+		Class: none
+		ClassName: Default
+		Factions:usa
+		BaseActor:WWI_USA_HQ
+	SpawnMPUnits:
+	PathFinder:
+	ValidateOrder:
+	DebugPauseState:
+	RadarPings:
+	StartGameNotification:
+	ObjectivesPanel:
+		PanelName: SKIRMISH_STATS
+
+EditorWorld:
+	Inherits: ^BaseWorld
+	EditorActorLayer:
+	EditorResourceLayer:

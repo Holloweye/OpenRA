@@ -1,0 +1,320 @@
+Rifleman:
+	ReloadDelay: 20
+	Range: 5c0
+	Report: GUN11.AUD
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 15
+		Versus:
+			stone_building: 10
+			wood_building: 25
+			vehicle: 30
+			howitzer: 50
+			artillery: 30
+			light_tank: 30
+			medium_tank: 20
+			heavy_tank: 10
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosion: piffs
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosion: water_piffs
+		ValidImpactTypes: Water
+
+Austro:
+	ReloadDelay: 30
+	Range: 6c0
+	Report: PILLBOX1.AUD
+	Burst: 5
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 15
+		Versus:
+			stone_building: 10
+			wood_building: 20
+			vehicle: 40
+			howitzer: 40
+			artillery: 40
+			light_tank: 30
+			medium_tank: 20
+			heavy_tank: 10
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosion: piffs
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosion: water_piffs
+		ValidImpactTypes: Water
+
+Jppa:
+	ReloadDelay: 30
+	Range: 5c0
+	Report: PILLBOX1.AUD
+	Burst: 5
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 15
+		Versus:
+			stone_building: 30
+			wood_building: 40
+			vehicle: 50
+			howitzer: 70
+			artillery: 50
+			light_tank: 60
+			medium_tank: 30
+			heavy_tank: 10
+			flesh: 50
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosion: piffs
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosion: water_piffs
+		ValidImpactTypes: Water
+
+Lancia:
+	ReloadDelay: 30
+	Range: 4c0
+	Report: PILLBOX1.AUD
+	Burst: 5
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 20
+		Versus:
+			stone_building: 60
+			wood_building: 50
+			vehicle: 60
+			artillery: 60
+			light_tank: 80
+			medium_tank: 60
+			heavy_tank: 30
+			flesh: 20
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosion: piffs
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosion: water_piffs
+		ValidImpactTypes: Water
+
+Grenadier:
+	ReloadDelay: 60
+	Range: 4c0
+	Report: grenade1.aud
+	Projectile: Bullet
+		Speed: 136
+		Blockable: false
+		Angle: 62
+		Inaccuracy: 554
+		Image: BOMB
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 60
+		Versus:
+			flesh: 50
+			wood_building: 100
+			stone_building: 100
+			vehicle: 20
+			howitzer: 30
+			artillery: 20
+			light_tank: 20
+			medium_tank: 30
+			heavy_tank: 40
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Eff: CreateEffect
+		Explosion: med_explosion
+		ImpactSound: kaboom25.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosion: small_splash
+		ImpactSound: splash9.aud
+		ValidImpactTypes: Water
+
+Machinegunner:
+	ReloadDelay: 5
+	Range: 5c0
+	Report: GUN11.AUD
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 15
+		Versus:
+			stone_building: 10
+			wood_building: 25
+			vehicle: 30
+			howitzer: 40
+			artillery: 30
+			light_tank: 30
+			medium_tank: 20
+			heavy_tank: 10
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosion: piffs
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosion: water_piffs
+		ValidImpactTypes: Water
+
+Flamethrower:
+	ReloadDelay: 20
+	Range: 3c0
+	Burst: 15
+	BurstDelay: 1
+	Projectile: Bullet
+		Speed: 170
+		Trail: fb4
+		Image: fb3
+		Angle: 62
+		Inaccuracy: 853
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 8
+		Versus:
+			flesh: 60
+			stone_building: 5
+			wood_building: 100
+			vehicle: 20
+			howitzer: 30
+			artillery: 20
+			light_tank: 15
+			medium_tank: 10
+			heavy_tank: 5
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
+	Warhead@3Eff: CreateEffect
+		Explosion: small_napalm
+		ImpactSound: firebl3.aud
+
+Medic:
+	ReloadDelay: 80
+	Range: 4c0
+	Report: HEAL2.AUD
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Damage: -50
+		Versus:
+			flesh: 60
+			stone_building: 0
+			wood_building: 0
+			vehicle: 0
+			artillery: 0
+			light_tank: 0
+			medium_tank: 0
+			heavy_tank: 0
+			howitzer: 0
+
+Plane:
+	ReloadDelay: 3
+	Range: 5c0
+	MinRange: 3c0
+	Report: GUN13.AUD
+	ValidTargets: Air, Ground
+	Projectile: Bullet
+		Speed: 1c682
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 10
+		Versus:
+			flesh: 60
+			stone_building: 2
+			wood_building: 5
+			vehicle: 8
+			howitzer: 20
+			artillery: 10
+			light_tank: 8
+			medium_tank: 5
+			heavy_tank: 2
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidTargets: Air, Ground
+	Warhead@2Eff: CreateEffect
+		Explosion: piffs
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosion: water_piffs
+		ValidImpactTypes: Water
+
+FieldGun:
+	ReloadDelay: 65
+	Range: 7c0
+	MinRange: 3c0
+	Report: TANK5.AUD
+	Projectile: Bullet
+		Speed: 400
+		Blockable: false
+		Angle: 20
+		Inaccuracy: 0c682
+		Image: 120MM
+		ContrailLength: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 80
+		Versus:
+			flesh: 20
+			stone_building: 30
+			wood_building: 50
+			medium_tank: 80
+			heavy_tank: 60
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Eff: CreateEffect
+		Explosion: artillery_explosion
+		ImpactSound: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosion: med_splash
+		ImpactSound: splash9.aud
+		ValidImpactTypes: Water
+
+Howitzer:
+	ReloadDelay: 90
+	Range: 15c0
+	MinRange: 6c0
+	Report: ArtShot1_1.AUD, ArtShot2_1.AUD
+	Projectile: Bullet
+		Speed: 184
+		Blockable: false
+		Angle: 82
+		Inaccuracy: 3c682
+		Image: 120MM
+		ContrailLength: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 100
+		Versus:
+			flesh: 80
+			stone_building: 30
+			wood_building: 20
+			vehicle: 10
+			artillery: 10
+			howitzer: 10
+			light_tank: 10
+			medium_tank: 10
+			heavy_tank: 10
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Eff: CreateEffect
+		Explosion: artillery_explosion
+		ImpactSound: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosion: med_splash
+		ImpactSound: splash9.aud
+		ValidImpactTypes: Water

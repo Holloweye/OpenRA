@@ -1,0 +1,42 @@
+WWI_USA_HQ:
+	Inherits: ^Building
+	Building:
+		Footprint: xxx xxx xxx
+		Dimensions: 3,3
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 1000
+		Prerequisites: ~structures.usa
+	ProvidesPrerequisite@usa:
+		Factions: usa
+		Prerequisite: structures.usa
+	Health:
+		HP: 1500
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 5c0
+	Bib:
+	Production:
+		Produces: Building,Defense
+	Valued:
+		Cost: 2500
+	Tooltip:
+		Name: Headquarters
+		Description: Produces structures.
+	CustomSellValue:
+		Value: 2500
+	BaseBuilding:
+	ProductionBar@Building:
+		ProductionType: Building
+	ProductionBar@Defense:
+		ProductionType: Defense
+		Color: 8A8A8A
+	BaseProvider:
+		Range: 16c0
+	Power:
+		Amount: 0
+	WithBuildingExplosion:
+		Delay: 1
+	Selectable:
+		Bounds: 72,72,0,10

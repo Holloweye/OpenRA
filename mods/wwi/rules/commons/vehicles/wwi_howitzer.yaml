@@ -1,0 +1,35 @@
+WWI_HOWITZER:
+	Inherits: ^Tank
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 70
+		Prerequisites: Pop4
+	Valued:
+		Cost: 700
+	Population:
+		Amount: -4
+	Tooltip:
+		Name: Heavy artillery
+		Description: Long-range artillery.\nStrong vs obstacles and infantry.
+	Health:
+		HP: 40
+	Armor:
+		Type: howitzer
+	Mobile:
+		ROT: 2
+		Speed: 30
+	RevealsShroud:
+		Range: 4c0
+	Armament:
+		Weapon: Howitzer
+		LocalOffset: 624,0,1000
+		MuzzleSequence: muzzle
+	AttackFrontal:
+	WithMuzzleOverlay:
+	AutoTarget:
+	WithAttackAnimation:
+		AttackSequence: shoot
+	WithMoveAnimation:
+		MoveSequence: run
+	SelectionDecorations:
+		VisualBounds: 32,32,0,-10

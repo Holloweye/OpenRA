@@ -1,0 +1,55 @@
+WWI_TFACT:
+	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 80
+		Prerequisites: vehiclefactory
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Tank Factory
+		Description: Produces tanks.
+	Building:
+		Footprint: xxx xxx
+		Dimensions: 3,2
+	Health:
+		HP: 1500
+	Armor:
+		Type: stone_building
+	RevealsShroud:
+		Range: 4c0
+	Bib:
+	RallyPoint:
+	Exit@1:
+		SpawnOffset: 0,1300,0
+		ExitCell: 1,2
+	Production:
+		Produces: Tank
+	ProvidesPrerequisite@austria:
+		Factions: austria
+		Prerequisite: tanks.austria
+	ProvidesPrerequisite@ottoman:
+		Factions: ottoman
+		Prerequisite: tanks.ottoman
+	ProvidesPrerequisite@germany:
+		Factions: germany
+		Prerequisite: tanks.germany
+	ProvidesPrerequisite@uk:
+		Factions: uk
+		Prerequisite: tanks.uk
+	ProvidesPrerequisite@france:
+		Factions: france
+		Prerequisite: tanks.france
+	ProvidesPrerequisite@russia:
+		Factions: russia
+		Prerequisite: tanks.russia
+	ProvidesPrerequisite@usa:
+		Factions: usa
+		Prerequisite: tanks.usa
+	ProvidesPrerequisite@italy:
+		Factions: italy
+		Prerequisite: tanks.italy
+	PrimaryBuilding:
+	ProductionBar:
+	Power:
+		Amount: -30

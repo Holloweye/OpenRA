@@ -1,0 +1,21 @@
+WWI_MACHINEGUNNER:
+	Inherits: ^Soldier
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 10
+		Prerequisites: Pop1
+	Population:
+		Amount: -1
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Machine gunner
+		Description: Strong vs Infantry\n  Weak vs Vehicles
+	Health:
+		HP: 100
+	Armament@PRIMARY:
+		Weapon: Machinegunner
+	AttackFrontal:
+	WithInfantryBody:
+		AttackSequence: shoot

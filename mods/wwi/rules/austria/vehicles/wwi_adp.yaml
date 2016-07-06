@@ -1,0 +1,35 @@
+WWI_ADP:
+	Inherits: ^Vehicle
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 40
+		Prerequisites: tanks.austria, Pop5
+	Valued:
+		Cost: 700
+	Population:
+		Amount: -5
+	Tooltip:
+		Name: Austro-Daimler Panzerwagen
+		Description: Light tank.
+	Health:
+		HP: 150
+	Armor:
+		Type: light_tank
+	Mobile:
+		Speed: 80
+		Crushes: mine
+	RevealsShroud:
+		Range: 5c0
+	Turreted:
+		ROT: 9
+		Offset: -380,0,500
+	AttackTurreted:
+	Armament@PRIMARY:
+		Weapon: Austro
+		LocalOffset: -380,0,500
+		MuzzleSequence: muzzle
+	WithMuzzleOverlay:
+	WithSpriteTurret:
+	AutoTarget:
+	SelectionDecorations:
+		VisualBounds: 30,30,0,-7
