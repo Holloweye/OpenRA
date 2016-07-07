@@ -1,7 +1,7 @@
 Rifleman:
 	ReloadDelay: 20
 	Range: 5c0
-	Report: GUN11.AUD
+	Report: gun11.aud
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
@@ -18,16 +18,16 @@ Rifleman:
 			heavy_tank: 10
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
-		Explosion: piffs
+		Explosions: piffs
 		InvalidImpactTypes: Water
 	Warhead@3EffWater: CreateEffect
-		Explosion: water_piffs
+		Explosions: water_piffs
 		ValidImpactTypes: Water
 
 Austro:
 	ReloadDelay: 30
 	Range: 6c0
-	Report: PILLBOX1.AUD
+	Report: pillbox1.aud
 	Burst: 5
 	Projectile: Bullet
 		Speed: 1c682
@@ -45,16 +45,16 @@ Austro:
 			heavy_tank: 10
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
-		Explosion: piffs
+		Explosions: piffs
 		InvalidImpactTypes: Water
 	Warhead@3EffWater: CreateEffect
-		Explosion: water_piffs
+		Explosions: water_piffs
 		ValidImpactTypes: Water
 
 Jppa:
 	ReloadDelay: 30
 	Range: 5c0
-	Report: PILLBOX1.AUD
+	Report: pillbox1.aud
 	Burst: 5
 	Projectile: Bullet
 		Speed: 1c682
@@ -73,16 +73,16 @@ Jppa:
 			flesh: 50
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
-		Explosion: piffs
+		Explosions: piffs
 		InvalidImpactTypes: Water
 	Warhead@3EffWater: CreateEffect
-		Explosion: water_piffs
+		Explosions: water_piffs
 		ValidImpactTypes: Water
 
 Lancia:
 	ReloadDelay: 30
 	Range: 4c0
-	Report: PILLBOX1.AUD
+	Report: pillbox1.aud
 	Burst: 5
 	Projectile: Bullet
 		Speed: 1c682
@@ -100,10 +100,10 @@ Lancia:
 			flesh: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
-		Explosion: piffs
+		Explosions: piffs
 		InvalidImpactTypes: Water
 	Warhead@3EffWater: CreateEffect
-		Explosion: water_piffs
+		Explosions: water_piffs
 		ValidImpactTypes: Water
 
 Grenadier:
@@ -133,18 +133,18 @@ Grenadier:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: med_explosion
-		ImpactSound: kaboom25.aud
+		Explosions: med_explosion
+		ImpactSounds: kaboom25.aud
 		InvalidImpactTypes: Water
 	Warhead@4EffWater: CreateEffect
-		Explosion: small_splash
-		ImpactSound: splash9.aud
+		Explosions: small_splash
+		ImpactSounds: splash9.aud
 		ValidImpactTypes: Water
 
 Machinegunner:
 	ReloadDelay: 5
 	Range: 5c0
-	Report: GUN11.AUD
+	Report: gun11.aud
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
@@ -161,10 +161,10 @@ Machinegunner:
 			heavy_tank: 10
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
-		Explosion: piffs
+		Explosions: piffs
 		InvalidImpactTypes: Water
 	Warhead@3EffWater: CreateEffect
-		Explosion: water_piffs
+		Explosions: water_piffs
 		ValidImpactTypes: Water
 
 Flamethrower:
@@ -195,13 +195,13 @@ Flamethrower:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
-		Explosion: small_napalm
-		ImpactSound: firebl3.aud
+		Explosions: small_napalm
+		ImpactSounds: firebl3.aud
 
 Medic:
 	ReloadDelay: 80
 	Range: 4c0
-	Report: HEAL2.AUD
+	Report: heal2.aud
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
@@ -222,7 +222,7 @@ Plane:
 	ReloadDelay: 3
 	Range: 5c0
 	MinRange: 3c0
-	Report: GUN13.AUD
+	Report: gun13.aud
 	ValidTargets: Air, Ground
 	Projectile: Bullet
 		Speed: 1c682
@@ -243,17 +243,17 @@ Plane:
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidTargets: Air, Ground
 	Warhead@2Eff: CreateEffect
-		Explosion: piffs
+		Explosions: piffs
 		InvalidImpactTypes: Water
 	Warhead@3EffWater: CreateEffect
-		Explosion: water_piffs
+		Explosions: water_piffs
 		ValidImpactTypes: Water
 
 FieldGun:
 	ReloadDelay: 65
 	Range: 7c0
 	MinRange: 3c0
-	Report: TANK5.AUD
+	Report: tank5.aud
 	Projectile: Bullet
 		Speed: 400
 		Blockable: false
@@ -274,19 +274,19 @@ FieldGun:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: artillery_explosion
-		ImpactSound: kaboom15.aud
+		Explosions: artillery_explosion
+		ImpactSounds: kaboom15.aud
 		InvalidImpactTypes: Water
 	Warhead@4EffWater: CreateEffect
-		Explosion: med_splash
-		ImpactSound: splash9.aud
+		Explosions: med_splash
+		ImpactSounds: splash9.aud
 		ValidImpactTypes: Water
 
 Howitzer:
 	ReloadDelay: 90
 	Range: 15c0
 	MinRange: 6c0
-	Report: ArtShot1_1.AUD, ArtShot2_1.AUD
+	Report: ArtShot1_1.aud, ArtShot2_1.aud
 	Projectile: Bullet
 		Speed: 184
 		Blockable: false
@@ -311,10 +311,10 @@ Howitzer:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Eff: CreateEffect
-		Explosion: artillery_explosion
-		ImpactSound: kaboom15.aud
+		Explosions: artillery_explosion
+		ImpactSounds: kaboom15.aud
 		InvalidImpactTypes: Water
 	Warhead@4EffWater: CreateEffect
-		Explosion: med_splash
-		ImpactSound: splash9.aud
+		Explosions: med_splash
+		ImpactSounds: splash9.aud
 		ValidImpactTypes: Water

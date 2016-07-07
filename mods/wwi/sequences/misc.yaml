@@ -161,7 +161,7 @@ litning:
 		Length: 4
 
 fb1:
-	idle: 
+	idle:
 		Length: *
 
 moveflsh:
@@ -472,6 +472,12 @@ overlay:
 		Start: 2
 	target-valid-temperat:
 	target-invalid:
+		Start: 1
+
+editor-overlay:
+	copy: overlay
+		Start: 0
+	paste: overlay
 		Start: 1
 
 resources:

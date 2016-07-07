@@ -22,8 +22,8 @@ WWI_FENCE:
 	WithWallSpriteBody:
 		Type: fence
 	Passable:
-		CrushesClasses: crush_fench
-		PassableClasses: pass_fench
+		CrushesClasses: crush_fence
+		PassableClasses: pass_fence
 		PassingDamage:20
 	CellModifier:
 		DamageModifier:10

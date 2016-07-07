@@ -220,7 +220,7 @@
 		Range: 4c0
 	Mobile:
 		Speed: 56
-		Crushes: mine, crate
+		Crushes: mine, crate, pass_trench, pass_fence
 		SharesCell: true
 		TerrainSpeeds:
 			Clear: 90

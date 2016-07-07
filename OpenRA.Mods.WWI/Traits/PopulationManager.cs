@@ -7,7 +7,7 @@ using System.Text;
 
 namespace OpenRA.Mods.WWI.Traits
 {
-    public class PopulationManagerInfo : ITraitInfo, Requires<DeveloperModeInfo>
+    public class PopulationManagerInfo : ITraitInfo, ITechTreePrerequisiteInfo, Requires<DeveloperModeInfo>
     {
         public object Create(ActorInitializer init) { return new PopulationManager(init.Self, this); }
     }
