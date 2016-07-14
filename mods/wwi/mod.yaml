@@ -52,7 +52,7 @@ Rules:
 	wwi|rules/commons/infantry/wwi_machinegunner.yaml
 	wwi|rules/commons/infantry/wwi_flamethrower.yaml
 	wwi|rules/commons/infantry/wwi_field_medic.yaml
-	wwi|rules/commons/vehicles/wwi_field_gun.yaml
+	wwi|rules/commons/vehicles/wwi_scoda.yaml
 	wwi|rules/commons/vehicles/wwi_howitzer.yaml
 	wwi|rules/commons/air/wwi_balloon.yaml
 	wwi|rules/commons/air/wwi_plane.yaml

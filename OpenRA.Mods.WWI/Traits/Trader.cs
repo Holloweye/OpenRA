@@ -18,6 +18,14 @@ namespace OpenRA.Mods.WWI.Traits
         public readonly string[] DeliveryBuildings = { };
         public readonly string[] TradeBuildings = { };
 
+        public readonly bool DeliversToAlliedBuildings = false;
+        public readonly bool DeliversToEnemyBuildings = false;
+        public readonly bool DeliversToOwnedBuildings = true;
+
+        public readonly bool TradesWithAlliedBuildings = true;
+        public readonly bool TradesWithEnemyBuildings = true;
+        public readonly bool TradesWithOwnedBuildings = true;
+
         [Desc("How long (in ticks) to wait until (re-)checking for a nearby available TradeActors if not yet linked to one.")]
         public readonly int SearchForTradeBuildingDelay = 125;
 
@@ -36,6 +44,7 @@ namespace OpenRA.Mods.WWI.Traits
     {
         readonly TraderInfo info;
         readonly Mobile mobile;
+        readonly Actor self;
 
         public bool isLoaded = false;
         bool idleSmart = true;
@@ -45,6 +54,7 @@ namespace OpenRA.Mods.WWI.Traits
 
         public Trader(Actor self, TraderInfo info)
 		{
+            this.self = self;
 			this.info = info;
 			mobile = self.Trait<Mobile>();
 		}
@@ -101,10 +111,10 @@ namespace OpenRA.Mods.WWI.Traits
             get
             {
                 yield return new EnterAlliedActorTargeter<BuildingInfo>("Trade", 5,
-                    a => info.TradeBuildings.Contains(a.Info.Name),
+                    a => info.TradeBuildings.Contains(a.Info.Name) && ((a.Owner == self.Owner && info.TradesWithOwnedBuildings) || (a.Owner.IsAlliedWith(self.Owner) && info.TradesWithAlliedBuildings) || (!a.Owner.IsAlliedWith(self.Owner) && info.TradesWithEnemyBuildings)),
                     a => !isLoaded);
                 yield return new EnterAlliedActorTargeter<BuildingInfo>("DeliverTrade", 5,
-                    a => info.DeliveryBuildings.Contains(a.Info.Name),
+                    a => info.DeliveryBuildings.Contains(a.Info.Name) && ((a.Owner == self.Owner && info.DeliversToOwnedBuildings) || (a.Owner.IsAlliedWith(self.Owner) && info.DeliversToAlliedBuildings) || (!a.Owner.IsAlliedWith(self.Owner) && info.DeliversToEnemyBuildings)),
                     a => isLoaded);
             }
         }
@@ -173,20 +183,20 @@ namespace OpenRA.Mods.WWI.Traits
 
         public Actor ClosestTradeBuilding(Actor self)
         {
-            return ClosestActorOfTypes(self, info.TradeBuildings);
+            return ClosestActorOfTypes(self, info.TradeBuildings, info.TradesWithOwnedBuildings, info.TradesWithAlliedBuildings, info.TradesWithEnemyBuildings);
         }
 
         public Actor ClosestDeliveryBuilding(Actor self)
         {
-            return ClosestActorOfTypes(self, info.DeliveryBuildings);
+            return ClosestActorOfTypes(self, info.DeliveryBuildings, info.DeliversToOwnedBuildings, info.DeliversToAlliedBuildings, info.DeliversToEnemyBuildings);
         }
 
-        private Actor ClosestActorOfTypes(Actor self, string[] types)
+        private Actor ClosestActorOfTypes(Actor self, string[] types, bool allowOwned, bool allowAllied, bool allowEnemy)
         {
             // Find all buildings
             var buildings = (
                 from a in self.World.ActorsWithTrait<Building>()
-                where types.Contains(a.Actor.Info.Name)
+                where types.Contains(a.Actor.Info.Name) && ((a.Actor.Owner == self.Owner && allowOwned) || (a.Actor.Owner.IsAlliedWith(self.Owner) && allowAllied) || (!a.Actor.Owner.IsAlliedWith(self.Owner) && allowEnemy))
                 select new { Location = a.Actor.Location, Actor = a.Actor}).ToDictionary(a => a.Location);
 
             // Start a search from each refinery's delivery location:

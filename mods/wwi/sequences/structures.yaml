@@ -140,11 +140,10 @@ wwi_tfact:
 	icon: wwi_tfact_icon
 
 wwi_supply_station:
-	idle: wwi_house
-	damaged-idle: wwi_house
-	make: wwi_house
-		Start:1
-		Length: 7
+	idle: wwi_supply
+	damaged-idle: wwi_supply
+	make: wwi_supply
+		Length: *
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true

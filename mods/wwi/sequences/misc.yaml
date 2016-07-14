@@ -58,6 +58,8 @@ explosion:
 		TilesetOverrides:
 			DESERT: TEMPERAT
 			INTERIOR: TEMPERAT
+	artillery_explosion_2: artexpl
+		Length: *
 
 pips:
 	groups:

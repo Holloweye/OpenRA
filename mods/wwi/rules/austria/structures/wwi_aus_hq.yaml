@@ -23,7 +23,7 @@ WWI_AUS_HQ:
 		Cost: 2500
 	Tooltip:
 		Name: Headquarters
-		Description: Produces structures.
+		Description: Produces structures. Increases max population by 15.
 	CustomSellValue:
 		Value: 2500
 	BaseBuilding:
@@ -36,6 +36,8 @@ WWI_AUS_HQ:
 		Range: 16c0
 	Power:
 		Amount: 0
+	Population:
+		Amount: 15
 	WithBuildingExplosion:
 		Delay: 1
 	Selectable:

@@ -16,13 +16,13 @@ WWI_TRADE:
 	Armor:
 		Type: vehicle
 	Mobile:
-		Speed: 60
+		Speed: 90
 		Crushes: mine
 	RevealsShroud:
 		Range: 5c0
 	SelectionDecorations:
 		VisualBounds: 30,30,0,-7
 	Trader:
-		DeliveryBuildings: wwi_pp
+		DeliveryBuildings: wwi_aus_hq
 		TradeBuildings: wwi_supply_station
-		DistanceMultiplier: 1
+		DistanceMultiplier: 2
