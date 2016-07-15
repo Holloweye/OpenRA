@@ -52,6 +52,7 @@
     <Compile Include="Traits\CellModifier.cs" />
     <Compile Include="Traits\TankArmor.cs" />
     <Compile Include="Traits\Trader.cs" />
+    <Compile Include="Widgets\Logic\IngamePopCounterLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenRA.Game\OpenRA.Game.csproj">

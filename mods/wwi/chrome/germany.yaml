@@ -1,7 +1,7 @@
 sidebar-germany: chrome.png
-	background-top: 0,167,238,290
-	background-iconrow: 0,457,238,47
-	background-bottom: 0,504,238,8
+	background-top: 0,167,238,316
+	background-iconrow: 0,483,238,47
+	background-bottom: 0,530,238,8
 	background-supportoverlay: 184,118,64,48
 sidebar-button-germany: chrome.png
 	background: 59,31,22,22
