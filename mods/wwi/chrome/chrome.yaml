@@ -1,7 +1,7 @@
 sidebar-allies: chrome.png
-	background-top: 0,167,238,290
-	background-iconrow: 0,457,238,47
-	background-bottom: 0,504,238,8
+	background-top: 0,167,238,316
+	background-iconrow: 0,483,238,47
+	background-bottom: 0,530,238,8
 	background-supportoverlay: 184,118,64,48
 
 sidebar-button-allies: chrome.png
@@ -86,9 +86,9 @@ sidebar-button-allies-highlighted-disabled: chrome.png
 	corner-br: 193,25,3,3
 
 sidebar-soviet: chrome.png
-	background-top: 274,167,238,290
-	background-iconrow: 274,457,238,47
-	background-bottom: 274,504,238,8
+	background-top: 274,167,238,315
+	background-iconrow: 274,483,238,47
+	background-bottom: 274,530,238,8
 	background-supportoverlay: 249,118,64,48
 
 sidebar-button-soviet: chrome.png
@@ -473,7 +473,7 @@ strategic: buttons.png
 flags: buttons.png
 	Random: 60,112,30,15
 	spectator: 60,112,30,15
-	
+
 	usa: 60,187,30,15
 	italy: 60,172,30,15
 	austria: 60,157,30,15
