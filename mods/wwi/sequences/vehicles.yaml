@@ -58,19 +58,19 @@ wwi_scoda:
 		Facings: 16
 		Tick: 400
 
-wwi_howitzer:
+wwi_skoda_howitzer:
 	idle:
-		Facings: 8
+		Facings: 16
 	muzzle: gunfire2
 		Length: 5
 	icon: wwi_adp_icon
 	run:
-		Start: 8
-		Length: 5
-		Facings: 8
+		Start: 112
+		Length: 9
+		Facings: 16
 		Tick: 100
 	shoot:
-		Start: 48
-		Length: 5
-		Facings: 8
+		Start: 16
+		Length: 6
+		Facings: 16
 		Tick: 100

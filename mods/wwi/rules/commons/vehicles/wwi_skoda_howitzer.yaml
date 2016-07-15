@@ -1,4 +1,4 @@
-WWI_HOWITZER:
+WWI_SKODA_HOWITZER:
 	Inherits: ^Tank
 	Buildable:
 		Queue: Vehicle
@@ -9,7 +9,7 @@ WWI_HOWITZER:
 	Population:
 		Amount: -4
 	Tooltip:
-		Name: Heavy artillery
+		Name: Skoda 305mm
 		Description: Long-range artillery.\nStrong vs obstacles and infantry.
 	Health:
 		HP: 40

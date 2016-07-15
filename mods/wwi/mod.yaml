@@ -53,7 +53,7 @@ Rules:
 	wwi|rules/commons/infantry/wwi_flamethrower.yaml
 	wwi|rules/commons/infantry/wwi_field_medic.yaml
 	wwi|rules/commons/vehicles/wwi_scoda.yaml
-	wwi|rules/commons/vehicles/wwi_howitzer.yaml
+	wwi|rules/commons/vehicles/wwi_skoda_howitzer.yaml
 	wwi|rules/commons/air/wwi_balloon.yaml
 	wwi|rules/commons/air/wwi_plane.yaml
 	wwi|rules/commons/structures/wwi_house.yaml
