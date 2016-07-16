@@ -60,10 +60,12 @@ wwi_recon:
 
 wwi_house:
 	idle:
+		Start: 8
+		Length: 1
 	damaged-idle:
 	make:
-		Start:1
-		Length: 7
+		Start: 0
+		Length: 9
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true
