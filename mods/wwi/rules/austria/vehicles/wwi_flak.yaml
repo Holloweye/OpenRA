@@ -1,0 +1,36 @@
+WWI_FLAK:
+	Inherits: ^Vehicle
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 60
+		Prerequisites: Pop2
+	Valued:
+		Cost: 600
+	Population:
+		Amount: -2
+	Tooltip:
+		Name: 88mm Flak 16
+		Description: Mobile unit with mounted Flak Cannon.\n  Strong vs Aircraft
+	Health:
+		HP: 150
+	Armor:
+		Type: vehicle
+	Mobile:
+		TurnSpeed: 2
+		Speed: 30
+	RevealsShroud:
+		Range: 5c0
+	Turreted:
+		TurnSpeed: 10
+		Offset: -298,0,298
+	Armament@AA:
+		Weapon: Flak
+		Recoil: 85
+		LocalOffset: 512,0,192
+		MuzzleSequence: muzzle
+	AttackTurreted:
+	WithMuzzleOverlay:
+	WithSpriteTurret:
+	AutoTarget:
+	SelectionDecorations:
+		VisualBounds: 28,28

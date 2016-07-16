@@ -2,7 +2,7 @@ WWI_PLANE:
 	Inherits: ^Plane
 	Buildable:
 		Queue: Aircraft
-		BuildAtProductionType: Plane
+		BuildAtProductionType: Aircraft
 		BuildPaletteOrder: 30
 		Prerequisites: Pop2
 	Valued:
@@ -34,7 +34,7 @@ WWI_PLANE:
 		CruiseAltitude: 2560
 		RearmBuildings: wwi_airstrip
 		InitialFacing: 192
-		ROT: 2
+		TurnSpeed: 2
 		Speed: 100
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -65,7 +65,7 @@ WWI_PLANE.Husk:
 	Contrail:
 		Offset: -853,0,0
 	Aircraft:
-		ROT: 2
+		TurnSpeed: 2
 		Speed: 100
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,0

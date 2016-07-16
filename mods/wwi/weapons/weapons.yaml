@@ -106,6 +106,34 @@ Lancia:
 		Explosions: water_piffs
 		ValidImpactTypes: Water
 
+Flak:
+	ReloadDelay: 10
+	Range: 8c0
+	Report: aacanon3.aud
+	ValidTargets: Air
+	Projectile: Bullet
+		Speed: 1c682
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Damage: 20
+		ValidTargets: Air
+		Versus:
+			flesh: 0
+			wood_building: 0
+			stone_building: 0
+			vehicle: 0
+			howitzer: 0
+			artillery: 0
+			light_tank: 0
+			medium_tank: 0
+			heavy_tank: 0
+			air: 100
+		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+	Warhead@2EffAir: CreateEffect
+		Explosions: small_explosion_air
+		ValidImpactTypes: Air, AirHit
+
 Grenadier:
 	ReloadDelay: 60
 	Range: 4c0

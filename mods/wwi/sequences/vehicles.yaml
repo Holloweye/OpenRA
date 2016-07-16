@@ -21,12 +21,26 @@ wwi_lancia:
 		Facings: 16
 	muzzle: gunfire2
 		Length: 2
-	icon: wwi_jppa1_icon
+	icon: wwi_lancia_icon
+
+wwi_flak:
+	idle:
+		Facings: 16
+	run:
+		Start: 16
+		Length: 5
+		Facings: 16
+		Tick: 400
+	turret: wwi_flak_turret
+		Facings: 16
+	muzzle: gunfire2
+		Length: 2
+	icon: wwi_flak_icon
 
 wwi_trade:
 	idle: wwi_trader
 		Facings: 16
-	icon: wwi_adp_icon
+	icon: wwi_trader_icon
 
 wwi_plane:
 	idle:
@@ -34,19 +48,19 @@ wwi_plane:
 	muzzle: minigun
 		Length: 6
 		Facings: 8
-	icon: wwi_adp_icon
+	icon: wwi_plane_icon
 
 wwi_balloon:
 	idle:
 		Facings: 1
-	icon: wwi_adp_icon
+	icon: wwi_balloon_icon
 
 wwi_scoda:
 	idle:
 		Facings: 16
 	muzzle: gunfire2
 		Length: 5
-	icon: wwi_adp_icon
+	icon: wwi_scoda_icon
 	shoot:
 		Start: 16
 		Length: 17
@@ -63,7 +77,7 @@ wwi_skoda_howitzer:
 		Facings: 16
 	muzzle: gunfire2
 		Length: 5
-	icon: wwi_adp_icon
+	icon: wwi_skoda_howitzer_icon
 	run:
 		Start: 112
 		Length: 9

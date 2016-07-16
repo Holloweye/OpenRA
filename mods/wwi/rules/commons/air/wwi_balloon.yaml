@@ -2,7 +2,7 @@ WWI_BALLOON:
 	Inherits: ^Helicopter
 	Buildable:
 		Queue: Aircraft
-		BuildAtProductionType: Helicopter
+		BuildAtProductionType: Aircraft
 		BuildPaletteOrder: 20
 		Prerequisites: Pop2
 	Valued:
@@ -23,7 +23,7 @@ WWI_BALLOON:
 		RearmBuildings: wwi_airstrip
 		LandWhenIdle: false
 		InitialFacing: 20
-		ROT: 1
+		TurnSpeed: 1
 		Speed: 10
 		AltitudeVelocity: 0c10
 	SelectionDecorations:
@@ -41,7 +41,7 @@ WWI_BALLOON.Husk:
 	Contrail:
 		Offset: -853,0,0
 	Aircraft:
-		ROT: 2
+		TurnSpeed: 1
 		Speed: 100
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,0
