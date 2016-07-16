@@ -82,10 +82,12 @@ wwi_stable:
 
 wwi_barr:
 	idle:
+		Start: 7
+		Length: 1
 	damaged-idle:
 	make:
-		Start:1
-		Length: 7
+		Start: 0
+		Length: 6
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true
