@@ -1,10 +1,12 @@
 wwi_aus_hq:
 	idle:
+		Start: 7
+		Length: 1
 		Offset: -2, 10
 	damaged-idle:
 		Offset: -2, 10
 	make:
-		Start:1
+		Start: 0
 		Length: 7
 		Offset: -2, 10
 	bib: bib2
@@ -30,10 +32,12 @@ wwi_usa_hq:
 
 wwi_pp:
 	idle:
+		Start: 8
+		Length: 1
 	damaged-idle:
 	make:
-		Start:1
-		Length: 6
+		Start: 0
+		Length: 9
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true
