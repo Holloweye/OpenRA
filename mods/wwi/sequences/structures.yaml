@@ -119,6 +119,8 @@ wwi_airstrip:
 
 wwi_vfact:
 	idle:
+		Start: 8
+		Length: 1
 	damaged-idle:
 	idle-top:
 		Start: 8
@@ -127,8 +129,8 @@ wwi_vfact:
 		Start: 8
 		ZOffset: 1000000
 	make:
-		Start: 1
-		Length: 7
+		Start: 0
+		Length: 9
 	bib: bib2
 		Length: *
 		UseTilesetExtension: true
