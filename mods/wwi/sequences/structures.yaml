@@ -142,10 +142,12 @@ wwi_vfact:
 
 wwi_tfact:
 	idle:
+		Start: 8
+		Length: 1
 	damaged-idle:
 	make:
-		Start: 1
-		Length: 8
+		Start: 0
+		Length: 9
 	bib: bib2
 		Length: *
 		UseTilesetExtension: true
