@@ -327,8 +327,8 @@ Howitzer:
 		Damage: 100
 		Versus:
 			flesh: 80
-			struct: 30
-			def: 20
+			struct: 60
+			def: 30
 			veh: 10
 			f_gun: 10
 			h_gun: 10

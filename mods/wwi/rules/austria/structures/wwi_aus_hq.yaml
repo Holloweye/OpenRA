@@ -24,8 +24,9 @@ WWI_AUS_HQ:
 	Tooltip:
 		Name: Headquarters
 		Description: Produces structures. Increases max population by 15.
-	CustomSellValue:
-		Value: 2500
+	CashTrickler:
+		Period: 375
+		Amount: 100
 	BaseBuilding:
 	ProductionBar@Building:
 		ProductionType: Building
