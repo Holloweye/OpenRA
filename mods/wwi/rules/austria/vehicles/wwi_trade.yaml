@@ -14,7 +14,7 @@ WWI_TRADE:
 	Health:
 		HP: 150
 	Armor:
-		Type: vehicle
+		Type: veh
 	Mobile:
 		Speed: 90
 		Crushes: mine

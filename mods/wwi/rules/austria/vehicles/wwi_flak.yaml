@@ -14,7 +14,7 @@ WWI_FLAK:
 	Health:
 		HP: 150
 	Armor:
-		Type: vehicle
+		Type: veh
 	Mobile:
 		TurnSpeed: 2
 		Speed: 30

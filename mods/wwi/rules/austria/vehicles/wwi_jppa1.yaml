@@ -14,7 +14,7 @@ WWI_JPPA1:
 	Health:
 		HP: 200
 	Armor:
-		Type: medium_tank
+		Type: m_tnk
 	Mobile:
 		Speed: 55
 		Crushes: mine, crush_fench

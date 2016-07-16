@@ -14,7 +14,7 @@ WWI_SCODA:
 	Health:
 		HP: 100
 	Armor:
-		Type: field_gun
+		Type: f_gun
 	Mobile:
 		ROT: 4
 		Speed: 50

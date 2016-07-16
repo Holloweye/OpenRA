@@ -14,7 +14,7 @@ WWI_ADP:
 	Health:
 		HP: 150
 	Armor:
-		Type: light_tank
+		Type: l_tnk
 	Mobile:
 		Speed: 80
 		Crushes: mine

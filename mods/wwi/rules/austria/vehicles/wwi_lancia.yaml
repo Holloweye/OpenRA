@@ -14,7 +14,7 @@ WWI_LANCIA:
 	Health:
 		HP: 250
 	Armor:
-		Type: heavy_tank
+		Type: h_tnk
 	Mobile:
 		Speed: 30
 		Crushes: mine, crush_fench, crush_trench

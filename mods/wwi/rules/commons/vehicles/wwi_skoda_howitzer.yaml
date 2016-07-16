@@ -14,7 +14,7 @@ WWI_SKODA_HOWITZER:
 	Health:
 		HP: 40
 	Armor:
-		Type: howitzer
+		Type: h_gun
 	Mobile:
 		ROT: 2
 		Speed: 30

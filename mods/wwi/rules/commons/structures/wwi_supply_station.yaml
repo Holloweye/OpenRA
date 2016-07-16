@@ -6,7 +6,7 @@ WWI_SUPPLY_STATION:
 	Health:
 		HP: 400
 	Armor:
-		Type: stone_building
+		Type: struct
 	RevealsShroud:
 		Range: 5c0
 	Bib:

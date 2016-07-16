@@ -15,7 +15,7 @@ WWI_VFACT:
 	Health:
 		HP: 1500
 	Armor:
-		Type: stone_building
+		Type: struct
 	RevealsShroud:
 		Range: 4c0
 	WithIdleOverlay@TOP:

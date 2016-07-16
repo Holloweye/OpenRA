@@ -8,14 +8,14 @@ Rifleman:
 		Spread: 128
 		Damage: 15
 		Versus:
-			stone_building: 10
-			wood_building: 25
-			vehicle: 30
-			howitzer: 50
-			artillery: 30
-			light_tank: 30
-			medium_tank: 20
-			heavy_tank: 10
+			struct: 10
+			def: 25
+			veh: 30
+			h_gun: 50
+			f_gun: 30
+			l_tnk: 30
+			m_tnk: 20
+			h_tnk: 10
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
@@ -35,14 +35,14 @@ Austro:
 		Spread: 128
 		Damage: 15
 		Versus:
-			stone_building: 10
-			wood_building: 20
-			vehicle: 40
-			howitzer: 40
-			artillery: 40
-			light_tank: 30
-			medium_tank: 20
-			heavy_tank: 10
+			struct: 10
+			def: 20
+			veh: 40
+			h_gun: 40
+			f_gun: 40
+			l_tnk: 30
+			m_tnk: 20
+			h_tnk: 10
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
@@ -62,14 +62,14 @@ Jppa:
 		Spread: 128
 		Damage: 15
 		Versus:
-			stone_building: 30
-			wood_building: 40
-			vehicle: 50
-			howitzer: 70
-			artillery: 50
-			light_tank: 60
-			medium_tank: 30
-			heavy_tank: 10
+			struct: 30
+			def: 40
+			veh: 50
+			h_gun: 70
+			f_gun: 50
+			l_tnk: 60
+			m_tnk: 30
+			h_tnk: 10
 			flesh: 50
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
@@ -90,13 +90,13 @@ Lancia:
 		Spread: 128
 		Damage: 20
 		Versus:
-			stone_building: 60
-			wood_building: 50
-			vehicle: 60
-			artillery: 60
-			light_tank: 80
-			medium_tank: 60
-			heavy_tank: 30
+			struct: 60
+			def: 50
+			veh: 60
+			f_gun: 60
+			l_tnk: 80
+			m_tnk: 60
+			h_tnk: 30
 			flesh: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
@@ -120,14 +120,14 @@ Flak:
 		ValidTargets: Air
 		Versus:
 			flesh: 0
-			wood_building: 0
-			stone_building: 0
-			vehicle: 0
-			howitzer: 0
-			artillery: 0
-			light_tank: 0
-			medium_tank: 0
-			heavy_tank: 0
+			def: 0
+			struct: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			m_tnk: 0
+			h_tnk: 0
 			air: 100
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2EffAir: CreateEffect
@@ -149,14 +149,14 @@ Grenadier:
 		Damage: 60
 		Versus:
 			flesh: 50
-			wood_building: 100
-			stone_building: 100
-			vehicle: 20
-			howitzer: 30
-			artillery: 20
-			light_tank: 20
-			medium_tank: 30
-			heavy_tank: 40
+			def: 100
+			struct: 100
+			veh: 20
+			h_gun: 30
+			f_gun: 20
+			l_tnk: 20
+			m_tnk: 30
+			h_tnk: 40
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -179,14 +179,14 @@ Machinegunner:
 		Spread: 128
 		Damage: 15
 		Versus:
-			stone_building: 10
-			wood_building: 25
-			vehicle: 30
-			howitzer: 40
-			artillery: 30
-			light_tank: 30
-			medium_tank: 20
-			heavy_tank: 10
+			struct: 10
+			def: 25
+			veh: 30
+			h_gun: 40
+			f_gun: 30
+			l_tnk: 30
+			m_tnk: 20
+			h_tnk: 10
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
@@ -211,14 +211,14 @@ Flamethrower:
 		Damage: 8
 		Versus:
 			flesh: 60
-			stone_building: 5
-			wood_building: 100
-			vehicle: 20
-			howitzer: 30
-			artillery: 20
-			light_tank: 15
-			medium_tank: 10
-			heavy_tank: 5
+			struct: 5
+			def: 100
+			veh: 20
+			h_gun: 30
+			f_gun: 20
+			l_tnk: 15
+			m_tnk: 10
+			h_tnk: 5
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -237,14 +237,14 @@ Medic:
 		Damage: -50
 		Versus:
 			flesh: 60
-			stone_building: 0
-			wood_building: 0
-			vehicle: 0
-			artillery: 0
-			light_tank: 0
-			medium_tank: 0
-			heavy_tank: 0
-			howitzer: 0
+			struct: 0
+			def: 0
+			veh: 0
+			f_gun: 0
+			l_tnk: 0
+			m_tnk: 0
+			h_tnk: 0
+			h_gun: 0
 
 Plane:
 	ReloadDelay: 3
@@ -260,14 +260,14 @@ Plane:
 		Damage: 10
 		Versus:
 			flesh: 60
-			stone_building: 2
-			wood_building: 5
-			vehicle: 8
-			howitzer: 20
-			artillery: 10
-			light_tank: 8
-			medium_tank: 5
-			heavy_tank: 2
+			struct: 2
+			def: 5
+			veh: 8
+			h_gun: 20
+			f_gun: 10
+			l_tnk: 8
+			m_tnk: 5
+			h_tnk: 2
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidTargets: Air, Ground
 	Warhead@2Eff: CreateEffect
@@ -294,10 +294,10 @@ Scoda14:
 		Damage: 80
 		Versus:
 			flesh: 20
-			stone_building: 30
-			wood_building: 50
-			medium_tank: 80
-			heavy_tank: 60
+			struct: 30
+			def: 50
+			m_tnk: 80
+			h_tnk: 60
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -327,14 +327,14 @@ Howitzer:
 		Damage: 100
 		Versus:
 			flesh: 80
-			stone_building: 30
-			wood_building: 20
-			vehicle: 10
-			artillery: 10
-			howitzer: 10
-			light_tank: 10
-			medium_tank: 10
-			heavy_tank: 10
+			struct: 30
+			def: 20
+			veh: 10
+			f_gun: 10
+			h_gun: 10
+			l_tnk: 10
+			m_tnk: 10
+			h_tnk: 10
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater

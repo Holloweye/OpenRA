@@ -10,7 +10,7 @@ WWI_HOUSE:
 	Health:
 		HP: 400
 	Armor:
-		Type: wood_building
+		Type: struct
 	RevealsShroud:
 		Range: 5c0
 	Bib:

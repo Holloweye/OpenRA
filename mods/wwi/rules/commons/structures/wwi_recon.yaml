@@ -15,7 +15,7 @@ WWI_RECON:
 	Health:
 		HP: 500
 	Armor:
-		Type: stone_building
+		Type: struct
 	RevealsShroud:
 		Range: 4c0
 	Bib:

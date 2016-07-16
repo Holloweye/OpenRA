@@ -13,7 +13,7 @@ WWI_FENCE:
 	Health:
 		HP: 100
 	Armor:
-		Type: wood_building
+		Type: def
 	LineBuild:
 		Range: 8
 		NodeTypes: fence
