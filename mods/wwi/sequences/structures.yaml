@@ -186,9 +186,9 @@ wwi_supply_station:
 wwi_fence:
 	idle: fenc
 		Length: 16
-	icon: wwi_house_icon
+	icon: wwi_fence_icon
 
 wwi_trench:
 	idle:
 		Length: 16
-	icon: wwi_house_icon
+	icon: wwi_trench_icon
