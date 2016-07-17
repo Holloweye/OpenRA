@@ -10,7 +10,7 @@ WWI_TRADE:
 		Amount: -2
 	Tooltip:
 		Name: Trader
-		Description: Trades with supply stations.
+		Description: Trades with supply stations.\nMain source of income.
 	Health:
 		HP: 150
 	Armor:

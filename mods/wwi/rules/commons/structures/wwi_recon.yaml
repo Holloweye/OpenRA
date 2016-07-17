@@ -25,5 +25,6 @@ WWI_RECON:
 		Prerequisite: reconnaissance
 	ScalePowerWithHealth:
 	DisabledOverlay:
+	ProvidesRadar:
 	WithBuildingExplosion:
 		Delay: 1

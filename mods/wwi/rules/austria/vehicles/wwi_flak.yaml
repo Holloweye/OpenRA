@@ -10,7 +10,7 @@ WWI_FLAK:
 		Amount: -2
 	Tooltip:
 		Name: 88mm Flak 16
-		Description: Mobile unit with mounted Flak Cannon.\n  Strong vs Aircraft
+		Description: Mobile unit with mounted Flak Cannon.\nStrong vs Aircraft
 	Health:
 		HP: 150
 	Armor:

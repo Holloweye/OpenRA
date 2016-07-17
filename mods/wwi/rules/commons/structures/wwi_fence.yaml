@@ -9,7 +9,7 @@ WWI_FENCE:
 		Value: 0
 	Tooltip:
 		Name: Wire Fence
-		Description: Stops infantry and blocks enemy fire.\nCan be crushed by tanks.
+		Description: Enemy infantry takes damage upon walked over.\nCan be crushed by certain tanks.
 	Health:
 		HP: 100
 	Armor:

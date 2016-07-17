@@ -4,7 +4,7 @@ WWI_PP:
 		Queue: Building
 		BuildPaletteOrder: 10
 		Prerequisites: !~structures.germany
-		# All except Russia, Russia uses not power.
+		# All except Russia, Russia does not use power.
 	Valued:
 		Cost: 300
 	Tooltip:

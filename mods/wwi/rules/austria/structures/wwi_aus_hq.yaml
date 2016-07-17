@@ -23,7 +23,7 @@ WWI_AUS_HQ:
 		Cost: 2500
 	Tooltip:
 		Name: Headquarters
-		Description: Produces structures. Increases max population by 15.
+		Description: Produces structures.\nIncreases max population by 15.\nGenerates some income.
 	CashTrickler:
 		Period: 375
 		Amount: 100

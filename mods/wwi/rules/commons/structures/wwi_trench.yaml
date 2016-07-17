@@ -9,7 +9,7 @@ WWI_TRENCH:
 		Value: 0
 	Tooltip:
 		Name: Trench
-		Description: Stops infantry and blocks enemy fire.\nCan be crushed by tanks.
+		Description: Infantry have increased armor when in trench.\nCan be crushed by certain tanks.
 	Health:
 		HP: 200
 	Armor:
