@@ -22,11 +22,11 @@ WWI_BABENBERG:
 		VisualBounds: 44,44
 	Turreted@PRIMARY:
 		Turret: primary
-		Offset: -1364,0,170
+		Offset: -1364,0,250
 		TurnSpeed: 3
 	Turreted@SECONDARY:
 		Turret: secondary
-		Offset: 1268,0,170
+		Offset: 1268,0,250
 		TurnSpeed: 3
 	Armament@PRIMARY:
 		Turret: primary

@@ -22,11 +22,19 @@ WWI_SAIDA:
 		VisualBounds: 44,44
 	Turreted@PRIMARY:
 		Turret: primary
-		Offset: -1364,0,170
+		Offset: -1364,0,140
 		TurnSpeed: 3
 	Turreted@SECONDARY:
 		Turret: secondary
-		Offset: 1268,0,170
+		Offset: 1268,0,140
+		TurnSpeed: 3
+	Turreted@THIRD:
+		Turret: third
+		Offset: 668,0,140
+		TurnSpeed: 3
+	Turreted@FORTH:
+		Turret: forth
+		Offset: -704,0,140
 		TurnSpeed: 3
 	Armament@PRIMARY:
 		Turret: primary
@@ -43,10 +51,30 @@ WWI_SAIDA:
 		Recoil: 171
 		RecoilRecovery: 34
 		MuzzleSequence: muzzle
+	Armament@THIRD:
+		Name: third
+		Turret: third
+		Weapon: saida
+		LocalOffset: 480,-100,40, 480,100,40
+		Recoil: 171
+		RecoilRecovery: 34
+		MuzzleSequence: muzzle
+	Armament@FORTH:
+		Name: forth
+		Turret: forth
+		Weapon: saida
+		LocalOffset: 480,-100,40, 480,100,40
+		Recoil: 171
+		RecoilRecovery: 34
+		MuzzleSequence: muzzle
 	AttackTurreted:
 	WithMuzzleOverlay:
 	WithSpriteTurret@PRIMARY:
 		Turret: primary
 	WithSpriteTurret@SECONDARY:
 		Turret: secondary
+	WithSpriteTurret@THIRD:
+		Turret: third
+	WithSpriteTurret@FORTH:
+		Turret: forth
 	AutoTarget:
