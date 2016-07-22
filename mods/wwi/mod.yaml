@@ -65,6 +65,7 @@ Rules:
 	wwi|rules/commons/structures/wwi_airstrip.yaml
 	wwi|rules/commons/structures/wwi_recon.yaml
 	wwi|rules/commons/structures/wwi_supply_station.yaml
+	wwi|rules/commons/structures/wwi_shipyard.yaml
 	wwi|rules/commons/structures/wwi_fence.yaml
 	wwi|rules/commons/structures/wwi_trench.yaml
 	wwi|rules/austria/structures/wwi_aus_hq.yaml
@@ -73,6 +74,8 @@ Rules:
 	wwi|rules/austria/vehicles/wwi_lancia.yaml
 	wwi|rules/austria/vehicles/wwi_trade.yaml
 	wwi|rules/austria/vehicles/wwi_flak.yaml
+	wwi|rules/austria/ships/wwi_babenberg.yaml
+	wwi|rules/austria/ships/wwi_saida.yaml
 	wwi|rules/usa/structures/wwi_usa_hq.yaml
 
 Sequences:

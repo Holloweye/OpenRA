@@ -296,6 +296,44 @@
 	DetectCloaked:
 		CloakTypes: Hijacker
 
+^Ship:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^GainsExperience
+	Inherits@3: ^SpriteActor
+	DrawLineToTarget:
+	UpdatesPlayerStatistics:
+	Mobile:
+		Crushes: crate
+		TerrainSpeeds:
+			Water: 100
+	SelectionDecorations:
+	Selectable:
+		Bounds: 24,24
+	Targetable:
+		TargetTypes: Ground, Water, Repair
+	HiddenUnderFog:
+	AttackMove:
+	ActorLostNotification:
+		Notification: NavalUnitLost
+	ProximityCaptor:
+		Types: Ship
+	GivesBounty:
+	RepairableNear:
+	WithDamageOverlay:
+	Explodes:
+		Weapon: UnitExplodeShip
+		EmptyWeapon: UnitExplodeShip
+	Guard:
+	Guardable:
+	Tooltip:
+		GenericName: Ship
+	MustBeDestroyed:
+	EditorTilesetFilter:
+		ExcludeTilesets: INTERIOR
+	Voiced:
+		VoiceSet: VehicleVoice
+	WithFacingSpriteBody:
+
 ^Plane:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^GainsExperience

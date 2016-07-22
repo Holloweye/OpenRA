@@ -46,3 +46,17 @@ UnitExplode:
 		Explosion: large_splash
 		ImpactSound: splash9.aud
 		ValidImpactTypes: Water
+
+UnitExplodeShip:
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 50
+		Versus:
+			None: 90
+			Wood: 75
+			Light: 60
+			Heavy: 25
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: building
+		ImpactSounds: kaboom25.aud

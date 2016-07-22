@@ -183,6 +183,18 @@ wwi_supply_station:
 			INTERIOR: TEMPERAT
 	icon: wwi_house_icon
 
+wwi_shipyard:
+	idle:
+		Start: 8
+		Length: 1
+	damaged-idle:
+		Start: 8
+		Length: 1
+	make:
+		Start: 0
+		Length: 9
+	icon: wwi_shipyard_icon
+
 wwi_fence:
 	idle: fenc
 		Length: 16

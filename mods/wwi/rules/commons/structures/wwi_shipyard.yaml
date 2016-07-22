@@ -1,0 +1,61 @@
+WWI_SHIPYARD:
+	Inherits: ^Building
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 40
+		Prerequisites: powerplant
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Shipyard
+		Description: Produces and repairs ships\nand transports.
+	Targetable:
+		TargetTypes: Ground, Water, Structure
+	Building:
+		Footprint: xxx xxx xxx
+		Dimensions: 3,3
+		Adjacent: 8
+		TerrainTypes: Water
+	-GivesBuildableArea:
+	Health:
+		HP: 1000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 4c0
+	Exit@1:
+		SpawnOffset: -1024,1024,0
+		Facing: 160
+		ExitCell: 0,2
+	Exit@2:
+		SpawnOffset: 1024,1024,0
+		Facing: 224
+		ExitCell: 2,2
+	Exit@3:
+		SpawnOffset: -1024,-1024,0
+		Facing: 96
+		ExitCell: 0,0
+	Exit@4:
+		SpawnOffset: 1024,-1024,0
+		Facing: 32
+		ExitCell: 2,0
+	Production:
+		Produces: Ship, Boat
+	PrimaryBuilding:
+	RepairsUnits:
+		FinishRepairingNotification: UnitRepaired
+	RallyPoint:
+	ProductionBar:
+	Power:
+		Amount: -30
+	ProvidesPrerequisite@buildingname:
+	EditorTilesetFilter:
+		ExcludeTilesets: INTERIOR
+	WithDecoration@primary:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
+		ReferencePoint: Top
+		ZOffset: 256
+		UpgradeTypes: primary
+		UpgradeMinEnabledLevel: 1

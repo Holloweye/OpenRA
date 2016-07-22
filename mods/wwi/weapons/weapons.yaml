@@ -346,3 +346,81 @@ Howitzer:
 		Explosions: med_splash
 		ImpactSounds: splash9.aud
 		ValidImpactTypes: Water
+
+Babenberg:
+	ReloadDelay: 250
+	Range: 16c0
+	Burst: 2
+	Report: turret1.aud
+	Projectile: Bullet
+		Speed: 204
+		Blockable: false
+		Angle: 62
+		Inaccuracy: 2c938
+		Image: 120MM
+		ContrailLength: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Damage: 25
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Versus:
+			flesh: 90
+			struct: 100
+			def: 50
+			veh: 20
+			f_gun: 20
+			h_gun: 20
+			l_tnk: 20
+			m_tnk: 20
+			h_tnk: 20
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Eff: CreateEffect
+		Explosions: artillery_explosion
+		ImpactSounds: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water
+
+Saida:
+	ReloadDelay: 250
+	Range: 16c0
+	Burst: 2
+	Report: turret1.aud
+	Projectile: Bullet
+		Speed: 204
+		Blockable: false
+		Angle: 62
+		Inaccuracy: 2c938
+		Image: 120MM
+		ContrailLength: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Damage: 25
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Versus:
+			flesh: 90
+			struct: 100
+			def: 50
+			veh: 20
+			f_gun: 20
+			h_gun: 20
+			l_tnk: 20
+			m_tnk: 20
+			h_tnk: 20
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Eff: CreateEffect
+		Explosions: artillery_explosion
+		ImpactSounds: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water

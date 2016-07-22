@@ -1,0 +1,52 @@
+WWI_SAIDA:
+	Inherits: ^Ship
+	Buildable:
+		Queue: Ship
+		BuildAtProductionType: Boat
+		BuildPaletteOrder: 50
+	Valued:
+		Cost: 2400
+	Tooltip:
+		Name: Cruiser
+		Description: Very slow long-range ship.\n  Strong vs Buildings, Ground units\n  Weak vs Naval units, Aircraft
+	Health:
+		HP: 800
+	Armor:
+		Type: Heavy
+	Mobile:
+		TurnSpeed: 3
+		Speed: 42
+	RevealsShroud:
+		Range: 7c0
+	SelectionDecorations:
+		VisualBounds: 44,44
+	Turreted@PRIMARY:
+		Turret: primary
+		Offset: -1364,0,170
+		TurnSpeed: 3
+	Turreted@SECONDARY:
+		Turret: secondary
+		Offset: 1268,0,170
+		TurnSpeed: 3
+	Armament@PRIMARY:
+		Turret: primary
+		Weapon: saida
+		LocalOffset: 480,-100,40, 480,100,40
+		Recoil: 171
+		RecoilRecovery: 34
+		MuzzleSequence: muzzle
+	Armament@SECONDARY:
+		Name: secondary
+		Turret: secondary
+		Weapon: saida
+		LocalOffset: 480,-100,40, 480,100,40
+		Recoil: 171
+		RecoilRecovery: 34
+		MuzzleSequence: muzzle
+	AttackTurreted:
+	WithMuzzleOverlay:
+	WithSpriteTurret@PRIMARY:
+		Turret: primary
+	WithSpriteTurret@SECONDARY:
+		Turret: secondary
+	AutoTarget:
