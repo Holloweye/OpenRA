@@ -1,0 +1,54 @@
+WWI_SUB:
+	Inherits: ^Ship
+	Buildable:
+		Queue: Ship
+		BuildAtProductionType: Submarine
+		BuildPaletteOrder: 30
+		Prerequisites:
+	Valued:
+		Cost: 950
+	Tooltip:
+		Name: Submarine
+		Description: Submerged anti-ship unit\narmed with torpedoes.\nCan detect other submarines.\n  Strong vs Naval units\n  Weak vs Ground units, Aircraft\n  Special Ability: Submerge
+	Health:
+		HP: 250
+	Armor:
+		Type: Light
+	Mobile:
+		TurnSpeed: 4
+		Speed: 71
+	RevealsShroud:
+		Range: 6c0
+	Targetable:
+		TargetTypes: Ground, Water, Repair
+		UpgradeTypes: underwater
+		UpgradeMaxEnabledLevel: 0
+	Targetable@UNDERWATER:
+		TargetTypes: Underwater, Repair
+		UpgradeTypes: underwater
+		UpgradeMinEnabledLevel: 1
+	Cloak:
+		CloakTypes: Underwater
+		InitialDelay: 0
+		CloakDelay: 50
+		CloakSound: subshow1.aud
+		UncloakSound: subshow1.aud
+		WhileCloakedUpgrades: underwater
+		Palette: submerged
+	Armament:
+		Weapon: Sub
+		LocalOffset: 0,-171,0, 0,171,0
+		FireDelay: 2
+	AttackFrontal:
+	SelectionDecorations:
+		VisualBounds: 38,38
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: ReturnFire
+	DetectCloaked:
+		CloakTypes: Underwater
+		Range: 4c0
+	RenderDetectionCircle:
+	Explodes:
+		Weapon: UnitExplodeSubmarine
+		EmptyWeapon: UnitExplodeSubmarine

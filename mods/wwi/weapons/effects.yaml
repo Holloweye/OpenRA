@@ -60,3 +60,17 @@ UnitExplodeShip:
 	Warhead@2Eff: CreateEffect
 		Explosions: building
 		ImpactSounds: kaboom25.aud
+
+UnitExplodeSubmarine:
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 50
+		Versus:
+			None: 90
+			Wood: 75
+			Light: 60
+			Heavy: 25
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splash9.aud

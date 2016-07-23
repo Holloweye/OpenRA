@@ -106,3 +106,8 @@ wwi_saida:
 	muzzle: gunfire2
 		Length: 5
 	icon: wwi_saida_icon
+
+wwi_sub:
+	idle:
+		Facings: 16
+	icon: wwi_sub_icon

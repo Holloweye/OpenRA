@@ -56,6 +56,7 @@ Rules:
 	wwi|rules/commons/vehicles/wwi_skoda_howitzer.yaml
 	wwi|rules/commons/air/wwi_balloon.yaml
 	wwi|rules/commons/air/wwi_plane.yaml
+	wwi|rules/commons/ships/wwi_sub.yaml
 	wwi|rules/commons/structures/wwi_house.yaml
 	wwi|rules/commons/structures/wwi_stable.yaml
 	wwi|rules/commons/structures/wwi_barr.yaml

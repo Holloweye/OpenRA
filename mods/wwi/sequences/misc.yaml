@@ -81,6 +81,11 @@ v2:
 	idle:
 		Facings: 32
 
+torpedo:
+	idle: missile
+		Facings: 32
+		ZOffset: -1023
+
 rallypoint:
 	flag:flagfly
 		Length: *
