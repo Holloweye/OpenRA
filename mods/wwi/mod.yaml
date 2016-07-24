@@ -47,6 +47,8 @@ Rules:
 	wwi|rules/world.yaml
 	wwi|rules/misc.yaml
 	wwi|rules/defaults.yaml
+	wwi|rules/decoration.yaml
+	wwi|rules/civilian.yaml
 	wwi|rules/commons/infantry/wwi_rifle.yaml
 	wwi|rules/commons/infantry/wwi_grenadier.yaml
 	wwi|rules/commons/infantry/wwi_machinegunner.yaml
@@ -84,6 +86,8 @@ Sequences:
 	wwi|sequences/structures.yaml
 	wwi|sequences/vehicles.yaml
 	wwi|sequences/infantry.yaml
+	wwi|sequences/decorations.yaml
+	wwi|sequences/civilian.yaml
 
 TileSets:
 	wwi|tilesets/snow.yaml
