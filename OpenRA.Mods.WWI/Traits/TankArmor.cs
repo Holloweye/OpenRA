@@ -30,7 +30,7 @@ namespace OpenRA.Mods.WWI.Traits
 			this.info = info;
 		}
 
-        public int GetDamageModifier(Actor attacker, IWarhead warhead)
+        public int GetDamageModifier(Actor attacker, Damage damage)
         {
             int modifier;
 

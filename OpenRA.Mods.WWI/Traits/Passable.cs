@@ -132,7 +132,7 @@ namespace OpenRA.Mods.WWI.Traits
             }
             else
             {
-                actor.InflictDamage(self, damage, null);
+                actor.InflictDamage(self, new Damage(damage));
                 if (actor.IsDead)
                 {
                     var wda = actor.TraitsImplementing<WithDeathAnimation>().FirstOrDefault(s => s.Info.DeathSequence != null);
