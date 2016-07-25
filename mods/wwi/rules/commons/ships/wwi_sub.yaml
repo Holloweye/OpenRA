@@ -13,7 +13,7 @@ WWI_SUB:
 	Health:
 		HP: 250
 	Armor:
-		Type: Light
+		Type: l_ship
 	Mobile:
 		TurnSpeed: 4
 		Speed: 71

@@ -215,7 +215,7 @@
 		Shape: Circle
 			Radius: 128
 	Armor:
-		Type: None
+		Type: flesh
 	RevealsShroud:
 		Range: 4c0
 	Mobile:
@@ -396,7 +396,7 @@
 	Health:
 		HP: 280
 	Armor:
-		Type: medium_tank
+		Type: m_tnk
 	HiddenUnderFog:
 		Type: CenterPosition
 	AutoTargetIgnore:

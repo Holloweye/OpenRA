@@ -12,7 +12,7 @@ WWI_SAIDA:
 	Health:
 		HP: 800
 	Armor:
-		Type: Heavy
+		Type: m_ship
 	Mobile:
 		TurnSpeed: 3
 		Speed: 42

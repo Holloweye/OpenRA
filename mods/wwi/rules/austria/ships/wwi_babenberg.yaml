@@ -12,7 +12,7 @@ WWI_BABENBERG:
 	Health:
 		HP: 800
 	Armor:
-		Type: Heavy
+		Type: h_ship
 	Mobile:
 		TurnSpeed: 3
 		Speed: 42

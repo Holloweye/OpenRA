@@ -14,8 +14,12 @@ Rifleman:
 			h_gun: 50
 			f_gun: 30
 			l_tnk: 30
+			l_ship: 30
 			m_tnk: 20
+			m_ship: 20
 			h_tnk: 10
+			h_ship: 10
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
@@ -35,14 +39,19 @@ Austro:
 		Spread: 128
 		Damage: 15
 		Versus:
+			flesh: 100
 			struct: 10
 			def: 20
 			veh: 40
 			h_gun: 40
 			f_gun: 40
 			l_tnk: 30
+			l_ship: 30
 			m_tnk: 20
+			m_ship: 20
 			h_tnk: 10
+			h_ship: 10
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
@@ -62,15 +71,19 @@ Jppa:
 		Spread: 128
 		Damage: 15
 		Versus:
+			flesh: 50
 			struct: 30
 			def: 40
 			veh: 50
 			h_gun: 70
 			f_gun: 50
 			l_tnk: 60
+			l_ship: 60
 			m_tnk: 30
+			m_ship: 30
 			h_tnk: 10
-			flesh: 50
+			h_ship: 10
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
@@ -90,14 +103,19 @@ Lancia:
 		Spread: 128
 		Damage: 20
 		Versus:
+			flesh: 20
 			struct: 60
 			def: 50
 			veh: 60
+			h_gun: 70
 			f_gun: 60
 			l_tnk: 80
+			l_ship: 80
 			m_tnk: 60
+			m_ship: 60
 			h_tnk: 30
-			flesh: 20
+			h_ship: 30
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
@@ -126,8 +144,11 @@ Flak:
 			h_gun: 0
 			f_gun: 0
 			l_tnk: 0
+			l_ship: 0
 			m_tnk: 0
+			m_ship: 0
 			h_tnk: 0
+			h_ship: 0
 			air: 100
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2EffAir: CreateEffect
@@ -155,8 +176,12 @@ Grenadier:
 			h_gun: 30
 			f_gun: 20
 			l_tnk: 20
+			l_ship: 20
 			m_tnk: 30
+			m_ship: 30
 			h_tnk: 40
+			h_ship: 40
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -179,14 +204,19 @@ Machinegunner:
 		Spread: 128
 		Damage: 15
 		Versus:
+			flesh: 100
 			struct: 10
 			def: 25
 			veh: 30
 			h_gun: 40
 			f_gun: 30
 			l_tnk: 30
+			l_ship: 30
 			m_tnk: 20
+			m_ship: 20
 			h_tnk: 10
+			h_ship: 10
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
@@ -217,8 +247,12 @@ Flamethrower:
 			h_gun: 30
 			f_gun: 20
 			l_tnk: 15
+			l_ship: 15
 			m_tnk: 10
+			m_ship: 10
 			h_tnk: 5
+			h_ship: 5
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -240,11 +274,15 @@ Medic:
 			struct: 0
 			def: 0
 			veh: 0
+			h_gun: 0
 			f_gun: 0
 			l_tnk: 0
+			l_ship: 0
 			m_tnk: 0
+			m_ship: 0
 			h_tnk: 0
-			h_gun: 0
+			h_ship: 0
+			air: 0
 
 Plane:
 	ReloadDelay: 3
@@ -266,8 +304,12 @@ Plane:
 			h_gun: 20
 			f_gun: 10
 			l_tnk: 8
+			l_ship: 8
 			m_tnk: 5
+			m_ship: 5
 			h_tnk: 2
+			h_ship: 2
+			air: 100
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidTargets: Air, Ground
 	Warhead@2Eff: CreateEffect
@@ -296,8 +338,15 @@ Scoda14:
 			flesh: 20
 			struct: 30
 			def: 50
+			h_gun: 100
+			f_gun: 100
+			l_tnk: 100
+			l_ship: 100
 			m_tnk: 80
+			m_ship: 80
 			h_tnk: 60
+			h_ship: 60
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -333,8 +382,12 @@ Howitzer:
 			f_gun: 10
 			h_gun: 10
 			l_tnk: 10
+			l_ship: 10
 			m_tnk: 10
+			m_ship: 10
 			h_tnk: 10
+			h_ship: 10
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -371,8 +424,11 @@ Babenberg:
 			f_gun: 20
 			h_gun: 20
 			l_tnk: 20
+			l_ship: 20
 			m_tnk: 20
+			m_ship: 20
 			h_tnk: 20
+			h_ship: 20
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
@@ -410,8 +466,11 @@ Saida:
 			f_gun: 20
 			h_gun: 20
 			l_tnk: 20
+			l_ship: 20
 			m_tnk: 20
+			m_ship: 20
 			h_tnk: 20
+			h_ship: 20
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
@@ -446,10 +505,19 @@ Sub:
 		Damage: 180
 		ValidTargets: Water, Underwater, Bridge
 		Versus:
-			None: 30
-			Wood: 75
-			Light: 75
-			Concrete: 500
+			flesh: 90
+			struct: 100
+			def: 50
+			veh: 20
+			f_gun: 20
+			h_gun: 20
+			l_tnk: 20
+			l_ship: 20
+			m_tnk: 20
+			m_ship: 20
+			h_tnk: 20
+			h_ship: 20
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater

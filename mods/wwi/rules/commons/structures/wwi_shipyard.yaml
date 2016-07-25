@@ -20,7 +20,7 @@ WWI_SHIPYARD:
 	Health:
 		HP: 1000
 	Armor:
-		Type: Light
+		Type: struct
 	RevealsShroud:
 		Range: 4c0
 	Exit@1:

@@ -42,7 +42,7 @@
 		Name: Ammo Box
 	AutoTargetIgnore:
 	Armor:
-		Type: Light
+		Type: def
 	Targetable:
 		TargetTypes: Ground, DetonateAttack
 
@@ -157,7 +157,7 @@ FCOM:
 	Health:
 		HP: 400
 	Armor:
-		Type: Wood
+		Type: struct
 	Tooltip:
 		Name: Forward Command
 	RevealsShroud:
@@ -345,7 +345,7 @@ BARL:
 		ShowOwnerRow: False
 	AutoTargetIgnore:
 	Armor:
-		Type: None
+		Type: def
 	Targetable:
 		TargetTypes: Ground, DemoTruck, Barrel
 	-ShakeOnDeath:
@@ -365,7 +365,7 @@ BRL3:
 		ShowOwnerRow: False
 	AutoTargetIgnore:
 	Armor:
-		Type: None
+		Type: def
 	Targetable:
 		TargetTypes: Ground, DemoTruck, Barrel
 	-ShakeOnDeath:
@@ -394,7 +394,7 @@ MISS:
 	RevealsShroud:
 		Range: 3c0
 	Armor:
-		Type: Wood
+		Type: struct
 	Tooltip:
 		Name: Technology Center
 	Bib:
