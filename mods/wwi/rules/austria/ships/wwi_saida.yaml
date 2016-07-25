@@ -5,17 +5,17 @@ WWI_SAIDA:
 		BuildAtProductionType: Boat
 		BuildPaletteOrder: 50
 	Valued:
-		Cost: 2400
+		Cost: 1200
 	Tooltip:
 		Name: Cruiser
-		Description: Very slow long-range ship.\n  Strong vs Buildings, Ground units\n  Weak vs Naval units, Aircraft
+		Description: Fast ship.\n  Strong vs Submarines\n  Weak vs Battleships
 	Health:
-		HP: 800
+		HP: 600
 	Armor:
 		Type: m_ship
 	Mobile:
-		TurnSpeed: 3
-		Speed: 42
+		TurnSpeed: 4
+		Speed: 52
 	RevealsShroud:
 		Range: 7c0
 	SelectionDecorations:
@@ -80,3 +80,7 @@ WWI_SAIDA:
 	WithSpriteTurret@FORTH:
 		Turret: forth
 	AutoTarget:
+	DetectCloaked:
+		CloakTypes: Underwater
+		Range: 7c0
+	RenderDetectionCircle:

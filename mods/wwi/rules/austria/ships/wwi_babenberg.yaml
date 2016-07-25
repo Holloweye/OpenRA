@@ -8,14 +8,14 @@ WWI_BABENBERG:
 		Cost: 2400
 	Tooltip:
 		Name: Battleship
-		Description: Very slow long-range ship.\n  Strong vs Buildings, Ground units\n  Weak vs Naval units, Aircraft
+		Description: Very slow long-range ship.\n  Strong vs Cruisers\n  Weak vs Submarines
 	Health:
-		HP: 800
+		HP: 1300
 	Armor:
 		Type: h_ship
 	Mobile:
-		TurnSpeed: 3
-		Speed: 42
+		TurnSpeed: 2
+		Speed: 22
 	RevealsShroud:
 		Range: 7c0
 	SelectionDecorations:

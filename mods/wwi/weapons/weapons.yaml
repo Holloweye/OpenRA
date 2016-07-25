@@ -403,21 +403,21 @@ Howitzer:
 Babenberg:
 	ReloadDelay: 250
 	Range: 16c0
-	Burst: 2
+	Burst: 5
 	Report: turret1.aud
 	Projectile: Bullet
-		Speed: 204
+		Speed: 180
 		Blockable: false
 		Angle: 62
-		Inaccuracy: 2c938
+		Inaccuracy: 3c938
 		Image: 120MM
 		ContrailLength: 30
 	Warhead@1Dam: SpreadDamage
-		Spread: 213
-		Damage: 25
+		Spread: 275
+		Damage: 30
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Versus:
-			flesh: 90
+			flesh: 80
 			struct: 100
 			def: 50
 			veh: 20
@@ -425,10 +425,10 @@ Babenberg:
 			h_gun: 20
 			l_tnk: 20
 			l_ship: 20
-			m_tnk: 20
-			m_ship: 20
-			h_tnk: 20
-			h_ship: 20
+			m_tnk: 100
+			m_ship: 100
+			h_tnk: 60
+			h_ship: 60
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
@@ -443,34 +443,35 @@ Babenberg:
 		ValidImpactTypes: Water
 
 Saida:
-	ReloadDelay: 250
-	Range: 16c0
+	ReloadDelay: 100
+	Range: 10c0
 	Burst: 1
 	Report: turret1.aud
 	Projectile: Bullet
-		Speed: 204
+		Speed: 244
 		Blockable: false
 		Angle: 62
 		Inaccuracy: 2c938
 		Image: 120MM
-		ContrailLength: 30
+		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
 		Spread: 213
 		Damage: 25
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		ValidTargets: Underwater, Ground, Water
 		Versus:
 			flesh: 90
-			struct: 100
+			struct: 70
 			def: 50
 			veh: 20
 			f_gun: 20
 			h_gun: 20
-			l_tnk: 20
-			l_ship: 20
-			m_tnk: 20
-			m_ship: 20
-			h_tnk: 20
-			h_ship: 20
+			l_tnk: 100
+			l_ship: 100
+			m_tnk: 60
+			m_ship: 60
+			h_tnk: 40
+			h_ship: 40
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
@@ -511,12 +512,12 @@ Sub:
 			veh: 20
 			f_gun: 20
 			h_gun: 20
-			l_tnk: 20
-			l_ship: 20
-			m_tnk: 20
-			m_ship: 20
-			h_tnk: 20
-			h_ship: 20
+			l_tnk: 60
+			l_ship: 60
+			m_tnk: 30
+			m_ship: 30
+			h_tnk: 100
+			h_ship: 100
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge

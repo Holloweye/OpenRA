@@ -9,14 +9,14 @@ WWI_SUB:
 		Cost: 950
 	Tooltip:
 		Name: Submarine
-		Description: Submerged anti-ship unit\narmed with torpedoes.\nCan detect other submarines.\n  Strong vs Naval units\n  Weak vs Ground units, Aircraft\n  Special Ability: Submerge
+		Description: Submerged anti-battleship unit\narmed with torpedoes.\nCan detect other submarines.\n  Strong vs Battleships\n  Weak vs Cruisers\n  Special Ability: Submerge
 	Health:
 		HP: 250
 	Armor:
 		Type: l_ship
 	Mobile:
-		TurnSpeed: 4
-		Speed: 71
+		TurnSpeed: 3
+		Speed: 45
 	RevealsShroud:
 		Range: 6c0
 	Targetable:
