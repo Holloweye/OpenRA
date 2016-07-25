@@ -230,7 +230,7 @@ wwi_machinegunner:
 	garrison-muzzle: minigun
 		Length: 6
 		Facings: 8
-	icon: e1icon
+	icon: wwi_machinegunner_icon
 
 wwi_flamethrower:
 	stand:e4
