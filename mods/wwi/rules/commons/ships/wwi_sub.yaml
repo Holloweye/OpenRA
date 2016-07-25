@@ -4,9 +4,11 @@ WWI_SUB:
 		Queue: Ship
 		BuildAtProductionType: Submarine
 		BuildPaletteOrder: 30
-		Prerequisites:
+		Prerequisites: Pop5
 	Valued:
 		Cost: 950
+	Population:
+		Amount: -5
 	Tooltip:
 		Name: Submarine
 		Description: Submerged anti-battleship unit\narmed with torpedoes.\nCan detect other submarines.\n  Strong vs Battleships\n  Weak vs Cruisers\n  Special Ability: Submerge

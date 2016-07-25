@@ -40,17 +40,17 @@ Austro:
 		Damage: 15
 		Versus:
 			flesh: 100
-			struct: 10
+			struct: 20
 			def: 20
 			veh: 40
-			h_gun: 40
-			f_gun: 40
-			l_tnk: 30
-			l_ship: 30
-			m_tnk: 20
-			m_ship: 20
-			h_tnk: 10
-			h_ship: 10
+			h_gun: 50
+			f_gun: 50
+			l_tnk: 60
+			l_ship: 60
+			m_tnk: 40
+			m_ship: 40
+			h_tnk: 35
+			h_ship: 35
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
@@ -71,18 +71,18 @@ Jppa:
 		Spread: 128
 		Damage: 15
 		Versus:
-			flesh: 50
+			flesh: 60
 			struct: 30
 			def: 40
 			veh: 50
-			h_gun: 70
+			h_gun: 50
 			f_gun: 50
-			l_tnk: 60
-			l_ship: 60
-			m_tnk: 30
-			m_ship: 30
-			h_tnk: 10
-			h_ship: 10
+			l_tnk: 100
+			l_ship: 100
+			m_tnk: 60
+			m_ship: 60
+			h_tnk: 45
+			h_ship: 45
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
@@ -103,18 +103,18 @@ Lancia:
 		Spread: 128
 		Damage: 20
 		Versus:
-			flesh: 20
-			struct: 60
+			flesh: 40
+			struct: 70
 			def: 50
 			veh: 60
-			h_gun: 70
-			f_gun: 60
-			l_tnk: 80
-			l_ship: 80
-			m_tnk: 60
-			m_ship: 60
-			h_tnk: 30
-			h_ship: 30
+			h_gun: 40
+			f_gun: 40
+			l_tnk: 100
+			l_ship: 100
+			m_tnk: 100
+			m_ship: 100
+			h_tnk: 60
+			h_ship: 60
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
@@ -321,31 +321,31 @@ Plane:
 
 Scoda14:
 	ReloadDelay: 65
-	Range: 7c0
+	Range: 8c0
 	MinRange: 3c0
 	Report: tank5.aud
 	Projectile: Bullet
 		Speed: 400
 		Blockable: false
-		Angle: 20
+		Angle: 10
 		Inaccuracy: 0c682
 		Image: 120MM
-		ContrailLength: 30
+		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
-		Spread: 426
-		Damage: 80
+		Spread: 200
+		Damage: 100
 		Versus:
-			flesh: 20
+			flesh: 50
 			struct: 30
 			def: 50
 			h_gun: 100
 			f_gun: 100
 			l_tnk: 100
 			l_ship: 100
-			m_tnk: 80
-			m_ship: 80
-			h_tnk: 60
-			h_ship: 60
+			m_tnk: 90
+			m_ship: 90
+			h_tnk: 80
+			h_ship: 80
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
@@ -373,20 +373,20 @@ Howitzer:
 		ContrailLength: 30
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
-		Damage: 100
+		Damage: 150
 		Versus:
-			flesh: 80
-			struct: 60
-			def: 30
-			veh: 10
-			f_gun: 10
-			h_gun: 10
-			l_tnk: 10
-			l_ship: 10
-			m_tnk: 10
-			m_ship: 10
-			h_tnk: 10
-			h_ship: 10
+			flesh: 60
+			struct: 100
+			def: 80
+			veh: 40
+			f_gun: 40
+			h_gun: 40
+			l_tnk: 40
+			l_ship: 40
+			m_tnk: 40
+			m_ship: 40
+			h_tnk: 40
+			h_ship: 40
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge

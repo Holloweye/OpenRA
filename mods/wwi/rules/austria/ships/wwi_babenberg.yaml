@@ -4,8 +4,11 @@ WWI_BABENBERG:
 		Queue: Ship
 		BuildAtProductionType: Boat
 		BuildPaletteOrder: 50
+		Prerequisites: Pop10
 	Valued:
 		Cost: 2400
+	Population:
+		Amount: -10
 	Tooltip:
 		Name: Battleship
 		Description: Very slow long-range ship.\n  Strong vs Cruisers\n  Weak vs Submarines

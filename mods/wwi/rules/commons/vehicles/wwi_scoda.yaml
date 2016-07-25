@@ -5,12 +5,12 @@ WWI_SCODA:
 		BuildPaletteOrder: 70
 		Prerequisites: Pop2
 	Valued:
-		Cost: 600
+		Cost: 700
 	Population:
 		Amount: -2
 	Tooltip:
 		Name: Scoda modell 14
-		Description: Short-range artillery.\nStrong vs Tanks and buildings.
+		Description: Short-range artillery.\n  Strong vs Tanks and buildings.\n  Weak vs Infantry
 	Health:
 		HP: 100
 	Armor:

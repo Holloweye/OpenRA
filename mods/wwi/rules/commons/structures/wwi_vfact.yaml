@@ -18,8 +18,6 @@ WWI_VFACT:
 		Type: struct
 	RevealsShroud:
 		Range: 4c0
-	WithIdleOverlay@TOP:
-		Sequence: idle-top
 	Bib:
 	RallyPoint:
 	Exit@1:

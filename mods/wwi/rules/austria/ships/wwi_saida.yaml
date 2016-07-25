@@ -4,8 +4,11 @@ WWI_SAIDA:
 		Queue: Ship
 		BuildAtProductionType: Boat
 		BuildPaletteOrder: 50
+		Prerequisites: Pop10
 	Valued:
 		Cost: 1200
+	Population:
+		Amount: -10
 	Tooltip:
 		Name: Cruiser
 		Description: Fast ship.\n  Strong vs Submarines\n  Weak vs Battleships

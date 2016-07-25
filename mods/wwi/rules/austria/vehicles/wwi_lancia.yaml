@@ -8,7 +8,7 @@ WWI_LANCIA:
 		Cost: 950
 	Tooltip:
 		Name: Lancia Ansaldo IZ
-		Description: Heavy tank.
+		Description: Heavy tank.\n  Strong vs Light & Medium tanks\n  Weak vs Field guns
 	Population:
 		Amount: -6
 	Health:

@@ -10,13 +10,13 @@ WWI_ADP:
 		Amount: -5
 	Tooltip:
 		Name: Austro-Daimler Panzerwagen
-		Description: Light tank.
+		Description: Light tank.\n  Strong vs Infantry\n  Weak vs Medium & Heavy tanks
 	Health:
 		HP: 150
 	Armor:
 		Type: l_tnk
 	Mobile:
-		Speed: 80
+		Speed: 90
 		Crushes: mine
 	RevealsShroud:
 		Range: 5c0

@@ -138,12 +138,6 @@ wwi_vfact:
 	damaged-idle:
 		Start: 8
 		Length: 1
-	idle-top:
-		Start: 8
-		ZOffset: 1000000
-	damaged-idle-top:
-		Start: 8
-		ZOffset: 1000000
 	make:
 		Start: 0
 		Length: 9

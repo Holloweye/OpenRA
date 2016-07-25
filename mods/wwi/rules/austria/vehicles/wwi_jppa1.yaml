@@ -10,13 +10,13 @@ WWI_JPPA1:
 		Amount: -5
 	Tooltip:
 		Name: Junovicz Panzerwagen PA1
-		Description: Medium tank.
+		Description: Medium tank.\n  Strong vs Light tanks\n  Weak vs Heavy tanks
 	Health:
 		HP: 200
 	Armor:
 		Type: m_tnk
 	Mobile:
-		Speed: 55
+		Speed: 60
 		Crushes: mine, crush_fench
 	RevealsShroud:
 		Range: 4c0
