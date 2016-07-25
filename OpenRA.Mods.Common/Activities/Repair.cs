@@ -49,6 +49,13 @@ namespace OpenRA.Mods.Common.Activities
 
 			if (health.DamageState == DamageState.Undamaged)
 			{
+				if (host.Owner != self.Owner)
+				{
+					var exp = host.Owner.PlayerActor.TraitOrDefault<PlayerExperience>();
+					if (exp != null)
+						exp.GiveExperience(repairsUnits.PlayerExperience);
+				}
+
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", repairsUnits.FinishRepairingNotification, self.Owner.Faction.InternalName);
 				return NextActivity;
 			}
@@ -71,10 +78,10 @@ namespace OpenRA.Mods.Common.Activities
 					return this;
 				}
 
-				self.InflictDamage(self, -hpToRepair, null);
+				self.InflictDamage(self, new Damage(-hpToRepair));
 
 				foreach (var depot in host.TraitsImplementing<INotifyRepair>())
-					depot.Repairing(self, host);
+					depot.Repairing(host, self);
 
 				remainingTicks = repairsUnits.Interval;
 			}

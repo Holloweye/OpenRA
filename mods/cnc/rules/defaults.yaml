@@ -3,6 +3,7 @@
 	UpdatesPlayerStatistics:
 	CombatDebugOverlay:
 	GivesExperience:
+		PlayerExperienceModifier: 1
 	ScriptTriggers:
 	UpgradeManager:
 	Huntable:
@@ -210,9 +211,11 @@
 	Passenger:
 		CargoType: Infantry
 	HiddenUnderFog:
-	PoisonedByTiberium:
+	DamagedByTerrain:
 		UpgradeTypes: hazmatsuits
 		UpgradeMaxEnabledLevel: 0
+		Terrain: Tiberium, BlueTiberium
+		Weapon: Tiberium
 	GlobalUpgradable@BIO:
 		Upgrades: hazmatsuits
 		Prerequisites: bio
@@ -346,7 +349,7 @@
 	Selectable:
 		Bounds: 24,24
 	Targetable:
-		TargetTypes: Ground
+		TargetTypes: Ground, Creep
 	HiddenUnderFog:
 	RenderSprites:
 		Palette: terrain
@@ -392,7 +395,7 @@
 	Selectable:
 		Bounds: 24,24
 	Targetable:
-		TargetTypes: Ground
+		TargetTypes: Ground, Creep
 	AutoTarget:
 		ScanRadius: 5
 	AttackMove:
@@ -416,8 +419,9 @@
 	Guard:
 		Voice: Move
 	Guardable:
-	PoisonedByTiberium:
+	DamagedByTerrain:
 		Weapon: Heal
+		Terrain: Tiberium, BlueTiberium
 	Voiced:
 		VoiceSet: DinoVoice
 
@@ -512,6 +516,7 @@
 	RepairableBuilding:
 		RepairPercent: 40
 		RepairStep: 14
+		PlayerExperience: 15
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
@@ -557,6 +562,7 @@
 	RepairableBuilding:
 		RepairPercent: 40
 		RepairStep: 14
+		PlayerExperience: 15
 	EngineerRepairable:
 	RevealsShroud:
 		Range: 3c0

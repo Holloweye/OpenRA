@@ -21,130 +21,133 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.RA.Traits
 {
-    class InfiltratesInfo : ITraitInfo
-    {
-        public readonly HashSet<string> Types = new HashSet<string>();
 
-        [VoiceReference]
-        public readonly string Voice = "Action";
+	class InfiltratesInfo : ITraitInfo
+	{
+		public readonly HashSet<string> Types = new HashSet<string>();
 
-        [Desc("What diplomatic stances can be infiltrated by this actor.")]
-        public readonly Stance ValidStances = Stance.Neutral | Stance.Enemy;
+		[VoiceReference] public readonly string Voice = "Action";
 
-        [Desc("Behaviour when entering the structure.",
-            "Possible values are Exit, Suicide, Dispose.")]
-        public readonly EnterBehaviour EnterBehaviour = EnterBehaviour.Dispose;
+		[Desc("What diplomatic stances can be infiltrated by this actor.")]
+		public readonly Stance ValidStances = Stance.Neutral | Stance.Enemy;
 
-        [Desc("Notification to play when a building is infiltrated.")]
-        public readonly string Notification = "BuildingInfiltrated";
+		[Desc("Behaviour when entering the structure.",
+			"Possible values are Exit, Suicide, Dispose.")]
+		public readonly EnterBehaviour EnterBehaviour = EnterBehaviour.Dispose;
 
-        public object Create(ActorInitializer init) { return new Infiltrates(this); }
-    }
+		[Desc("Notification to play when a building is infiltrated.")]
+		public readonly string Notification = "BuildingInfiltrated";
 
-    class Infiltrates : IIssueOrder, IResolveOrder, IOrderVoice
-    {
-        readonly InfiltratesInfo info;
+		[Desc("Experience to grant to the infiltrating player.")]
+		public readonly int PlayerExperience = 0;
 
-        public Infiltrates(InfiltratesInfo info)
-        {
-            this.info = info;
-        }
+		public object Create(ActorInitializer init) { return new Infiltrates(this); }
+	}
 
-        public IEnumerable<IOrderTargeter> Orders
-        {
-            get { yield return new InfiltrationOrderTargeter(info); }
-        }
+	class Infiltrates : IIssueOrder, IResolveOrder, IOrderVoice
+	{
+		readonly InfiltratesInfo info;
 
-        public Order IssueOrder(Actor self, IOrderTargeter order, Target target, bool queued)
-        {
-            if (order.OrderID != "Infiltrate")
-                return null;
+		public Infiltrates(InfiltratesInfo info)
+		{
+			this.info = info;
+		}
 
-            if (target.Type == TargetType.FrozenActor)
-                return new Order(order.OrderID, self, queued) { ExtraData = target.FrozenActor.ID };
+		public IEnumerable<IOrderTargeter> Orders
+		{
+			get { yield return new InfiltrationOrderTargeter(info); }
+		}
 
-            return new Order(order.OrderID, self, queued) { TargetActor = target.Actor };
-        }
+		public Order IssueOrder(Actor self, IOrderTargeter order, Target target, bool queued)
+		{
+			if (order.OrderID != "Infiltrate")
+				return null;
 
-        bool IsValidOrder(Actor self, Order order)
-        {
-            // Not targeting an actor
-            if (order.ExtraData == 0 && order.TargetActor == null)
-                return false;
+			if (target.Type == TargetType.FrozenActor)
+				return new Order(order.OrderID, self, queued) { ExtraData = target.FrozenActor.ID };
 
-            IEnumerable<string> targetTypes;
+			return new Order(order.OrderID, self, queued) { TargetActor = target.Actor };
+		}
 
-            if (order.ExtraData != 0)
-            {
-                // Targeted an actor under the fog
-                var frozenLayer = self.Owner.PlayerActor.TraitOrDefault<FrozenActorLayer>();
-                if (frozenLayer == null)
-                    return false;
+		bool IsValidOrder(Actor self, Order order)
+		{
+			// Not targeting an actor
+			if (order.ExtraData == 0 && order.TargetActor == null)
+				return false;
 
-                var frozen = frozenLayer.FromID(order.ExtraData);
-                if (frozen == null)
-                    return false;
+			IEnumerable<string> targetTypes;
 
-                targetTypes = frozen.TargetTypes;
-            }
-            else
-                targetTypes = order.TargetActor.GetEnabledTargetTypes();
+			if (order.ExtraData != 0)
+			{
+				// Targeted an actor under the fog
+				var frozenLayer = self.Owner.PlayerActor.TraitOrDefault<FrozenActorLayer>();
+				if (frozenLayer == null)
+					return false;
 
-            return info.Types.Overlaps(targetTypes);
-        }
+				var frozen = frozenLayer.FromID(order.ExtraData);
+				if (frozen == null)
+					return false;
 
-        public string VoicePhraseForOrder(Actor self, Order order)
-        {
-            return order.OrderString == "Infiltrate" && IsValidOrder(self, order)
-                ? info.Voice : null;
-        }
+				targetTypes = frozen.TargetTypes;
+			}
+			else
+				targetTypes = order.TargetActor.GetEnabledTargetTypes();
 
-        public void ResolveOrder(Actor self, Order order)
-        {
-            if (order.OrderString != "Infiltrate" || !IsValidOrder(self, order))
-                return;
+			return info.Types.Overlaps(targetTypes);
+		}
 
-            var target = self.ResolveFrozenActorOrder(order, Color.Red);
-            if (target.Type != TargetType.Actor
-                || !info.Types.Overlaps(target.Actor.GetAllTargetTypes()))
-                return;
+		public string VoicePhraseForOrder(Actor self, Order order)
+		{
+			return order.OrderString == "Infiltrate" && IsValidOrder(self, order)
+				? info.Voice : null;
+		}
 
-            if (!order.Queued)
-                self.CancelActivity();
+		public void ResolveOrder(Actor self, Order order)
+		{
+			if (order.OrderString != "Infiltrate" || !IsValidOrder(self, order))
+				return;
 
-            self.SetTargetLine(target, Color.Red);
-            self.QueueActivity(new Infiltrate(self, target.Actor, info.EnterBehaviour, info.ValidStances, info.Notification));
-        }
-    }
+			var target = self.ResolveFrozenActorOrder(order, Color.Red);
+			if (target.Type != TargetType.Actor
+				|| !info.Types.Overlaps(target.Actor.GetAllTargetTypes()))
+				return;
 
-    class InfiltrationOrderTargeter : UnitOrderTargeter
-    {
-        readonly InfiltratesInfo info;
+			if (!order.Queued)
+				self.CancelActivity();
 
-        public InfiltrationOrderTargeter(InfiltratesInfo info)
-            : base("Infiltrate", 7, "enter", true, false)
-        {
-            this.info = info;
-        }
+			self.SetTargetLine(target, Color.Red);
+			self.QueueActivity(new Infiltrate(self, target.Actor, info.EnterBehaviour, info.ValidStances, info.Notification, info.PlayerExperience));
+		}
+	}
 
-        public override bool CanTargetActor(Actor self, Actor target, TargetModifiers modifiers, ref string cursor)
-        {
-            var stance = self.Owner.Stances[target.Owner];
+	class InfiltrationOrderTargeter : UnitOrderTargeter
+	{
+		readonly InfiltratesInfo info;
 
-            if (!info.ValidStances.HasStance(stance))
-                return false;
+		public InfiltrationOrderTargeter(InfiltratesInfo info)
+			: base("Infiltrate", 7, "enter", true, false)
+		{
+			this.info = info;
+		}
 
-            return info.Types.Overlaps(target.GetAllTargetTypes());
-        }
+		public override bool CanTargetActor(Actor self, Actor target, TargetModifiers modifiers, ref string cursor)
+		{
+			var stance = self.Owner.Stances[target.Owner];
 
-        public override bool CanTargetFrozenActor(Actor self, FrozenActor target, TargetModifiers modifiers, ref string cursor)
-        {
-            var stance = self.Owner.Stances[target.Owner];
+			if (!info.ValidStances.HasStance(stance))
+				return false;
 
-            if (!info.ValidStances.HasStance(stance))
-                return false;
+			return info.Types.Overlaps(target.GetAllTargetTypes());
+		}
 
-            return info.Types.Overlaps(target.Info.TraitInfos<ITargetableInfo>().SelectMany(ti => ti.GetTargetTypes()));
-        }
-    }
+		public override bool CanTargetFrozenActor(Actor self, FrozenActor target, TargetModifiers modifiers, ref string cursor)
+		{
+			var stance = self.Owner.Stances[target.Owner];
+
+			if (!info.ValidStances.HasStance(stance))
+				return false;
+
+			return info.Types.Overlaps(target.Info.TraitInfos<ITargetableInfo>().SelectMany(ti => ti.GetTargetTypes()));
+		}
+	}
 }

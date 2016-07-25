@@ -65,11 +65,18 @@ namespace OpenRA.Mods.Common.Activities
 
 					if (building != null && building.Locked)
 						building.Unlock();
+
+					if (self.Owner.Stances[oldOwner].HasStance(capturesInfo.PlayerExperienceStances))
+					{
+						var exp = self.Owner.PlayerActor.TraitOrDefault<PlayerExperience>();
+						if (exp != null)
+							exp.GiveExperience(capturesInfo.PlayerExperience);
+					}
 				}
 				else
 				{
 					var damage = health.MaxHP * capturesInfo.SabotageHPRemoval / 100;
-					actor.InflictDamage(self, damage, null);
+					actor.InflictDamage(self, new Damage(damage));
 				}
 
 				self.Dispose();

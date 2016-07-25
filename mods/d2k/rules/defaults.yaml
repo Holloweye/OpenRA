@@ -3,6 +3,7 @@
 	UpdatesPlayerStatistics:
 	CombatDebugOverlay:
 	GivesExperience:
+		PlayerExperienceModifier: 1
 	ScriptTriggers:
 	UpgradeManager:
 	Huntable:
@@ -262,6 +263,7 @@
 	WithBuildingExplosion:
 		Sequences: building, self_destruct, large_explosion
 	RepairableBuilding:
+		PlayerExperience: 25
 	EmitInfantryOnSell:
 		ActorTypes: light_inf
 	MustBeDestroyed:
@@ -277,7 +279,11 @@
 		Range: 3c0
 	WithCrumbleOverlay:
 	Demolishable:
-	DamagedWithoutFoundation:
+	DamagedByTerrain:
+		Weapon: weathering
+		Terrain: Rock
+		DamageThreshold: 50
+		StartOnThreshold: true
 	ThrowsShrapnel:
 		Weapons: Debris, Debris2, Debris3, Debris4
 		Pieces: 2, 5

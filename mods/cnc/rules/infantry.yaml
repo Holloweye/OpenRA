@@ -122,7 +122,7 @@ E5:
 		MuzzleSequence: muzzle
 	AttackFrontal:
 	WithMuzzleOverlay:
-	-PoisonedByTiberium:
+	-DamagedByTerrain:
 	WithInfantryBody:
 		AttackSequence: shoot
 
@@ -146,6 +146,7 @@ E6:
 	RepairsBridges:
 	Captures:
 		CaptureTypes: building, husk
+		PlayerExperience: 50
 	-AutoTarget:
 	-GainsExperience:
 

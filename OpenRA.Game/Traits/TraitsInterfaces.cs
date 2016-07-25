@@ -41,7 +41,7 @@ namespace OpenRA.Traits
 		int DisplayHP { get; }
 		bool IsDead { get; }
 
-		void InflictDamage(Actor self, Actor attacker, int damage, IWarhead warhead, bool ignoreModifiers);
+		void InflictDamage(Actor self, Actor attacker, Damage damage, bool ignoreModifiers);
 		void Kill(Actor self, Actor attacker);
 	}
 
@@ -82,11 +82,28 @@ namespace OpenRA.Traits
 
 	public class AttackInfo
 	{
-		public int Damage;
+		public Damage Damage;
 		public Actor Attacker;
-		public IWarhead Warhead;
 		public DamageState DamageState;
 		public DamageState PreviousDamageState;
+	}
+
+	public class Damage
+	{
+		public readonly int Value;
+		public readonly HashSet<string> DamageTypes;
+
+		public Damage(int damage, HashSet<string> damageTypes)
+		{
+			Value = damage;
+			DamageTypes = damageTypes;
+		}
+
+		public Damage(int damage)
+		{
+			Value = damage;
+			DamageTypes = new HashSet<string>();
+		}
 	}
 
 	public interface ITick { void Tick(Actor self); }
@@ -129,7 +146,7 @@ namespace OpenRA.Traits
 	public interface INotifySold { void Selling(Actor self); void Sold(Actor self); }
 	public interface INotifyDamage { void Damaged(Actor self, AttackInfo e); }
 	public interface INotifyDamageStateChanged { void DamageStateChanged(Actor self, AttackInfo e); }
-	public interface INotifyRepair { void Repairing(Actor self, Actor host); }
+	public interface INotifyRepair { void Repairing(Actor self, Actor target); }
 	public interface INotifyKilled { void Killed(Actor self, AttackInfo e); }
 	public interface INotifyActorDisposing { void Disposing(Actor self); }
 	public interface INotifyAppliedDamage { void AppliedDamage(Actor self, Actor damaged, AttackInfo e); }
@@ -249,7 +266,7 @@ namespace OpenRA.Traits
 	}
 
 	public interface IRenderModifier { IEnumerable<IRenderable> ModifyRender(Actor self, WorldRenderer wr, IEnumerable<IRenderable> r); }
-	public interface IDamageModifier { int GetDamageModifier(Actor attacker, IWarhead warhead); }
+	public interface IDamageModifier { int GetDamageModifier(Actor attacker, Damage damage); }
 	public interface ISpeedModifier { int GetSpeedModifier(); }
 	public interface IFirepowerModifier { int GetFirepowerModifier(); }
 	public interface IReloadModifier { int GetReloadModifier(); }

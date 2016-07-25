@@ -196,6 +196,7 @@
     <Compile Include="Lint\LintExts.cs" />
     <Compile Include="LoadScreens\ModChooserLoadScreen.cs" />
     <Compile Include="ActorInitializer.cs" />
+    <Compile Include="Scripting\Properties\AmmoPoolProperties.cs" />
     <Compile Include="ShroudExts.cs" />
     <Compile Include="Orders\BeaconOrderGenerator.cs" />
     <Compile Include="Orders\DeployOrderTargeter.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="Scripting\Properties\MissionObjectiveProperties.cs" />
     <Compile Include="Scripting\Properties\MobileProperties.cs" />
     <Compile Include="Scripting\Properties\DemolitionProperties.cs" />
+    <Compile Include="Scripting\Properties\PlayerExperienceProperties.cs" />
     <Compile Include="Scripting\Properties\PlayerProperties.cs" />
     <Compile Include="Scripting\Properties\PlayerStatsProperties.cs" />
     <Compile Include="Scripting\Properties\PowerProperties.cs" />
@@ -324,6 +326,7 @@
     <Compile Include="Traits\CustomBuildTimeValue.cs" />
     <Compile Include="Traits\CustomSellValue.cs" />
     <Compile Include="Traits\CustomSelectionSize.cs" />
+    <Compile Include="Traits\DamagedByTerrain.cs" />
     <Compile Include="Traits\Demolishable.cs" />
     <Compile Include="Traits\Demolition.cs" />
     <Compile Include="Traits\DetectCloaked.cs" />
@@ -387,6 +390,7 @@
     <Compile Include="Traits\Player\MissionObjectives.cs" />
     <Compile Include="Traits\Player\PlaceBeacon.cs" />
     <Compile Include="Traits\Player\PlaceBuilding.cs" />
+    <Compile Include="Traits\Player\PlayerExperience.cs" />
     <Compile Include="Traits\Player\PlayerStatistics.cs" />
     <Compile Include="Traits\Player\ProductionQueue.cs" />
     <Compile Include="Traits\Player\ProvidesPrerequisite.cs" />
@@ -768,6 +772,11 @@
     <Compile Include="Traits\Carryable.cs" />
     <Compile Include="Traits\Carryall.cs" />
     <Compile Include="Traits\Buildings\FreeActorWithDelivery.cs" />
+    <Compile Include="Traits\ExitsDebugOverlay.cs" />
+    <Compile Include="Traits\World\ExitsDebugOverlayManager.cs" />
+    <Compile Include="Activities\Air\FlyCircleTimed.cs" />
+    <Compile Include="UtilityCommands\ListInstallShieldCabContentsCommand.cs" />
+    <Compile Include="FileFormats\InstallShieldCABCompression.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -3,6 +3,7 @@
 	UpdatesPlayerStatistics:
 	CombatDebugOverlay:
 	GivesExperience:
+		PlayerExperienceModifier: 1
 	ScriptTriggers:
 	UpgradeManager:
 	Huntable:
@@ -125,6 +126,7 @@
 	Capturable:
 	RepairableBuilding:
 		IndicatorPalette: mouse
+		PlayerExperience: 25
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
@@ -218,8 +220,10 @@
 	ScriptTriggers:
 	UpgradeManager:
 	Health:
-		Shape: Circle
-			Radius: 363
+		Shape: Rectangle
+			RotateToIsometry: true
+			TopLeft: -384, -384
+			BottomRight: 384, 384
 			VerticalTopOffset: 512
 
 ^BuildingPlug:
@@ -282,7 +286,9 @@
 		Voice: Move
 	HiddenUnderFog:
 	ActorLostNotification:
-	PoisonedByTiberium:
+	DamagedByTerrain:
+		Terrain: Tiberium, BlueTiberium
+		Weapon: Tiberium
 	Guard:
 		Voice: Move
 	Guardable:
@@ -381,8 +387,9 @@
 	RevealsShroud:
 		Range: 4c0
 	MustBeDestroyed:
-	PoisonedByTiberium:
+	DamagedByTerrain:
 		Weapon: TiberiumHeal
+		Terrain: Tiberium, BlueTiberium
 	WithPermanentInjury:
 	WithInfantryBody:
 		AttackSequence: attack
@@ -463,9 +470,9 @@
 		Weapons: SmallDebris
 		Pieces: 3, 7
 		Range: 2c0, 5c0
-	PoisonedByTiberium:
+	DamagedByTerrain:
 		Weapon: Veins
-		Resources: Veins
+		Terrain: Veins
 	UpgradeOnDamage@DAMAGED:
 		Upgrades: damagedspeed
 		ValidDamageStates: Heavy
@@ -524,7 +531,7 @@
 	AppearsOnRadar:
 		UseLocation: true
 	Targetable@GROUND:
-		TargetTypes: Ground
+		TargetTypes: Ground, Vehicle
 		UpgradeTypes: airborne
 		UpgradeMaxEnabledLevel: 0
 	Targetable@AIRBORNE:
@@ -628,11 +635,12 @@
 	Selectable:
 		Bounds: 26,26,0,-3
 	Targetable:
-		TargetTypes: Ground
+		TargetTypes: Ground, Creep
 	AttackMove:
 	HiddenUnderFog:
-	PoisonedByTiberium:
+	DamagedByTerrain:
 		Weapon: TiberiumHeal
+		Terrain: Tiberium, BlueTiberium
 	Guardable:
 	WithSpriteBody:
 
@@ -742,7 +750,7 @@
 		Palette: pips
 	Selectable:
 	Targetable:
-		TargetTypes: Ground, Repair
+		TargetTypes: Ground, Building, Repair
 	Guardable:
 	HiddenUnderFog:
 	ActorLostNotification:
@@ -833,6 +841,7 @@
 	-MustBeDestroyed:
 	-WithSpriteBody:
 	WithGateSpriteBody:
+		OpenSequence: open
 	Tooltip:
 		Description: Automated barrier that opens for allied units.
 	Gate:
