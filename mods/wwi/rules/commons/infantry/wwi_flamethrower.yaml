@@ -8,7 +8,7 @@ WWI_FLAMETHROWER:
 	Population:
 		Amount: -1
 	Valued:
-		Cost: 100
+		Cost: 500
 	Tooltip:
 		Name: Flamethrower
 		Description: Strong vs Trench, Infantry\n  Weak vs Vehicles

@@ -8,8 +8,9 @@ Rifleman:
 		Spread: 128
 		Damage: 15
 		Versus:
-			struct: 10
-			def: 25
+			flesh: 100
+			struct: 20
+			def: 30
 			veh: 30
 			h_gun: 50
 			f_gun: 30
@@ -167,20 +168,20 @@ Grenadier:
 		Image: BOMB
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
-		Damage: 60
+		Damage: 80
 		Versus:
-			flesh: 50
+			flesh: 30
 			def: 100
 			struct: 100
-			veh: 20
-			h_gun: 30
-			f_gun: 20
-			l_tnk: 20
-			l_ship: 20
-			m_tnk: 30
-			m_ship: 30
-			h_tnk: 40
-			h_ship: 40
+			veh: 60
+			h_gun: 60
+			f_gun: 60
+			l_tnk: 60
+			l_ship: 60
+			m_tnk: 60
+			m_ship: 60
+			h_tnk: 60
+			h_ship: 60
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
@@ -199,7 +200,7 @@ Machinegunner:
 	Range: 5c0
 	Report: gun11.aud
 	Projectile: Bullet
-		Speed: 1c682
+		Speed: 2c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 15
@@ -240,18 +241,18 @@ Flamethrower:
 		Spread: 341
 		Damage: 8
 		Versus:
-			flesh: 60
-			struct: 5
+			flesh: 100
+			struct: 30
 			def: 100
 			veh: 20
-			h_gun: 30
+			h_gun: 50
 			f_gun: 20
-			l_tnk: 15
-			l_ship: 15
-			m_tnk: 10
-			m_ship: 10
-			h_tnk: 5
-			h_ship: 5
+			l_tnk: 20
+			l_ship: 20
+			m_tnk: 20
+			m_ship: 20
+			h_tnk: 20
+			h_ship: 20
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
@@ -270,7 +271,7 @@ Medic:
 		Spread: 213
 		Damage: -50
 		Versus:
-			flesh: 60
+			flesh: 100
 			struct: 0
 			def: 0
 			veh: 0
@@ -297,18 +298,18 @@ Plane:
 		Spread: 128
 		Damage: 10
 		Versus:
-			flesh: 60
-			struct: 2
-			def: 5
-			veh: 8
-			h_gun: 20
-			f_gun: 10
-			l_tnk: 8
-			l_ship: 8
-			m_tnk: 5
-			m_ship: 5
-			h_tnk: 2
-			h_ship: 2
+			flesh: 80
+			struct: 10
+			def: 10
+			veh: 30
+			h_gun: 40
+			f_gun: 40
+			l_tnk: 30
+			l_ship: 30
+			m_tnk: 20
+			m_ship: 20
+			h_tnk: 10
+			h_ship: 10
 			air: 100
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidTargets: Air, Ground

@@ -8,7 +8,7 @@ WWI_GRENADIER:
 	Population:
 		Amount: -1
 	Valued:
-		Cost: 100
+		Cost: 150
 	Tooltip:
 		Name: Grenadier
 		Description: Strong vs Buildings, Heavy tanks\n  Weak vs Vehicles

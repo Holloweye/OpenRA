@@ -1,0 +1,31 @@
+WWI_TRANS:
+	Inherits: ^Ship
+	Buildable:
+		Queue: Ship
+		BuildPaletteOrder: 10
+	Valued:
+		Cost: 700
+	Tooltip:
+		Name: Transport
+		Description: General-purpose naval transport.\nCan carry infantry, tanks and artillery.\n  Unarmed
+	Health:
+		HP: 350
+	Armor:
+		Type: m_ship
+	Mobile:
+		UpgradeTypes: notmobile
+		UpgradeMaxEnabledLevel: 0
+		TurnSpeed: 10
+		Speed: 113
+	RevealsShroud:
+		Range: 6c0
+	SelectionDecorations:
+		VisualBounds: 36,36
+	WithLandingCraftAnimation:
+		OpenTerrainTypes: Clear, Rough, Road, Ore, Gems, Beach
+	Cargo:
+		Types: Infantry, Vehicle
+		MaxWeight: 5
+		PipCount: 5
+		PassengerFacing: 0
+		LoadingUpgrades: notmobile

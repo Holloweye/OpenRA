@@ -54,11 +54,10 @@ Rules:
 	wwi|rules/commons/infantry/wwi_machinegunner.yaml
 	wwi|rules/commons/infantry/wwi_flamethrower.yaml
 	wwi|rules/commons/infantry/wwi_field_medic.yaml
-	wwi|rules/commons/vehicles/wwi_scoda.yaml
-	wwi|rules/commons/vehicles/wwi_skoda_howitzer.yaml
 	wwi|rules/commons/air/wwi_balloon.yaml
 	wwi|rules/commons/air/wwi_plane.yaml
 	wwi|rules/commons/ships/wwi_sub.yaml
+	wwi|rules/commons/ships/wwi_trans.yaml
 	wwi|rules/commons/structures/wwi_house.yaml
 	wwi|rules/commons/structures/wwi_stable.yaml
 	wwi|rules/commons/structures/wwi_barr.yaml
@@ -77,6 +76,8 @@ Rules:
 	wwi|rules/austria/vehicles/wwi_lancia.yaml
 	wwi|rules/austria/vehicles/wwi_trade.yaml
 	wwi|rules/austria/vehicles/wwi_flak.yaml
+	wwi|rules/austria/vehicles/wwi_scoda.yaml
+	wwi|rules/austria/vehicles/wwi_skoda_howitzer.yaml
 	wwi|rules/austria/ships/wwi_babenberg.yaml
 	wwi|rules/austria/ships/wwi_saida.yaml
 	wwi|rules/usa/structures/wwi_usa_hq.yaml

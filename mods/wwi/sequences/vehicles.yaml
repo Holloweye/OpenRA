@@ -111,3 +111,18 @@ wwi_sub:
 	idle:
 		Facings: 16
 	icon: wwi_sub_icon
+
+wwi_trans:
+	idle: lst
+	open: lst
+		Start: 1
+		Length: 4
+		Tick: 150
+	close: lst
+		Frames: 4, 3, 2, 1
+		Length: 4
+		Tick: 150
+	unload: lst
+		Start: 4
+		ZOffset: -511
+	icon: lsticon
