@@ -366,3 +366,66 @@ wwi_field_medic:
 		Facings: 8
 		Tick: 100
 	icon: mediicon
+
+wwi_engi:
+	stand:e6
+		Facings: 8
+	stand2:e6
+		Start: 8
+		Facings: 8
+	run:e6
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 100
+	idle1:e6
+		Start: 121
+		Length: 8
+		Tick: 120
+	idle2:e6
+		Start: 130
+		Length: 14
+		Tick: 120
+	die1:e6
+		Start: 146
+		Length: 8
+	die2:e6
+		Start: 154
+		Length: 8
+	die3:e6
+		Start: 162
+		Length: 8
+	die4:e6
+		Start: 170
+		Length: 12
+	die5:e6
+		Start: 182
+		Length: 18
+	die6: electro
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			DESERT: TEMPERAT
+			INTERIOR: TEMPERAT
+	die-crushed: corpse1
+		Length: 6
+		Tick: 1600
+		ZOffset: -511
+		UseTilesetExtension: true
+		TilesetOverrides:
+			DESERT: TEMPERAT
+			INTERIOR: TEMPERAT
+	prone-stand:e6
+		Start: 82
+		Stride: 4
+		Facings: 8
+	prone-stand2:e6
+		Start: 82
+		Stride: 4
+		Facings: 8
+	prone-run:e6
+		Start: 82
+		Length: 4
+		Facings: 8
+		Tick: 100
+	icon: e6icon

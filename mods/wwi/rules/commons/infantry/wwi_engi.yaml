@@ -1,0 +1,25 @@
+WWI_ENGI:
+	Inherits: ^Soldier
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 60
+		Prerequisites: Pop1
+	Valued:
+		Cost: 500
+	Population:
+		Amount: -1
+	Tooltip:
+		Name: Engineer
+		Description: Captures and repairs structures.\n  Unarmed
+	Passenger:
+		PipType: Yellow
+	EngineerRepair:
+	RepairsBridges:
+	ExternalCaptures:
+		Type: building
+	-AutoTarget:
+	Voiced:
+		VoiceSet: EngineerVoice
+	Selectable:
+		Priority: 5
