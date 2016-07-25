@@ -445,7 +445,7 @@ Babenberg:
 Saida:
 	ReloadDelay: 250
 	Range: 16c0
-	Burst: 2
+	Burst: 1
 	Report: turret1.aud
 	Projectile: Bullet
 		Speed: 204

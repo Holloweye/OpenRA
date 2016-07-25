@@ -37,6 +37,7 @@ WWI_SAIDA:
 		Offset: -704,0,140
 		TurnSpeed: 3
 	Armament@PRIMARY:
+		Name: primary
 		Turret: primary
 		Weapon: saida
 		LocalOffset: 480,-100,40, 480,100,40
@@ -68,6 +69,7 @@ WWI_SAIDA:
 		RecoilRecovery: 34
 		MuzzleSequence: muzzle
 	AttackTurreted:
+		Armaments: primary, secondary, third, forth
 	WithMuzzleOverlay:
 	WithSpriteTurret@PRIMARY:
 		Turret: primary
