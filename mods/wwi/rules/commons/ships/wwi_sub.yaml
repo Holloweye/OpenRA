@@ -43,7 +43,7 @@ WWI_SUB:
 		FireDelay: 2
 	AttackFrontal:
 	SelectionDecorations:
-		VisualBounds: 38,38
+		VisualBounds: 50,46
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
