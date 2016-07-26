@@ -4,6 +4,7 @@ using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Pathfinder;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.WWI.Activities;
+using OpenRA.Mods.WWI.Orders;
 using OpenRA.Traits;
 using System;
 using System.Collections.Generic;
@@ -110,22 +111,22 @@ namespace OpenRA.Mods.WWI.Traits
         {
             get
             {
-                yield return new EnterAlliedActorTargeter<BuildingInfo>("Trade", 5,
-                    a => info.TradeBuildings.Contains(a.Info.Name) && ((a.Owner == self.Owner && info.TradesWithOwnedBuildings) || (a.Owner.IsAlliedWith(self.Owner) && info.TradesWithAlliedBuildings) || (!a.Owner.IsAlliedWith(self.Owner) && info.TradesWithEnemyBuildings)),
-                    a => !isLoaded);
-                yield return new EnterAlliedActorTargeter<BuildingInfo>("DeliverTrade", 5,
-                    a => info.DeliveryBuildings.Contains(a.Info.Name) && ((a.Owner == self.Owner && info.DeliversToOwnedBuildings) || (a.Owner.IsAlliedWith(self.Owner) && info.DeliversToAlliedBuildings) || (!a.Owner.IsAlliedWith(self.Owner) && info.DeliversToEnemyBuildings)),
-                    a => isLoaded);
+                yield return new GenericTargeter<BuildingInfo>("Trade", 5,
+                    a => !isLoaded && info.TradeBuildings.Contains(a.Info.Name) && ((a.Owner == self.Owner && info.TradesWithOwnedBuildings) || (a.Owner.IsAlliedWith(self.Owner) && info.TradesWithAlliedBuildings) || (!a.Owner.IsAlliedWith(self.Owner) && info.TradesWithEnemyBuildings)),
+                    a => "enter");
+                yield return new GenericTargeter<BuildingInfo>("DeliverTrade", 5,
+                    a => isLoaded && info.DeliveryBuildings.Contains(a.Info.Name) && ((a.Owner == self.Owner && info.DeliversToOwnedBuildings) || (a.Owner.IsAlliedWith(self.Owner) && info.DeliversToAlliedBuildings) || (!a.Owner.IsAlliedWith(self.Owner) && info.DeliversToEnemyBuildings)),
+                    a => "enter");
             }
         }
 
         public Order IssueOrder(Actor self, IOrderTargeter order, Target target, bool queued)
         {
             if (order.OrderID == "Trade")
-                return new Order(order.OrderID, self, queued) { TargetActor = target.Actor };
+                return new Order(order.OrderID, self, queued) { TargetActor = (target.Actor != null ? target.Actor : target.FrozenActor.Actor) };
 
             if (order.OrderID == "DeliverTrade")
-                return new Order(order.OrderID, self, queued) { TargetActor = target.Actor };
+                return new Order(order.OrderID, self, queued) { TargetActor = (target.Actor != null ? target.Actor : target.FrozenActor.Actor) };
 
             return null;
         }
