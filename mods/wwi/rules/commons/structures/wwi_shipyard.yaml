@@ -59,3 +59,5 @@ WWI_SHIPYARD:
 		ZOffset: 256
 		UpgradeTypes: primary
 		UpgradeMinEnabledLevel: 1
+	Selectable:
+		Bounds: 67,67,0,-5

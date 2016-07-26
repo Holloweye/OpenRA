@@ -55,3 +55,5 @@ WWI_STABLE:
 	ProductionBar:
 	Power:
 		Amount: -30
+	Selectable:
+		Bounds: 60,55,0,0

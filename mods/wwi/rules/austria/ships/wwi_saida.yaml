@@ -22,7 +22,7 @@ WWI_SAIDA:
 	RevealsShroud:
 		Range: 7c0
 	SelectionDecorations:
-		VisualBounds: 44,44
+		VisualBounds: 50,46
 	Turreted@PRIMARY:
 		Turret: primary
 		Offset: -1364,0,140
