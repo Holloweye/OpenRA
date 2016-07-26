@@ -43,7 +43,7 @@ WWI_BALLOON.Husk:
 		Offset: -853,0,0
 	Aircraft:
 		TurnSpeed: 1
-		Speed: 100
+		Speed: 50
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,0
 		Interval: 2
