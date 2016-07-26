@@ -35,38 +35,23 @@ Container@SKIRMISH_STATS:
 			Children:
 				Label@NAME:
 					X: 10
-					Width: 150
+					Width: 210
 					Height: 25
 					Text: Player
 					Font: Bold
 				Label@FACTION:
-					X: 150
-					Width: 80
+					X: 230
+					Width: 120
 					Height: 25
 					Text: Faction
 					Font: Bold
-					Align: Center
-				Label@STANCE:
-					X: 260
-					Width: 50
+				Label@SCORE:
+					X: 360
+					Width: 75
 					Height: 25
-					Text: Team
+					Text: Score
 					Font: Bold
-					Align: Center
-				Label@KILLS:
-					X: 310
-					Width: 70
-					Height: 25
-					Text: Kills
-					Font: Bold
-					Align: Center
-				Label@DEATHS:
-					X: 380
-					Width: 70
-					Height: 25
-					Text: Deaths
-					Font: Bold
-					Align: Center
+					Align: Right
 		ScrollPanel@PLAYER_LIST:
 			X: 20
 			Y: 105
@@ -99,7 +84,6 @@ Container@SKIRMISH_STATS:
 					Width: PARENT_RIGHT-27
 					Height: 25
 					X: 2
-					Y: 0
 					Children:
 						Label@NAME:
 							X: 10

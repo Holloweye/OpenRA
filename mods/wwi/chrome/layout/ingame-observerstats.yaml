@@ -308,27 +308,39 @@ Background@INGAME_OBSERVERSTATS_BG:
 									Width: 80
 									Height: PARENT_BOTTOM
 								Label@KILLS:
-									X: 475
+									X: 455
 									Y: 0
-									Width: 40
+									Width: 60
 									Height: PARENT_BOTTOM
 									Align: Right
 								Label@DEATHS:
-									X: 535
+									X: 515
 									Y: 0
-									Width: 40
+									Width: 60
 									Height: PARENT_BOTTOM
 									Align: Right
-								Label@KD_RATIO:
-									X: 595
+								Label@ASSETS_DESTROYED:
+									X: 575
 									Y: 0
 									Width: 80
 									Height: PARENT_BOTTOM
 									Align: Right
-								Label@ACTIONS_MIN:
-									X: 725
+								Label@ASSETS_LOST:
+									X: 655
 									Y: 0
-									Width: 40
+									Width: 80
+									Height: PARENT_BOTTOM
+									Align: Right
+								Label@EXPERIENCE:
+									X: 735
+									Y: 0
+									Width: 95
+									Height: PARENT_BOTTOM
+									Align: Right
+								Label@ACTIONS_MIN:
+									X: 830
+									Y: 0
+									Width: 90
 									Height: PARENT_BOTTOM
 									Align: Right
 						ScrollItem@ECONOMY_PLAYER_TEMPLATE:
@@ -434,12 +446,12 @@ Background@INGAME_OBSERVERSTATS_BG:
 									Width: 160
 									Height: PARENT_BOTTOM
 									Font: Bold
-								Label@KILLS_COST:
+								Label@ASSETS_DESTROYED:
 									X: 215
 									Y: 0
 									Width: 60
 									Height: PARENT_BOTTOM
-								Label@DEATHS_COST:
+								Label@ASSETS_LOST:
 									X: 295
 									Y: 0
 									Width: 60
