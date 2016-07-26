@@ -53,6 +53,7 @@ Player:
 	PlayerResources:
 	SupportPowerManager:
 	PowerManager:
+	AllyRepair:
 	PopulationManager:
 	DeveloperMode:
 	Shroud:

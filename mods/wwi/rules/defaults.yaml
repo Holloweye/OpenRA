@@ -93,6 +93,7 @@
 	UpdatesPlayerStatistics:
 	GivesBuildableArea:
 	RepairableBuilding:
+		PlayerExperience: 25
 	EngineerRepairable:
 	AcceptsSupplies:
 	WithMakeAnimation:
