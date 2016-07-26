@@ -3,15 +3,19 @@ UnitExplodeSmall:
 		Spread: 426
 		Damage: 40
 		Versus:
-			flesh: 80
+			flesh: 100
 			struct: 10
 			def: 25
 			veh: 30
 			h_gun: 50
 			f_gun: 30
 			l_tnk: 30
+			l_ship: 30
 			m_tnk: 20
+			m_ship: 20
 			h_tnk: 10
+			h_ship: 10
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: large_explosion
@@ -28,23 +32,27 @@ UnitExplode:
 		Damage: 50
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Versus:
-			flesh: 80
+			flesh: 100
 			struct: 10
 			def: 25
 			veh: 30
 			h_gun: 50
 			f_gun: 30
 			l_tnk: 30
+			l_ship: 30
 			m_tnk: 20
+			m_ship: 20
 			h_tnk: 10
+			h_ship: 10
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
-		Explosion: self_destruct
-		ImpactSound: kaboom22.aud
+		Explosions: self_destruct
+		ImpactSounds: kaboom22.aud
 		InvalidImpactTypes: Water
 	Warhead@3EffWater: CreateEffect
-		Explosion: large_splash
-		ImpactSound: splash9.aud
+		Explosions: large_splash
+		ImpactSounds: splash9.aud
 		ValidImpactTypes: Water
 
 UnitExplodeShip:
@@ -52,10 +60,19 @@ UnitExplodeShip:
 		Spread: 426
 		Damage: 50
 		Versus:
-			None: 90
-			Wood: 75
-			Light: 60
-			Heavy: 25
+			flesh: 100
+			struct: 10
+			def: 25
+			veh: 30
+			h_gun: 50
+			f_gun: 30
+			l_tnk: 30
+			l_ship: 30
+			m_tnk: 20
+			m_ship: 20
+			h_tnk: 10
+			h_ship: 10
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: building
@@ -66,10 +83,19 @@ UnitExplodeSubmarine:
 		Spread: 426
 		Damage: 50
 		Versus:
-			None: 90
-			Wood: 75
-			Light: 60
-			Heavy: 25
+			flesh: 100
+			struct: 10
+			def: 25
+			veh: 30
+			h_gun: 50
+			f_gun: 30
+			l_tnk: 30
+			l_ship: 30
+			m_tnk: 20
+			m_ship: 20
+			h_tnk: 10
+			h_ship: 10
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: large_splash
@@ -83,11 +109,19 @@ BarrelExplode:
 		Delay: 5
 		ValidTargets: Ground, Trees
 		Versus:
-			None: 120
-			Wood: 200
-			Light: 50
-			Heavy: 25
-			Concrete: 10
+			flesh: 100
+			struct: 10
+			def: 25
+			veh: 30
+			h_gun: 50
+			f_gun: 30
+			l_tnk: 30
+			l_ship: 30
+			m_tnk: 20
+			m_ship: 20
+			h_tnk: 10
+			h_ship: 10
+			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, Incendiary
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
