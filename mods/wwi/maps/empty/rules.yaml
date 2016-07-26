@@ -7,3 +7,5 @@ World:
 	MusicPlaylist:
 		BackgroundMusic: intro
 	-StartGameNotification:
+	LuaScript:
+		Scripts: shellmap.lua
