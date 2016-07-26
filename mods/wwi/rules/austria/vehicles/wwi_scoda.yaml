@@ -3,7 +3,7 @@ WWI_SCODA:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 70
-		Prerequisites: Pop2
+		Prerequisites: vehicles.austria, Pop2
 	Valued:
 		Cost: 700
 	Population:

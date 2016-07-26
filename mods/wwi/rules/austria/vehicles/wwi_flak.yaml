@@ -3,7 +3,7 @@ WWI_FLAK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 60
-		Prerequisites: Pop2
+		Prerequisites: vehicles.austria, reconnaissance, Pop2
 	Valued:
 		Cost: 600
 	Population:
