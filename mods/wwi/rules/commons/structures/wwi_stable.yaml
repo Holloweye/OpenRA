@@ -2,7 +2,7 @@ WWI_STABLE:
 	Inherits: ^Building
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 70
+		BuildPaletteOrder: 40
 		Prerequisites: powerplant
 	Valued:
 		Cost: 400

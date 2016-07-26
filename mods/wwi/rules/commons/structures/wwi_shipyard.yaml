@@ -2,7 +2,7 @@ WWI_SHIPYARD:
 	Inherits: ^Building
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 80
 		Prerequisites: powerplant
 	Valued:
 		Cost: 1000

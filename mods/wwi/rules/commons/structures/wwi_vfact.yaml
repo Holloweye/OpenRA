@@ -2,7 +2,7 @@ WWI_VFACT:
 	Inherits: ^Building
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 45
 		Prerequisites: powerplant
 	Valued:
 		Cost: 2000

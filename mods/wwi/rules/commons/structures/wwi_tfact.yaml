@@ -2,7 +2,7 @@ WWI_TFACT:
 	Inherits: ^Building
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 80
+		BuildPaletteOrder: 70
 		Prerequisites: vehiclefactory
 	Valued:
 		Cost: 2000
