@@ -16,7 +16,7 @@
 		Name: Germany
 		InternalName: germany
 		Side: CentralPowers
-		Selectable: True
+		Selectable: False
 	Faction@1:
 		Name: Austria & Hungary
 		InternalName: austria
@@ -26,36 +26,36 @@
 		Name: Ottoman Empire
 		InternalName: ottoman
 		Side: CentralPowers
-		Selectable: True
+		Selectable: False
 	Faction@3:
 		Name: United Kingdom
 		InternalName: uk
 		Side: Allies
-		Selectable: True
+		Selectable: False
 	Faction@4:
 		Name: France
 		InternalName: france
 		Side: Allies
-		Selectable: True
+		Selectable: False
 	Faction@5:
 		Name: Italy
 		InternalName: italy
 		Side: Allies
-		Selectable: True
+		Selectable: False
 	Faction@6:
 		Name: Russia
 		InternalName: russia
 		Side: Allies
-		Selectable: True
+		Selectable: False
 	Faction@7:
 		Name: USA
 		InternalName: usa
 		Side: Allies
-		Selectable: True
+		Selectable: False
 	Faction@random:
 		Name: Any
 		InternalName: Random
-		RandomFactionMembers: germany, austria, ottoman, uk, france, italy, russia, usa
+		RandomFactionMembers: austria
 		Side: Random
 		Description: A random country.
 	ResourceType@ore:
