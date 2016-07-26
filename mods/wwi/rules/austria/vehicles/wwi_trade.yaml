@@ -2,7 +2,7 @@ WWI_TRADE:
 	Inherits: ^Vehicle
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 10
 		Prerequisites: vehicles.austria, Pop2
 	Valued:
 		Cost: 700

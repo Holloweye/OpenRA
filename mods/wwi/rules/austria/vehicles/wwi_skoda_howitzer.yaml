@@ -2,7 +2,7 @@ WWI_SKODA_HOWITZER:
 	Inherits: ^Tank
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 70
+		BuildPaletteOrder: 30
 		Prerequisites: vehicles.austria, Pop4
 	Valued:
 		Cost: 950

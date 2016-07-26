@@ -298,7 +298,7 @@ Plane:
 		Spread: 128
 		Damage: 10
 		Versus:
-			flesh: 80
+			flesh: 100
 			struct: 10
 			def: 10
 			veh: 30

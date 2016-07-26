@@ -2,7 +2,7 @@ WWI_LANCIA:
 	Inherits: ^Tank
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 60
 		Prerequisites: tanks.austria, Pop6
 		BuildAtProductionType: Tank
 	Valued:
