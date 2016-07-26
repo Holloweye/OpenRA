@@ -1,0 +1,9 @@
+Player:
+	-ConquestVictoryConditions:
+
+World:
+	-SpawnMPUnits:
+	-MPStartLocations:
+	MusicPlaylist:
+		BackgroundMusic: intro
+	-StartGameNotification:
