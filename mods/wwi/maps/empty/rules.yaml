@@ -9,3 +9,5 @@ World:
 	-StartGameNotification:
 	LuaScript:
 		Scripts: shellmap.lua
+	SoundModifier:
+		Volume: 70
