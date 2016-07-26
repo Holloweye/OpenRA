@@ -2,10 +2,10 @@ WWI_STABLE:
 	Inherits: ^Building
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 60
+		BuildPaletteOrder: 70
 		Prerequisites: powerplant
 	Valued:
-		Cost: 2000
+		Cost: 400
 	Tooltip:
 		Name: Stable
 		Description: Produces mounted troops.
@@ -13,7 +13,7 @@ WWI_STABLE:
 		Footprint: xx xx
 		Dimensions: 2,2
 	Health:
-		HP: 600
+		HP: 800
 	Armor:
 		Type: struct
 	RevealsShroud:

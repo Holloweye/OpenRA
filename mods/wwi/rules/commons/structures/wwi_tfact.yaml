@@ -25,6 +25,8 @@ WWI_TFACT:
 		ExitCell: 1,2
 	Production:
 		Produces: Tank
+	ProvidesPrerequisite@tankfactory:
+		Prerequisite: tankfactory
 	ProvidesPrerequisite@austria:
 		Factions: austria
 		Prerequisite: tanks.austria

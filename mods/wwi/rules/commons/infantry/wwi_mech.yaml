@@ -1,0 +1,39 @@
+WWI_MECH:
+	Inherits: ^Soldier
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 100
+		Prerequisites: Pop1, tankfactory
+	Valued:
+		Cost: 500
+	Population:
+		Amount: -1
+	Tooltip:
+		Name: Mechanic
+		Description: Repairs nearby vehicles and restores\nhusks to working condition by capturing them.\n  Unarmed
+	Health:
+		HP: 80
+	Mobile:
+		Voice: Move
+	RevealsShroud:
+		Range: 3c0
+	Passenger:
+		PipType: Yellow
+		Voice: Move
+	Armament:
+		Weapon: Repair
+		Cursor: repair
+		OutsideRangeCursor: repair
+		TargetStances: Ally
+		ForceTargetStances: None
+	AttackFrontal:
+		Voice: Move
+	Captures:
+		CaptureTypes: husk
+		PlayerExperience: 25
+	WithInfantryBody:
+		AttackSequence: repair
+		StandSequences: stand
+	Voiced:
+		VoiceSet: MechanicVoice

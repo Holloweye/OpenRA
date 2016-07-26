@@ -2,7 +2,7 @@ WWI_BARR:
 	Inherits: ^Building
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 30
+		BuildPaletteOrder: 20
 		Prerequisites: powerplant
 	Valued:
 		Cost: 400

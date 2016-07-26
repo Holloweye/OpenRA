@@ -5,7 +5,7 @@ WWI_HOUSE:
 		Dimensions: 2,2
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 20
+		BuildPaletteOrder: 30
 		Prerequisites: powerplant
 	Health:
 		HP: 400

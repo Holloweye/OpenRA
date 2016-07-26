@@ -56,6 +56,7 @@ Rules:
 	wwi|rules/commons/infantry/wwi_field_medic.yaml
 	wwi|rules/commons/infantry/wwi_engi.yaml
 	wwi|rules/commons/infantry/wwi_thief.yaml
+	wwi|rules/commons/infantry/wwi_mech.yaml
 	wwi|rules/commons/air/wwi_balloon.yaml
 	wwi|rules/commons/air/wwi_plane.yaml
 	wwi|rules/commons/ships/wwi_sub.yaml

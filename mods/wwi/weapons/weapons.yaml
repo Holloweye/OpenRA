@@ -535,3 +535,16 @@ Sub:
 		Explosions: large_splash
 		ImpactSounds: splash9.aud
 		ValidImpactTypes: Water
+
+Repair:
+	ReloadDelay: 80
+	Range: 4c0
+	Report: fixit1.aud
+	ValidTargets: Repair
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Damage: -20
+		ValidTargets: Repair
+		DebugOverlayColor: 00FF00

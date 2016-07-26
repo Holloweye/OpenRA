@@ -2,7 +2,7 @@ WWI_AIRSTRIP:
 	Inherits: ^Building
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 60
 		Prerequisites: reconnaissance
 	Valued:
 		Cost: 500
