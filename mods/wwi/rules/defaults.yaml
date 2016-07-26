@@ -61,7 +61,7 @@
 	Selectable:
 		Priority: 3
 	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure
+		TargetTypes: Ground, C4, DetonateAttack, Structure, TheifInfiltrate
 	Building:
 		Dimensions: 1,1
 		Footprint: x
@@ -83,6 +83,10 @@
 	FrozenUnderFog:
 	Tooltip:
 		GenericName: Structure
+	InfiltrateForCash:
+		Percentage: 100
+		Minimum: 500
+		Notification: CreditsStolen
 
 ^Building:
 	Inherits: ^BasicBuilding

@@ -1,0 +1,24 @@
+WWI_THIEF:
+	Inherits: ^Infantry
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 90
+		Prerequisites: reconnaissance
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Thief
+		GenericName: Soldier
+		Description: Steal credits from enemy structures.\n  Special Ability: Steal
+	RevealsShroud:
+		Range: 5c0
+	Passenger:
+		PipType: Yellow
+		Voice: Move
+	Infiltrates:
+		Types: TheifInfiltrate
+		PlayerExperience: 50
+		ValidStances: Enemy
+	Voiced:
+		VoiceSet: ThiefVoice

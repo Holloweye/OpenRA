@@ -43,16 +43,19 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\Copied\Infiltrate.cs" />
     <Compile Include="Activities\DeliverGoods.cs" />
     <Compile Include="Activities\FindGoods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Traits\Copied\InfiltrateForCash.cs" />
+    <Compile Include="Traits\Copied\Infiltrates.cs" />
     <Compile Include="Traits\Passable.cs" />
     <Compile Include="Traits\Population.cs" />
     <Compile Include="Traits\PopulationManager.cs" />
     <Compile Include="Traits\CellModifier.cs" />
     <Compile Include="Traits\TankArmor.cs" />
     <Compile Include="Traits\Trader.cs" />
-    <Compile Include="Traits\WithLandingCraftAnimation.cs" />
+    <Compile Include="Traits\Copied\WithLandingCraftAnimation.cs" />
     <Compile Include="Widgets\Logic\IngamePopCounterLogic.cs" />
   </ItemGroup>
   <ItemGroup>
