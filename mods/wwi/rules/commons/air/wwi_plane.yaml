@@ -48,7 +48,7 @@ WWI_PLANE:
 		EnableStances: false
 	ReturnOnIdle:
 	SelectionDecorations:
-		VisualBounds: 30,28,0,2
+		VisualBounds: 30,35,0,-4
 	WithMuzzleOverlay:
 	Contrail:
 		Offset: -853,0,0

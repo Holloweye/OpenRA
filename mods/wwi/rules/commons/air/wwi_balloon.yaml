@@ -26,8 +26,9 @@ WWI_BALLOON:
 		TurnSpeed: 1
 		Speed: 10
 		AltitudeVelocity: 0c10
+		CruiseAltitude: 3000
 	SelectionDecorations:
-		VisualBounds: 38,32,0,0
+		VisualBounds: 38,50,0,-18
 	SpawnActorOnDeath:
 		Actor: WWI_BALLOON.Husk
 	SmokeTrailWhenDamaged:
