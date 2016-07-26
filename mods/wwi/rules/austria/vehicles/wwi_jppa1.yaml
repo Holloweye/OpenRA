@@ -24,9 +24,9 @@ WWI_JPPA1:
 	AttackFrontal:
 	Armament@PRIMARY:
 		Weapon: Jppa
-		LocalOffset: 300,-513,0
+		LocalOffset: 300,0,350
 		MuzzleSequence: muzzle
 	WithMuzzleOverlay:
 	AutoTarget:
 	SelectionDecorations:
-		VisualBounds: 30,30,0,-7
+		VisualBounds: 35,30,0,-5

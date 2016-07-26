@@ -22,7 +22,7 @@ WWI_SCODA:
 		Range: 4c0
 	Armament:
 		Weapon: Scoda14
-		LocalOffset: 624,0,608
+		LocalOffset: 724,0,308
 		MuzzleSequence: muzzle
 	AttackFrontal:
 	WithMuzzleOverlay:

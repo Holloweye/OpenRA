@@ -26,11 +26,11 @@ WWI_FLAK:
 	Armament@AA:
 		Weapon: Flak
 		Recoil: 85
-		LocalOffset: 512,0,192
+		LocalOffset: 550,0,800
 		MuzzleSequence: muzzle
 	AttackTurreted:
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	AutoTarget:
 	SelectionDecorations:
-		VisualBounds: 28,28
+		VisualBounds: 35,35

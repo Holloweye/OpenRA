@@ -27,10 +27,10 @@ WWI_LANCIA:
 	AttackTurreted:
 	Armament@PRIMARY:
 		Weapon: Lancia
-		LocalOffset: -380,0,500
+		LocalOffset: 380,0,0
 		MuzzleSequence: muzzle
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	AutoTarget:
 	SelectionDecorations:
-		VisualBounds: 30,30,0,-7
+		VisualBounds: 30,30,0,-4
