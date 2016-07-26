@@ -22,7 +22,7 @@ WWI_AIRSTRIP:
 	Exit@1:
 		SpawnOffset: 0,170,0
 		ExitCell: 1,1
-		Facing: 192
+		Facing: 150
 		MoveIntoWorld: false
 	RallyPoint:
 	Production:

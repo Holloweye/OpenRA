@@ -33,7 +33,7 @@ WWI_PLANE:
 	Aircraft:
 		CruiseAltitude: 2560
 		RearmBuildings: wwi_airstrip
-		InitialFacing: 192
+		InitialFacing: 150
 		TurnSpeed: 2
 		Speed: 100
 		RepulsionSpeed: 40
