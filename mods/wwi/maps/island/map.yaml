@@ -897,3 +897,21 @@ Actors:
 	Actor302: t15
 		Owner: Neutral
 		Location: 101,42
+	Actor303: tc03
+		Owner: Neutral
+		Location: 110,114
+	Actor304: tc02
+		Owner: Neutral
+		Location: 110,117
+	Actor305: t16
+		Owner: Neutral
+		Location: 112,115
+	Actor306: t07
+		Owner: Neutral
+		Location: 113,117
+	Actor307: t07
+		Owner: Neutral
+		Location: 97,110
+	Actor308: t16
+		Owner: Neutral
+		Location: 15,3
