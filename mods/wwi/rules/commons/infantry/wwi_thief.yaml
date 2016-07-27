@@ -4,7 +4,7 @@ WWI_THIEF:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 90
-		Prerequisites: reconnaissance, Pop1
+		Prerequisites: reconnaissance, barracks, Pop1
 	Valued:
 		Cost: 500
 	Population:

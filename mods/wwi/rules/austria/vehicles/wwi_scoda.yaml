@@ -4,6 +4,7 @@ WWI_SCODA:
 		Queue: Vehicle
 		BuildPaletteOrder: 20
 		Prerequisites: vehicles.austria, Pop2
+		BuildAtProductionType: SmallVehicle
 	Valued:
 		Cost: 700
 	Population:

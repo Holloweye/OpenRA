@@ -5,7 +5,7 @@ WWI_STABLE:
 		BuildPaletteOrder: 40
 		Prerequisites: powerplant
 	Valued:
-		Cost: 400
+		Cost: 200
 	Tooltip:
 		Name: Stable
 		Description: Produces mounted troops.
@@ -13,7 +13,7 @@ WWI_STABLE:
 		Footprint: xx xx
 		Dimensions: 2,2
 	Health:
-		HP: 800
+		HP: 500
 	Armor:
 		Type: struct
 	RevealsShroud:
@@ -24,7 +24,7 @@ WWI_STABLE:
 		SpawnOffset: 0,1300,0
 		ExitCell: 1,2
 	Production:
-		Produces: Mounted
+		Produces: Infantry, Mounted
 	ProvidesPrerequisite@stable:
 		Prerequisite: stable
 	ProvidesPrerequisite@austria:
@@ -54,6 +54,6 @@ WWI_STABLE:
 	PrimaryBuilding:
 	ProductionBar:
 	Power:
-		Amount: -30
+		Amount: -10
 	Selectable:
 		Bounds: 60,55,0,0

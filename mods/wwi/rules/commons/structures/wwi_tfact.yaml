@@ -24,7 +24,7 @@ WWI_TFACT:
 		SpawnOffset: 0,1300,0
 		ExitCell: 1,2
 	Production:
-		Produces: Tank
+		Produces: Vehicle, Tank
 	ProvidesPrerequisite@tankfactory:
 		Prerequisite: tankfactory
 	ProvidesPrerequisite@austria:

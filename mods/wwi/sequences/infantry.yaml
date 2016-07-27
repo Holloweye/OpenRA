@@ -541,3 +541,39 @@ wwi_mech:
 		Facings: 8
 		Tick: 100
 	icon: mechicon
+
+wwi_scout:
+	stand:wwi_scout_idle
+		Start: 0
+		Length: 1
+		Facings: 16
+		Tick: 100
+	run:wwi_scout_run
+		Start: 0
+		Length: 19
+		Facings: 16
+		Tick: 100
+	shoot:wwi_scout_attack
+		Start: 0
+		Length: 17
+		Facings: 16
+		Tick: 100
+	idle1:wwi_scout_idle
+		Start: 0
+		Length: 1
+		Facings: 16
+		Tick: 100
+	die1:wwi_scout_death
+		Start: 0
+		Length: 21
+		Facings: 16
+		Tick: 100
+	die-crushed: corpse1
+		Length: 6
+		Tick: 1600
+		ZOffset: -511
+		UseTilesetExtension: true
+		TilesetOverrides:
+			DESERT: TEMPERAT
+			INTERIOR: TEMPERAT
+	icon:wwi_scout_icon

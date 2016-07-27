@@ -4,7 +4,7 @@ WWI_ENGI:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 60
-		Prerequisites: Pop1
+		Prerequisites: Pop1, barracks
 	Valued:
 		Cost: 500
 	Population:

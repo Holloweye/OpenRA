@@ -4,7 +4,7 @@ WWI_FLAMETHROWER:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
-		Prerequisites: reconnaissance, Pop1
+		Prerequisites: reconnaissance, barracks, Pop1
 	Population:
 		Amount: -1
 	Valued:

@@ -1,0 +1,38 @@
+WWI_SCOUT:
+	Inherits: ^Soldier
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Mounted
+		BuildPaletteOrder: 10
+		Prerequisites: Pop1, stable
+	Population:
+		Amount: -1
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Scout
+		Description: Scouting unit.\n  Strong vs Infantry\n  Weak vs Vehicles
+	Mobile:
+		Speed: 90
+	RevealsShroud:
+		Range: 6c0
+	Health:
+		HP: 100
+	WithDeathAnimation:
+		DeathTypes:
+			DefaultDeath: 1
+			BulletDeath: 1
+			SmallExplosionDeath: 1
+			ExplosionDeath: 1
+			FireDeath: 1
+			ElectricityDeath: 1
+		CrushedSequence: die-crushed
+		FallbackSequence: die1
+		IdleSequences: idle1
+		StandSequences: stand
+	Armament@PRIMARY:
+		Weapon: Scout
+	AttackFrontal:
+	WithInfantryBody:
+		AttackSequence: shoot
+	-TakeCover:

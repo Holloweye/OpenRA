@@ -24,7 +24,7 @@ WWI_VFACT:
 		SpawnOffset: 0,1300,0
 		ExitCell: 1,2
 	Production:
-		Produces: Vehicle
+		Produces: Vehicle, SmallVehicle
 	ProvidesPrerequisite@vfact:
 		Prerequisite: vehiclefactory
 	ProvidesPrerequisite@austria:

@@ -548,3 +548,28 @@ Repair:
 		Damage: -20
 		ValidTargets: Repair
 		DebugOverlayColor: 00FF00
+
+Scout:
+	ReloadDelay: 20
+	Range: 1c0
+	Report: sword1.aud, sword2.aud, sword3.aud
+	Projectile: Bullet
+		Speed: 99c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 100
+		Versus:
+			flesh: 100
+			struct: 10
+			def: 10
+			veh: 10
+			h_gun: 10
+			f_gun: 10
+			l_tnk: 10
+			l_ship: 10
+			m_tnk: 10
+			m_ship: 10
+			h_tnk: 10
+			h_ship: 10
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
