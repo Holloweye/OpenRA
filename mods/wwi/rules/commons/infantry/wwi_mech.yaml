@@ -37,3 +37,5 @@ WWI_MECH:
 		StandSequences: stand
 	Voiced:
 		VoiceSet: MechanicVoice
+	WithDeathAnimation:
+		FallbackSequence:die1

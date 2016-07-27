@@ -24,6 +24,5 @@ WWI_FENCE:
 	Passable:
 		CrushesClasses: crush_fence
 		PassableClasses: pass_fence
-		PassingDamage:20
-	CellModifier:
-		DamageModifier:10
+		PassingDamage:30
+		PassableByFriendly: false

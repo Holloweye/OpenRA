@@ -29,8 +29,6 @@ namespace OpenRA.Mods.WWI.Traits
         public readonly bool CrushableByFriendly = false;
         [Desc("Is crushable by enemy units.")]
         public readonly bool CrushableByEnemy = true;
-        [Desc("Hurts when crushing.")]
-        public readonly bool CrushesHurts = false;
         [Desc("Probability of mobile actors noticing and evading a crush attempt.")]
         public readonly int CrushWarnProbability = 75;
         [Desc("Sound to play when being crushed.")]
@@ -73,17 +71,6 @@ namespace OpenRA.Mods.WWI.Traits
                     attack(crusher, info.CrushingWeapon, info.CrushingDamage);
 
                     Game.Sound.Play(info.CrushSound, crusher.CenterPosition);
-
-                    var wda = self.TraitsImplementing<WithDeathAnimation>().FirstOrDefault(s => s.Info.CrushedSequence != null);
-                    var rs = self.Trait<RenderSprites>();
-                    if (wda != null && rs != null)
-                    {
-                        var palette = wda.Info.CrushedSequencePalette;
-                        if (wda.Info.CrushedPaletteIsPlayerPalette)
-                            palette += self.Owner.InternalName;
-
-                        wda.SpawnDeathAnimation(self, self.CenterPosition, rs.GetImage(self), wda.Info.CrushedSequence, palette);
-                    }
 
                     self.Kill(crusher);
                 }
@@ -133,19 +120,6 @@ namespace OpenRA.Mods.WWI.Traits
             else
             {
                 actor.InflictDamage(self, new Damage(damage));
-                if (actor.IsDead)
-                {
-                    var wda = actor.TraitsImplementing<WithDeathAnimation>().FirstOrDefault(s => s.Info.DeathSequence != null);
-                    var rs = self.Trait<RenderSprites>();
-                    if (wda != null)
-                    {
-                        var palette = wda.Info.DeathSequencePalette;
-                        if (wda.Info.DeathPaletteIsPlayerPalette)
-                            palette += self.Owner.InternalName;
-
-                        wda.SpawnDeathAnimation(actor, actor.CenterPosition, rs.GetImage(actor), wda.Info.DeathSequence, palette);
-                    }
-                }
             }
         }
     }

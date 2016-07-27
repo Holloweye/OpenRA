@@ -19,3 +19,5 @@ WWI_RIFLE:
 	AttackFrontal:
 	WithInfantryBody:
 		AttackSequence: shoot
+	WithDeathAnimation:
+		FallbackSequence:die1

@@ -19,3 +19,5 @@ WWI_FLAMETHROWER:
 	AttackFrontal:
 	WithInfantryBody:
 		AttackSequence: shoot
+	WithDeathAnimation:
+		FallbackSequence:die1

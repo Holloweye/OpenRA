@@ -24,3 +24,5 @@ WWI_THIEF:
 		ValidStances: Enemy
 	Voiced:
 		VoiceSet: ThiefVoice
+	WithDeathAnimation:
+		FallbackSequence:die1

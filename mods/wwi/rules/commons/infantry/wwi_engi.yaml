@@ -23,3 +23,5 @@ WWI_ENGI:
 		VoiceSet: EngineerVoice
 	Selectable:
 		Priority: 5
+	WithDeathAnimation:
+		FallbackSequence:die1

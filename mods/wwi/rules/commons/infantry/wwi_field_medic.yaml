@@ -30,3 +30,5 @@ WWI_FIELD_MEDIC:
 		AttackSequence: heal
 	Voiced:
 		VoiceSet: MedicVoice
+	WithDeathAnimation:
+		FallbackSequence:die1
