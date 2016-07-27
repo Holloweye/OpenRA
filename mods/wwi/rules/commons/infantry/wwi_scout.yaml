@@ -36,3 +36,5 @@ WWI_SCOUT:
 	WithInfantryBody:
 		AttackSequence: shoot
 	-TakeCover:
+	Voiced:
+		VoiceSet: HorseVoice

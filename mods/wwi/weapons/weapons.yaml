@@ -560,16 +560,16 @@ Scout:
 		Damage: 100
 		Versus:
 			flesh: 100
-			struct: 10
-			def: 10
-			veh: 10
-			h_gun: 10
-			f_gun: 10
-			l_tnk: 10
-			l_ship: 10
-			m_tnk: 10
-			m_ship: 10
-			h_tnk: 10
-			h_ship: 10
+			struct: 0
+			def: 0
+			veh: 8
+			h_gun: 8
+			f_gun: 8
+			l_tnk: 5
+			l_ship: 5
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath

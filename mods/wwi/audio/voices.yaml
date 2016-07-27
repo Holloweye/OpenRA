@@ -16,6 +16,24 @@ GenericVoice:
 		Zapped: dedman6
 	DisableVariants: Die, Burned, Zapped
 
+HorseVoice:
+	Variants:
+		austria: .v01,.v03
+		france: .v01,.v03
+		germany: .v01,.v03
+		italy: .v01,.v03
+		ottoman: .r01,.r03
+		russia: .r01,.r03
+		uk: .r01,.r03
+		usa: .r01,.r03
+	Voices:
+		Select: await1,ready,report1,yessir1
+		Action: ackno,affirm1,noprob,overout,ritaway,roger,ugotit
+		Die: horse
+		Burned: horse
+		Zapped: horse
+	DisableVariants: Die, Burned, Zapped
+
 VehicleVoice:
 	Variants:
 		austria: .v00,.v02
