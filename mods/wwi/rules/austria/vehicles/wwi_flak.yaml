@@ -33,4 +33,4 @@ WWI_FLAK:
 	WithSpriteTurret:
 	AutoTarget:
 	SelectionDecorations:
-		VisualBounds: 35,35
+		VisualBounds: 35,35,0,-4
