@@ -337,7 +337,7 @@ Scoda14:
 		Damage: 150
 		Versus:
 			flesh: 25
-			struct: 40
+			struct: 35
 			def: 25
 			h_gun: 100
 			f_gun: 100

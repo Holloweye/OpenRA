@@ -10,7 +10,7 @@ WWI_SKODA_HOWITZER:
 		Amount: -4
 	Tooltip:
 		Name: Skoda 305mm
-		Description: Long-range artillery.\nStrong vs obstacles and infantry.
+		Description: Long-range artillery.\nStrong vs obstacles, buildings and infantry.
 	Health:
 		HP: 40
 	Armor:

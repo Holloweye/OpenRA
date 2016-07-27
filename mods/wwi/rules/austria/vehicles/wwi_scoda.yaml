@@ -10,7 +10,7 @@ WWI_SCODA:
 		Amount: -2
 	Tooltip:
 		Name: Scoda modell 14
-		Description: Short-range artillery.\n  Strong vs Tanks and buildings.\n  Weak vs Infantry
+		Description: Short-range artillery.\n  Strong vs Medium / Heavy tanks and buildings.\n  Weak vs Infantry and Artillery
 	Health:
 		HP: 100
 	Armor:
