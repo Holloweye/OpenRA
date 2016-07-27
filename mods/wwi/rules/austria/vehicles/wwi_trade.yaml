@@ -21,7 +21,7 @@ WWI_TRADE:
 	RevealsShroud:
 		Range: 5c0
 	SelectionDecorations:
-		VisualBounds: 30,30,0,-7
+		VisualBounds: 30,28,0,-5
 	Trader:
 		DeliveryBuildings: wwi_aus_hq
 		TradeBuildings: wwi_supply_station
