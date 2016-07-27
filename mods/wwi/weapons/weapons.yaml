@@ -73,7 +73,7 @@ Jppa:
 		Damage: 15
 		Versus:
 			flesh: 60
-			struct: 30
+			struct: 70
 			def: 40
 			veh: 50
 			h_gun: 50
@@ -168,7 +168,7 @@ Grenadier:
 		Image: BOMB
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
-		Damage: 80
+		Damage: 30
 		Versus:
 			flesh: 30
 			def: 100
@@ -334,11 +334,11 @@ Scoda14:
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
 		Spread: 200
-		Damage: 100
+		Damage: 150
 		Versus:
-			flesh: 50
-			struct: 30
-			def: 50
+			flesh: 25
+			struct: 40
+			def: 25
 			h_gun: 100
 			f_gun: 100
 			l_tnk: 100
