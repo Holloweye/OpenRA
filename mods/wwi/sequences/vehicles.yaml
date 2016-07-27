@@ -44,7 +44,7 @@ wwi_trade:
 
 wwi_plane:
 	idle:
-		Facings: 8
+		Facings: 16
 	muzzle: minigun
 		Length: 6
 		Facings: 8
