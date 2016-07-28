@@ -126,3 +126,20 @@ wwi_trans:
 		Start: 4
 		ZOffset: -511
 	icon: lsticon
+
+wwi_krupp75:
+	idle:
+		Facings: 16
+	muzzle: gunfire2
+		Length: 5
+	icon: wwi_krupp75_icon
+	shoot:
+		Start: 128
+		Length: 11
+		Facings: 16
+		Tick: 50
+	run:
+		Start: 16
+		Length: 7
+		Facings: 16
+		Tick: 400
