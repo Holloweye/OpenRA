@@ -1,0 +1,27 @@
+WWI_TAX:
+	Inherits: ^Building
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 30
+		Prerequisites: powerplant
+	Health:
+		HP: 400
+	Armor:
+		Type: struct
+	RevealsShroud:
+		Range: 5c0
+	Bib:
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Tax collector
+		Description: Collects credits depending the number of houses.
+	Power:
+		Amount: -10
+	WithBuildingExplosion:
+		Delay: 1
+	Selectable:
+		Bounds: 65,70,0,0

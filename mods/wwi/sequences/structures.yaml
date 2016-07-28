@@ -20,16 +20,16 @@ wwi_aus_hq:
 
 wwi_otto_hq:
 	idle:
-		Start: 0
+		Start: 8
 		Length: 1
 		Offset: 0, 5
 	damaged-idle:
-		Start: 0
+		Start: 8
 		Length: 1
 		Offset: 0, 5
 	make:
 		Start: 0
-		Length: 1
+		Length: 9
 		Offset: 0, 5
 	bib: bib2
 		Length: *
@@ -218,3 +218,20 @@ wwi_trench:
 	idle:
 		Length: 16
 	icon: wwi_trench_icon
+
+wwi_tax:
+	idle:
+		Start: 9
+		Length: 1
+	damaged-idle:
+		Start: 9
+		Length: 1
+	make:
+		Start: 0
+		Length: 10
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_tax_icon

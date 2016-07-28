@@ -86,6 +86,7 @@ Rules:
 	wwi|rules/austria/ships/wwi_saida.yaml
 	wwi|rules/usa/structures/wwi_usa_hq.yaml
 	wwi|rules/ottoman/structures/wwi_otto_hq.yaml
+	wwi|rules/ottoman/structures/wwi_tax.yaml
 
 Sequences:
 	wwi|sequences/misc.yaml
