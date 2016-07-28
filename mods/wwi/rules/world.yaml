@@ -26,7 +26,7 @@
 		Name: Ottoman Empire
 		InternalName: ottoman
 		Side: CentralPowers
-		Selectable: False
+		Selectable: True
 	Faction@3:
 		Name: United Kingdom
 		InternalName: uk
@@ -116,18 +116,18 @@ World:
 	MPStartUnits@default:
 		Class: none
 		ClassName: Default
-		Factions:germany, ottoman, uk, france, italy, russia
+		Factions:germany, uk, france, italy, russia
 		BaseActor:mpspawn
 	MPStartUnits@default.austria:
 		Class: none
 		ClassName: Default
 		Factions:austria
 		BaseActor:WWI_AUS_HQ
-	MPStartUnits@default.usa:
+	MPStartUnits@default.ottoman:
 		Class: none
 		ClassName: Default
-		Factions:usa
-		BaseActor:WWI_USA_HQ
+		Factions:ottoman
+		BaseActor:WWI_OTTO_HQ
 	SpawnMPUnits:
 	PathFinder:
 	ValidateOrder:
