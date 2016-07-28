@@ -56,6 +56,7 @@
     <Compile Include="Traits\CellModifier.cs" />
     <Compile Include="Traits\SoundModifier.cs" />
     <Compile Include="Traits\TankArmor.cs" />
+    <Compile Include="Traits\TaxCollection.cs" />
     <Compile Include="Traits\Trader.cs" />
     <Compile Include="Traits\Copied\WithLandingCraftAnimation.cs" />
     <Compile Include="Widgets\Logic\IngamePopCounterLogic.cs" />

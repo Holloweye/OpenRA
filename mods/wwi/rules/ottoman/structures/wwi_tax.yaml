@@ -7,6 +7,7 @@ WWI_TAX:
 		Queue: Building
 		BuildPaletteOrder: 30
 		Prerequisites: powerplant
+		BuildLimit: 1
 	Health:
 		HP: 400
 	Armor:
@@ -25,3 +26,7 @@ WWI_TAX:
 		Delay: 1
 	Selectable:
 		Bounds: 65,70,0,0
+	TaxCollection:
+		Buildings: wwi_house
+		TaxAmount: 50
+		MaxCredits: 700
