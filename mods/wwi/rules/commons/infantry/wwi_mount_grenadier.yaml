@@ -1,0 +1,41 @@
+WWI_MOUNT_GRENADIER:
+	Inherits: ^Soldier
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Mounted
+		BuildPaletteOrder: 10
+		Prerequisites: Pop1, stable, ~!structures.austria
+	Population:
+		Amount: -1
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Grenadier
+		Description: Mounted grenadier.\n  Strong vs Structures\n  Weak vs Vehicles
+	Mobile:
+		Speed: 100
+	RevealsShroud:
+		Range: 6c0
+	Health:
+		HP: 90
+	WithDeathAnimation:
+		DeathTypes:
+			DefaultDeath: 1
+			BulletDeath: 1
+			SmallExplosionDeath: 1
+			ExplosionDeath: 1
+			FireDeath: 1
+			ElectricityDeath: 1
+		CrushedSequence: die-crushed
+		FallbackSequence: die1
+		IdleSequences: idle1
+		StandSequences: stand
+	Armament@PRIMARY:
+		Weapon: Grenadier
+		LocalOffset: 0,200,600
+	AttackFrontal:
+	WithInfantryBody:
+		AttackSequence: shoot
+	-TakeCover:
+	Voiced:
+		VoiceSet: HorseVoice
