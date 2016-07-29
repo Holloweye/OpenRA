@@ -1,4 +1,41 @@
 
+^Smokes:
+	ParticleEmitter@1:
+		UpgradeTypes: critical
+		UpgradeMinEnabledLevel: 1
+		Sprite: smokey
+		Sequence: idle
+		Palette: effect
+		SpawnFrequency: 1,5,0
+		GravityMin: -20,-200,0
+		GravityMax: 20,-50,0
+		OffsetMin: -600,-600,100
+		OffsetMax: 600,600,100
+	ParticleEmitter@2:
+		UpgradeTypes: critical
+		UpgradeMinEnabledLevel: 1
+		Sprite: smokey
+		Sequence: idle
+		Palette: effect
+		SpawnFrequency: 1,5,0
+		GravityMin: -20,-200,0
+		GravityMax: 20,-50,0
+		OffsetMin: -600,-600,100
+		OffsetMax: 600,600,100
+	ParticleEmitter@3:
+		UpgradeTypes: critical
+		UpgradeMinEnabledLevel: 1
+		Sprite: fire
+		Sequence: 2
+		Palette: effect
+		SpawnFrequency: 10,10,0
+		GravityMin: 0,0,0
+		GravityMax: 0,0,0
+		OffsetMin: -600,-600,0
+		OffsetMax: 600,600,0
+	UpgradeOnDamage:
+		Upgrades: critical
+
 ^GainsExperience:
 	GainsExperience:
 		Upgrades:
@@ -58,6 +95,7 @@
 ^BasicBuilding:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
+	Inherits@3: ^Smokes
 	SelectionDecorations:
 	Selectable:
 		Priority: 3

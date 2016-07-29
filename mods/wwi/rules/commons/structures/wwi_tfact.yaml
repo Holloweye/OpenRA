@@ -3,7 +3,7 @@ WWI_TFACT:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 70
-		Prerequisites: vehiclefactory
+		Prerequisites: vehiclefactory, ~!structures.ottoman
 	Valued:
 		Cost: 2000
 	Tooltip:
