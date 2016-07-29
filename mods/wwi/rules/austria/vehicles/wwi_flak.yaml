@@ -3,7 +3,7 @@ WWI_FLAK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 60
-		Prerequisites: vehicles.austria, reconnaissance, Pop2
+		Prerequisites: ~vehicles.austria, reconnaissance, Pop2
 		BuildAtProductionType: SmallVehicle
 	Valued:
 		Cost: 600

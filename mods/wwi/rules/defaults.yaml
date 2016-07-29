@@ -105,6 +105,18 @@
 	Sellable:
 		SellSounds: cashturn.aud
 
+^Defense:
+	Inherits: ^Building
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure, Defense
+	MustBeDestroyed:
+		RequiredForShortGame: false
+	AutoTarget:
+	-GivesBuildableArea:
+	-AcceptsSupplies:
+	DrawLineToTarget:
+	RenderRangeCircle:
+
 ^Wall:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor

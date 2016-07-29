@@ -235,3 +235,27 @@ wwi_tax:
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
 	icon: wwi_tax_icon
+
+wwi_krupp355:
+	idle:
+		Facings: 16
+	shoot:
+		Start: 16
+		Length: 11
+		Facings: 16
+		Tick: 200
+	make:
+		Start: 192
+		Length: 7
+	damaged-idle:
+		Facings: 16
+	muzzle: gunfire2
+		Length: 5
+		Tick: 200
+	bib: bib3
+		Length: *
+		Offset: 0, -10
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_tax_icon

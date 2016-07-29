@@ -3,7 +3,7 @@ WWI_SKODA_HOWITZER:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 30
-		Prerequisites: vehicles.austria, Pop4
+		Prerequisites: ~vehicles.austria, Pop4
 		BuildAtProductionType: SmallVehicle
 	Valued:
 		Cost: 950

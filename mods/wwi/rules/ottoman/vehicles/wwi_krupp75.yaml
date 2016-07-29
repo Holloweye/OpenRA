@@ -3,7 +3,7 @@ WWI_KRUPP75:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 20
-		Prerequisites: vehicles.ottoman, Pop2
+		Prerequisites: ~vehicles.ottoman, Pop2
 		BuildAtProductionType: SmallVehicle
 	Valued:
 		Cost: 700

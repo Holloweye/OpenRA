@@ -87,6 +87,7 @@ Rules:
 	wwi|rules/usa/structures/wwi_usa_hq.yaml
 	wwi|rules/ottoman/structures/wwi_otto_hq.yaml
 	wwi|rules/ottoman/structures/wwi_tax.yaml
+	wwi|rules/ottoman/structures/wwi_krupp355.yaml
 	wwi|rules/ottoman/vehicles/wwi_krupp75.yaml
 
 Sequences:

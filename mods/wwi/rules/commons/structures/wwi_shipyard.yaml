@@ -49,6 +49,30 @@ WWI_SHIPYARD:
 	Power:
 		Amount: -30
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@austria:
+		Factions: austria
+		Prerequisite: ships.austria
+	ProvidesPrerequisite@ottoman:
+		Factions: ottoman
+		Prerequisite: ships.ottoman
+	ProvidesPrerequisite@germany:
+		Factions: germany
+		Prerequisite: ships.germany
+	ProvidesPrerequisite@uk:
+		Factions: uk
+		Prerequisite: ships.uk
+	ProvidesPrerequisite@france:
+		Factions: france
+		Prerequisite: ships.france
+	ProvidesPrerequisite@russia:
+		Factions: russia
+		Prerequisite: ships.russia
+	ProvidesPrerequisite@usa:
+		Factions: usa
+		Prerequisite: ships.usa
+	ProvidesPrerequisite@italy:
+		Factions: italy
+		Prerequisite: ships.italy
 	EditorTilesetFilter:
 		ExcludeTilesets: INTERIOR
 	WithDecoration@primary:

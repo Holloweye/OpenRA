@@ -1,0 +1,41 @@
+WWI_KRUPP355:
+	Inherits: ^Defense
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 70
+		Prerequisites: ~structures.ottoman
+	Valued:
+		Cost: 1400
+	Tooltip:
+		Name: Krupp 35,5 cm
+		Description: Anti-Armor base defense.\n  Strong vs Structures and Ships
+	Building:
+		Footprint: xx
+		Dimensions: 2,1
+	Health:
+		HP: 400
+	Armor:
+		Type: def
+	RevealsShroud:
+		Range: 7c0
+	Bib:
+	Turreted:
+		TurnSpeed: 1
+		InitialFacing: 100
+	-WithSpriteBody:
+	WithTurretedSpriteBody:
+	WithAttackAnimation:
+		AttackSequence: shoot
+	Armament:
+		Weapon: Krupp355
+		LocalOffset: 1150,0,850
+		MuzzleSequence: muzzle
+	AttackTurreted:
+	WithMuzzleOverlay:
+	Power:
+		Amount: -10
+	WithBuildingExplosion:
+		Sequences: building, building_napalm, large_explosion, self_destruct
+	BodyOrientation:
+	Selectable:
+		Bounds: 50,50,0,0
