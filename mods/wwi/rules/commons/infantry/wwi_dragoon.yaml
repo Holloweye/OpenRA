@@ -3,7 +3,7 @@ WWI_DRAGOON:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Mounted
-		BuildPaletteOrder: 10
+		BuildPaletteOrder: 110
 		Prerequisites: Pop1, stable, ~!structures.austria
 	Population:
 		Amount: -1

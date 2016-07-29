@@ -3,7 +3,7 @@ WWI_MOUNT_GRENADIER:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Mounted
-		BuildPaletteOrder: 10
+		BuildPaletteOrder: 120
 		Prerequisites: Pop1, stable, ~!structures.austria
 	Population:
 		Amount: -1
@@ -31,7 +31,7 @@ WWI_MOUNT_GRENADIER:
 		IdleSequences: idle1
 		StandSequences: stand
 	Armament@PRIMARY:
-		Weapon: Grenadier
+		Weapon: MountGrenadier
 		LocalOffset: 0,200,600
 	AttackFrontal:
 	WithInfantryBody:
