@@ -238,17 +238,17 @@ wwi_tax:
 
 wwi_krupp355:
 	idle:
-		Facings: 16
+		Facings: 32
 	shoot:
-		Start: 16
+		Start: 32
 		Length: 11
-		Facings: 16
+		Facings: 32
 		Tick: 200
 	make:
-		Start: 192
+		Start: 485
 		Length: 7
 	damaged-idle:
-		Facings: 16
+		Facings: 32
 	muzzle: gunfire2
 		Length: 5
 		Tick: 200
@@ -258,4 +258,4 @@ wwi_krupp355:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	icon: wwi_tax_icon
+	icon: wwi_krupp355_icon

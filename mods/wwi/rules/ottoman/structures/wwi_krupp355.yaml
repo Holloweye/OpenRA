@@ -21,7 +21,7 @@ WWI_KRUPP355:
 	Bib:
 	Turreted:
 		TurnSpeed: 1
-		InitialFacing: 100
+		InitialFacing: 85
 	-WithSpriteBody:
 	WithTurretedSpriteBody:
 	WithAttackAnimation:
