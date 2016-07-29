@@ -577,3 +577,40 @@ wwi_scout:
 			DESERT: TEMPERAT
 			INTERIOR: TEMPERAT
 	icon:wwi_scout_icon
+
+wwi_dragoon:
+	stand:wwi_dragoon_idle
+		Start: 0
+		Length: 1
+		Facings: 16
+		Tick: 100
+	run:wwi_dragoon_run
+		Start: 0
+		Length: 19
+		Facings: 16
+		Tick: 100
+	shoot:wwi_dragoon_attack
+		Start: 0
+		Length: 21
+		Facings: 16
+		Tick: 50
+	idle1:wwi_dragoon_idle
+		Start: 0
+		Length: 1
+		Facings: 16
+		Tick: 100
+	die1:wwi_dragoon_death
+		Start: 0
+		Length: 19
+		Tick: 100
+	muzzle: gunfire2
+		Length: 2
+	die-crushed: corpse1
+		Length: 6
+		Tick: 1600
+		ZOffset: -511
+		UseTilesetExtension: true
+		TilesetOverrides:
+			DESERT: TEMPERAT
+			INTERIOR: TEMPERAT
+	icon:wwi_dragoon_icon

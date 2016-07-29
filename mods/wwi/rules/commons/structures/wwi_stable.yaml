@@ -3,7 +3,7 @@ WWI_STABLE:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 40
-		Prerequisites: powerplant
+		Prerequisites: powerplant, ~!structures.austria
 	Valued:
 		Cost: 200
 	Tooltip:

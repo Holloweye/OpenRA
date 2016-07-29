@@ -1,4 +1,4 @@
-WWI_SCOUT:
+WWI_DRAGOON:
 	Inherits: ^Soldier
 	Buildable:
 		Queue: Infantry
@@ -10,14 +10,14 @@ WWI_SCOUT:
 	Valued:
 		Cost: 300
 	Tooltip:
-		Name: Scout
-		Description: Scouting unit.\n  Strong vs Infantry\n  Weak vs Vehicles
+		Name: Dragoon
+		Description: Equiped with a rifle.\n  Strong vs Infantry\n  Weak vs Vehicles
 	Mobile:
-		Speed: 90
+		Speed: 70
 	RevealsShroud:
-		Range: 6c0
+		Range: 4c0
 	Health:
-		HP: 90
+		HP: 120
 	WithDeathAnimation:
 		DeathTypes:
 			DefaultDeath: 1
@@ -31,8 +31,11 @@ WWI_SCOUT:
 		IdleSequences: idle1
 		StandSequences: stand
 	Armament@PRIMARY:
-		Weapon: Scout
+		Weapon: Dragoon
+		LocalOffset: 800,0,600
+		MuzzleSequence: muzzle
 	AttackFrontal:
+	WithMuzzleOverlay:
 	WithInfantryBody:
 		AttackSequence: shoot
 	-TakeCover:

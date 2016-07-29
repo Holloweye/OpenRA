@@ -3,7 +3,9 @@ WWI_KRUPP355:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 70
-		Prerequisites: ~structures.ottoman
+		Prerequisites: Pop2, ~structures.ottoman
+	Population:
+		Amount: -2
 	Valued:
 		Cost: 1400
 	Tooltip:
