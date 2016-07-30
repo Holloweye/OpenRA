@@ -2,7 +2,7 @@ WWI_RECON:
 	Inherits: ^Building
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 60
 		Prerequisites: barracks, powerplant
 	Valued:
 		Cost: 300

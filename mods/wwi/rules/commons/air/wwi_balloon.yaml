@@ -3,7 +3,7 @@ WWI_BALLOON:
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Aircraft
-		BuildPaletteOrder: 20
+		BuildPaletteOrder: 10
 		Prerequisites: Pop2
 	Valued:
 		Cost: 900

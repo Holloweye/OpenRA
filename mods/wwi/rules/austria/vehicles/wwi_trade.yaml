@@ -3,7 +3,7 @@ WWI_TRADE:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 10
-		Prerequisites: ~vehicles.austria, Pop2
+		Prerequisites: vehiclefactory, Pop2, ~structures.austria
 		BuildAtProductionType: SmallVehicle
 	Valued:
 		Cost: 700

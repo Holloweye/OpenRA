@@ -3,7 +3,7 @@ WWI_GRENADIER:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 10
+		BuildPaletteOrder: 30
 		Prerequisites: Pop1, barracks
 	Population:
 		Amount: -1

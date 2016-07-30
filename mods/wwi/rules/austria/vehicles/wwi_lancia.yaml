@@ -3,7 +3,7 @@ WWI_LANCIA:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 60
-		Prerequisites: ~tanks.austria, Pop6
+		Prerequisites: tankfactory, Pop6, ~structures.austria
 		BuildAtProductionType: Tank
 	Valued:
 		Cost: 950

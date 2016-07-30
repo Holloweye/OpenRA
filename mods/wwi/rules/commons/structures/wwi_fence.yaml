@@ -2,7 +2,7 @@ WWI_FENCE:
 	Inherits: ^Wall
 	Buildable:
 		Queue: Defense
-		BuildPaletteOrder: 20
+		BuildPaletteOrder: 10
 	Valued:
 		Cost: 25
 	CustomSellValue:

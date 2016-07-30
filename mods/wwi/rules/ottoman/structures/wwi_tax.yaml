@@ -5,8 +5,8 @@ WWI_TAX:
 		Dimensions: 2,2
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 30
-		Prerequisites: powerplant
+		BuildPaletteOrder: 25
+		Prerequisites: powerplant, ~structures.ottoman
 		BuildLimit: 1
 	Health:
 		HP: 400

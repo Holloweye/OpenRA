@@ -3,7 +3,7 @@ WWI_FIELD_MEDIC:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 50
 		Prerequisites: Pop1, barracks
 	Valued:
 		Cost: 200

@@ -3,7 +3,7 @@ WWI_ADP:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
-		Prerequisites: ~tanks.austria, Pop5
+		Prerequisites: tankfactory, Pop5, ~structures.austria
 		BuildAtProductionType: Tank
 	Valued:
 		Cost: 700

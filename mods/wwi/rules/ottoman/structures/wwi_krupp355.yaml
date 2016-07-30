@@ -2,8 +2,8 @@ WWI_KRUPP355:
 	Inherits: ^Defense
 	Buildable:
 		Queue: Defense
-		BuildPaletteOrder: 70
-		Prerequisites: Pop2, ~structures.ottoman
+		BuildPaletteOrder: 30
+		Prerequisites: Pop2, vehiclefactory, ~structures.ottoman
 	Population:
 		Amount: -2
 	Valued:

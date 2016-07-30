@@ -3,7 +3,7 @@ WWI_PLANE:
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Aircraft
-		BuildPaletteOrder: 30
+		BuildPaletteOrder: 20
 		Prerequisites: Pop2
 	Valued:
 		Cost: 500
