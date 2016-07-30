@@ -15,9 +15,9 @@ WWI_DRAGOON:
 	Mobile:
 		Speed: 70
 	RevealsShroud:
-		Range: 4c0
+		Range: 5c0
 	Health:
-		HP: 120
+		HP: 80
 	WithDeathAnimation:
 		DeathTypes:
 			DefaultDeath: 1

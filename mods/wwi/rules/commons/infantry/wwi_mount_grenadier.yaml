@@ -15,9 +15,9 @@ WWI_MOUNT_GRENADIER:
 	Mobile:
 		Speed: 100
 	RevealsShroud:
-		Range: 6c0
+		Range: 4c0
 	Health:
-		HP: 90
+		HP: 40
 	WithDeathAnimation:
 		DeathTypes:
 			DefaultDeath: 1
