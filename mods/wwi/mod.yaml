@@ -92,6 +92,7 @@ Rules:
 	wwi|rules/ottoman/structures/wwi_krupp355.yaml
 	wwi|rules/ottoman/vehicles/wwi_krupp75.yaml
 	wwi|rules/ottoman/vehicles/wwi_krupp87.yaml
+	wwi|rules/ottoman/vehicles/wwi_hotch.yaml
 
 Sequences:
 	wwi|sequences/misc.yaml

@@ -1,0 +1,36 @@
+WWI_HOTCH:
+	Inherits: ^Vehicle
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 40
+		Prerequisites: ~vehicles.ottoman, Pop2
+		BuildAtProductionType: SmallVehicle
+	Valued:
+		Cost: 500
+	Population:
+		Amount: -2
+	Tooltip:
+		Name: Hotchkiss MLE
+		Description: Light armored car.\n  Strong vs Infantry and Artillery\n  Weak vs Medium & Heavy tanks
+	Health:
+		HP: 100
+	Armor:
+		Type: l_tnk
+	Mobile:
+		Speed: 90
+		Crushes: mine
+	RevealsShroud:
+		Range: 5c0
+	Turreted:
+		ROT: 9
+		Offset: -450,0,250
+	AttackTurreted:
+	Armament@PRIMARY:
+		Weapon: Hotch
+		LocalOffset: 380,0,150
+		MuzzleSequence: muzzle
+	WithMuzzleOverlay:
+	WithSpriteTurret:
+	AutoTarget:
+	SelectionDecorations:
+		VisualBounds: 30,30,0,-6
