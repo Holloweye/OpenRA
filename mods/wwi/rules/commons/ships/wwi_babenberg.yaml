@@ -4,7 +4,7 @@ WWI_BABENBERG:
 		Queue: Ship
 		BuildAtProductionType: Boat
 		BuildPaletteOrder: 50
-		Prerequisites: ~ships.austria, Pop10
+		Prerequisites: Pop10
 	Valued:
 		Cost: 2400
 	Population:

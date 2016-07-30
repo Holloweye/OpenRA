@@ -64,6 +64,8 @@ Rules:
 	wwi|rules/commons/air/wwi_plane.yaml
 	wwi|rules/commons/ships/wwi_sub.yaml
 	wwi|rules/commons/ships/wwi_trans.yaml
+	wwi|rules/commons/ships/wwi_babenberg.yaml
+	wwi|rules/commons/ships/wwi_saida.yaml
 	wwi|rules/commons/structures/wwi_house.yaml
 	wwi|rules/commons/structures/wwi_stable.yaml
 	wwi|rules/commons/structures/wwi_barr.yaml
@@ -84,8 +86,6 @@ Rules:
 	wwi|rules/austria/vehicles/wwi_flak.yaml
 	wwi|rules/austria/vehicles/wwi_scoda.yaml
 	wwi|rules/austria/vehicles/wwi_skoda_howitzer.yaml
-	wwi|rules/austria/ships/wwi_babenberg.yaml
-	wwi|rules/austria/ships/wwi_saida.yaml
 	wwi|rules/usa/structures/wwi_usa_hq.yaml
 	wwi|rules/ottoman/structures/wwi_otto_hq.yaml
 	wwi|rules/ottoman/structures/wwi_tax.yaml

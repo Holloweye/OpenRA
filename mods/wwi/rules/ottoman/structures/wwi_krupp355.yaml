@@ -3,7 +3,7 @@ WWI_KRUPP355:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 30
-		Prerequisites: Pop2, vehiclefactory, ~structures.ottoman
+		Prerequisites: Pop2, vehiclefactory, reconnaissance, ~structures.ottoman
 	Population:
 		Amount: -2
 	Valued:
