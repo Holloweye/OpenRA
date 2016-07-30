@@ -1,19 +1,19 @@
 WWI_KRUPP87:
-	Inherits: ^Tank
+	Inherits: ^Artillery
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 20
 		Prerequisites: ~vehicles.ottoman, Pop2
 		BuildAtProductionType: SmallVehicle
 	Valued:
-		Cost: 700
+		Cost: 850
 	Population:
 		Amount: -2
 	Tooltip:
 		Name: Krupp 8.7 cm
-		Description: Short-range artillery.\n  Strong vs Medium / Heavy tanks and buildings.\n  Weak vs Infantry and Artillery
+		Description: Medium-range artillery.\n  Strong vs Medium / Heavy tanks and buildings.\n  Weak vs Infantry and Artillery
 	Health:
-		HP: 100
+		HP: 70
 	Armor:
 		Type: f_gun
 	Mobile:

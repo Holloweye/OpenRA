@@ -1,5 +1,5 @@
 WWI_SCODA:
-	Inherits: ^Tank
+	Inherits: ^ShieldedArtillery
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 20

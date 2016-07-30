@@ -287,6 +287,22 @@
 	Tooltip:
 		GenericName: Tank
 
+^Artillery:
+	Inherits: ^Vehicle
+	Targetable:
+		TargetTypes: Ground, C4, Repair, Artillery
+	Tooltip:
+		GenericName: Artillery
+
+^ShieldedArtillery:
+	Inherits: ^Artillery
+	TankArmor:
+		FrontalDamageModifier: 50
+	Targetable:
+		TargetTypes: Ground, C4, Repair, Artillery
+	Tooltip:
+		GenericName: Artillery
+
 ^Infantry:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^GainsExperience

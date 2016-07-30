@@ -588,7 +588,7 @@ Krupp75:
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
 		Spread: 200
-		Damage: 150
+		Damage: 130
 		Versus:
 			flesh: 25
 			struct: 35
@@ -628,7 +628,7 @@ Krupp355:
 		ContrailLength: 30
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
-		Damage: 150
+		Damage: 190
 		Versus:
 			flesh: 50
 			struct: 100
@@ -739,7 +739,7 @@ Krupp87:
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
 		Spread: 200
-		Damage: 150
+		Damage: 180
 		Versus:
 			flesh: 25
 			struct: 35

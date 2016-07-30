@@ -1,5 +1,5 @@
 WWI_SKODA_HOWITZER:
-	Inherits: ^Tank
+	Inherits: ^Artillery
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 30

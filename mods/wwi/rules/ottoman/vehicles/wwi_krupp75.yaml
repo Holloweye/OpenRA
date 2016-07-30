@@ -1,12 +1,12 @@
 WWI_KRUPP75:
-	Inherits: ^Tank
+	Inherits: ^ShieldedArtillery
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 20
 		Prerequisites: ~vehicles.ottoman, Pop2
 		BuildAtProductionType: SmallVehicle
 	Valued:
-		Cost: 700
+		Cost: 650
 	Population:
 		Amount: -2
 	Tooltip:
