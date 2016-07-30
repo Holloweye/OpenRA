@@ -38,3 +38,4 @@ WWI_SCOUT:
 	-TakeCover:
 	Voiced:
 		VoiceSet: HorseVoice
+	-Passable:

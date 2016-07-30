@@ -221,7 +221,7 @@
 	DrawLineToTarget:
 	UpdatesPlayerStatistics:
 	Mobile:
-		Crushes: mine, crate
+		Crushes: mine
 		TerrainSpeeds:
 			Clear: 80
 			Rough: 40
@@ -270,7 +270,7 @@
 ^Tank:
 	Inherits: ^Vehicle
 	Mobile:
-		Crushes: mine
+		Crushes: mine, infantry
 		TerrainSpeeds:
 			Clear: 80
 			Rough: 70
@@ -376,6 +376,9 @@
 		DeathTypes: ElectricityDeath
 	Voiced:
 		VoiceSet: GenericVoice
+	Passable:
+		CrushesClasses: infantry
+		CrushSound: squishy2.aud
 
 ^Soldier:
 	Inherits: ^Infantry

@@ -41,3 +41,4 @@ WWI_DRAGOON:
 	-TakeCover:
 	Voiced:
 		VoiceSet: HorseVoice
+	-Passable:

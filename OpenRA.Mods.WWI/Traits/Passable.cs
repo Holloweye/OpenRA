@@ -88,16 +88,21 @@ namespace OpenRA.Mods.WWI.Traits
                 return false;
             }
 
+            bool crushable = isCrushable(classes);
+            bool passable = isPassable(classes);
+
             if (crusher.Owner.IsAlliedWith(self.Owner))
             {
-                if(!info.PassableByFriendly) return false;
+                if (crushable && !info.CrushableByFriendly) return false;
+                if (passable && !info.PassableByFriendly) return false;
             }
             else
             {
-                if(!info.PassableByEnemy) return false;
+                if (crushable && !info.CrushableByEnemy) return false;
+                if (passable && !info.PassableByEnemy) return false;
             }
 
-            return isPassable(classes) || isCrushable(classes);
+            return passable || crushable;
         }
 
         private bool isPassable(HashSet<string> classes)

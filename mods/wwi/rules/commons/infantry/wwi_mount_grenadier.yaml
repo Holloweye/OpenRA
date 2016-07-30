@@ -39,3 +39,4 @@ WWI_MOUNT_GRENADIER:
 	-TakeCover:
 	Voiced:
 		VoiceSet: HorseVoice
+	-Passable:

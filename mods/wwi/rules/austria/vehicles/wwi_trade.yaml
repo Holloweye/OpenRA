@@ -18,7 +18,6 @@ WWI_TRADE:
 		Type: veh
 	Mobile:
 		Speed: 90
-		Crushes: mine
 	RevealsShroud:
 		Range: 5c0
 	SelectionDecorations:

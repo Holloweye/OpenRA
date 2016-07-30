@@ -18,7 +18,7 @@ WWI_ADP:
 		Type: l_tnk
 	Mobile:
 		Speed: 90
-		Crushes: mine
+		Crushes: mine, infantry
 	RevealsShroud:
 		Range: 5c0
 	Turreted:

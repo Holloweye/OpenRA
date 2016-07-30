@@ -18,7 +18,7 @@ WWI_JPPA1:
 		Type: m_tnk
 	Mobile:
 		Speed: 60
-		Crushes: mine, crush_fench
+		Crushes: mine, infantry, crush_fench
 	RevealsShroud:
 		Range: 4c0
 	AttackFrontal:
