@@ -91,6 +91,7 @@ Rules:
 	wwi|rules/ottoman/structures/wwi_tax.yaml
 	wwi|rules/ottoman/structures/wwi_krupp355.yaml
 	wwi|rules/ottoman/vehicles/wwi_krupp75.yaml
+	wwi|rules/ottoman/vehicles/wwi_krupp87.yaml
 
 Sequences:
 	wwi|sequences/misc.yaml

@@ -1,0 +1,36 @@
+WWI_KRUPP87:
+	Inherits: ^Tank
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 20
+		Prerequisites: ~vehicles.ottoman, Pop2
+		BuildAtProductionType: SmallVehicle
+	Valued:
+		Cost: 700
+	Population:
+		Amount: -2
+	Tooltip:
+		Name: Krupp 8.7 cm
+		Description: Short-range artillery.\n  Strong vs Medium / Heavy tanks and buildings.\n  Weak vs Infantry and Artillery
+	Health:
+		HP: 100
+	Armor:
+		Type: f_gun
+	Mobile:
+		ROT: 4
+		Speed: 50
+	RevealsShroud:
+		Range: 4c0
+	Armament:
+		Weapon: Krupp87
+		LocalOffset: 724,0,358
+		MuzzleSequence: muzzle
+	AttackFrontal:
+	WithMuzzleOverlay:
+	AutoTarget:
+	WithAttackAnimation:
+		AttackSequence: shoot
+	WithMoveAnimation:
+		MoveSequence: run
+	SelectionDecorations:
+		VisualBounds: 30,30,0,-7
