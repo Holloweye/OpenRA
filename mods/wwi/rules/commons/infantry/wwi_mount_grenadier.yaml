@@ -14,6 +14,7 @@ WWI_MOUNT_GRENADIER:
 		Description: Mounted grenadier.\n  Strong vs Structures\n  Weak vs Vehicles
 	Mobile:
 		Speed: 100
+		Crushes: mine, crate
 	RevealsShroud:
 		Range: 4c0
 	Health:

@@ -14,6 +14,7 @@ WWI_DRAGOON:
 		Description: Equiped with a rifle.\n  Strong vs Infantry\n  Weak vs Vehicles
 	Mobile:
 		Speed: 70
+		Crushes: mine, crate
 	RevealsShroud:
 		Range: 5c0
 	Health:
