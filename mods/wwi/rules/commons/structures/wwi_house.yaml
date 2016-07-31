@@ -25,3 +25,5 @@ WWI_HOUSE:
 		Amount: 15
 	WithBuildingExplosion:
 		Delay: 1
+	PaysTaxes:
+		Amount: 50

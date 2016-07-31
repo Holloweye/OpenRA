@@ -53,12 +53,13 @@
     <Compile Include="Traits\Copied\Infiltrates.cs" />
     <Compile Include="Traits\ParticleEmitter.cs" />
     <Compile Include="Traits\Passable.cs" />
+    <Compile Include="Traits\PaysTaxes.cs" />
     <Compile Include="Traits\Population.cs" />
     <Compile Include="Traits\PopulationManager.cs" />
     <Compile Include="Traits\CellModifier.cs" />
     <Compile Include="Traits\SoundModifier.cs" />
     <Compile Include="Traits\TankArmor.cs" />
-    <Compile Include="Traits\TaxCollection.cs" />
+    <Compile Include="Traits\TaxCollector.cs" />
     <Compile Include="Traits\Trader.cs" />
     <Compile Include="Traits\Copied\WithLandingCraftAnimation.cs" />
     <Compile Include="Widgets\Logic\IngamePopCounterLogic.cs" />

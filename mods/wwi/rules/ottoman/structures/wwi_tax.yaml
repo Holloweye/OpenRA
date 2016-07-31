@@ -26,7 +26,6 @@ WWI_TAX:
 		Delay: 1
 	Selectable:
 		Bounds: 65,70,0,0
-	TaxCollection:
+	TaxCollector:
 		Buildings: wwi_house
-		TaxAmount: 50
 		MaxCredits: 700
