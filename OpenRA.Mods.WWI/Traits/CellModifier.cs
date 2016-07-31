@@ -48,25 +48,31 @@ namespace OpenRA.Mods.WWI.Traits
 
         private void addBonusTo(Actor a)
         {
-            CellModification trait = a.TraitOrDefault<CellModification>();
-            if (trait == null && a != null && affects(a))
+            if(a == null || a == self || !affects(a))
+                return;
+
+            var trait = a.TraitOrDefault<CellModification>();
+
+            if (trait == null)
             {
                 trait = new CellModification(a);
-                trait.damageModifier = info.DamageModifier;
-                trait.firepowerModifier = info.FirepowerModifier;
-                trait.reloadModifier = info.ReloadModifier;
-                trait.inaccuracyModifier = info.InaccuracyModifer;
-                trait.speedModifier = info.SpeedModifier;
                 a.AddTrait(trait);
             }
+
+            trait.modifier = self;
+            trait.damageModifier = info.DamageModifier;
+            trait.firepowerModifier = info.FirepowerModifier;
+            trait.reloadModifier = info.ReloadModifier;
+            trait.inaccuracyModifier = info.InaccuracyModifer;
+            trait.speedModifier = info.SpeedModifier;
         }
 
         private void removeBonusFrom(Actor a)
         {
-            if (a.IsDead || !a.IsInWorld) return;
+            if (a == null || a.IsDead || !a.IsInWorld || a == self || !affects(a)) return;
 
             CellModification trait = a.TraitOrDefault<CellModification>();
-            if (trait != null && a != null && affects(a))
+            if (trait != null && trait.modifier == self)
             {
                 trait.damageModifier = 100;
                 trait.firepowerModifier = 100;
@@ -86,6 +92,7 @@ namespace OpenRA.Mods.WWI.Traits
     {
         readonly Actor self;
 
+        public Actor modifier;
         public int damageModifier;
         public int firepowerModifier;
         public int reloadModifier;
