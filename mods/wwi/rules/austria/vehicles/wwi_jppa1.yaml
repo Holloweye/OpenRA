@@ -13,7 +13,7 @@ WWI_JPPA1:
 		Name: Junovicz Panzerwagen PA1
 		Description: Medium tank.\n  Strong vs Light tanks\n  Weak vs Heavy tanks
 	Health:
-		HP: 200
+		HP: 270
 	Armor:
 		Type: m_tnk
 	Mobile:

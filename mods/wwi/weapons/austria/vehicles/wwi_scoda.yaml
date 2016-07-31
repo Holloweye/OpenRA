@@ -1,39 +1,4 @@
 wwi_scoda:
-	ReloadDelay: 65
-	Range: 8c0
-	MinRange: 3c0
-	Report: tank5.aud
-	Projectile: Bullet
-		Speed: 400
-		Blockable: false
-		Angle: 10
-		Inaccuracy: 0c682
-		Image: 120MM
-		ContrailLength: 10
+	Inherits: ^field_artillery
 	Warhead@1Dam: SpreadDamage
-		Spread: 200
-		Damage: 150
-		Versus:
-			flesh: 25
-			struct: 35
-			def: 25
-			h_gun: 100
-			f_gun: 100
-			l_tnk: 100
-			l_ship: 100
-			m_tnk: 90
-			m_ship: 90
-			h_tnk: 80
-			h_ship: 80
-			air: 0
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Crater
-	Warhead@3Eff: CreateEffect
-		Explosions: artillery_explosion
-		ImpactSounds: kaboom15.aud
-		InvalidImpactTypes: Water
-	Warhead@4EffWater: CreateEffect
-		Explosions: med_splash
-		ImpactSounds: splash9.aud
-		ValidImpactTypes: Water
+		Damage: 140

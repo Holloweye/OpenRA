@@ -1,0 +1,278 @@
+^field_artillery:
+	ReloadDelay: 65
+	Range: 8c0
+	MinRange: 3c0
+	Report: tank5.aud
+	Projectile: Bullet
+		Speed: 400
+		Blockable: false
+		Angle: 10
+		Inaccuracy: 0c682
+		Image: 120MM
+		ContrailLength: 10
+	Warhead@1Dam: SpreadDamage
+		Spread: 200
+		Damage: 140
+		Versus:
+			flesh: 25
+			struct: 35
+			def: 25
+			h_gun: 100
+			f_gun: 100
+			l_tnk: 100
+			l_ship: 100
+			m_tnk: 85
+			m_ship: 85
+			h_tnk: 70
+			h_ship: 70
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Eff: CreateEffect
+		Explosions: artillery_explosion
+		ImpactSounds: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosions: med_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water
+
+^howitzer:
+	ReloadDelay: 90
+	Range: 15c0
+	MinRange: 6c0
+	Report: ArtShot1_1.aud, ArtShot2_1.aud
+	Projectile: Bullet
+		Speed: 184
+		Blockable: false
+		Angle: 82
+		Inaccuracy: 3c682
+		Image: 120MM
+		ContrailLength: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 150
+		Versus:
+			flesh: 60
+			struct: 100
+			def: 80
+			veh: 40
+			f_gun: 40
+			h_gun: 40
+			l_tnk: 40
+			l_ship: 40
+			m_tnk: 40
+			m_ship: 40
+			h_tnk: 40
+			h_ship: 40
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosions: med_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water
+
+^grenade:
+	ReloadDelay: 60
+	Range: 4c0
+	Report: grenade1.aud
+	Projectile: Bullet
+		Speed: 136
+		Blockable: false
+		Angle: 62
+		Inaccuracy: 554
+		Image: BOMB
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 30
+		Versus:
+			flesh: 30
+			def: 50
+			struct: 100
+			veh: 20
+			h_gun: 50
+			f_gun: 20
+			l_tnk: 20
+			l_ship: 20
+			m_tnk: 20
+			m_ship: 20
+			h_tnk: 20
+			h_ship: 20
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Eff: CreateEffect
+		Explosions: med_explosion
+		ImpactSounds: kaboom25.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosions: small_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water
+
+^rifle:
+	ReloadDelay: 50
+	Range: 5c0
+	Report: rifle.aud
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 30
+		Versus:
+			flesh: 100
+			struct: 15
+			def: 25
+			veh: 30
+			h_gun: 30
+			f_gun: 30
+			l_tnk: 15
+			l_ship: 15
+			m_tnk: 15
+			m_ship: 15
+			h_tnk: 15
+			h_ship: 15
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidImpactTypes: Water
+
+^machine_gun:
+	ReloadDelay: 30
+	Range: 6c0
+	Report: pillbox1.aud
+	Burst: 5
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 25
+		Versus:
+			flesh: 100
+			struct: 15
+			def: 15
+			veh: 35
+			h_gun: 25
+			f_gun: 25
+			l_tnk: 60
+			l_ship: 60
+			m_tnk: 35
+			m_ship: 35
+			h_tnk: 30
+			h_ship: 30
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidImpactTypes: Water
+
+^light_machine_gun:
+	Inherits: ^machine_gun
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			l_tnk: 60
+			l_ship: 60
+			m_tnk: 40
+			m_ship: 40
+			h_tnk: 40
+			h_ship: 40
+
+^medium_machine_gun:
+	Inherits: ^machine_gun
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			l_tnk: 80
+			l_ship: 80
+			m_tnk: 60
+			m_ship: 60
+			h_tnk: 40
+			h_ship: 40
+
+^heavy_machine_gun:
+	Inherits: ^machine_gun
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			l_tnk: 80
+			l_ship: 80
+			m_tnk: 80
+			m_ship: 80
+			h_tnk: 60
+			h_ship: 60
+
+^close_combat:
+	ReloadDelay: 20
+	Range: 1c0
+	Projectile: Bullet
+		Speed: 99c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 100
+		Versus:
+			flesh: 100
+			struct: 0
+			def: 0
+			veh: 8
+			h_gun: 8
+			f_gun: 8
+			l_tnk: 5
+			l_ship: 5
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+
+^saber:
+	Inherits: ^close_combat
+	Report: sword1.aud, sword2.aud, sword3.aud
+
+^flamethrower:
+	ReloadDelay: 20
+	Range: 3c0
+	Burst: 15
+	BurstDelay: 1
+	Projectile: Bullet
+		Speed: 170
+		Trail: fb4
+		Image: fb3
+		Angle: 62
+		Inaccuracy: 853
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 8
+		Versus:
+			flesh: 100
+			struct: 30
+			def: 100
+			veh: 80
+			h_gun: 80
+			f_gun: 80
+			l_tnk: 80
+			l_ship: 80
+			m_tnk: 80
+			m_ship: 80
+			h_tnk: 80
+			h_ship: 80
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
+	Warhead@3Eff: CreateEffect
+		Explosions: small_napalm
+		ImpactSounds: firebl3.aud

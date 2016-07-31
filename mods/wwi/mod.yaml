@@ -171,6 +171,7 @@ ChromeLayout:
 
 Weapons:
 	wwi|weapons/effects.yaml
+	wwi|weapons/defaults.yaml
 	wwi|weapons/commons/infantry/wwi_rifle.yaml
 	wwi|weapons/commons/infantry/wwi_grenadier.yaml
 	wwi|weapons/commons/infantry/wwi_machinegunner.yaml

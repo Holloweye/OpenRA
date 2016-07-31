@@ -13,7 +13,7 @@ WWI_ADP:
 		Name: Austro-Daimler Panzerwagen
 		Description: Light tank.\n  Strong vs Infantry and Artillery\n  Weak vs Medium & Heavy tanks
 	Health:
-		HP: 150
+		HP: 200
 	Armor:
 		Type: l_tnk
 	Mobile:

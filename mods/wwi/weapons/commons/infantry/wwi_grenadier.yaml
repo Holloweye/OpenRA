@@ -1,38 +1,4 @@
 wwi_grenadier:
-	ReloadDelay: 60
-	Range: 4c0
-	Report: grenade1.aud
-	Projectile: Bullet
-		Speed: 136
-		Blockable: false
-		Angle: 62
-		Inaccuracy: 554
-		Image: BOMB
+	Inherits: ^grenade
 	Warhead@1Dam: SpreadDamage
-		Spread: 256
 		Damage: 30
-		Versus:
-			flesh: 30
-			def: 100
-			struct: 100
-			veh: 60
-			h_gun: 60
-			f_gun: 60
-			l_tnk: 60
-			l_ship: 60
-			m_tnk: 60
-			m_ship: 60
-			h_tnk: 60
-			h_ship: 60
-			air: 0
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Crater
-	Warhead@3Eff: CreateEffect
-		Explosions: med_explosion
-		ImpactSounds: kaboom25.aud
-		InvalidImpactTypes: Water
-	Warhead@4EffWater: CreateEffect
-		Explosions: small_splash
-		ImpactSounds: splash9.aud
-		ValidImpactTypes: Water

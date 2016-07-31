@@ -13,7 +13,7 @@ WWI_SCODA_HOWITZER:
 		Name: Skoda 305mm
 		Description: Long-range artillery.\nStrong vs obstacles, buildings and infantry.
 	Health:
-		HP: 80
+		HP: 150
 	Armor:
 		Type: h_gun
 	Mobile:

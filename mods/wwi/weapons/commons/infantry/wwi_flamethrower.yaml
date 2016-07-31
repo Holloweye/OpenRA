@@ -1,34 +1,4 @@
 wwi_flamethrower:
-	ReloadDelay: 20
-	Range: 3c0
-	Burst: 15
-	BurstDelay: 1
-	Projectile: Bullet
-		Speed: 170
-		Trail: fb4
-		Image: fb3
-		Angle: 62
-		Inaccuracy: 853
+	Inherits: ^flamethrower
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
 		Damage: 8
-		Versus:
-			flesh: 100
-			struct: 30
-			def: 100
-			veh: 20
-			h_gun: 50
-			f_gun: 20
-			l_tnk: 20
-			l_ship: 20
-			m_tnk: 20
-			m_ship: 20
-			h_tnk: 20
-			h_ship: 20
-			air: 0
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch
-	Warhead@3Eff: CreateEffect
-		Explosions: small_napalm
-		ImpactSounds: firebl3.aud

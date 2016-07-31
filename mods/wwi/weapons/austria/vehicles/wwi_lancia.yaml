@@ -1,31 +1,4 @@
 wwi_lancia:
-	ReloadDelay: 30
-	Range: 4c0
-	Report: pillbox1.aud
-	Burst: 5
-	Projectile: Bullet
-		Speed: 1c682
+	Inherits: ^heavy_machine_gun
 	Warhead@1Dam: SpreadDamage
-		Spread: 128
-		Damage: 20
-		Versus:
-			flesh: 40
-			struct: 70
-			def: 50
-			veh: 60
-			h_gun: 40
-			f_gun: 40
-			l_tnk: 100
-			l_ship: 100
-			m_tnk: 100
-			m_ship: 100
-			h_tnk: 60
-			h_ship: 60
-			air: 0
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-	Warhead@2Eff: CreateEffect
-		Explosions: piffs
-		InvalidImpactTypes: Water
-	Warhead@3EffWater: CreateEffect
-		Explosions: water_piffs
-		ValidImpactTypes: Water
+		Damage: 35

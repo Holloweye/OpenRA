@@ -1,24 +1,4 @@
 wwi_scout:
-	ReloadDelay: 20
-	Range: 1c0
-	Report: sword1.aud, sword2.aud, sword3.aud
-	Projectile: Bullet
-		Speed: 99c682
+	Inherits: ^saber
 	Warhead@1Dam: SpreadDamage
-		Spread: 128
 		Damage: 100
-		Versus:
-			flesh: 100
-			struct: 0
-			def: 0
-			veh: 8
-			h_gun: 8
-			f_gun: 8
-			l_tnk: 5
-			l_ship: 5
-			m_tnk: 0
-			m_ship: 0
-			h_tnk: 0
-			h_ship: 0
-			air: 0
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath

@@ -1,31 +1,4 @@
 wwi_adp:
-	ReloadDelay: 30
-	Range: 6c0
-	Report: pillbox1.aud
-	Burst: 5
-	Projectile: Bullet
-		Speed: 1c682
+	Inherits: ^light_machine_gun
 	Warhead@1Dam: SpreadDamage
-		Spread: 128
-		Damage: 15
-		Versus:
-			flesh: 100
-			struct: 20
-			def: 20
-			veh: 40
-			h_gun: 50
-			f_gun: 50
-			l_tnk: 60
-			l_ship: 60
-			m_tnk: 40
-			m_ship: 40
-			h_tnk: 35
-			h_ship: 35
-			air: 0
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-	Warhead@2Eff: CreateEffect
-		Explosions: piffs
-		InvalidImpactTypes: Water
-	Warhead@3EffWater: CreateEffect
-		Explosions: water_piffs
-		ValidImpactTypes: Water
+		Damage: 25
