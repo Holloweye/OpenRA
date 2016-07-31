@@ -1,5 +1,5 @@
 WWI_MOUNT_GRENADIER:
-	Inherits: ^Soldier
+	Inherits: ^Mounted
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Mounted
@@ -14,30 +14,13 @@ WWI_MOUNT_GRENADIER:
 		Description: Mounted grenadier.\n  Strong vs Structures\n  Weak vs Vehicles
 	Mobile:
 		Speed: 100
-		Crushes: mine, crate
 	RevealsShroud:
 		Range: 4c0
 	Health:
 		HP: 40
-	WithDeathAnimation:
-		DeathTypes:
-			DefaultDeath: 1
-			BulletDeath: 1
-			SmallExplosionDeath: 1
-			ExplosionDeath: 1
-			FireDeath: 1
-			ElectricityDeath: 1
-		CrushedSequence: die-crushed
-		FallbackSequence: die1
-		IdleSequences: idle1
-		StandSequences: stand
 	Armament@PRIMARY:
 		Weapon: wwi_mount_grenadier
 		LocalOffset: 0,200,600
 	AttackFrontal:
 	WithInfantryBody:
 		AttackSequence: shoot
-	-TakeCover:
-	Voiced:
-		VoiceSet: HorseVoice
-	-Passable:

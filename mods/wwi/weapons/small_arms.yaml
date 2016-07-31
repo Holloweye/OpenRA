@@ -123,6 +123,7 @@
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 100
+		InvalidTargets: Structure
 		Versus:
 			flesh: 100
 			struct: 0

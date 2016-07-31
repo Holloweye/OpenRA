@@ -1,5 +1,5 @@
 WWI_DRAGOON:
-	Inherits: ^Soldier
+	Inherits: ^Mounted
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Mounted
@@ -14,23 +14,10 @@ WWI_DRAGOON:
 		Description: Equiped with a rifle.\n  Strong vs Infantry\n  Weak vs Vehicles
 	Mobile:
 		Speed: 70
-		Crushes: mine, crate
 	RevealsShroud:
 		Range: 5c0
 	Health:
 		HP: 80
-	WithDeathAnimation:
-		DeathTypes:
-			DefaultDeath: 1
-			BulletDeath: 1
-			SmallExplosionDeath: 1
-			ExplosionDeath: 1
-			FireDeath: 1
-			ElectricityDeath: 1
-		CrushedSequence: die-crushed
-		FallbackSequence: die1
-		IdleSequences: idle1
-		StandSequences: stand
 	Armament@PRIMARY:
 		Weapon: wwi_dragoon
 		LocalOffset: 800,0,600
@@ -39,7 +26,3 @@ WWI_DRAGOON:
 	WithMuzzleOverlay:
 	WithInfantryBody:
 		AttackSequence: shoot
-	-TakeCover:
-	Voiced:
-		VoiceSet: HorseVoice
-	-Passable:
