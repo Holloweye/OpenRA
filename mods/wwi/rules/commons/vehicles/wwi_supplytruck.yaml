@@ -1,0 +1,23 @@
+WWI_SUPPLYTRUCK:
+	Inherits: ^Vehicle
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 200
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Supply Truck
+		Description: Transports cash to other players.\n  Unarmed
+	Health:
+		HP: 110
+	Armor:
+		Type: veh
+	Mobile:
+		Speed: 128
+	RevealsShroud:
+		Range: 4c0
+	SupplyTruck:
+		Payload: 500
+		PlayerExperience: 50
+	SpawnActorOnDeath:
+		Actor: moneycrate

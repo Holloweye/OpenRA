@@ -169,3 +169,9 @@ wwi_hotch:
 	muzzle: gunfire2
 		Length: 2
 	icon: wwi_hotch_icon
+
+wwi_supplytruck:
+	idle: truk
+		Facings: 32
+		UseClassicFacingFudge: True
+	icon: trukicon
