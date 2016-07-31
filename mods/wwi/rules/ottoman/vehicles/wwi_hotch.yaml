@@ -26,7 +26,7 @@ WWI_HOTCH:
 		Offset: -450,0,250
 	AttackTurreted:
 	Armament@PRIMARY:
-		Weapon: Hotch
+		Weapon: wwi_hotch
 		LocalOffset: 380,0,150
 		MuzzleSequence: muzzle
 	WithMuzzleOverlay:

@@ -1,0 +1,30 @@
+wwi_flak:
+	ReloadDelay: 10
+	Range: 8c0
+	Report: aacanon3.aud
+	ValidTargets: Air
+	Projectile: Bullet
+		Speed: 1c682
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Damage: 20
+		ValidTargets: Air
+		Versus:
+			flesh: 0
+			def: 0
+			struct: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			l_ship: 0
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 100
+		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+	Warhead@2EffAir: CreateEffect
+		Explosions: small_explosion_air
+		ValidImpactTypes: Air, AirHit

@@ -22,7 +22,7 @@ WWI_SCODA:
 	RevealsShroud:
 		Range: 4c0
 	Armament:
-		Weapon: Scoda14
+		Weapon: wwi_scoda
 		LocalOffset: 724,0,308
 		MuzzleSequence: muzzle
 	AttackFrontal:

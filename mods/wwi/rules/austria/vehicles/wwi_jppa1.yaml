@@ -23,7 +23,7 @@ WWI_JPPA1:
 		Range: 4c0
 	AttackFrontal:
 	Armament@PRIMARY:
-		Weapon: Jppa
+		Weapon: wwi_jppa1
 		LocalOffset: 300,0,350
 		MuzzleSequence: muzzle
 	WithMuzzleOverlay:

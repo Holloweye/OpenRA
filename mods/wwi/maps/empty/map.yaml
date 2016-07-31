@@ -481,7 +481,7 @@ Actors:
 	Actor122: wwi_shipyard
 		Owner: Multi0
 		Location: 45,62
-	Actor124: wwi_skoda_howitzer
+	Actor124: wwi_scoda_howitzer
 		Owner: Multi0
 		Location: 61,58
 		Facing: 92
@@ -555,7 +555,7 @@ Actors:
 		SubCell: 3
 		Facing: 92
 		TurretFacing: 92
-	Actor138: wwi_babenberg
+	Actor138: wwi_battleship
 		Owner: Multi0
 		Location: 44,59
 		Facing: 92

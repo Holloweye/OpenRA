@@ -20,12 +20,12 @@ WWI_PLANE:
 		Range: 4c0
 		Type: CenterPosition
 	Armament@PRIMARY:
-		Weapon: Plane
+		Weapon: wwi_plane
 		LocalOffset: 256,-213,0
 		MuzzleSequence: muzzle
 	Armament@SECONDARY:
 		Name: secondary
-		Weapon: Plane
+		Weapon: wwi_plane
 		LocalOffset: 256,213,0
 		MuzzleSequence: muzzle
 	AttackPlane:

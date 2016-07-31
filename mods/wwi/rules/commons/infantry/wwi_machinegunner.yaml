@@ -15,7 +15,7 @@ WWI_MACHINEGUNNER:
 	Health:
 		HP: 100
 	Armament@PRIMARY:
-		Weapon: Machinegunner
+		Weapon: wwi_machinegunner
 	AttackFrontal:
 	WithInfantryBody:
 		AttackSequence: shoot

@@ -1,0 +1,30 @@
+wwi_machinegunner:
+	ReloadDelay: 5
+	Range: 5c0
+	Report: gun11.aud
+	Projectile: Bullet
+		Speed: 2c0
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 15
+		Versus:
+			flesh: 100
+			struct: 10
+			def: 25
+			veh: 30
+			h_gun: 40
+			f_gun: 30
+			l_tnk: 30
+			l_ship: 30
+			m_tnk: 20
+			m_ship: 20
+			h_tnk: 10
+			h_ship: 10
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidImpactTypes: Water

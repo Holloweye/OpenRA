@@ -1,0 +1,40 @@
+wwi_scoda_howitzer:
+	ReloadDelay: 90
+	Range: 15c0
+	MinRange: 6c0
+	Report: ArtShot1_1.aud, ArtShot2_1.aud
+	Projectile: Bullet
+		Speed: 184
+		Blockable: false
+		Angle: 82
+		Inaccuracy: 3c682
+		Image: 120MM
+		ContrailLength: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 150
+		Versus:
+			flesh: 60
+			struct: 100
+			def: 80
+			veh: 40
+			f_gun: 40
+			h_gun: 40
+			l_tnk: 40
+			l_ship: 40
+			m_tnk: 40
+			m_ship: 40
+			h_tnk: 40
+			h_ship: 40
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosions: med_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water

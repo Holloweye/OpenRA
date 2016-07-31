@@ -72,12 +72,12 @@ wwi_scoda:
 		Facings: 16
 		Tick: 400
 
-wwi_skoda_howitzer:
+wwi_scoda_howitzer:
 	idle:
 		Facings: 16
 	muzzle: gunfire2
 		Length: 5
-	icon: wwi_skoda_howitzer_icon
+	icon: wwi_scoda_howitzer_icon
 	run:
 		Start: 112
 		Length: 9
@@ -89,8 +89,8 @@ wwi_skoda_howitzer:
 		Facings: 16
 		Tick: 100
 
-wwi_babenberg:
-	idle:
+wwi_battleship:
+	idle: wwi_babenberg
 		Facings: 16
 	turret: wwi_babenberg_turret
 		Facings: 16
@@ -98,8 +98,8 @@ wwi_babenberg:
 		Length: 5
 	icon: wwi_babenberg_icon
 
-wwi_saida:
-	idle:
+wwi_cruiser:
+	idle: wwi_saida
 		Facings: 16
 	turret: wwi_saida_turret
 		Facings: 16

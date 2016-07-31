@@ -26,7 +26,7 @@ WWI_ADP:
 		Offset: -380,0,500
 	AttackTurreted:
 	Armament@PRIMARY:
-		Weapon: Austro
+		Weapon: wwi_adp
 		LocalOffset: 380,0,0
 		MuzzleSequence: muzzle
 	WithMuzzleOverlay:

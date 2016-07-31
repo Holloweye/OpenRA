@@ -1,4 +1,4 @@
-WWI_SKODA_HOWITZER:
+WWI_SCODA_HOWITZER:
 	Inherits: ^Artillery
 	Buildable:
 		Queue: Vehicle
@@ -22,7 +22,7 @@ WWI_SKODA_HOWITZER:
 	RevealsShroud:
 		Range: 4c0
 	Armament:
-		Weapon: Howitzer
+		Weapon: wwi_scoda_howitzer
 		LocalOffset: 624,0,800
 		MuzzleSequence: muzzle
 	AttackFrontal:

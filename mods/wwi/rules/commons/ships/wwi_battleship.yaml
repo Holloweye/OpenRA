@@ -1,4 +1,4 @@
-WWI_BABENBERG:
+WWI_BATTLESHIP:
 	Inherits: ^Ship
 	Buildable:
 		Queue: Ship
@@ -33,7 +33,7 @@ WWI_BABENBERG:
 		TurnSpeed: 3
 	Armament@PRIMARY:
 		Turret: primary
-		Weapon: babenberg
+		Weapon: wwi_battleship
 		LocalOffset: 480,-100,40, 480,100,40
 		Recoil: 171
 		RecoilRecovery: 34
@@ -41,7 +41,7 @@ WWI_BABENBERG:
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
-		Weapon: babenberg
+		Weapon: wwi_battleship
 		LocalOffset: 480,-100,40, 480,100,40
 		Recoil: 171
 		RecoilRecovery: 34

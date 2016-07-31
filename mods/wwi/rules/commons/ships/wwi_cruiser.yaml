@@ -1,4 +1,4 @@
-WWI_SAIDA:
+WWI_CRUISER:
 	Inherits: ^Ship
 	Buildable:
 		Queue: Ship
@@ -42,7 +42,7 @@ WWI_SAIDA:
 	Armament@PRIMARY:
 		Name: primary
 		Turret: primary
-		Weapon: saida
+		Weapon: wwi_cruiser
 		LocalOffset: 480,-100,40, 480,100,40
 		Recoil: 171
 		RecoilRecovery: 34
@@ -50,7 +50,7 @@ WWI_SAIDA:
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
-		Weapon: saida
+		Weapon: wwi_cruiser
 		LocalOffset: 480,-100,40, 480,100,40
 		Recoil: 171
 		RecoilRecovery: 34
@@ -58,7 +58,7 @@ WWI_SAIDA:
 	Armament@THIRD:
 		Name: third
 		Turret: third
-		Weapon: saida
+		Weapon: wwi_cruiser
 		LocalOffset: 480,-100,40, 480,100,40
 		Recoil: 171
 		RecoilRecovery: 34
@@ -66,7 +66,7 @@ WWI_SAIDA:
 	Armament@FORTH:
 		Name: forth
 		Turret: forth
-		Weapon: saida
+		Weapon: wwi_cruiser
 		LocalOffset: 480,-100,40, 480,100,40
 		Recoil: 171
 		RecoilRecovery: 34

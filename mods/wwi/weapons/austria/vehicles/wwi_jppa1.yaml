@@ -1,0 +1,31 @@
+wwi_jppa1:
+	ReloadDelay: 30
+	Range: 5c0
+	Report: pillbox1.aud
+	Burst: 5
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 15
+		Versus:
+			flesh: 60
+			struct: 70
+			def: 40
+			veh: 50
+			h_gun: 50
+			f_gun: 50
+			l_tnk: 100
+			l_ship: 100
+			m_tnk: 60
+			m_ship: 60
+			h_tnk: 45
+			h_ship: 45
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidImpactTypes: Water

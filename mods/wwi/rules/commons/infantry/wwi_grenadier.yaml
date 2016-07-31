@@ -15,7 +15,7 @@ WWI_GRENADIER:
 	Health:
 		HP: 50
 	Armament@PRIMARY:
-		Weapon: Grenadier
+		Weapon: wwi_grenadier
 	AttackFrontal:
 	WithInfantryBody:
 		AttackSequence: throw

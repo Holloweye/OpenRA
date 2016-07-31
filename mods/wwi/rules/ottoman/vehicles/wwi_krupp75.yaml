@@ -22,7 +22,7 @@ WWI_KRUPP75:
 	RevealsShroud:
 		Range: 4c0
 	Armament:
-		Weapon: Krupp75
+		Weapon: wwi_krupp75
 		LocalOffset: 724,0,358
 		MuzzleSequence: muzzle
 	AttackFrontal:

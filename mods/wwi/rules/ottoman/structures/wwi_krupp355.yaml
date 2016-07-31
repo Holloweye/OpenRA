@@ -29,7 +29,7 @@ WWI_KRUPP355:
 	WithAttackAnimation:
 		AttackSequence: shoot
 	Armament:
-		Weapon: Krupp355
+		Weapon: wwi_krupp355
 		LocalOffset: 1150,0,850
 		MuzzleSequence: muzzle
 	AttackTurreted:

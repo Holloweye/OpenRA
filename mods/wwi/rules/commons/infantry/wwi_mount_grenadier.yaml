@@ -31,7 +31,7 @@ WWI_MOUNT_GRENADIER:
 		IdleSequences: idle1
 		StandSequences: stand
 	Armament@PRIMARY:
-		Weapon: MountGrenadier
+		Weapon: wwi_mount_grenadier
 		LocalOffset: 0,200,600
 	AttackFrontal:
 	WithInfantryBody:

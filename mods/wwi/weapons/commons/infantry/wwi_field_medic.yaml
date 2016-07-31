@@ -1,0 +1,23 @@
+wwi_field_medic:
+	ReloadDelay: 80
+	Range: 4c0
+	Report: heal2.aud
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Damage: -50
+		Versus:
+			flesh: 100
+			struct: 0
+			def: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			l_ship: 0
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 0

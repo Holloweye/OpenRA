@@ -1,0 +1,40 @@
+wwi_krupp355:
+	ReloadDelay: 140
+	Range: 15c0
+	MinRange: 7c0
+	Report: ArtShot1_1.aud, ArtShot2_1.aud
+	Projectile: Bullet
+		Speed: 150
+		Blockable: false
+		Angle: 62
+		Inaccuracy: 3c682
+		Image: 120MM
+		ContrailLength: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 190
+		Versus:
+			flesh: 50
+			struct: 100
+			def: 80
+			veh: 30
+			f_gun: 30
+			h_gun: 30
+			l_tnk: 30
+			l_ship: 70
+			m_tnk: 30
+			m_ship: 70
+			h_tnk: 30
+			h_ship: 70
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosions: med_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water

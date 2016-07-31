@@ -1,0 +1,41 @@
+wwi_battleship:
+	ReloadDelay: 250
+	Range: 16c0
+	Burst: 5
+	Report: turret1.aud
+	Projectile: Bullet
+		Speed: 180
+		Blockable: false
+		Angle: 62
+		Inaccuracy: 3c938
+		Image: 120MM
+		ContrailLength: 30
+	Warhead@1Dam: SpreadDamage
+		Spread: 275
+		Damage: 30
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Versus:
+			flesh: 80
+			struct: 100
+			def: 50
+			veh: 20
+			f_gun: 20
+			h_gun: 20
+			l_tnk: 20
+			l_ship: 20
+			m_tnk: 100
+			m_ship: 100
+			h_tnk: 60
+			h_ship: 60
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Eff: CreateEffect
+		Explosions: artillery_explosion
+		ImpactSounds: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water

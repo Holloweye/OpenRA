@@ -22,7 +22,7 @@ WWI_MECH:
 		PipType: Yellow
 		Voice: Move
 	Armament:
-		Weapon: Repair
+		Weapon: wwi_mech
 		Cursor: repair
 		OutsideRangeCursor: repair
 		TargetStances: Ally

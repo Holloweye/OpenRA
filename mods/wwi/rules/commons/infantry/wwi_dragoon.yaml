@@ -31,7 +31,7 @@ WWI_DRAGOON:
 		IdleSequences: idle1
 		StandSequences: stand
 	Armament@PRIMARY:
-		Weapon: Dragoon
+		Weapon: wwi_dragoon
 		LocalOffset: 800,0,600
 		MuzzleSequence: muzzle
 	AttackFrontal:

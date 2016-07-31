@@ -38,7 +38,7 @@ WWI_SUB:
 		WhileCloakedUpgrades: underwater
 		Palette: submerged
 	Armament:
-		Weapon: Sub
+		Weapon: wwi_sub
 		LocalOffset: 0,-171,0, 0,171,0
 		FireDelay: 2
 	AttackFrontal:

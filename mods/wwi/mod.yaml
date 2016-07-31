@@ -64,8 +64,8 @@ Rules:
 	wwi|rules/commons/air/wwi_plane.yaml
 	wwi|rules/commons/ships/wwi_sub.yaml
 	wwi|rules/commons/ships/wwi_trans.yaml
-	wwi|rules/commons/ships/wwi_babenberg.yaml
-	wwi|rules/commons/ships/wwi_saida.yaml
+	wwi|rules/commons/ships/wwi_battleship.yaml
+	wwi|rules/commons/ships/wwi_cruiser.yaml
 	wwi|rules/commons/structures/wwi_house.yaml
 	wwi|rules/commons/structures/wwi_stable.yaml
 	wwi|rules/commons/structures/wwi_barr.yaml
@@ -85,7 +85,7 @@ Rules:
 	wwi|rules/austria/vehicles/wwi_trade.yaml
 	wwi|rules/austria/vehicles/wwi_flak.yaml
 	wwi|rules/austria/vehicles/wwi_scoda.yaml
-	wwi|rules/austria/vehicles/wwi_skoda_howitzer.yaml
+	wwi|rules/austria/vehicles/wwi_scoda_howitzer.yaml
 	wwi|rules/usa/structures/wwi_usa_hq.yaml
 	wwi|rules/ottoman/structures/wwi_otto_hq.yaml
 	wwi|rules/ottoman/structures/wwi_tax.yaml
@@ -169,8 +169,30 @@ ChromeLayout:
 	wwi|chrome/layout/editor.yaml
 
 Weapons:
-	wwi|weapons/weapons.yaml
 	wwi|weapons/effects.yaml
+	wwi|weapons/commons/infantry/wwi_rifle.yaml
+	wwi|weapons/commons/infantry/wwi_grenadier.yaml
+	wwi|weapons/commons/infantry/wwi_machinegunner.yaml
+	wwi|weapons/commons/infantry/wwi_flamethrower.yaml
+	wwi|weapons/commons/infantry/wwi_field_medic.yaml
+	wwi|weapons/commons/infantry/wwi_mech.yaml
+	wwi|weapons/commons/infantry/wwi_scout.yaml
+	wwi|weapons/commons/infantry/wwi_dragoon.yaml
+	wwi|weapons/commons/infantry/wwi_mount_grenadier.yaml
+	wwi|weapons/commons/air/wwi_plane.yaml
+	wwi|weapons/commons/ships/wwi_sub.yaml
+	wwi|weapons/commons/ships/wwi_battleship.yaml
+	wwi|weapons/commons/ships/wwi_cruiser.yaml
+	wwi|weapons/austria/vehicles/wwi_adp.yaml
+	wwi|weapons/austria/vehicles/wwi_jppa1.yaml
+	wwi|weapons/austria/vehicles/wwi_lancia.yaml
+	wwi|weapons/austria/vehicles/wwi_flak.yaml
+	wwi|weapons/austria/vehicles/wwi_scoda.yaml
+	wwi|weapons/austria/vehicles/wwi_scoda_howitzer.yaml
+	wwi|weapons/ottoman/structures/wwi_krupp355.yaml
+	wwi|weapons/ottoman/vehicles/wwi_krupp75.yaml
+	wwi|weapons/ottoman/vehicles/wwi_krupp87.yaml
+	wwi|weapons/ottoman/vehicles/wwi_hotch.yaml
 
 Voices:
 	wwi|audio/voices.yaml

@@ -19,7 +19,7 @@ WWI_FIELD_MEDIC:
 	Passenger:
 		PipType: Yellow
 	Armament:
-		Weapon: Medic
+		Weapon: wwi_field_medic
 		Cursor: heal
 		OutsideRangeCursor: heal
 		TargetStances: Ally

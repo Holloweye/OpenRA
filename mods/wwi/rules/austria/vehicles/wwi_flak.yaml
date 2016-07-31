@@ -25,7 +25,7 @@ WWI_FLAK:
 		TurnSpeed: 10
 		Offset: -298,0,298
 	Armament@AA:
-		Weapon: Flak
+		Weapon: wwi_flak
 		Recoil: 85
 		LocalOffset: 550,0,800
 		MuzzleSequence: muzzle
