@@ -1,6 +1,4 @@
 wwi_machinegunner:
-	Inherits: ^light_machine_gun
-	ReloadDelay: 5
-	Report: gun11.aud
+	Inherits: ^machine_gun
 	Warhead@1Dam: SpreadDamage
 		Damage: 15

@@ -1,42 +1,5 @@
 wwi_cruiser:
-	ReloadDelay: 100
-	Range: 10c0
-	Burst: 1
-	Report: turret1.aud
-	Projectile: Bullet
-		Speed: 244
-		Blockable: false
-		Angle: 62
-		Inaccuracy: 2c938
-		Image: 120MM
-		ContrailLength: 10
+	Inherits: ^gun
 	Warhead@1Dam: SpreadDamage
-		Spread: 213
 		Damage: 25
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Underwater, Ground, Water
-		Versus:
-			flesh: 90
-			struct: 70
-			def: 50
-			veh: 20
-			f_gun: 20
-			h_gun: 20
-			l_tnk: 100
-			l_ship: 100
-			m_tnk: 60
-			m_ship: 60
-			h_tnk: 40
-			h_ship: 40
-			air: 0
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Crater
-	Warhead@3Eff: CreateEffect
-		Explosions: artillery_explosion
-		ImpactSounds: kaboom15.aud
-		InvalidImpactTypes: Water
-	Warhead@4EffWater: CreateEffect
-		Explosions: large_splash
-		ImpactSounds: splash9.aud
-		ValidImpactTypes: Water
