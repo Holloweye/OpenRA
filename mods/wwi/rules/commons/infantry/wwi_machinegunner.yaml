@@ -10,7 +10,7 @@ WWI_MACHINEGUNNER:
 	Valued:
 		Cost: 400
 	RevealsShroud:
-		Range: 5c0
+		Range: 4c0
 	Tooltip:
 		Name: Machine gunner
 		Description: Strong vs Infantry\n  Weak vs Vehicles

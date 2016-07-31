@@ -41,7 +41,7 @@ WWI_PLANE:
 	AmmoPool:
 		Ammo: 18
 		PipCount: 6
-		ReloadTicks: 11
+		ReloadTicks: 5
 	AutoTarget:
 		TargetWhenIdle: false
 		TargetWhenDamaged: false

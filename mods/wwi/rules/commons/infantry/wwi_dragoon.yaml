@@ -13,7 +13,7 @@ WWI_DRAGOON:
 		Name: Dragoon
 		Description: Equiped with a rifle.\n  Strong vs Infantry\n  Weak vs Vehicles
 	Mobile:
-		Speed: 70
+		Speed: 90
 	RevealsShroud:
 		Range: 5c0
 	Health:

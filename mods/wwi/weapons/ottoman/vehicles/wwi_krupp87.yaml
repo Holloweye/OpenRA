@@ -1,4 +1,4 @@
 wwi_krupp87:
 	Inherits: ^field_artillery
 	Warhead@1Dam: SpreadDamage
-		Damage: 170
+		Damage: 180

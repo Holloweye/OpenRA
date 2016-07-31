@@ -2,4 +2,4 @@ wwi_krupp355:
 	Inherits: ^howitzer
 	MinRange: 7c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 190
+		Damage: 220

@@ -11,14 +11,14 @@
 		Image: 120MM
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
-		Spread: 200
+		Spread: 300
 		Damage: 140
 		Versus:
 			flesh: 25
 			struct: 35
 			def: 25
-			h_gun: 100
-			f_gun: 100
+			h_gun: 60
+			f_gun: 60
 			l_tnk: 100
 			l_ship: 100
 			m_tnk: 85

@@ -137,12 +137,15 @@ wwi_airstrip:
 	idle:
 		Start: 8
 		Length: 1
+		ZOffset: -1023
 	damaged-idle:
 		Start: 8
 		Length: 1
+		ZOffset: -1023
 	make:
 		Start: 0
 		Length: 9
+		ZOffset: -1023
 	bib: bib3
 		Length: *
 		Offset: 0,-20

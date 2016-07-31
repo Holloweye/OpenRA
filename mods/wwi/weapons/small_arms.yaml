@@ -52,7 +52,7 @@
 			def: 25
 			veh: 30
 			h_gun: 30
-			f_gun: 30
+			f_gun: 15
 			l_tnk: 15
 			l_ship: 15
 			m_tnk: 15
@@ -80,6 +80,7 @@
 ^mounted_machine_gun:
 	Inherits: ^machine_gun
 	ReloadDelay: 30
+	Range: 5c0
 	Report: pillbox1.aud
 
 ^light_machine_gun:

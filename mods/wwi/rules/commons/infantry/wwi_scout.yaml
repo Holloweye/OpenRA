@@ -13,7 +13,7 @@ WWI_SCOUT:
 		Name: Scout
 		Description: Scouting unit.\n  Strong vs Infantry\n  Weak vs Vehicles
 	Mobile:
-		Speed: 90
+		Speed: 100
 	RevealsShroud:
 		Range: 6c0
 	Health:

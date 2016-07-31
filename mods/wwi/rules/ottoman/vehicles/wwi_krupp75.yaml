@@ -13,7 +13,7 @@ WWI_KRUPP75:
 		Name: Krupp 7.5 cm
 		Description: Short-range artillery.\n  Strong vs Medium / Heavy tanks and buildings.\n  Weak vs Infantry and Artillery
 	Health:
-		HP: 150
+		HP: 130
 	Armor:
 		Type: f_gun
 	Mobile:

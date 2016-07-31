@@ -13,9 +13,9 @@ WWI_MOUNT_GRENADIER:
 		Name: Grenadier
 		Description: Mounted grenadier.\n  Strong vs Structures\n  Weak vs Vehicles
 	Mobile:
-		Speed: 100
+		Speed: 80
 	RevealsShroud:
-		Range: 4c0
+		Range: 5c0
 	Health:
 		HP: 40
 	Armament@PRIMARY:

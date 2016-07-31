@@ -1,4 +1,4 @@
 wwi_scoda:
 	Inherits: ^field_artillery
 	Warhead@1Dam: SpreadDamage
-		Damage: 140
+		Damage: 120
