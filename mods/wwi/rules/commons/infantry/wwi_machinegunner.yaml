@@ -8,7 +8,9 @@ WWI_MACHINEGUNNER:
 	Population:
 		Amount: -1
 	Valued:
-		Cost: 1000
+		Cost: 400
+	RevealsShroud:
+		Range: 5c0
 	Tooltip:
 		Name: Machine gunner
 		Description: Strong vs Infantry\n  Weak vs Vehicles
