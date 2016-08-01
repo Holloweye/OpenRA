@@ -1,0 +1,26 @@
+WWI_GAS:
+	Inherits: ^Soldier
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 30
+		Prerequisites: reconnaissance, Pop1, barracks
+	Population:
+		Amount: -1
+	Valued:
+		Cost: 150
+	Tooltip:
+		Name: Gas Soldier
+		Description: Strong vs Infantry\n  Weak vs Infantry, Vehicles
+	Health:
+		HP: 50
+	Armament@PRIMARY:
+		Weapon: wwi_gas
+	AttackFrontal:
+	WithInfantryBody:
+		AttackSequence: throw
+	Explodes:
+		Weapon: UnitExplodeSmall
+		Chance: 100
+	WithDeathAnimation:
+		FallbackSequence:die1

@@ -47,6 +47,7 @@ explosion:
 			DESERT: TEMPERAT
 			INTERIOR: TEMPERAT
 	artillery_explosion_2: artexpl
+	gas_cloud:
 
 pips:
 	groups:

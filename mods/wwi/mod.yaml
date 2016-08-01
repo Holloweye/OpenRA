@@ -60,6 +60,7 @@ Rules:
 	wwi|rules/commons/infantry/wwi_scout.yaml
 	wwi|rules/commons/infantry/wwi_dragoon.yaml
 	wwi|rules/commons/infantry/wwi_mount_grenadier.yaml
+	wwi|rules/commons/infantry/wwi_gas.yaml
 	wwi|rules/commons/air/wwi_balloon.yaml
 	wwi|rules/commons/air/wwi_plane.yaml
 	wwi|rules/commons/ships/wwi_sub.yaml
@@ -183,6 +184,7 @@ Weapons:
 	wwi|weapons/commons/infantry/wwi_scout.yaml
 	wwi|weapons/commons/infantry/wwi_dragoon.yaml
 	wwi|weapons/commons/infantry/wwi_mount_grenadier.yaml
+	wwi|weapons/commons/infantry/wwi_gas.yaml
 	wwi|weapons/commons/air/wwi_plane.yaml
 	wwi|weapons/commons/ships/wwi_sub.yaml
 	wwi|weapons/commons/ships/wwi_battleship.yaml

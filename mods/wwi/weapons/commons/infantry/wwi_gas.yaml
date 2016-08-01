@@ -1,0 +1,31 @@
+wwi_gas:
+	ReloadDelay: 100
+	Range: 4c0
+	Report: grenade1.aud
+	Projectile: Bullet
+		Speed: 136
+		Blockable: false
+		Angle: 62
+		Inaccuracy: 554
+		Image: BOMB
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 5
+		Versus:
+			flesh: 100
+			def: 0
+			struct: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			l_ship: 0
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: gas_cloud
+		ImpactSounds: kaboom25.aud
