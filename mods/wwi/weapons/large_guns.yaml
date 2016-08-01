@@ -21,11 +21,11 @@
 			veh: 20
 			f_gun: 20
 			h_gun: 20
-			l_tnk: 100
+			l_tnk: 30
 			l_ship: 100
-			m_tnk: 60
+			m_tnk: 30
 			m_ship: 60
-			h_tnk: 40
+			h_tnk: 30
 			h_ship: 40
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath

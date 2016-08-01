@@ -3702,25 +3702,25 @@ Templates:
 		Size: 1,1
 		Category: Rail
 		Tiles:
-			0: Rail
+			0: Clear
 	Template@603:
 		Id: 603
 		Images: rail12.shp
 		Size: 1,1
 		Category: Rail
 		Tiles:
-			0: Rail
+			0: Clear
 	Template@604:
 		Id: 604
 		Images: rail13.shp
 		Size: 1,1
 		Category: Rail
 		Tiles:
-			0: Rail
+			0: Clear
 	Template@605:
 		Id: 605
 		Images: rail14.shp
 		Size: 1,1
 		Category: Rail
 		Tiles:
-			0: Rail
+			0: Clear

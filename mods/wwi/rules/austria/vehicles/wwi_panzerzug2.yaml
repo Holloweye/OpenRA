@@ -1,0 +1,70 @@
+WWI_PANZERZUG2_BUILD:
+	Inherits: ^Building
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 50
+		Prerequisites: tankfactory, Pop20, ~structures.austria
+		BuildAtProductionType: Tank
+	Tooltip:
+		Name: Panzerzug II
+		Description: Armored train.\n  Strong vs Light tanks\n  Weak vs Heavy tanks
+	Valued:
+		Cost: 2550
+	Population:
+		Amount: -20
+	Building:
+		Footprint: x
+		Dimensions: 1,1
+		TerrainTypes: Rail
+	Health:
+		HP: 1
+	RevealsShroud:
+		Range: 4c0
+	SpawnActorOnDeath:
+		Actor: WWI_PANZERZUG2
+	SelfHealing@REMOVE:
+		Step: -1000
+		Ticks: 0
+		HealIfBelow: 1000
+		DamageCooldown: 0
+	-WithBuildingExplosion:
+	-ShakeOnDeath:
+	-SoundOnDamageTransition:
+
+WWI_PANZERZUG2:
+	Inherits: ^Train
+	Tooltip:
+		Name: Panzerzug II
+		Description: Armored train.\n  Strong vs Light tanks\n  Weak vs Heavy tanks
+	Valued:
+		Cost: 2550
+	Population:
+		Amount: -20
+	Health:
+		HP: 3000
+	Armor:
+		Type: h_tnk
+	Mobile:
+		Speed: 20
+		Crushes: mine, infantry, crush_fench
+		InitialFacing: 70
+	RevealsShroud:
+		Range: 4c0
+	Turreted:
+		ROT: 6
+		Offset: 0,0,500
+	AttackTurreted:
+	Armament@PRIMARY:
+		Weapon: wwi_panzerzug2
+		LocalOffset: 500,0,150
+		MuzzleSequence: muzzle
+	WithMuzzleOverlay:
+	WithSpriteTurret:
+	AutoTarget:
+	SelectionDecorations:
+		VisualBounds: 35,30,0,-5
+	SelfHealing@HEAL:
+		Step: 5
+		Ticks: 25
+		HealIfBelow: 100
+		DamageCooldown: 25

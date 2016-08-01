@@ -1,0 +1,6 @@
+wwi_panzerzug2:
+	Inherits: ^gun
+	Projectile: Bullet
+		Inaccuracy: 0
+	Warhead@1Dam: SpreadDamage
+		Damage: 70

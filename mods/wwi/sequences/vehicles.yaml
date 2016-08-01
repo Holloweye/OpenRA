@@ -175,3 +175,23 @@ wwi_supplytruck:
 		Facings: 32
 		UseClassicFacingFudge: True
 	icon: trukicon
+
+wwi_panzerzug2_build:
+	idle: wwi_panzerzug2
+		Start: 4
+		Length: 1
+	make: wwi_panzerzug2
+		Start: 4
+		Length: 1
+	muzzle: gunfire2
+		Length: 2
+	icon: wwi_jppa1_icon
+
+wwi_panzerzug2:
+	idle:
+		Facings: 16
+	turret: wwi_panzerzug2_turret
+		Facings: 16
+	muzzle: gunfire2
+		Length: 2
+	icon: wwi_jppa1_icon

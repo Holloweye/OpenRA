@@ -88,6 +88,7 @@ Rules:
 	wwi|rules/austria/vehicles/wwi_flak.yaml
 	wwi|rules/austria/vehicles/wwi_scoda.yaml
 	wwi|rules/austria/vehicles/wwi_scoda_howitzer.yaml
+	wwi|rules/austria/vehicles/wwi_panzerzug2.yaml
 	wwi|rules/usa/structures/wwi_usa_hq.yaml
 	wwi|rules/ottoman/structures/wwi_otto_hq.yaml
 	wwi|rules/ottoman/structures/wwi_tax.yaml
@@ -195,6 +196,7 @@ Weapons:
 	wwi|weapons/austria/vehicles/wwi_flak.yaml
 	wwi|weapons/austria/vehicles/wwi_scoda.yaml
 	wwi|weapons/austria/vehicles/wwi_scoda_howitzer.yaml
+	wwi|weapons/austria/vehicles/wwi_panzerzug2.yaml
 	wwi|weapons/ottoman/structures/wwi_krupp355.yaml
 	wwi|weapons/ottoman/vehicles/wwi_krupp75.yaml
 	wwi|weapons/ottoman/vehicles/wwi_krupp87.yaml
