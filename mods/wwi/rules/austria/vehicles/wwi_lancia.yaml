@@ -22,7 +22,7 @@ WWI_LANCIA:
 	RevealsShroud:
 		Range: 4c0
 	Turreted:
-		ROT: 6
+		TurnSpeed: 6
 		Offset: -290,0,350
 	AttackTurreted:
 	Armament@PRIMARY:

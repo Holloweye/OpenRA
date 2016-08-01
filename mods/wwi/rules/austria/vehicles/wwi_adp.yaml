@@ -22,7 +22,7 @@ WWI_ADP:
 	RevealsShroud:
 		Range: 5c0
 	Turreted:
-		ROT: 9
+		TurnSpeed: 9
 		Offset: -380,0,500
 	AttackTurreted:
 	Armament@PRIMARY:

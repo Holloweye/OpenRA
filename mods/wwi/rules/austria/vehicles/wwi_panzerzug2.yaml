@@ -51,7 +51,7 @@ WWI_PANZERZUG2:
 	RevealsShroud:
 		Range: 4c0
 	Turreted:
-		ROT: 6
+		TurnSpeed: 2
 		Offset: 0,0,500
 	AttackTurreted:
 	Armament@PRIMARY:
