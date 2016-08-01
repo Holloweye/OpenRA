@@ -963,9 +963,6 @@ Actors:
 	Actor334: wwi_fence
 		Owner: Neutral
 		Location: 64,63
-	Actor335: wwi_fence
-		Owner: Neutral
-		Location: 64,64
 	Actor336: wwi_fence
 		Owner: Neutral
 		Location: 64,65
@@ -996,9 +993,6 @@ Actors:
 	Actor345: wwi_fence
 		Owner: Neutral
 		Location: 66,62
-	Actor346: wwi_fence
-		Owner: Neutral
-		Location: 66,63
 	Actor347: wwi_fence
 		Owner: Neutral
 		Location: 60,58
