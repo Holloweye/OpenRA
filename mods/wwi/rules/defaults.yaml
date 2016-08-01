@@ -230,6 +230,7 @@
 			Ore: 70
 			Gems: 70
 			Beach: 40
+			Rail: 40
 		TurnSpeed: 5
 	SelectionDecorations:
 	Selectable:
@@ -279,6 +280,7 @@
 			Ore: 70
 			Gems: 70
 			Beach: 70
+			Rail: 70
 	TankArmor:
 		FrontalDamageModifier: 50
 		SideDamageModifier: 75
@@ -328,6 +330,7 @@
 			Ore: 80
 			Gems: 80
 			Beach: 80
+			Rail: 80
 	SelectionDecorations:
 	Selectable:
 		Bounds: 12,18,0,-8
