@@ -20,16 +20,6 @@ Player:
 		BuildSpeed: 40
 		LowPowerSlowdown: 3
 		SpeedUp: True
-	ClassicProductionQueue@Tank:
-		Type: Tank
-		BuildSpeed: 40
-		LowPowerSlowdown: 3
-		SpeedUp: True
-	ClassicProductionQueue@Mounted:
-		Type: Mounted
-		BuildSpeed: 40
-		LowPowerSlowdown: 3
-		SpeedUp: True
 	ClassicProductionQueue@Infantry:
 		Type: Infantry
 		BuildSpeed: 40
