@@ -47,7 +47,7 @@
 		Speed: 184
 		Blockable: false
 		Angle: 82
-		Inaccuracy: 3c682
+		Inaccuracy: 2c0
 		Image: 120MM
 		ContrailLength: 30
 	Warhead@1Dam: SpreadDamage
