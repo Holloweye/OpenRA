@@ -3,7 +3,7 @@ WWI_PANZERZUG2_BUILD:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 50
-		Prerequisites: tankfactory, Pop20, ~structures.austria
+		Prerequisites: tankfactory, reconnaissance, Pop20, ~structures.austria
 		BuildAtProductionType: Tank
 	Tooltip:
 		Name: Panzerzug II
