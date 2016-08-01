@@ -1,5 +1,5 @@
 wwi_gas:
-	ReloadDelay: 100
+	ReloadDelay: 200
 	Range: 4c0
 	Report: grenade1.aud
 	Projectile: Bullet
@@ -9,8 +9,9 @@ wwi_gas:
 		Inaccuracy: 554
 		Image: BOMB
 	Warhead@1Dam: SpreadDamage
-		Spread: 256
-		Damage: 5
+		Spread: 250
+		Damage: 20
+		Falloff: 100, 100, 100, 100, 100
 		Versus:
 			flesh: 100
 			def: 0
@@ -26,6 +27,206 @@ wwi_gas:
 			h_ship: 0
 			air: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
-	Warhead@2Eff: CreateEffect
+	Warhead@2Dam: SpreadDamage
+		Delay: 25
+		Spread: 250
+		Damage: 20
+		Falloff: 100, 100, 100, 100, 100
+		Versus:
+			flesh: 100
+			def: 0
+			struct: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			l_ship: 0
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@3Dam: SpreadDamage
+		Delay: 50
+		Spread: 250
+		Damage: 20
+		Falloff: 100, 100, 100, 100, 100
+		Versus:
+			flesh: 100
+			def: 0
+			struct: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			l_ship: 0
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@4Dam: SpreadDamage
+		Delay: 75
+		Spread: 250
+		Damage: 20
+		Falloff: 100, 100, 100, 100, 100
+		Versus:
+			flesh: 100
+			def: 0
+			struct: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			l_ship: 0
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@5Dam: SpreadDamage
+		Delay: 100
+		Spread: 250
+		Damage: 20
+		Falloff: 100, 100, 100, 100, 100
+		Versus:
+			flesh: 100
+			def: 0
+			struct: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			l_ship: 0
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@6Dam: SpreadDamage
+		Delay: 125
+		Spread: 250
+		Damage: 20
+		Falloff: 100, 100, 100, 100, 100
+		Versus:
+			flesh: 100
+			def: 0
+			struct: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			l_ship: 0
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@7Dam: SpreadDamage
+		Delay: 150
+		Spread: 250
+		Damage: 20
+		Falloff: 100, 100, 100, 100, 100
+		Versus:
+			flesh: 100
+			def: 0
+			struct: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			l_ship: 0
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@8Dam: SpreadDamage
+		Delay: 175
+		Spread: 250
+		Damage: 20
+		Falloff: 100, 100, 100, 100, 100
+		Versus:
+			flesh: 100
+			def: 0
+			struct: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			l_ship: 0
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@9Dam: SpreadDamage
+		Delay: 200
+		Spread: 250
+		Damage: 20
+		Falloff: 100, 100, 100, 100, 100
+		Versus:
+			flesh: 100
+			def: 0
+			struct: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			l_ship: 0
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@10Dam: SpreadDamage
+		Delay: 225
+		Spread: 250
+		Damage: 20
+		Falloff: 100, 100, 100, 100, 100
+		Versus:
+			flesh: 100
+			def: 0
+			struct: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			l_ship: 0
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@11Dam: SpreadDamage
+		Delay: 250
+		Spread: 250
+		Damage: 20
+		Falloff: 100, 100, 100, 100, 100
+		Versus:
+			flesh: 100
+			def: 0
+			struct: 0
+			veh: 0
+			h_gun: 0
+			f_gun: 0
+			l_tnk: 0
+			l_ship: 0
+			m_tnk: 0
+			m_ship: 0
+			h_tnk: 0
+			h_ship: 0
+			air: 0
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@1Eff: CreateEffect
 		Explosions: gas_cloud
 		ImpactSounds: kaboom25.aud

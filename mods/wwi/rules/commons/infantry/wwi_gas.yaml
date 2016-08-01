@@ -8,19 +8,20 @@ WWI_GAS:
 	Population:
 		Amount: -1
 	Valued:
-		Cost: 150
+		Cost: 500
 	Tooltip:
-		Name: Gas Soldier
+		Name: Chemical Soldier
 		Description: Strong vs Infantry\n  Weak vs Infantry, Vehicles
 	Health:
-		HP: 50
+		HP: 25
 	Armament@PRIMARY:
 		Weapon: wwi_gas
 	AttackFrontal:
 	WithInfantryBody:
 		AttackSequence: throw
 	Explodes:
-		Weapon: UnitExplodeSmall
+		Weapon: wwi_gas
+		EmptyWeapon: wwi_gas
 		Chance: 100
 	WithDeathAnimation:
 		FallbackSequence:die1
