@@ -12,7 +12,7 @@
 		Spread: 256
 		Damage: 30
 		Versus:
-			flesh: 30
+			flesh: 90
 			def: 50
 			struct: 100
 			veh: 20
