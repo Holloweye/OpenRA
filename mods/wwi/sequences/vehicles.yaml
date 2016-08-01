@@ -185,7 +185,7 @@ wwi_panzerzug2_build:
 		Length: 1
 	muzzle: gunfire2
 		Length: 2
-	icon: wwi_jppa1_icon
+	icon: wwi_panzerzug2_icon
 
 wwi_panzerzug2:
 	idle:
@@ -194,4 +194,4 @@ wwi_panzerzug2:
 		Facings: 16
 	muzzle: gunfire2
 		Length: 2
-	icon: wwi_jppa1_icon
+	icon: wwi_panzerzug2_icon
