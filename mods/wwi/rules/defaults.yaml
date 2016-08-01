@@ -227,8 +227,6 @@
 			Rough: 40
 			Road: 100
 			Bridge: 100
-			Ore: 70
-			Gems: 70
 			Beach: 40
 		TurnSpeed: 5
 	SelectionDecorations:
@@ -276,8 +274,6 @@
 			Rough: 70
 			Road: 100
 			Bridge: 100
-			Ore: 70
-			Gems: 70
 			Beach: 70
 	TankArmor:
 		FrontalDamageModifier: 50
@@ -325,8 +321,6 @@
 			Rough: 80
 			Road: 100
 			Bridge: 100
-			Ore: 80
-			Gems: 80
 			Beach: 80
 	SelectionDecorations:
 	Selectable:
@@ -528,7 +522,7 @@
 ^Husk:
 	Inherits: ^BasicHusk
 	Husk:
-		AllowedTerrain: Clear, Rough, Road, Ore, Gems, Beach
+		AllowedTerrain: Clear, Rough, Road, Beach
 	Burns:
 		Damage: 2
 	Capturable:

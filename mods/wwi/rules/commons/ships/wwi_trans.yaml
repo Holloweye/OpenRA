@@ -22,7 +22,7 @@ WWI_TRANS:
 	SelectionDecorations:
 		VisualBounds: 36,36
 	WithLandingCraftAnimation:
-		OpenTerrainTypes: Clear, Rough, Road, Ore, Gems, Beach
+		OpenTerrainTypes: Clear, Rough, Road, Beach
 	Cargo:
 		Types: Infantry, Vehicle
 		MaxWeight: 5
