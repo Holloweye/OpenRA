@@ -1,0 +1,71 @@
+WWI_BOMBER:
+	Inherits: ^Plane
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Aircraft
+		BuildPaletteOrder: 20
+		Prerequisites: Pop2
+	Valued:
+		Cost: 700
+	Population:
+		Amount: -2
+	Tooltip:
+		Name: Bomber Plane
+		Description: Strong vs buildings.
+	Health:
+		HP: 80
+	Armor:
+		Type: air
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Armament@PRIMARY:
+		Weapon: wwi_bomber
+		LocalOffset: 256,-213,0
+	AttackPlane:
+		FacingTolerance: 20
+	Aircraft:
+		CruiseAltitude: 2560
+		RearmBuildings: wwi_airstrip
+		InitialFacing: 150
+		TurnSpeed: 2
+		Speed: 100
+		RepulsionSpeed: 40
+		MaximumPitch: 56
+	AmmoPool:
+		Ammo: 2
+		PipCount: 2
+		ReloadTicks: 5
+	AutoTarget:
+		TargetWhenIdle: false
+		TargetWhenDamaged: false
+		EnableStances: false
+	ReturnOnIdle:
+	SelectionDecorations:
+		VisualBounds: 30,35,0,-4
+	Contrail:
+		Offset: -853,0,0
+	SpawnActorOnDeath:
+		Actor: WWI_BOMBER.Husk
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,0
+		Interval: 2
+
+WWI_BOMBER.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Bomber Plane
+	Contrail:
+		Offset: -853,0,0
+	Aircraft:
+		TurnSpeed: 2
+		Speed: 100
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,0
+		Interval: 2
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: wwi_bomber

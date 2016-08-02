@@ -63,6 +63,7 @@ Rules:
 	wwi|rules/commons/infantry/wwi_gas.yaml
 	wwi|rules/commons/air/wwi_balloon.yaml
 	wwi|rules/commons/air/wwi_plane.yaml
+	wwi|rules/commons/air/wwi_bomber.yaml
 	wwi|rules/commons/ships/wwi_sub.yaml
 	wwi|rules/commons/ships/wwi_trans.yaml
 	wwi|rules/commons/ships/wwi_battleship.yaml
@@ -187,6 +188,7 @@ Weapons:
 	wwi|weapons/commons/infantry/wwi_mount_grenadier.yaml
 	wwi|weapons/commons/infantry/wwi_gas.yaml
 	wwi|weapons/commons/air/wwi_plane.yaml
+	wwi|weapons/commons/air/wwi_bomber.yaml
 	wwi|weapons/commons/ships/wwi_sub.yaml
 	wwi|weapons/commons/ships/wwi_battleship.yaml
 	wwi|weapons/commons/ships/wwi_cruiser.yaml
