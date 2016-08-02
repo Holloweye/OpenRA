@@ -4,7 +4,7 @@ WWI_MECH:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 80
-		Prerequisites: Pop1, tankfactory, barracks
+		Prerequisites: Pop1, vehiclefactory, barracks
 	Valued:
 		Cost: 500
 	Population:

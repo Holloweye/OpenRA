@@ -20,6 +20,8 @@ WWI_TRADE:
 		Speed: 90
 	RevealsShroud:
 		Range: 5c0
+	Selectable:
+		Priority: 0
 	SelectionDecorations:
 		VisualBounds: 30,28,0,-5
 	Trader:
