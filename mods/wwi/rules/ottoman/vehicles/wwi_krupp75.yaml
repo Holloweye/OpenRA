@@ -20,7 +20,7 @@ WWI_KRUPP75:
 		ROT: 4
 		Speed: 50
 	RevealsShroud:
-		Range: 4c0
+		Range: 5c0
 	Armament:
 		Weapon: wwi_krupp75
 		LocalOffset: 724,0,358

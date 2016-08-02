@@ -7,7 +7,7 @@ WWI_PANZERZUG2_BUILD:
 		BuildAtProductionType: Tank
 	Tooltip:
 		Name: Panzerzug II
-		Description: Armored train.\n  Strong vs Light tanks\n  Weak vs Heavy tanks
+		Description: Armored train.\n Must be deploy on rails.
 	Valued:
 		Cost: 2550
 	Population:
@@ -35,7 +35,7 @@ WWI_PANZERZUG2:
 	Inherits: ^Train
 	Tooltip:
 		Name: Panzerzug II
-		Description: Armored train.\n  Strong vs Light tanks\n  Weak vs Heavy tanks
+		Description: Armored train.\n Must be deploy on rails.
 	Valued:
 		Cost: 2550
 	Population:
