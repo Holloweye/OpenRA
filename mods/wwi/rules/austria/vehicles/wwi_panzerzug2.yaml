@@ -2,7 +2,7 @@ WWI_PANZERZUG2_BUILD:
 	Inherits: ^Building
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 100
 		Prerequisites: tankfactory, reconnaissance, Pop20, ~structures.austria
 		BuildAtProductionType: Tank
 	Tooltip:
