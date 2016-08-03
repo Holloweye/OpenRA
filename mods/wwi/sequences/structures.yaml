@@ -264,3 +264,24 @@ wwi_krupp355:
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
 	icon: wwi_krupp355_icon
+
+wwi_otto_aa:
+	idle:
+		Facings: 32
+	shoot:
+		Start: 32
+		Length: 9
+		Facings: 32
+		Tick: 125
+	make:
+		Start: 320
+		Length: 6
+	damaged-idle:
+		Facings: 32
+	muzzle: gunfire2
+		Length: 5
+		Tick: 200
+	bib: mbAGUN
+		Length: *
+		UseTilesetExtension: true
+	icon: wwi_krupp355_icon
