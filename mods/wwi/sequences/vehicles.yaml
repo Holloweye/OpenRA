@@ -204,12 +204,12 @@ wwi_train_cart_build:
 	make: wwi_train_cart
 		Start: 4
 		Length: 1
-	icon: wwi_panzerzug2_icon
+	icon: wwi_train_cart_icon
 
 wwi_train_cart:
 	idle:
 		Facings: 16
-	icon: wwi_panzerzug2_icon
+	icon: wwi_train_cart_icon
 
 wwi_bomber:
 	idle:
