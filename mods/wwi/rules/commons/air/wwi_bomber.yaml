@@ -4,7 +4,7 @@ WWI_BOMBER:
 		Queue: Aircraft
 		BuildAtProductionType: Aircraft
 		BuildPaletteOrder: 20
-		Prerequisites: Pop2
+		Prerequisites: Pop2, ~!structures.ottoman
 	Valued:
 		Cost: 700
 	Population:
