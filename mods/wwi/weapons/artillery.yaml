@@ -53,6 +53,7 @@
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
 		Damage: 150
+		Falloff: 100, 70, 50, 30, 0
 		Versus:
 			flesh: 60
 			struct: 100
