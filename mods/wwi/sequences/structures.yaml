@@ -284,4 +284,4 @@ wwi_otto_aa:
 	bib: mbAGUN
 		Length: *
 		UseTilesetExtension: true
-	icon: wwi_krupp355_icon
+	icon: wwi_otto_aa_icon
