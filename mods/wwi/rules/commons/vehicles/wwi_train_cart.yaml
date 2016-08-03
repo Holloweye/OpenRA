@@ -41,10 +41,17 @@ WWI_TRAIN_CART:
 	Armor:
 		Type: m_tnk
 	Mobile:
-		Speed: 60
+		Speed: 70
 		Crushes: mine, infantry, crush_fench
 		InitialFacing: 70
+		UpgradeTypes: notmobile
+		UpgradeMaxEnabledLevel: 0
 	RevealsShroud:
 		Range: 4c0
 	SelectionDecorations:
 		VisualBounds: 35,30,0,-5
+	Cargo:
+		Types: Infantry
+		MaxWeight: 10
+		PipCount: 5
+		LoadingUpgrades: notmobile
