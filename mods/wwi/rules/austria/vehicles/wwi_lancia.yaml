@@ -18,7 +18,7 @@ WWI_LANCIA:
 		Type: h_tnk
 	Mobile:
 		Speed: 30
-		Crushes: mine, infantry, crush_fench, crush_trench
+		Crushes: mine, infantry, crush_fench, crush_trench, crush_wall
 	RevealsShroud:
 		Range: 4c0
 	Turreted:

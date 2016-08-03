@@ -285,3 +285,14 @@ wwi_otto_aa:
 		Length: *
 		UseTilesetExtension: true
 	icon: wwi_otto_aa_icon
+
+wwi_brick:
+	idle: brik
+		Length: 16
+	scratched-idle: brik
+		Start: 16
+		Length: 16
+	damaged-idle: brik
+		Start: 32
+		Length: 16
+	icon: brikicon

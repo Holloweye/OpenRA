@@ -81,6 +81,7 @@ Rules:
 	wwi|rules/commons/structures/wwi_shipyard.yaml
 	wwi|rules/commons/structures/wwi_fence.yaml
 	wwi|rules/commons/structures/wwi_trench.yaml
+	wwi|rules/commons/structures/wwi_brick.yaml
 	wwi|rules/austria/structures/wwi_aus_hq.yaml
 	wwi|rules/austria/vehicles/wwi_adp.yaml
 	wwi|rules/austria/vehicles/wwi_jppa1.yaml
