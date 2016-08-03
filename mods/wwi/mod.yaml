@@ -69,6 +69,7 @@ Rules:
 	wwi|rules/commons/ships/wwi_battleship.yaml
 	wwi|rules/commons/ships/wwi_cruiser.yaml
 	wwi|rules/commons/vehicles/wwi_supplytruck.yaml
+	wwi|rules/commons/vehicles/wwi_train_cart.yaml
 	wwi|rules/commons/structures/wwi_house.yaml
 	wwi|rules/commons/structures/wwi_stable.yaml
 	wwi|rules/commons/structures/wwi_barr.yaml

@@ -1,0 +1,30 @@
+MapFormat: 11
+
+RequiresMod: wwi
+
+Title: Name your map here
+
+Author: Holloweye
+
+Tileset: TEMPERAT
+
+MapSize: 130,130
+
+Bounds: 1,1,128,128
+
+Visibility: Lobby
+
+Categories: Conquest
+
+Players:
+	PlayerReference@Neutral:
+		Name: Neutral
+		OwnsWorld: True
+		NonCombatant: True
+		Faction: austria
+	PlayerReference@Creeps:
+		Name: Creeps
+		NonCombatant: True
+		Faction: austria
+
+Actors:

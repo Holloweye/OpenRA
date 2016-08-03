@@ -197,6 +197,20 @@ wwi_panzerzug2:
 		Length: 2
 	icon: wwi_panzerzug2_icon
 
+wwi_train_cart_build:
+	idle: wwi_train_cart
+		Start: 4
+		Length: 1
+	make: wwi_train_cart
+		Start: 4
+		Length: 1
+	icon: wwi_panzerzug2_icon
+
+wwi_train_cart:
+	idle:
+		Facings: 16
+	icon: wwi_panzerzug2_icon
+
 wwi_bomber:
 	idle:
 		Facings: 32
