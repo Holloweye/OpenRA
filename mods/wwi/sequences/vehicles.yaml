@@ -44,7 +44,8 @@ wwi_trade:
 
 wwi_plane:
 	idle:
-		Facings: 16
+		Facings: 32
+		Length: 21
 	muzzle: minigun
 		Length: 6
 		Facings: 8
@@ -198,5 +199,6 @@ wwi_panzerzug2:
 
 wwi_bomber:
 	idle:
-		Facings: 16
+		Facings: 32
+		Length: 21
 	icon: wwi_bomber_icon

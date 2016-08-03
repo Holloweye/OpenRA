@@ -1,34 +1,16 @@
 wwi_plane:
-	ReloadDelay: 3
-	Range: 5c0
+	Inherits: ^light_machine_gun
 	MinRange: 3c0
 	Report: gun13.aud
 	ValidTargets: Air, Ground
 	Projectile: Bullet
-		Speed: 1c682
+		Speed: 600
 		Blockable: false
+		ContrailLength: 20
+		Inaccuracy: 1c0
 	Warhead@1Dam: SpreadDamage
-		Spread: 128
-		Damage: 10
+		Damage: 15
+		Spread: 400
 		Versus:
-			flesh: 100
-			struct: 10
-			def: 10
-			veh: 30
-			h_gun: 40
-			f_gun: 40
-			l_tnk: 30
-			l_ship: 30
-			m_tnk: 20
-			m_ship: 20
-			h_tnk: 10
-			h_ship: 10
 			air: 100
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidTargets: Air, Ground
-	Warhead@2Eff: CreateEffect
-		Explosions: piffs
-		InvalidImpactTypes: Water
-	Warhead@3EffWater: CreateEffect
-		Explosions: water_piffs
-		ValidImpactTypes: Water

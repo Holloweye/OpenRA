@@ -3,6 +3,7 @@ wwi_bomber:
 	Range: 1c0
 	Report: nosound.aud
 	Projectile: Bullet
+		Speed: 80
 		Inaccuracy: 0
 	Warhead@1Dam: SpreadDamage
 		Damage: 100

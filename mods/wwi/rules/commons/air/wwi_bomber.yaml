@@ -28,14 +28,14 @@ WWI_BOMBER:
 		CruiseAltitude: 2560
 		RearmBuildings: wwi_airstrip
 		InitialFacing: 150
-		TurnSpeed: 2
-		Speed: 100
+		TurnSpeed: 1
+		Speed: 80
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 	AmmoPool:
 		Ammo: 2
 		PipCount: 2
-		ReloadTicks: 5
+		ReloadTicks: 20
 	AutoTarget:
 		TargetWhenIdle: false
 		TargetWhenDamaged: false
@@ -47,8 +47,11 @@ WWI_BOMBER:
 		Offset: -853,0,0
 	SpawnActorOnDeath:
 		Actor: WWI_BOMBER.Husk
-	SmokeTrailWhenDamaged:
-		Offset: -853,0,0
+	SmokeTrailWhenDamaged@1:
+		Offset: 0,400,0
+		Interval: 2
+	SmokeTrailWhenDamaged@2:
+		Offset: 0,-400,0
 		Interval: 2
 
 WWI_BOMBER.Husk:
@@ -60,8 +63,12 @@ WWI_BOMBER.Husk:
 	Aircraft:
 		TurnSpeed: 2
 		Speed: 100
-	SmokeTrailWhenDamaged:
-		Offset: -853,0,0
+	SmokeTrailWhenDamaged@1:
+		Offset: 0,400,0
+		Interval: 2
+		MinDamage: Undamaged
+	SmokeTrailWhenDamaged@2:
+		Offset: 0,-400,0
 		Interval: 2
 		MinDamage: Undamaged
 	RevealsShroud:
