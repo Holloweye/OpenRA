@@ -57,4 +57,11 @@ Tick = function()
 		end)
   end
 
+  local t = (ticks + 45) % (360 * speed) * (math.pi / 180) / speed;
+	Camera.Position = viewportOrigin + WVec.New(-5000 * math.sin(t), 5000 * math.cos(t), 0)
+
+end
+
+WorldLoaded = function()
+	viewportOrigin = Camera.Position
 end

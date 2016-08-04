@@ -2,6 +2,8 @@ Player:
 	-ConquestVictoryConditions:
 
 World:
+	MenuPaletteEffect:
+		Effect: Desaturated
 	-SpawnMPUnits:
 	-MPStartLocations:
 	MusicPlaylist:
