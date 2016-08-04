@@ -9,8 +9,9 @@ RequiresMods:
 	modchooser: {DEV_VERSION}
 
 Packages:
-	~^Content/ra
-	~^Content/ra/music
+	~^Content/ra/v2/
+	~^Content/ra/v2/expand
+	~^Content/ra/v2/cnc
 	~^Content/wwi
 	~^Content/wwi/music
 	.
@@ -32,9 +33,12 @@ Packages:
 	~scores.mix
 	~movies1.mix
 	~movies2.mix
+	~expand2.mix
+	~desert.mix
 	wwi|bits
 	wwi|bits/terrain
 	wwi|bits/inherited
+	wwi|bits/inherited/desert
 	wwi|bits/inherited/shps
 	wwi|uibits
 
