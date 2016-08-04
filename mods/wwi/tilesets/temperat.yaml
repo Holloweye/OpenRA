@@ -70,7 +70,7 @@ Terrain:
 	TerrainType@Rail:
 		Type: Rail
 		TargetTypes: Ground
-		Color: b2b215
+		Color: 606060
 
 Templates:
 	Template@255:
@@ -3628,98 +3628,98 @@ Templates:
 			11: Clear
 	Template@592:
 		Id: 592
-		Images: rail1.shp
+		Images: rail1.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:
 			0: Rail
 	Template@593:
 		Id: 593
-		Images: rail2.shp
+		Images: rail2.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:
 			0: Rail
 	Template@594:
 		Id: 594
-		Images: rail3.shp
+		Images: rail3.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:
 			0: Rail
 	Template@595:
 		Id: 595
-		Images: rail4.shp
+		Images: rail4.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:
 			0: Rail
 	Template@596:
 		Id: 596
-		Images: rail5.shp
+		Images: rail5.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:
 			0: Rail
 	Template@597:
 		Id: 597
-		Images: rail6.shp
+		Images: rail6.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:
 			0: Rail
 	Template@598:
 		Id: 598
-		Images: rail7.shp
+		Images: rail7.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:
 			0: Rail
 	Template@599:
 		Id: 599
-		Images: rail8.shp
+		Images: rail8.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:
 			0: Rail
 	Template@600:
 		Id: 600
-		Images: rail9.shp
+		Images: rail9.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:
 			0: Rail
 	Template@601:
 		Id: 601
-		Images: rail10.shp
+		Images: rail10.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:
 			0: Rail
 	Template@602:
 		Id: 602
-		Images: rail11.shp
+		Images: rail11.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:
 			0: Clear
 	Template@603:
 		Id: 603
-		Images: rail12.shp
+		Images: rail12.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:
 			0: Clear
 	Template@604:
 		Id: 604
-		Images: rail13.shp
+		Images: rail13.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:
 			0: Clear
 	Template@605:
 		Id: 605
-		Images: rail14.shp
+		Images: rail14.tem
 		Size: 1,1
 		Category: Rail
 		Tiles:

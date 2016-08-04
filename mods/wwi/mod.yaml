@@ -33,6 +33,7 @@ Packages:
 	~movies1.mix
 	~movies2.mix
 	wwi|bits
+	wwi|bits/terrain
 	wwi|bits/inherited
 	wwi|bits/inherited/shps
 	wwi|uibits
