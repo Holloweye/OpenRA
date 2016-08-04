@@ -2,8 +2,9 @@ General:
 	Name: Snow
 	Id: SNOW
 	Palette: snow.pal
-	EditorTemplateOrder: Terrain, Debris, Road, Cliffs, Water Cliffs, Beach, River, Bridge
+	EditorTemplateOrder: Terrain, Debris, Road, Cliffs, Water Cliffs, Beach, River, Bridge, Rail
 	HeightDebugColors: 880000
+	SheetSize: 1024
 
 Terrain:
 	TerrainType@Beach:
@@ -66,6 +67,10 @@ Terrain:
 		IsWater: True
 		Color: 5C74A4
 		RestrictPlayerColor: true
+	TerrainType@Rail:
+		Type: Rail
+		TargetTypes: Ground
+		Color: 606060
 
 Templates:
 	Template@255:
@@ -3160,3 +3165,101 @@ Templates:
 		Tiles:
 			0: Rock
 			1: Rock
+	Template@592:
+		Id: 592
+		Images: rail1.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@593:
+		Id: 593
+		Images: rail2.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@594:
+		Id: 594
+		Images: rail3.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@595:
+		Id: 595
+		Images: rail4.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@596:
+		Id: 596
+		Images: rail5.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@597:
+		Id: 597
+		Images: rail6.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@598:
+		Id: 598
+		Images: rail7.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@599:
+		Id: 599
+		Images: rail8.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@600:
+		Id: 600
+		Images: rail9.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@601:
+		Id: 601
+		Images: rail10.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@602:
+		Id: 602
+		Images: rail11.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Clear
+	Template@603:
+		Id: 603
+		Images: rail12.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Clear
+	Template@604:
+		Id: 604
+		Images: rail13.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Clear
+	Template@605:
+		Id: 605
+		Images: rail14.sno
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Clear
