@@ -618,84 +618,18 @@ Actors:
 	Actor219: t16
 		Owner: Neutral
 		Location: 84,32
-	Actor220: tc01
-		Owner: Neutral
-		Location: 28,62
-	Actor221: tc04
-		Owner: Neutral
-		Location: 29,68
-	Actor222: t16
-		Owner: Neutral
-		Location: 28,65
-	Actor223: t16
-		Owner: Neutral
-		Location: 29,61
 	Actor224: t16
 		Owner: Neutral
 		Location: 31,60
-	Actor225: t16
-		Owner: Neutral
-		Location: 30,67
 	Actor226: t12
 		Owner: Neutral
 		Location: 33,66
-	Actor227: t12
-		Owner: Neutral
-		Location: 23,62
 	Actor228: t12
 		Owner: Neutral
 		Location: 21,47
-	Actor229: tc03
-		Owner: Neutral
-		Location: 32,72
-	Actor230: t01
-		Owner: Neutral
-		Location: 31,73
 	Actor231: t01
 		Owner: Neutral
 		Location: 34,68
-	Actor232: tc01
-		Owner: Neutral
-		Location: 101,59
-	Actor233: t07
-		Owner: Neutral
-		Location: 102,60
-	Actor234: t07
-		Owner: Neutral
-		Location: 101,56
-	Actor235: t01
-		Owner: Neutral
-		Location: 102,53
-	Actor236: t01
-		Owner: Neutral
-		Location: 98,51
-	Actor237: t08
-		Owner: Neutral
-		Location: 99,52
-	Actor238: t08
-		Owner: Neutral
-		Location: 102,58
-	Actor239: tc04
-		Owner: Neutral
-		Location: 96,57
-	Actor240: t16
-		Owner: Neutral
-		Location: 97,56
-	Actor241: t16
-		Owner: Neutral
-		Location: 95,54
-	Actor242: t16
-		Owner: Neutral
-		Location: 97,61
-	Actor243: tc03
-		Owner: Neutral
-		Location: 105,58
-	Actor244: t17
-		Owner: Neutral
-		Location: 108,62
-	Actor245: t17
-		Owner: Neutral
-		Location: 103,49
 	Actor246: t17
 		Owner: Neutral
 		Location: 104,37
@@ -1023,3 +957,15 @@ Actors:
 	Actor356: mpspawn
 		Owner: Neutral
 		Location: 81,58
+	Actor335: t12
+		Owner: Neutral
+		Location: 29,62
+	Actor346: t17
+		Owner: Neutral
+		Location: 95,49
+	Actor357: tc03
+		Owner: Neutral
+		Location: 97,58
+	Actor358: t17
+		Owner: Neutral
+		Location: 100,62
