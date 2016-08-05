@@ -3774,3 +3774,94 @@ Templates:
 			0: Swamp
 			1: Swamp
 			2: Swamp
+	Template@611:
+		Id: 611
+		Images: swamp_grass1.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Clear
+	Template@612:
+		Id: 612
+		Images: swamp_grass2.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Clear
+	Template@613:
+		Id: 613
+		Images: swamp_grass3.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Clear
+	Template@614:
+		Id: 614
+		Images: swamp_grass4.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Clear
+	Template@615:
+		Id: 615
+		Images: swamp_grass5.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Clear
+	Template@616:
+		Id: 616
+		Images: swamp_grass6.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Clear
+	Template@617:
+		Id: 617
+		Images: swamp_grass7.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Clear
+	Template@618:
+		Id: 618
+		Images: swamp_grass8.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Clear
+	Template@619:
+		Id: 619
+		Images: swamp_grass9.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Clear
+	Template@620:
+		Id: 620
+		Images: swamp_grass10.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Clear
+	Template@621:
+		Id: 621
+		Images: swamp_grass11.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Clear
+	Template@622:
+		Id: 622
+		Images: swamp_grass12.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Clear
+	Template@623:
+		Id: 623
+		Images: swamp_grass13.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Clear

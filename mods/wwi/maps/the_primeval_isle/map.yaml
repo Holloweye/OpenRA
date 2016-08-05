@@ -880,57 +880,27 @@ Actors:
 	Actor297: wwi_supply_station
 		Owner: Neutral
 		Location: 105,63
-	Actor346: swamp_tree
-		Owner: Neutral
-		Location: 56,68
-	Actor347: swamp_tree
-		Owner: Neutral
-		Location: 57,61
-	Actor349: swamp_tree
+	Actor349: swamp_tree1
 		Owner: Neutral
 		Location: 52,69
-	Actor345: swamp_tree
-		Owner: Neutral
-		Location: 53,65
-	Actor350: swamp_tree
+	Actor350: swamp_tree1
 		Owner: Neutral
 		Location: 50,63
-	Actor348: swamp_tree
-		Owner: Neutral
-		Location: 73,67
-	Actor351: swamp_tree
-		Owner: Neutral
-		Location: 77,65
-	Actor352: swamp_tree
+	Actor352: swamp_tree1
 		Owner: Neutral
 		Location: 72,63
-	Actor353: swamp_tree
+	Actor353: swamp_tree1
 		Owner: Neutral
 		Location: 72,69
-	Actor354: swamp_tree
-		Owner: Neutral
-		Location: 76,71
-	Actor355: swamp_tree
-		Owner: Neutral
-		Location: 75,61
-	Actor302: swamp_tree
-		Owner: Neutral
-		Location: 60,62
-	Actor303: swamp_tree
+	Actor303: swamp_tree1
 		Owner: Neutral
 		Location: 64,66
-	Actor304: swamp_tree
+	Actor304: swamp_tree1
 		Owner: Neutral
 		Location: 62,69
-	Actor305: swamp_tree
-		Owner: Neutral
-		Location: 69,67
-	Actor306: swamp_tree
+	Actor306: swamp_tree1
 		Owner: Neutral
 		Location: 67,60
-	Actor307: swamp_tree
-		Owner: Neutral
-		Location: 65,63
 	Actor298: oilb
 		Owner: Neutral
 		Location: 59,59
@@ -1012,3 +982,78 @@ Actors:
 	Actor330: t16
 		Owner: Neutral
 		Location: 67,55
+	Actor331: swamp_tree2
+		Owner: Neutral
+		Location: 55,62
+	Actor332: swamp_tree2
+		Owner: Neutral
+		Location: 54,66
+	Actor333: swamp_tree2
+		Owner: Neutral
+		Location: 58,63
+	Actor334: swamp_tree2
+		Owner: Neutral
+		Location: 67,65
+	Actor335: swamp_tree2
+		Owner: Neutral
+		Location: 65,61
+	Actor336: swamp_tree2
+		Owner: Neutral
+		Location: 62,66
+	Actor337: swamp_tree2
+		Owner: Neutral
+		Location: 74,67
+	Actor338: swamp_tree2
+		Owner: Neutral
+		Location: 79,63
+	Actor339: swamp_tree2
+		Owner: Neutral
+		Location: 78,66
+	Actor340: swamp_tree2
+		Owner: Neutral
+		Location: 68,70
+	Actor341: swamp_tree1
+		Owner: Neutral
+		Location: 57,65
+	Actor342: swamp_tree1
+		Owner: Neutral
+		Location: 62,63
+	Actor343: swamp_tree1
+		Owner: Neutral
+		Location: 56,61
+	Actor344: swamp_tree1
+		Owner: Neutral
+		Location: 68,66
+	Actor345: swamp_tree1
+		Owner: Neutral
+		Location: 65,63
+	Actor346: swamp_tree2
+		Owner: Neutral
+		Location: 67,62
+	Actor347: swamp_tree2
+		Owner: Neutral
+		Location: 61,62
+	Actor348: swamp_tree2
+		Owner: Neutral
+		Location: 60,66
+	Actor351: swamp_tree2
+		Owner: Neutral
+		Location: 57,68
+	Actor354: swamp_tree2
+		Owner: Neutral
+		Location: 53,61
+	Actor355: swamp_tree2
+		Owner: Neutral
+		Location: 52,64
+	Actor356: swamp_tree2
+		Owner: Neutral
+		Location: 70,67
+	Actor357: swamp_tree2
+		Owner: Neutral
+		Location: 71,64
+	Actor358: swamp_tree2
+		Owner: Neutral
+		Location: 75,61
+	Actor359: swamp_tree2
+		Owner: Neutral
+		Location: 74,63

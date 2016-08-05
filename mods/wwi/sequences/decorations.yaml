@@ -101,7 +101,15 @@ tc01.husk:
 		Length: 8
 		Tick: 80
 
-swamp_tree:
+swamp_tree1:
+	Defaults:
+		UseTilesetExtension: true
+		TilesetOverrides:
+			DESERT: TEMPERAT
+			INTERIOR: TEMPERAT
+	idle:
+
+swamp_tree2:
 	Defaults:
 		UseTilesetExtension: true
 		TilesetOverrides:
