@@ -37,9 +37,9 @@ WWI_TRAIN_CART:
 	Valued:
 		Cost: 500
 	Health:
-		HP: 300
+		HP: 250
 	Armor:
-		Type: m_tnk
+		Type: veh
 	Mobile:
 		Speed: 70
 		Crushes: mine, infantry, crush_fench
