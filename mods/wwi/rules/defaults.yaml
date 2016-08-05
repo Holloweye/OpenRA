@@ -376,6 +376,7 @@
 			Gems: 80
 			Beach: 80
 			Rail: 80
+			Swamp: 50
 	SelectionDecorations:
 	Selectable:
 		Bounds: 12,18,0,-8

@@ -3757,3 +3757,20 @@ Templates:
 		Category: Swamp
 		Tiles:
 			0: Swamp
+	Template@609:
+		Id: 609
+		Images: swamp4.tem
+		Size: 1,2
+		Category: Swamp
+		Tiles:
+			0: Swamp
+			1: Swamp
+	Template@610:
+		Id: 610
+		Images: swamp5.tem
+		Size: 3,1
+		Category: Swamp
+		Tiles:
+			0: Swamp
+			1: Swamp
+			2: Swamp

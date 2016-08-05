@@ -101,6 +101,14 @@ tc01.husk:
 		Length: 8
 		Tick: 80
 
+swamp_tree:
+	Defaults:
+		UseTilesetExtension: true
+		TilesetOverrides:
+			DESERT: TEMPERAT
+			INTERIOR: TEMPERAT
+	idle:
+
 t17:
 	Defaults:
 		UseTilesetExtension: true
@@ -985,4 +993,3 @@ windmill:
 		Start: 8
 		Length: 8
 		Tick: 80
-

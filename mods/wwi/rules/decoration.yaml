@@ -236,6 +236,14 @@ T17:
 	SpawnActorOnDeath:
 		Actor: T17.Husk
 
+SWAMP_TREE:
+	Inherits: ^Tree
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	EditorTilesetFilter:
+		ExcludeTilesets: DESERT, INTERIOR
+
 TC01:
 	Inherits: ^Tree
 	Building:
