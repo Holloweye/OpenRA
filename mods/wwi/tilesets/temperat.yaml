@@ -3778,9 +3778,14 @@ Templates:
 		Id: 611
 		Images: swamp_grass1.tem
 		Size: 1,1
+		PickAny: True
 		Category: Swamp
 		Tiles:
 			0: Clear
+			1: Clear
+			2: Clear
+			3: Clear
+			4: Clear
 	Template@612:
 		Id: 612
 		Images: swamp_grass2.tem
