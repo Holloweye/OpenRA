@@ -2,7 +2,7 @@ General:
 	Name: Temperate
 	Id: TEMPERAT
 	Palette: temperat.pal
-	EditorTemplateOrder: Terrain, Debris, Road, Cliffs, Water Cliffs, Beach, River, Bridge, Rail
+	EditorTemplateOrder: Terrain, Debris, Road, Cliffs, Water Cliffs, Beach, River, Bridge, Rail, Swamp
 	HeightDebugColors: AA0000
 	SheetSize: 1024
 
@@ -71,6 +71,10 @@ Terrain:
 		Type: Rail
 		TargetTypes: Ground
 		Color: 606060
+	TerrainType@Swamp:
+		Type: Swamp
+		TargetTypes: Ground
+		Color: 828c51
 
 Templates:
 	Template@255:
@@ -3724,3 +3728,32 @@ Templates:
 		Category: Rail
 		Tiles:
 			0: Clear
+	Template@606:
+		Id: 606
+		Images: swamp1.tem
+		Size: 3,2
+		Category: Swamp
+		Tiles:
+			0: Swamp
+			1: Swamp
+			2: Swamp
+			3: Swamp
+			4: Swamp
+			5: Swamp
+	Template@607:
+		Id: 607
+		Images: swamp2.tem
+		Size: 2,2
+		Category: Swamp
+		Tiles:
+			0: Swamp
+			1: Swamp
+			2: Swamp
+			3: Swamp
+	Template@608:
+		Id: 608
+		Images: swamp3.tem
+		Size: 1,1
+		Category: Swamp
+		Tiles:
+			0: Swamp
