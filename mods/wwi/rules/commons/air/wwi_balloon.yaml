@@ -24,7 +24,7 @@ WWI_BALLOON:
 		LandWhenIdle: false
 		InitialFacing: 20
 		TurnSpeed: 1
-		Speed: 10
+		Speed: 20
 		AltitudeVelocity: 0c10
 		CruiseAltitude: 3000
 	SelectionDecorations:

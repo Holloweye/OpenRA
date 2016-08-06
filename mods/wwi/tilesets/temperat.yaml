@@ -3781,11 +3781,11 @@ Templates:
 		PickAny: True
 		Category: Swamp
 		Tiles:
-			0: Clear
-			1: Clear
-			2: Clear
-			3: Clear
-			4: Clear
+			0: Swamp
+			1: Swamp
+			2: Swamp
+			3: Swamp
+			4: Swamp
 	Template@612:
 		Id: 612
 		Images: swamp_grass2.tem
