@@ -175,7 +175,7 @@ wwi_supplytruck:
 	idle: truk
 		Facings: 32
 		UseClassicFacingFudge: True
-	icon: trukicon
+	icon: wwi_supplytruck_icon
 
 wwi_panzerzug2_build:
 	idle: wwi_panzerzug2

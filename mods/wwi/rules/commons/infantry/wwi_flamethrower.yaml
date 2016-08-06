@@ -10,7 +10,7 @@ WWI_FLAMETHROWER:
 	Valued:
 		Cost: 500
 	Tooltip:
-		Name: wwi_flamethrower
+		Name: Flamethrower
 		Description: Strong vs Trench, Infantry\n  Weak vs Vehicles
 	Health:
 		HP: 40

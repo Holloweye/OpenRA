@@ -78,7 +78,7 @@ wwi_rifle:
 		Length: 3
 		Stride: 6
 		Facings: 8
-	icon: e1icon
+	icon: rifleman_icon
 
 wwi_grenadier:
 	stand:e2
@@ -149,7 +149,7 @@ wwi_grenadier:
 		Start: 288
 		Length: 12
 		Facings: 8
-	icon: e2icon
+	icon: grenadier_icon
 
 wwi_machinegunner:
 	stand:e1
@@ -301,7 +301,7 @@ wwi_flamethrower:
 		Start: 256
 		Length: 16
 		Facings: 8
-	icon: e4icon
+	icon: flamethrower_icon
 
 wwi_field_medic:
 	stand:medi
@@ -428,7 +428,7 @@ wwi_engi:
 		Length: 4
 		Facings: 8
 		Tick: 100
-	icon: e6icon
+	icon: engi_icon
 
 wwi_thief:
 	stand:thf
@@ -540,7 +540,7 @@ wwi_mech:
 		Length: 4
 		Facings: 8
 		Tick: 100
-	icon: mechicon
+	icon: mechanic_icon
 
 wwi_scout:
 	stand:wwi_scout_idle
