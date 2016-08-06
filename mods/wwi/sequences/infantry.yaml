@@ -365,7 +365,7 @@ wwi_field_medic:
 		Length: 4
 		Facings: 8
 		Tick: 100
-	icon: mediicon
+	icon: medic_icon
 
 wwi_engi:
 	stand:e6
@@ -476,7 +476,7 @@ wwi_thief:
 		Length: 4
 		Facings: 8
 		Tick: 80
-	icon: thficon
+	icon: thief_icon
 
 wwi_mech:
 	stand:mech

@@ -295,4 +295,4 @@ wwi_brick:
 	damaged-idle: brik
 		Start: 32
 		Length: 16
-	icon: brikicon
+	icon: brick_icon

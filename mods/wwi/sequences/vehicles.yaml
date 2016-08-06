@@ -126,7 +126,7 @@ wwi_trans:
 	unload: lst
 		Start: 4
 		ZOffset: -511
-	icon: lsticon
+	icon: transport_icon
 
 wwi_krupp75:
 	idle:
