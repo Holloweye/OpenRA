@@ -57,7 +57,7 @@ Player:
 			wwi_trade: 30%
 		UnitLimits:
 			wwi_balloon: 1
-		SquadSize: 20
+		SquadSize: 10
 	HackyAI@HardAI:
 		Name: Hard AI
 		MinimumExcessPower: 30
@@ -116,4 +116,4 @@ Player:
 			wwi_trade: 30%
 		UnitLimits:
 			wwi_balloon: 1
-		SquadSize: 20
+		SquadSize: 10

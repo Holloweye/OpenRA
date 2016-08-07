@@ -8,6 +8,7 @@ Player:
 		QueuedAudio: Building
 		ReadyAudio: ConstructionComplete
 		SpeedUp: True
+		BuildTimeSpeedReduction: 100, 80, 60, 50
 	ClassicProductionQueue@Defense:
 		Type: Defense
 		BuildSpeed: 40
@@ -15,26 +16,31 @@ Player:
 		QueuedAudio: Building
 		ReadyAudio: ConstructionComplete
 		SpeedUp: True
+		BuildTimeSpeedReduction: 100, 80, 60, 50
 	ClassicProductionQueue@Vehicle:
 		Type: Vehicle
 		BuildSpeed: 40
 		LowPowerSlowdown: 3
 		SpeedUp: True
+		BuildTimeSpeedReduction: 100, 80, 60, 50
 	ClassicProductionQueue@Infantry:
 		Type: Infantry
 		BuildSpeed: 40
 		LowPowerSlowdown: 3
 		SpeedUp: True
+		BuildTimeSpeedReduction: 100, 80, 60, 50
 	ClassicProductionQueue@Ship:
 		Type: Ship
 		BuildSpeed: 40
 		LowPowerSlowdown: 3
 		SpeedUp: True
+		BuildTimeSpeedReduction: 100, 80, 60, 50
 	ClassicProductionQueue@Aircraft:
 		Type: Aircraft
 		BuildSpeed: 40
 		LowPowerSlowdown: 3
 		SpeedUp: True
+		BuildTimeSpeedReduction: 100, 80, 60, 50
 	PlaceBuilding:
 	ScriptTriggers:
 	MissionObjectives:
