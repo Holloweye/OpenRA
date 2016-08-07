@@ -9,7 +9,7 @@ Player:
 			Barracks: wwi_barr
 			VehiclesFactory: wwi_vfact, wwi_tfact
 			Production: wwi_barr, wwi_vfact, wwi_tfact, wwi_airstrip, wwi_stable, wwi_shipyard
-			Silo:
+			Silo: wwi_house
 		UnitsCommonNames:
 			Mcv:
 			ExcludeFromSquads: wwi_trade
@@ -68,7 +68,7 @@ Player:
 			Barracks: wwi_barr
 			VehiclesFactory: wwi_vfact, wwi_tfact
 			Production: wwi_barr, wwi_vfact, wwi_tfact, wwi_airstrip, wwi_stable, wwi_shipyard
-			Silo:
+			Silo: wwi_house
 		UnitsCommonNames:
 			Mcv:
 			ExcludeFromSquads: wwi_trade
