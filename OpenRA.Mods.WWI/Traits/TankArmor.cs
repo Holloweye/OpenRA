@@ -25,10 +25,10 @@ namespace OpenRA.Mods.WWI.Traits
         readonly TankArmorInfo info;
 
         public TankArmor(Actor self, TankArmorInfo info)
-		{
-			this.self = self;
-			this.info = info;
-		}
+        {
+            this.self = self;
+            this.info = info;
+        }
 
         public int GetDamageModifier(Actor attacker, Damage damage)
         {
@@ -36,59 +36,39 @@ namespace OpenRA.Mods.WWI.Traits
 
             // Not entirely accurate as it uses positions of actors and not warhead.
             // TODO: Use warhead angle if possible?
-            int facing = getFacingAngle(self);
-            int angleOfAttack = angleBetweenActors(self, attacker);
-            if (isFrontalAttack(facing, angleOfAttack))
+
+            var angle = (self.CenterPosition - attacker.CenterPosition).Yaw.Facing - getFacingAngle(self).Facing;
+
+            if (isFrontalAttack(angle))
             {
                 modifier = info.FrontalDamageModifier;
             }
-            else if (isSideAttack(facing, angleOfAttack))
-            {
-                modifier = info.SideDamageModifier;
-            }
-            else 
+            else if (isBackAttack(angle))
             {
                 modifier = info.BackDamageModifier;
+            }
+            else
+            {
+                modifier = info.SideDamageModifier;
             }
 
             return modifier;
         }
 
-        private bool isFrontalAttack(int facing, int angleOfAttack)
+        private bool isFrontalAttack(int angle)
         {
-            return distance(facing, angleOfAttack) > 120;
+            return angle >= 179 || angle <= -13;
         }
 
-        private bool isSideAttack(int facing, int angleOfAttack)
+        private bool isBackAttack(int angle)
         {
-            int dist = distance(facing, angleOfAttack);
-            return dist > 60 && dist <= 120;
+            return angle >= 51 && angle <= 115;
         }
 
-        private int distance(int alpha, int beta)
-        {
-            int phi = Math.Abs(beta - alpha) % 360;
-            int distance = phi > 180 ? 360 - phi : phi;
-            return distance;
-        }
-
-        private int angleBetweenActors(Actor a, Actor b)
-        {
-            int angle = 0;
-            if (a != null && b != null)
-            {
-                int deltaX = a.Location.X - b.Location.X;
-                int deltaY = a.Location.Y - b.Location.Y;
-
-                angle = (int)(Math.Atan2(deltaY, deltaX) * 180.0f / Math.PI) + 90;
-            }
-            return angle;
-        }
-
-        private int getFacingAngle(Actor a)
+        private WAngle getFacingAngle(Actor a)
         {
             IFacing facing = a.TraitOrDefault<IFacing>();
-            return (int)(facing != null ? (float)WAngle.FromFacing(facing.Facing).Angle / 1024.0f * 360.0f : 0);
+            return new WAngle((int)(facing != null ? (float)WAngle.FromFacing(facing.Facing).Angle / 1024.0f * 360.0f : 0.0f));
         }
     }
 }
