@@ -23,7 +23,7 @@ namespace OpenRA.Mods.WWI.Traits
         [Desc("Maximum credits gained.")]
         public readonly int MaxCredits = Int16.MaxValue;
 
-        [Desc("Max from which to collect from.")]
+        [Desc("Max distance from which to collect from.")]
         public readonly int CollectionDistance = 0;
 
         [Desc("Whether to show the cash tick indicators (+$15 rising from actor).")]
