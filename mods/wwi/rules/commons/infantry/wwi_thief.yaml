@@ -5,6 +5,7 @@ WWI_THIEF:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 70
 		Prerequisites: reconnaissance, barracks, Pop1
+		BuildLimit: 1
 	Valued:
 		Cost: 500
 	Population:
