@@ -9,7 +9,7 @@ World:
 	MusicPlaylist:
 		BackgroundMusic: intro
 	-StartGameNotification:
-	LuaScript:
+	LuaScript@shellmap:
 		Scripts: shellmap.lua
 	SoundModifier:
 		Volume: 70

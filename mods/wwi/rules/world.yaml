@@ -136,6 +136,8 @@ World:
 	StartGameNotification:
 	ObjectivesPanel:
 		PanelName: SKIRMISH_STATS
+	LuaScript@ai:
+		Scripts: ai.lua
 
 EditorWorld:
 	Inherits: ^BaseWorld

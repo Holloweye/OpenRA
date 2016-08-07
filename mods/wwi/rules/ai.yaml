@@ -1,0 +1,119 @@
+Player:
+	HackyAI@NormalAI:
+		Name: Normal AI
+		MinimumExcessPower: 30
+		BuildingCommonNames:
+			ConstructionYard: wwi_aus_hq, wwi_otto_hq
+			Refinery: wwi_tax, wwi_trade, wwi_aus_hq
+			Power: wwi_pp
+			Barracks: wwi_barr
+			VehiclesFactory: wwi_vfact, wwi_tfact
+			Production: wwi_barr, wwi_vfact, wwi_tfact, wwi_airstrip, wwi_stable, wwi_shipyard
+			Silo:
+		UnitsCommonNames:
+			Mcv:
+			ExcludeFromSquads: wwi_trade
+		BuildingLimits:
+		BuildingFractions:
+			wwi_aus_hq: 5%
+			wwi_otto_hq: 5%
+			wwi_pp: 10%
+			wwi_house: 30%
+			wwi_barr: 5%
+			wwi_stable: 5%
+			wwi_vfact: 5%
+			wwi_tfact: 5%
+			wwi_airstrip: 5%
+			wwi_shipyard: 5%
+			wwi_recon: 5%
+			wwi_tax: 5%
+			wwi_krupp355: 5%
+			wwi_otto_aa: 5%
+		UnitsToBuild:
+			wwi_dragoon: 10%
+			wwi_field_medic: 3%
+			wwi_flamethrower: 10%
+			wwi_gas: 10%
+			wwi_grenadier: 10%
+			wwi_machinegunner: 10%
+			wwi_mech: 3%
+			wwi_mount_grenadier: 10%
+			wwi_rifle: 40%
+			wwi_scout: 10%
+			wwi_balloon: 1%
+			wwi_bomber: 10%
+			wwi_plane: 10%
+			wwi_battleship: 5%
+			wwi_cruiser: 5%
+			wwi_sub: 5%
+			wwi_adp: 20%
+			wwi_flak: 5%
+			wwi_jppa1: 10%
+			wwi_scoda_howitzer: 10%
+			wwi_scoda: 10%
+			wwi_hotch: 20%
+			wwi_krupp75: 10%
+			wwi_krupp87: 10%
+			wwi_trade: 30%
+		UnitLimits:
+			wwi_balloon: 1
+		SquadSize: 20
+	HackyAI@HardAI:
+		Name: Hard AI
+		MinimumExcessPower: 30
+		BuildingCommonNames:
+			ConstructionYard: wwi_aus_hq, wwi_otto_hq
+			Refinery: wwi_tax, wwi_trade, wwi_aus_hq
+			Power: wwi_pp
+			Barracks: wwi_barr
+			VehiclesFactory: wwi_vfact, wwi_tfact
+			Production: wwi_barr, wwi_vfact, wwi_tfact, wwi_airstrip, wwi_stable, wwi_shipyard
+			Silo:
+		UnitsCommonNames:
+			Mcv:
+			ExcludeFromSquads: wwi_trade
+		BuildingLimits:
+		BuildingFractions:
+			wwi_aus_hq: 5%
+			wwi_otto_hq: 5%
+			wwi_pp: 10%
+			wwi_house: 30%
+			wwi_barr: 5%
+			wwi_stable: 5%
+			wwi_vfact: 5%
+			wwi_tfact: 5%
+			wwi_airstrip: 5%
+			wwi_shipyard: 5%
+			wwi_recon: 5%
+			wwi_tax: 5%
+			wwi_krupp355: 5%
+			wwi_otto_aa: 5%
+		UnitsToBuild:
+			wwi_dragoon: 10%
+			wwi_field_medic: 3%
+			wwi_flamethrower: 10%
+			wwi_gas: 10%
+			wwi_grenadier: 10%
+			wwi_machinegunner: 10%
+			wwi_mech: 3%
+			wwi_mount_grenadier: 10%
+			wwi_rifle: 40%
+			wwi_scout: 10%
+			wwi_balloon: 1%
+			wwi_bomber: 10%
+			wwi_plane: 10%
+			wwi_battleship: 5%
+			wwi_cruiser: 5%
+			wwi_sub: 5%
+			wwi_adp: 20%
+			wwi_flak: 5%
+			wwi_jppa1: 10%
+			wwi_scoda_howitzer: 10%
+			wwi_scoda: 10%
+			wwi_hotch: 20%
+			wwi_krupp75: 10%
+			wwi_krupp87: 10%
+			wwi_trade: 30%
+		UnitLimits:
+			wwi_balloon: 1
+		SquadSize: 20

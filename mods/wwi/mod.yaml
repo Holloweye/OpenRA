@@ -47,9 +47,10 @@ MapFolders:
 	~^maps/wwi: User
 
 Rules:
-	wwi|rules/player.yaml
 	wwi|rules/palettes.yaml
 	wwi|rules/world.yaml
+	wwi|rules/player.yaml
+	wwi|rules/ai.yaml
 	wwi|rules/misc.yaml
 	wwi|rules/defaults.yaml
 	wwi|rules/decoration.yaml
