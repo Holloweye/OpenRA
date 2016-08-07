@@ -1,7 +1,7 @@
 
 ^Smokes:
 	ParticleEmitter@1:
-		UpgradeTypes: heavly_damaged
+		UpgradeTypes: heavly_damaged, critical_damaged
 		UpgradeMinEnabledLevel: 1
 		Sprite: smokey
 		Sequence: idle
@@ -12,7 +12,7 @@
 		OffsetMin: -600,-600,100
 		OffsetMax: 600,600,100
 	ParticleEmitter@2:
-		UpgradeTypes: heavly_damaged
+		UpgradeTypes: heavly_damaged, critical_damaged
 		UpgradeMinEnabledLevel: 1
 		Sprite: smokey
 		Sequence: idle
@@ -23,7 +23,7 @@
 		OffsetMin: -600,-600,100
 		OffsetMax: 600,600,100
 	ParticleEmitter@3:
-		UpgradeTypes: heavly_damaged
+		UpgradeTypes: heavly_damaged, critical_damaged
 		UpgradeMinEnabledLevel: 1
 		Sprite: fire
 		Sequence: 2

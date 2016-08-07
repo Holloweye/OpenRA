@@ -24,16 +24,16 @@ namespace OpenRA.Mods.WWI.Traits
         [Desc("Randomize particle gravity.")]
         public readonly WVec GravityMax = new WVec(0, 1, 0);
 
-        [Desc("How long should each particle live, 150 = 50% faster.")]
+        [Desc("How many particles should spawn.")]
         public readonly WVec SpawnFrequency = new WVec(100, 150, 0);
 
-        [Desc("Offset for the particle emitter.")]
+        [Desc("Which sprite to use.")]
         public readonly string Sprite = null;
 
-        [Desc("Offset for the particle emitter.")]
+        [Desc("Which sequence to use.")]
         public readonly string Sequence = null;
 
-        [Desc("Offset for the particle emitter.")]
+        [Desc("Which palette to use.")]
         public readonly string Palette = null;
 
         public override object Create(ActorInitializer init) { return new ParticleEmitter(init.Self, this); }
@@ -41,8 +41,6 @@ namespace OpenRA.Mods.WWI.Traits
 
     class ParticleEmitter : UpgradableTrait<ParticleEmitterInfo>, ITick
     {
-        static int seed = 0;
-        Random random = new Random(seed++);
         int ticks;
 
         WVec offset = WVec.Zero;
@@ -50,9 +48,9 @@ namespace OpenRA.Mods.WWI.Traits
         public ParticleEmitter(Actor self, ParticleEmitterInfo info)
 			: base(info) 
         {
-            offset = new WVec(random.Next(Info.OffsetMin.X, Info.OffsetMax.X),
-                              random.Next(Info.OffsetMin.Y, Info.OffsetMax.Y),
-                              random.Next(Info.OffsetMin.Z, Info.OffsetMax.Z));
+            offset = new WVec(Game.CosmeticRandom.Next(Info.OffsetMin.X, Info.OffsetMax.X),
+                              Game.CosmeticRandom.Next(Info.OffsetMin.Y, Info.OffsetMax.Y),
+                              Game.CosmeticRandom.Next(Info.OffsetMin.Z, Info.OffsetMax.Z));
         }
 
         public void Tick(Actor self)
@@ -62,13 +60,13 @@ namespace OpenRA.Mods.WWI.Traits
 
             if (--ticks < 0)
             {
-                ticks = random.Next(Info.SpawnFrequency.X, Info.SpawnFrequency.Y);
+                ticks = Game.CosmeticRandom.Next(Info.SpawnFrequency.X, Info.SpawnFrequency.Y);
 
                 var pos = new WPos(self.CenterPosition.X + offset.X,
                                    self.CenterPosition.Y + offset.Y, 
                                    self.CenterPosition.Z + offset.Z);
 
-                self.World.AddFrameEndTask(w => w.Add(new Particle(pos, new WPos(random.Next(Info.GravityMin.X, Info.GravityMax.X), random.Next(Info.GravityMin.Y, Info.GravityMax.Y), 0), w, Info.Sprite, Info.Sequence, Info.Palette, false, false)));
+                self.World.AddFrameEndTask(w => w.Add(new Particle(pos, new WPos(Game.CosmeticRandom.Next(Info.GravityMin.X, Info.GravityMax.X), Game.CosmeticRandom.Next(Info.GravityMin.Y, Info.GravityMax.Y), 0), w, Info.Sprite, Info.Sequence, Info.Palette, false, false)));
             }
         }
     }
