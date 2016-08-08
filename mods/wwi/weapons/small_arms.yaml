@@ -40,6 +40,7 @@
 ^rifle:
 	ReloadDelay: 50
 	Range: 5c0
+	MinRange: 2c0
 	Report: rifle.aud
 	Projectile: Bullet
 		Speed: 1c682
@@ -81,6 +82,7 @@
 	Inherits: ^machine_gun
 	ReloadDelay: 30
 	Range: 5c0
+	MinRange: 0c0
 	Report: pillbox1.aud
 
 ^light_machine_gun:
