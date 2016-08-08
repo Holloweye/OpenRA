@@ -95,8 +95,9 @@ wwi_battleship:
 		Facings: 16
 	turret: wwi_babenberg_turret
 		Facings: 16
-	muzzle: gunfire2
-		Length: 5
+	muzzle: gunfire3
+		Length: 10
+		Tick: 300
 	icon: wwi_babenberg_icon
 
 wwi_cruiser:
@@ -104,8 +105,9 @@ wwi_cruiser:
 		Facings: 16
 	turret: wwi_saida_turret
 		Facings: 16
-	muzzle: gunfire2
-		Length: 5
+	muzzle: gunfire3
+		Length: 10
+		Tick: 100
 	icon: wwi_saida_icon
 
 wwi_sub:

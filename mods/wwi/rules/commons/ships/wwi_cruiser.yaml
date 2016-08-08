@@ -43,7 +43,7 @@ WWI_CRUISER:
 		Name: primary
 		Turret: primary
 		Weapon: wwi_cruiser
-		LocalOffset: 480,-100,40, 480,100,40
+		LocalOffset: 480,-100,60, 480,100,60
 		Recoil: 171
 		RecoilRecovery: 34
 		MuzzleSequence: muzzle
@@ -51,7 +51,7 @@ WWI_CRUISER:
 		Name: secondary
 		Turret: secondary
 		Weapon: wwi_cruiser
-		LocalOffset: 480,-100,40, 480,100,40
+		LocalOffset: 480,-100,60, 480,100,60
 		Recoil: 171
 		RecoilRecovery: 34
 		MuzzleSequence: muzzle
@@ -59,7 +59,7 @@ WWI_CRUISER:
 		Name: third
 		Turret: third
 		Weapon: wwi_cruiser
-		LocalOffset: 480,-100,40, 480,100,40
+		LocalOffset: 480,-100,60, 480,100,60
 		Recoil: 171
 		RecoilRecovery: 34
 		MuzzleSequence: muzzle
@@ -67,7 +67,7 @@ WWI_CRUISER:
 		Name: forth
 		Turret: forth
 		Weapon: wwi_cruiser
-		LocalOffset: 480,-100,40, 480,100,40
+		LocalOffset: 480,-100,60, 480,100,60
 		Recoil: 171
 		RecoilRecovery: 34
 		MuzzleSequence: muzzle

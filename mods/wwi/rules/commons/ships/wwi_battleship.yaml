@@ -34,7 +34,7 @@ WWI_BATTLESHIP:
 	Armament@PRIMARY:
 		Turret: primary
 		Weapon: wwi_battleship
-		LocalOffset: 480,-100,40, 480,100,40
+		LocalOffset: 600,-100,40, 600,100,40
 		Recoil: 171
 		RecoilRecovery: 34
 		MuzzleSequence: muzzle
@@ -42,7 +42,7 @@ WWI_BATTLESHIP:
 		Name: secondary
 		Turret: secondary
 		Weapon: wwi_battleship
-		LocalOffset: 480,-100,40, 480,100,40
+		LocalOffset: 600,-100,40, 600,100,40
 		Recoil: 171
 		RecoilRecovery: 34
 		MuzzleSequence: muzzle
