@@ -31,7 +31,7 @@
 		Name: United Kingdom
 		InternalName: uk
 		Side: Allies
-		Selectable: False
+		Selectable: True
 	Faction@4:
 		Name: France
 		InternalName: france
@@ -116,18 +116,23 @@ World:
 	MPStartUnits@default:
 		Class: none
 		ClassName: Default
-		Factions:germany, uk, france, italy, russia
-		BaseActor:mpspawn
+		Factions: germany, france, italy, russia
+		BaseActor: mpspawn
 	MPStartUnits@default.austria:
 		Class: none
 		ClassName: Default
-		Factions:austria
-		BaseActor:WWI_AUS_HQ
+		Factions: austria
+		BaseActor: WWI_AUS_HQ
 	MPStartUnits@default.ottoman:
 		Class: none
 		ClassName: Default
-		Factions:ottoman
-		BaseActor:WWI_OTTO_HQ
+		Factions: ottoman
+		BaseActor: WWI_OTTO_HQ
+	MPStartUnits@default.uk:
+		Class: none
+		ClassName: Default
+		Factions: uk
+		BaseActor: WWI_UK_HQ
 	SpawnMPUnits:
 	PathFinder:
 	ValidateOrder:

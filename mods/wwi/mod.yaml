@@ -99,6 +99,7 @@ Rules:
 	wwi|rules/austria/vehicles/wwi_scoda_howitzer.yaml
 	wwi|rules/austria/vehicles/wwi_panzerzug2.yaml
 	wwi|rules/usa/structures/wwi_usa_hq.yaml
+	wwi|rules/uk/structures/wwi_uk_hq.yaml
 	wwi|rules/ottoman/structures/wwi_otto_hq.yaml
 	wwi|rules/ottoman/structures/wwi_otto_aa.yaml
 	wwi|rules/ottoman/structures/wwi_tax.yaml
