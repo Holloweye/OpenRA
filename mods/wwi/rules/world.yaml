@@ -36,7 +36,7 @@
 		Name: France
 		InternalName: france
 		Side: Allies
-		Selectable: False
+		Selectable: True
 	Faction@5:
 		Name: Italy
 		InternalName: italy
@@ -116,7 +116,7 @@ World:
 	MPStartUnits@default:
 		Class: none
 		ClassName: Default
-		Factions: germany, france, italy, russia
+		Factions: germany, italy, russia
 		BaseActor: mpspawn
 	MPStartUnits@default.austria:
 		Class: none
@@ -133,6 +133,11 @@ World:
 		ClassName: Default
 		Factions: uk
 		BaseActor: WWI_UK_HQ
+	MPStartUnits@default.france:
+		Class: none
+		ClassName: Default
+		Factions: france
+		BaseActor: WWI_FRANCE_HQ
 	SpawnMPUnits:
 	PathFinder:
 	ValidateOrder:
