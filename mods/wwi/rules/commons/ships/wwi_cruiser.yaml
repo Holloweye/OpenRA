@@ -18,7 +18,7 @@ WWI_CRUISER:
 		Type: m_ship
 	Mobile:
 		TurnSpeed: 4
-		Speed: 52
+		Speed: 45
 	RevealsShroud:
 		Range: 7c0
 	SelectionDecorations:

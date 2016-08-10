@@ -16,7 +16,7 @@
 		Name: Germany
 		InternalName: germany
 		Side: CentralPowers
-		Selectable: False
+		Selectable: True
 	Faction@1:
 		Name: Austria & Hungary
 		InternalName: austria
@@ -116,7 +116,7 @@ World:
 	MPStartUnits@default:
 		Class: none
 		ClassName: Default
-		Factions: germany, italy, russia
+		Factions: italy, russia
 		BaseActor: mpspawn
 	MPStartUnits@default.austria:
 		Class: none
@@ -138,6 +138,11 @@ World:
 		ClassName: Default
 		Factions: france
 		BaseActor: WWI_FRANCE_HQ
+	MPStartUnits@default.germany:
+		Class: none
+		ClassName: Default
+		Factions: germany
+		BaseActor: WWI_GERMANY_HQ
 	SpawnMPUnits:
 	PathFinder:
 	ValidateOrder:

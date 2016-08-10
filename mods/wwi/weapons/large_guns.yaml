@@ -47,6 +47,7 @@
 	Burst: 5
 	Projectile: Bullet
 		Speed: 180
+		Inaccuracy: 4c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 275
 		Damage: 30
