@@ -5,7 +5,7 @@ WWI_USA_HQ:
 		Dimensions: 3,3
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 1000
+		BuildPaletteOrder: 0
 		Prerequisites: ~structures.usa
 	ProvidesPrerequisite@usa:
 		Factions: usa
@@ -13,7 +13,7 @@ WWI_USA_HQ:
 	Health:
 		HP: 1500
 	Armor:
-		Type: Wood
+		Type: struct
 	RevealsShroud:
 		Range: 5c0
 	Bib:
@@ -23,9 +23,7 @@ WWI_USA_HQ:
 		Cost: 2500
 	Tooltip:
 		Name: Headquarters
-		Description: Produces structures.
-	CustomSellValue:
-		Value: 2500
+		Description: Produces structures.\nIncreases max population by 15.
 	BaseBuilding:
 	ProductionBar@Building:
 		ProductionType: Building
@@ -36,6 +34,8 @@ WWI_USA_HQ:
 		Range: 16c0
 	Power:
 		Amount: 0
+	Population:
+		Amount: 15
 	WithBuildingExplosion:
 		Delay: 1
 	Selectable:

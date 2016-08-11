@@ -100,12 +100,18 @@ wwi_france_hq:
 
 wwi_usa_hq:
 	idle:
+		Start: 8
+		Length: 1
+		Offset: 0, 10
 	damaged-idle:
+		Start: 8
+		Length: 1
+		Offset: 0, 10
 	make:
-		Start:1
-		Length: 7
+		Start: 0
+		Length: 9
+		Offset: 0, 10
 	bib: bib2
-		Offset: 0,-10
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:

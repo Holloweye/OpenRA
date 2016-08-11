@@ -51,7 +51,7 @@
 		Name: USA
 		InternalName: usa
 		Side: Allies
-		Selectable: False
+		Selectable: True
 	Faction@random:
 		Name: Any
 		InternalName: Random
@@ -143,6 +143,11 @@ World:
 		ClassName: Default
 		Factions: germany
 		BaseActor: WWI_GERMANY_HQ
+	MPStartUnits@default.usa:
+		Class: none
+		ClassName: Default
+		Factions: usa
+		BaseActor: WWI_USA_HQ
 	SpawnMPUnits:
 	PathFinder:
 	ValidateOrder:
