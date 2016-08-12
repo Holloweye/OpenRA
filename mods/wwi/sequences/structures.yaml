@@ -68,6 +68,11 @@ wwi_russia_hq:
 	make:
 		Start: 0
 		Length: 9
+	bib: bib5
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
 	icon: wwi_russia_hq_icon
 
 wwi_germany_hq:

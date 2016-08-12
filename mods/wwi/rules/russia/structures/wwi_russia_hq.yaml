@@ -16,6 +16,7 @@ WWI_RUSSIA_HQ:
 		Type: struct
 	RevealsShroud:
 		Range: 5c0
+	Bib:
 	Production:
 		Produces: Building,Defense
 	Valued:
