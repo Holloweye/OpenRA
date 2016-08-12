@@ -46,7 +46,7 @@
 		Name: Russia
 		InternalName: russia
 		Side: Allies
-		Selectable: False
+		Selectable: True
 	Faction@7:
 		Name: USA
 		InternalName: usa
@@ -116,7 +116,7 @@ World:
 	MPStartUnits@default:
 		Class: none
 		ClassName: Default
-		Factions: italy, russia
+		Factions: italy
 		BaseActor: mpspawn
 	MPStartUnits@default.austria:
 		Class: none
@@ -148,6 +148,11 @@ World:
 		ClassName: Default
 		Factions: usa
 		BaseActor: WWI_USA_HQ
+	MPStartUnits@default.russia:
+		Class: none
+		ClassName: Default
+		Factions: russia
+		BaseActor: WWI_RUSSIA_HQ
 	SpawnMPUnits:
 	PathFinder:
 	ValidateOrder:

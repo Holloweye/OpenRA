@@ -58,6 +58,18 @@ wwi_uk_hq:
 			INTERIOR: TEMPERAT
 	icon: wwi_uk_hq_icon
 
+wwi_russia_hq:
+	idle:
+		Start: 8
+		Length: 1
+	damaged-idle:
+		Start: 8
+		Length: 1
+	make:
+		Start: 0
+		Length: 9
+	icon: wwi_russia_hq_icon
+
 wwi_germany_hq:
 	idle:
 		Start: 8
