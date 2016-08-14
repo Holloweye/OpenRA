@@ -23,4 +23,4 @@ WWI_GRENADIER:
 		Weapon: UnitExplodeSmall
 		Chance: 50
 	WithDeathAnimation:
-		FallbackSequence:die1
+		FallbackSequence: die1

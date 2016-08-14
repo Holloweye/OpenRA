@@ -8,7 +8,7 @@ WWI_DRAGOON:
 	Population:
 		Amount: -1
 	Valued:
-		Cost: 300
+		Cost: 400
 	Tooltip:
 		Name: Dragoon
 		Description: Equiped with a rifle.\n  Strong vs Infantry\n  Weak vs Vehicles

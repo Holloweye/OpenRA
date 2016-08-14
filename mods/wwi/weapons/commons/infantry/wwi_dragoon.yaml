@@ -1,6 +1,6 @@
 wwi_dragoon:
 	Inherits: ^rifle
-	ReloadDelay: 100
+	ReloadDelay: 120
 	Range: 6c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 50
