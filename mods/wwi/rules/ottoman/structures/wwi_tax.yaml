@@ -28,4 +28,4 @@ WWI_TAX:
 		Bounds: 65,70,0,0
 	TaxCollector:
 		Buildings: wwi_house
-		MaxCredits: 700
+		MaxCredits: 1500
