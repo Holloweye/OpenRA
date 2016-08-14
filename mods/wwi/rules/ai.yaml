@@ -57,7 +57,9 @@ Player:
 			wwi_trade: 30%
 		UnitLimits:
 			wwi_balloon: 1
-		SquadSize: 10
+		SquadSize: 4
+		SquadSizeRandomBonus: 10
+		RushInterval: 250
 	HackyAI@HardAI:
 		Name: Hard AI
 		MinimumExcessPower: 30
@@ -116,4 +118,6 @@ Player:
 			wwi_trade: 30%
 		UnitLimits:
 			wwi_balloon: 1
-		SquadSize: 10
+		SquadSize: 4
+		SquadSizeRandomBonus: 10
+		RushInterval: 250
