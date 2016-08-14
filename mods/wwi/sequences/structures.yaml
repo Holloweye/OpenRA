@@ -137,14 +137,14 @@ wwi_usa_hq:
 
 wwi_pp:
 	idle:
-		Start: 8
+		Start: 18
 		Length: 1
 	damaged-idle:
-		Start: 8
+		Start: 18
 		Length: 1
 	make:
 		Start: 0
-		Length: 9
+		Length: *
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true
