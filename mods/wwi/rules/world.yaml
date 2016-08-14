@@ -55,7 +55,7 @@
 	Faction@random:
 		Name: Any
 		InternalName: Random
-		RandomFactionMembers: austria
+		RandomFactionMembers: austria, ottoman
 		Side: Random
 		Description: A random country.
 	ResourceType@ore:
