@@ -483,17 +483,6 @@ flags: buttons.png
 	france: 60,142,30,15
 	ottoman: 0,157,30,15
 
-	russia: 0,127,30,15
-	ukraine: 30,127,30,15
-	england: 60,127,30,15
-
-	germany: 0,142,30,15
-	spain: 30,142,30,15
-	france: 60,142,30,15
-
-	turkey: 0,157,30,15
-	greece: 30,157,30,15
-
 music: buttons.png
 	pause: 0,193,25,25
 	stop: 25,193,25,25
