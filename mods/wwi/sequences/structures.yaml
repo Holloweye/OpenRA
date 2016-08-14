@@ -285,14 +285,14 @@ wwi_supply_station:
 
 wwi_shipyard:
 	idle:
-		Start: 8
+		Start: 19
 		Length: 1
 	damaged-idle:
-		Start: 8
+		Start: 19
 		Length: 1
 	make:
 		Start: 0
-		Length: 9
+		Length: *
 	icon: wwi_shipyard_icon
 
 wwi_fence:
