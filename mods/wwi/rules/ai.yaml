@@ -60,6 +60,7 @@ Player:
 		SquadSize: 4
 		SquadSizeRandomBonus: 10
 		RushInterval: 250
+		ProtectUnitScanRadius: 0
 	HackyAI@HardAI:
 		Name: Hard AI
 		MinimumExcessPower: 30
@@ -121,3 +122,4 @@ Player:
 		SquadSize: 4
 		SquadSizeRandomBonus: 10
 		RushInterval: 250
+		ProtectUnitScanRadius: 0

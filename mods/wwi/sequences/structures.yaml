@@ -75,6 +75,23 @@ wwi_russia_hq:
 			INTERIOR: TEMPERAT
 	icon: wwi_russia_hq_icon
 
+wwi_italy_hq:
+	idle:
+		Start: 23
+		Length: 1
+	damaged-idle:
+		Start: 23
+		Length: 1
+	make:
+		Start: 0
+		Length: *
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: wwi_russia_hq_icon
+
 wwi_germany_hq:
 	idle:
 		Start: 8
