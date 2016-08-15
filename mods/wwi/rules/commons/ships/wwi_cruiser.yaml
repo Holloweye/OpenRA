@@ -4,11 +4,11 @@ WWI_CRUISER:
 		Queue: Ship
 		BuildAtProductionType: Boat
 		BuildPaletteOrder: 50
-		Prerequisites: Pop10
+		Prerequisites: Pop7
 	Valued:
 		Cost: 1200
 	Population:
-		Amount: -10
+		Amount: -7
 	Tooltip:
 		Name: Cruiser
 		Description: Fast ship.\n  Strong vs Submarines\n  Weak vs Battleships

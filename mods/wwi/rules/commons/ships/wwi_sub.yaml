@@ -2,7 +2,7 @@ WWI_SUB:
 	Inherits: ^Ship
 	Buildable:
 		Queue: Ship
-		BuildAtProductionType: Submarine
+		BuildAtProductionType: Boat
 		BuildPaletteOrder: 30
 		Prerequisites: Pop5
 	Valued:
