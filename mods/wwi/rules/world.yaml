@@ -113,11 +113,6 @@ World:
 		TechLevelLocked: true
 	CreateMPPlayers:
 	MPStartLocations:
-	MPStartUnits@default:
-		Class: none
-		ClassName: Default
-		Factions: italy
-		BaseActor: mpspawn
 	MPStartUnits@default.austria:
 		Class: none
 		ClassName: Default
