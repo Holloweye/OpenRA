@@ -28,3 +28,4 @@ WWI_TRADE:
 		DeliveryBuildings: wwi_aus_hq
 		TradeBuildings: wwi_supply_station
 		DistanceMultiplier: 1
+	WithTraderAnimation:

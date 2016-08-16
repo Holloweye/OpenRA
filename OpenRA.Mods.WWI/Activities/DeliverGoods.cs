@@ -1,5 +1,6 @@
 ﻿using OpenRA.Activities;
 using OpenRA.Mods.Common.Activities;
+using OpenRA.Mods.Common.Effects;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.WWI.Traits;
 using OpenRA.Traits;
@@ -53,9 +54,13 @@ namespace OpenRA.Mods.WWI.Activities
                 trader.isLoaded = false;
 
                 float distance = (trader.tradeBuilding.CenterPosition - trader.deliveryBuilding.CenterPosition).HorizontalLength / 100;
+                int amount = (int)(distance * traderInfo.DistanceMultiplier);
 
                 PlayerResources playerResources = self.Owner.PlayerActor.Trait<PlayerResources>();
-                playerResources.GiveCash((int)(distance * traderInfo.DistanceMultiplier));
+                playerResources.GiveCash(amount);
+
+                if (amount > 0)
+                    self.World.AddFrameEndTask(w => w.Add(new FloatingText(self.CenterPosition, self.Owner.Color.RGB, FloatingText.FormatCashTick(amount), 30)));
             }
 
             return new FindGoods(self);

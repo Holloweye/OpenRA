@@ -62,6 +62,7 @@
     <Compile Include="Traits\TaxCollector.cs" />
     <Compile Include="Traits\Trader.cs" />
     <Compile Include="Traits\Copied\WithLandingCraftAnimation.cs" />
+    <Compile Include="Traits\WithTraderAnimation.cs" />
     <Compile Include="Widgets\Logic\IngamePopCounterLogic.cs" />
   </ItemGroup>
   <ItemGroup>

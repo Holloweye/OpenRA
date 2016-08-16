@@ -40,6 +40,10 @@ wwi_flak:
 wwi_trade:
 	idle: wwi_trader
 		Facings: 16
+	empty-idle: wwi_trader
+		Facings: 16
+	full-idle: wwi_trader_full
+		Facings: 16
 	icon: wwi_trader_icon
 
 wwi_plane:
