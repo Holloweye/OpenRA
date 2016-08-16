@@ -411,15 +411,6 @@ Actors:
 	Actor126: v12
 		Owner: Neutral
 		Location: 24,28
-	Actor127: v18
-		Owner: Neutral
-		Location: 37,28
-	Actor128: v17
-		Owner: Neutral
-		Location: 37,27
-	Actor129: v18
-		Owner: Neutral
-		Location: 37,26
 	Actor130: v06
 		Owner: Neutral
 		Location: 35,24
@@ -435,3 +426,6 @@ Actors:
 	Actor134: v12
 		Owner: Neutral
 		Location: 45,34
+	Actor135: wwi_floating_supply_station
+		Owner: Neutral
+		Location: 33,29

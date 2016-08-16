@@ -1057,3 +1057,15 @@ Actors:
 	Actor359: swamp_tree2
 		Owner: Neutral
 		Location: 74,63
+	Actor360: wwi_floating_supply_station
+		Owner: Neutral
+		Location: 4,66
+	Actor362: wwi_floating_supply_station
+		Owner: Neutral
+		Location: 124,66
+	Actor363: wwi_floating_supply_station
+		Owner: Neutral
+		Location: 65,5
+	Actor361: wwi_floating_supply_station
+		Owner: Neutral
+		Location: 63,121

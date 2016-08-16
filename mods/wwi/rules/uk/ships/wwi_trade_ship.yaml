@@ -18,12 +18,12 @@ WWI_TRADE_SHIP:
 		Type: m_ship
 	Mobile:
 		TurnSpeed: 4
-		Speed: 40
+		Speed: 60
 	RevealsShroud:
 		Range: 7c0
 	SelectionDecorations:
 		VisualBounds: 50,46
 	Trader:
 		DeliveryBuildings: wwi_shipyard
-		TradeBuildings: wwi_supply_station
+		TradeBuildings: wwi_floating_supply_station
 		DistanceMultiplier: 1

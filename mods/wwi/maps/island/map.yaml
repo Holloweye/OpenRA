@@ -969,3 +969,15 @@ Actors:
 	Actor358: t17
 		Owner: Neutral
 		Location: 100,62
+	Actor359: wwi_floating_supply_station
+		Owner: Neutral
+		Location: 14,115
+	Actor360: wwi_floating_supply_station
+		Owner: Neutral
+		Location: 11,12
+	Actor361: wwi_floating_supply_station
+		Owner: Neutral
+		Location: 118,10
+	Actor362: wwi_floating_supply_station
+		Owner: Neutral
+		Location: 105,106
