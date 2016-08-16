@@ -117,7 +117,7 @@ wwi_cruiser:
 wwi_trade_ship:
 	idle:
 		Facings: 32
-	icon: wwi_saida_icon
+	icon: wwi_trade_ship_icon
 
 wwi_sub:
 	idle:
