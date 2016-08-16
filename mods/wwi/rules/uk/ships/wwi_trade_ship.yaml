@@ -1,0 +1,29 @@
+WWI_TRADE_SHIP:
+	Inherits: ^Ship
+	Buildable:
+		Queue: Ship
+		BuildAtProductionType: Boat
+		BuildPaletteOrder: 0
+		Prerequisites: Pop2, ~structures.uk
+	Valued:
+		Cost: 700
+	Population:
+		Amount: -2
+	Tooltip:
+		Name: Trade ship
+		Description: Trades with supply stations.\nMain source of income.
+	Health:
+		HP: 450
+	Armor:
+		Type: m_ship
+	Mobile:
+		TurnSpeed: 4
+		Speed: 40
+	RevealsShroud:
+		Range: 7c0
+	SelectionDecorations:
+		VisualBounds: 50,46
+	Trader:
+		DeliveryBuildings: wwi_shipyard
+		TradeBuildings: wwi_supply_station
+		DistanceMultiplier: 1

@@ -37,14 +37,14 @@ wwi_flak:
 		Length: 2
 	icon: wwi_flak_icon
 
-wwi_trade:
-	idle: wwi_trader
+wwi_trade_truck:
+	idle: wwi_trade_truck
 		Facings: 16
-	empty-idle: wwi_trader
+	empty-idle: wwi_trade_truck
 		Facings: 16
-	full-idle: wwi_trader_full
+	full-idle: wwi_trade_truck_full
 		Facings: 16
-	icon: wwi_trader_icon
+	icon: wwi_trade_truck_icon
 
 wwi_plane:
 	idle:
@@ -112,6 +112,11 @@ wwi_cruiser:
 	muzzle: gunfire3
 		Length: 10
 		Tick: 100
+	icon: wwi_saida_icon
+
+wwi_trade_ship:
+	idle:
+		Facings: 32
 	icon: wwi_saida_icon
 
 wwi_sub:

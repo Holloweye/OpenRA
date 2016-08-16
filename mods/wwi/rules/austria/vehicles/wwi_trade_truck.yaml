@@ -1,4 +1,4 @@
-WWI_TRADE:
+WWI_TRADE_TRUCK:
 	Inherits: ^Vehicle
 	Buildable:
 		Queue: Vehicle

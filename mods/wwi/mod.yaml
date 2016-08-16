@@ -93,13 +93,14 @@ Rules:
 	wwi|rules/austria/vehicles/wwi_adp.yaml
 	wwi|rules/austria/vehicles/wwi_jppa1.yaml
 	wwi|rules/austria/vehicles/wwi_lancia.yaml
-	wwi|rules/austria/vehicles/wwi_trade.yaml
+	wwi|rules/austria/vehicles/wwi_trade_truck.yaml
 	wwi|rules/austria/vehicles/wwi_flak.yaml
 	wwi|rules/austria/vehicles/wwi_scoda.yaml
 	wwi|rules/austria/vehicles/wwi_scoda_howitzer.yaml
 	wwi|rules/austria/vehicles/wwi_panzerzug2.yaml
 	wwi|rules/usa/structures/wwi_usa_hq.yaml
 	wwi|rules/uk/structures/wwi_uk_hq.yaml
+	wwi|rules/uk/ships/wwi_trade_ship.yaml
 	wwi|rules/russia/structures/wwi_russia_hq.yaml
 	wwi|rules/germany/structures/wwi_germany_hq.yaml
 	wwi|rules/france/structures/wwi_france_hq.yaml
