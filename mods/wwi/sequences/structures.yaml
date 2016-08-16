@@ -293,9 +293,12 @@ wwi_tfact:
 
 wwi_supply_station:
 	idle: wwi_supply
+		Offset: 0, 10
 	damaged-idle: wwi_supply
+		Offset: 0, 10
 	make: wwi_supply
 		Length: *
+		Offset: 0, 10
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true

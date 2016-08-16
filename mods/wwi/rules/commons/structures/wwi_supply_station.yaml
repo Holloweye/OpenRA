@@ -19,3 +19,5 @@ WWI_SUPPLY_STATION:
 		Amount: 15
 	WithBuildingExplosion:
 		Delay: 1
+	Selectable:
+		Bounds: 50,40,0,10
