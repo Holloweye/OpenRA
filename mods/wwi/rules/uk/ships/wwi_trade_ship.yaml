@@ -26,4 +26,4 @@ WWI_TRADE_SHIP:
 	Trader:
 		DeliveryBuildings: wwi_shipyard
 		TradeBuildings: wwi_floating_supply_station
-		DistanceMultiplier: 1
+		DistanceMultiplier: 1.3
