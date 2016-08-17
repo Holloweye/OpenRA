@@ -105,9 +105,6 @@ Actors:
 	Actor24: mpspawn
 		Owner: Neutral
 		Location: 12,9
-	Actor25: mpspawn
-		Owner: Neutral
-		Location: 54,55
 	Actor26: tc03
 		Owner: Neutral
 		Location: 59,39
@@ -429,3 +426,6 @@ Actors:
 	Actor135: wwi_floating_supply_station
 		Owner: Neutral
 		Location: 33,29
+	Actor137: mpspawn
+		Owner: Neutral
+		Location: 52,54

@@ -618,9 +618,6 @@ Actors:
 	Actor219: t16
 		Owner: Neutral
 		Location: 84,32
-	Actor224: t16
-		Owner: Neutral
-		Location: 31,60
 	Actor226: t12
 		Owner: Neutral
 		Location: 33,66
@@ -957,15 +954,9 @@ Actors:
 	Actor356: mpspawn
 		Owner: Neutral
 		Location: 81,58
-	Actor335: t12
-		Owner: Neutral
-		Location: 29,62
 	Actor346: t17
 		Owner: Neutral
 		Location: 95,49
-	Actor357: tc03
-		Owner: Neutral
-		Location: 97,58
 	Actor358: t17
 		Owner: Neutral
 		Location: 100,62

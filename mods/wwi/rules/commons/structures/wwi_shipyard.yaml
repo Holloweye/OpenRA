@@ -14,7 +14,7 @@ WWI_SHIPYARD:
 	Building:
 		Footprint: xxx xxx xxx
 		Dimensions: 3,3
-		Adjacent: 8
+		Adjacent: 14
 		TerrainTypes: Water
 	-GivesBuildableArea:
 	Health:
