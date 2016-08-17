@@ -35,7 +35,6 @@ WWI_BOMBER:
 	AmmoPool:
 		Ammo: 2
 		PipCount: 2
-		ReloadTicks: 20
 	AutoTarget:
 		TargetWhenIdle: false
 		TargetWhenDamaged: false
