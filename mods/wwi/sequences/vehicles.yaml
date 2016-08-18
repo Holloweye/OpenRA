@@ -227,3 +227,20 @@ wwi_bomber:
 		Facings: 32
 		Length: 21
 	icon: wwi_bomber_icon
+
+wwi_ordnance13:
+	idle:
+		Facings: 16
+	muzzle: gunfire2
+		Length: 5
+	icon: wwi_ordnance13_icon
+	shoot:
+		Start: 16
+		Length: 20
+		Facings: 16
+		Tick: 75
+	run:
+		Start: 336
+		Length: 10
+		Facings: 16
+		Tick: 400

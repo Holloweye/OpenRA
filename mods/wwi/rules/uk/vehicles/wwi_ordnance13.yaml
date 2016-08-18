@@ -1,0 +1,36 @@
+WWI_ORDNANCE13:
+	Inherits: ^ShieldedArtillery
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 20
+		Prerequisites: vehiclefactory, Pop2, ~structures.uk
+		BuildAtProductionType: SmallVehicle
+	Valued:
+		Cost: 700
+	Population:
+		Amount: -2
+	Tooltip:
+		Name: Ordnance QF 13-Pounder
+		Description: Short-range artillery.\n  Strong vs Medium / Heavy tanks and buildings.\n  Weak vs Infantry and Artillery
+	Health:
+		HP: 150
+	Armor:
+		Type: f_gun
+	Mobile:
+		ROT: 4
+		Speed: 50
+	RevealsShroud:
+		Range: 4c0
+	Armament:
+		Weapon: wwi_ordnance13
+		LocalOffset: 724,0,308
+		MuzzleSequence: muzzle
+	AttackFrontal:
+	WithMuzzleOverlay:
+	AutoTarget:
+	WithAttackAnimation:
+		AttackSequence: shoot
+	WithMoveAnimation:
+		MoveSequence: run
+	SelectionDecorations:
+		VisualBounds: 30,30,0,-7
