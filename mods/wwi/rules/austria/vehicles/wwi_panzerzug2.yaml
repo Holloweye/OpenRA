@@ -41,7 +41,7 @@ WWI_PANZERZUG2:
 	Population:
 		Amount: -20
 	Health:
-		HP: 3000
+		HP: 2500
 	Armor:
 		Type: h_tnk
 	Mobile:

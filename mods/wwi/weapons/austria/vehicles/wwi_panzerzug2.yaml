@@ -3,4 +3,4 @@ wwi_panzerzug2:
 	Projectile: Bullet
 		Inaccuracy: 0
 	Warhead@1Dam: SpreadDamage
-		Damage: 70
+		Damage: 60
