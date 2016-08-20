@@ -9,7 +9,7 @@ wwi_plane:
 		ContrailLength: 20
 		Inaccuracy: 1c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 20
+		Damage: 25
 		Spread: 400
 		Versus:
 			air: 100

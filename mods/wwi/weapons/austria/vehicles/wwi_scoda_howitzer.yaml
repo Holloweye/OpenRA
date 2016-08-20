@@ -1,4 +1,4 @@
 wwi_scoda_howitzer:
 	Inherits: ^howitzer
 	Warhead@1Dam: SpreadDamage
-		Damage: 150
+		Damage: 130
