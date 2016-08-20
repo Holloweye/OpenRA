@@ -244,3 +244,20 @@ wwi_ordnance13:
 		Length: 10
 		Facings: 16
 		Tick: 400
+
+wwi_ordnance15:
+	idle:
+		Facings: 16
+	muzzle: gunfire2
+		Length: 5
+	icon: wwi_ordnance15_icon
+	shoot:
+		Start: 16
+		Length: 15
+		Facings: 16
+		Tick: 75
+	run:
+		Start: 256
+		Length: 5
+		Facings: 16
+		Tick: 400

@@ -103,6 +103,7 @@ Rules:
 	wwi|rules/uk/structures/wwi_uk_hq.yaml
 	wwi|rules/uk/ships/wwi_trade_ship.yaml
 	wwi|rules/uk/vehicles/wwi_ordnance13.yaml
+	wwi|rules/uk/vehicles/wwi_ordnance15.yaml
 	wwi|rules/russia/structures/wwi_russia_hq.yaml
 	wwi|rules/germany/structures/wwi_germany_hq.yaml
 	wwi|rules/france/structures/wwi_france_hq.yaml
@@ -222,6 +223,7 @@ Weapons:
 	wwi|weapons/ottoman/vehicles/wwi_krupp87.yaml
 	wwi|weapons/ottoman/vehicles/wwi_hotch.yaml
 	wwi|weapons/uk/vehicles/wwi_ordnance13.yaml
+	wwi|weapons/uk/vehicles/wwi_ordnance15.yaml
 
 Voices:
 	wwi|audio/voices.yaml
