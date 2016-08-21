@@ -3,7 +3,7 @@ WWI_BARR:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 20
-		Prerequisites: powerplant
+		Prerequisites: powerplant, ~!structures.ottoman
 	Valued:
 		Cost: 400
 	Tooltip:

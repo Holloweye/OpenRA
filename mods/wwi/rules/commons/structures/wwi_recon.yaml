@@ -3,7 +3,7 @@ WWI_RECON:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 60
-		Prerequisites: barracks, powerplant
+		Prerequisites: barracks, powerplant, ~!structures.ottoman
 	Valued:
 		Cost: 300
 	Tooltip:

@@ -3,7 +3,7 @@ WWI_AIRSTRIP:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 70
-		Prerequisites: reconnaissance
+		Prerequisites: reconnaissance, ~!structures.ottoman
 	Valued:
 		Cost: 500
 	Tooltip:

@@ -1,0 +1,8 @@
+WWI_OTTO_RECON:
+	Inherits: WWI_RECON
+	Buildable:
+		Prerequisites: barracks, powerplant, ~structures.ottoman
+	Building:
+		Adjacent: 4
+	RenderSprites:
+		Image: WWI_RECON

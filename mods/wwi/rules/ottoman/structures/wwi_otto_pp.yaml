@@ -1,0 +1,8 @@
+WWI_OTTO_PP:
+	Inherits: WWI_PP
+	Buildable:
+		Prerequisites: ~structures.ottoman
+	Building:
+		Adjacent: 4
+	RenderSprites:
+		Image: WWI_PP

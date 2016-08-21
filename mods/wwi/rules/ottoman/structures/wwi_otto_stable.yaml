@@ -1,0 +1,8 @@
+WWI_OTTO_STABLE:
+	Inherits: WWI_STABLE
+	Buildable:
+		Prerequisites: powerplant, ~structures.ottoman
+	Building:
+		Adjacent: 4
+	RenderSprites:
+		Image: WWI_STABLE

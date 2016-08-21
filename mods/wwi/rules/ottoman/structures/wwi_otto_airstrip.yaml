@@ -1,0 +1,8 @@
+WWI_OTTO_AIRSTRIP:
+	Inherits: WWI_AIRSTRIP
+	Buildable:
+		Prerequisites: reconnaissance, ~structures.ottoman
+	Building:
+		Adjacent: 4
+	RenderSprites:
+		Image: WWI_AIRSTRIP

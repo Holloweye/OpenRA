@@ -3,7 +3,7 @@ WWI_VFACT:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 45
-		Prerequisites: powerplant
+		Prerequisites: powerplant, ~!structures.ottoman
 	Valued:
 		Cost: 2000
 	Tooltip:

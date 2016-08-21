@@ -6,7 +6,7 @@ WWI_HOUSE:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 30
-		Prerequisites: powerplant
+		Prerequisites: powerplant, ~!structures.ottoman
 	Health:
 		HP: 400
 	Armor:
