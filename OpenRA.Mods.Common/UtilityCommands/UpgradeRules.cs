@@ -270,6 +270,27 @@ namespace OpenRA.Mods.Common.UtilityCommands
 					}
 				}
 
+				if (engineVersion < 20160717)
+				{
+					if (depth == 0)
+					{
+						var selectionDecorations = node.Value.Nodes.FirstOrDefault(n => n.Key == "SelectionDecorations");
+						if (selectionDecorations != null)
+							node.Value.Nodes.Add(selectionDecorations = new MiniYamlNode("WithSpriteControlGroup", ""));
+					}
+				}
+
+				if (engineVersion < 20160818)
+				{
+					if (depth == 1 && node.Key.StartsWith("UpgradeOnDamage"))
+					{
+						var parts = node.Key.Split('@');
+						node.Key = "UpgradeOnDamageState";
+						if (parts.Length > 1)
+							node.Key += "@" + parts[1];
+					}
+				}
+
 				UpgradeActorRules(modData, engineVersion, ref node.Value.Nodes, node, depth + 1);
 			}
 
@@ -346,7 +367,7 @@ namespace OpenRA.Mods.Common.UtilityCommands
 		{
 			foreach (var node in nodes)
 			{
-				if (engineVersion < 20160730 && modData.Manifest.Mod.Id == "d2k" && depth == 2)
+				if (engineVersion < 20160730 && modData.Manifest.Id == "d2k" && depth == 2)
 				{
 					if (node.Key == "Start")
 						node.Value.Value = RemapD2k106Sequence(FieldLoader.GetValue<int>("", node.Value.Value)).ToString();
@@ -416,7 +437,7 @@ namespace OpenRA.Mods.Common.UtilityCommands
 			foreach (var node in nodes)
 			{
 				// Fix RA building footprints to not use _ when it's not necessary
-				if (engineVersion < 20160619 && modData.Manifest.Mod.Id == "ra" && depth == 1)
+				if (engineVersion < 20160619 && modData.Manifest.Id == "ra" && depth == 1)
 				{
 					var buildings = new List<string>() { "tsla", "gap", "agun", "apwr", "fapw" };
 					if (buildings.Contains(parent.Value.Value) && node.Key == "Location")
@@ -424,7 +445,7 @@ namespace OpenRA.Mods.Common.UtilityCommands
 				}
 
 				// Fix TD building footprints to not use _ when it's not necessary
-				if (engineVersion < 20160619 && modData.Manifest.Mod.Id == "cnc" && depth == 1)
+				if (engineVersion < 20160619 && modData.Manifest.Id == "cnc" && depth == 1)
 				{
 					var buildings = new List<string>() { "atwr", "obli", "tmpl", "weap", "hand" };
 					if (buildings.Contains(parent.Value.Value) && node.Key == "Location")

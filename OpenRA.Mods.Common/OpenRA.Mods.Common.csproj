@@ -474,6 +474,8 @@
     <Compile Include="Traits\SeedsResource.cs" />
     <Compile Include="Traits\StoresResources.cs" />
     <Compile Include="Traits\Render\SelectionDecorations.cs" />
+    <Compile Include="Traits\Render\WithSpriteControlGroupDecoration.cs" />
+    <Compile Include="Traits\Render\WithTextControlGroupDecoration.cs" />
     <Compile Include="Traits\SelfHealing.cs" />
     <Compile Include="Traits\Sellable.cs" />
     <Compile Include="Traits\ShakeOnDeath.cs" />
@@ -505,7 +507,7 @@
     <Compile Include="Traits\Upgrades\DisableOnUpgrade.cs" />
     <Compile Include="Traits\Upgrades\UpgradableTrait.cs" />
     <Compile Include="Traits\Upgrades\UpgradeActorsNear.cs" />
-    <Compile Include="Traits\Upgrades\UpgradeOnDamage.cs" />
+    <Compile Include="Traits\Upgrades\UpgradeOnDamageState.cs" />
     <Compile Include="Traits\Upgrades\UpgradeOnTerrain.cs" />
     <Compile Include="Traits\Upgrades\UpgradeManager.cs" />
     <Compile Include="Traits\Valued.cs" />
@@ -778,6 +780,7 @@
     <Compile Include="Activities\Air\FlyCircleTimed.cs" />
     <Compile Include="UtilityCommands\ListInstallShieldCabContentsCommand.cs" />
     <Compile Include="FileFormats\InstallShieldCABCompression.cs" />
+    <Compile Include="ModContent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
