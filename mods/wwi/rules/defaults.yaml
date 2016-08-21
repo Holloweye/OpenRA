@@ -55,10 +55,10 @@
 		GravityMax: 0,0,0
 		OffsetMin: -600,-600,0
 		OffsetMax: 600,600,0
-	UpgradeOnDamage@heavly:
+	UpgradeOnDamageState@heavly:
 		Upgrades: heavly_damaged
 		ValidDamageStates: Heavy
-	UpgradeOnDamage@critical:
+	UpgradeOnDamageState@critical:
 		Upgrades: critical_damaged
 		ValidDamageStates: Critical
 
@@ -123,6 +123,7 @@
 	Inherits@2: ^SpriteActor
 	Inherits@3: ^Smokes
 	SelectionDecorations:
+	WithSpriteControlGroupDecoration:
 	Selectable:
 		Priority: 3
 	Targetable:
@@ -233,6 +234,7 @@
 			Rail: 40
 		TurnSpeed: 5
 	SelectionDecorations:
+	WithSpriteControlGroupDecoration:
 	Selectable:
 		Bounds: 24, 24
 	Targetable:
@@ -301,6 +303,7 @@
 			Rail: 100
 			TurnSpeed: 9999
 	SelectionDecorations:
+	WithSpriteControlGroupDecoration:
 	Selectable:
 		Bounds: 24, 24
 	Targetable:
@@ -378,6 +381,7 @@
 			Rail: 80
 			Swamp: 50
 	SelectionDecorations:
+	WithSpriteControlGroupDecoration:
 	Selectable:
 		Bounds: 12,18,0,-8
 	Targetable:
@@ -478,6 +482,7 @@
 		TerrainSpeeds:
 			Water: 100
 	SelectionDecorations:
+	WithSpriteControlGroupDecoration:
 	Selectable:
 		Bounds: 24,24
 	Targetable:
@@ -514,6 +519,7 @@
 	AppearsOnRadar:
 		UseLocation: true
 	SelectionDecorations:
+	WithSpriteControlGroupDecoration:
 	Selectable:
 		Bounds: 24,24
 	Aircraft:
