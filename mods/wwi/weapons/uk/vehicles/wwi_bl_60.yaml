@@ -1,0 +1,4 @@
+wwi_bl_60:
+	Inherits: ^field_artillery
+	Warhead@1Dam: SpreadDamage
+		Damage: 120
