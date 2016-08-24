@@ -278,3 +278,23 @@ wwi_bl_60:
 		Length: 10
 		Facings: 16
 		Tick: 100
+
+wwi_12_railway_howitzer_build:
+	idle: wwi_12_railway_howitzer
+		Start: 4
+		Length: 1
+	make: wwi_12_railway_howitzer
+		Start: 4
+		Length: 1
+	muzzle: gunfire2
+		Length: 2
+	icon: wwi_12_railway_howitzer_icon
+
+wwi_12_railway_howitzer:
+	idle:
+		Facings: 16
+	turret: wwi_12_railway_howitzer_turret
+		Facings: 16
+	muzzle: gunfire2
+		Length: 2
+	icon: wwi_12_railway_howitzer_icon

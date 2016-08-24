@@ -1,0 +1,65 @@
+WWI_12_RAILWAY_HOWITZER_BUILD:
+	Inherits: ^Building
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 100
+		Prerequisites: tankfactory, reconnaissance, Pop10, ~structures.uk
+		BuildAtProductionType: Tank
+	Tooltip:
+		Name: 12-inch Railway Howitzer
+		Description: Railway Howitzer.\n Must be deployed on rails.
+	Valued:
+		Cost: 1000
+	Population:
+		Amount: -10
+	Building:
+		Footprint: x
+		Dimensions: 1,1
+		TerrainTypes: Rail
+	Health:
+		HP: 1
+	RevealsShroud:
+		Range: 4c0
+	SpawnActorOnDeath:
+		Actor: WWI_12_RAILWAY_HOWITZER
+	SelfHealing@REMOVE:
+		Step: -1000
+		Ticks: 0
+		HealIfBelow: 1000
+		DamageCooldown: 0
+	-WithBuildingExplosion:
+	-ShakeOnDeath:
+	-SoundOnDamageTransition:
+
+WWI_12_RAILWAY_HOWITZER:
+	Inherits: ^Train
+	Tooltip:
+		Name: 12-inch Railway Howitzer
+		Description: Railway Howitzer.\n Must be deployed on rails.
+	Valued:
+		Cost: 1000
+	Population:
+		Amount: -10
+	Health:
+		HP: 2500
+	Armor:
+		Type: h_tnk
+	Mobile:
+		Speed: 20
+		Crushes: mine, infantry, crush_fench
+		InitialFacing: 70
+	RevealsShroud:
+		Range: 4c0
+	Turreted:
+		TurnSpeed: 2
+		Offset: 0,0,100
+	AttackTurreted:
+	Armament@PRIMARY:
+		Weapon: wwi_12_railway_howitzer
+		LocalOffset: 550,0,800
+		MuzzleSequence: muzzle
+	WithMuzzleOverlay:
+	WithSpriteTurret:
+	AutoTarget:
+	SelectionDecorations:
+		VisualBounds: 35,30,0,-5
