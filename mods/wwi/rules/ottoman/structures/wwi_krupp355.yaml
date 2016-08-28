@@ -1,5 +1,6 @@
 WWI_KRUPP355:
-	Inherits: ^Defense
+	Inherits@1: ^Defense
+	Inherits@2: ^BodyTurret
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 30
@@ -16,28 +17,21 @@ WWI_KRUPP355:
 		Dimensions: 2,1
 	Health:
 		HP: 400
-	Armor:
-		Type: def
 	RevealsShroud:
 		Range: 7c0
 	Bib:
-	Turreted:
+	Turreted@PRIMARY:
 		TurnSpeed: 1
 		InitialFacing: 85
 	-WithSpriteBody:
-	WithTurretedSpriteBody:
 	WithAttackAnimation:
 		AttackSequence: shoot
-	Armament:
+	Armament@PRIMARY:
 		Weapon: wwi_krupp355
 		LocalOffset: 1150,0,850
-		MuzzleSequence: muzzle
-	AttackTurreted:
-	WithMuzzleOverlay:
 	Power:
 		Amount: -10
 	WithBuildingExplosion:
 		Sequences: building, building_napalm, large_explosion, self_destruct
-	BodyOrientation:
 	Selectable:
 		Bounds: 50,50,0,0

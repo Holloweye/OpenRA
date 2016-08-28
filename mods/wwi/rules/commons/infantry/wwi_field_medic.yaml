@@ -18,7 +18,7 @@ WWI_FIELD_MEDIC:
 		Range: 3c0
 	Passenger:
 		PipType: Yellow
-	Armament:
+	Armament@PRIMARY:
 		Weapon: wwi_field_medic
 		Cursor: heal
 		OutsideRangeCursor: heal

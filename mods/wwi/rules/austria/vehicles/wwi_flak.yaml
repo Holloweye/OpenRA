@@ -1,5 +1,6 @@
 WWI_FLAK:
-	Inherits: ^Vehicle
+	Inherits@1: ^CombatVehicle
+	Inherits@2: ^1Turret
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 60
@@ -17,17 +18,12 @@ WWI_FLAK:
 	Mobile:
 		TurnSpeed: 2
 		Speed: 30
-	Turreted:
+	Turreted@PRIMARY:
 		TurnSpeed: 10
 		Offset: -298,0,298
-	Armament@AA:
+	Armament@PRIMARY:
 		Weapon: wwi_flak
 		Recoil: 85
 		LocalOffset: 550,0,800
-		MuzzleSequence: muzzle
-	AttackTurreted:
-	WithMuzzleOverlay:
-	WithSpriteTurret:
-	AutoTarget:
 	SelectionDecorations:
 		VisualBounds: 35,35,0,-4

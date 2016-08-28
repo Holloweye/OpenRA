@@ -15,8 +15,6 @@ WWI_PP:
 		Dimensions: 2,2
 	Health:
 		HP: 400
-	Armor:
-		Type: struct
 	RevealsShroud:
 		Range: 4c0
 	Bib:

@@ -1,5 +1,6 @@
 WWI_OTTO_AA:
-	Inherits: ^Defense
+	Inherits@1: ^Defense
+	Inherits@2: ^BodyTurret
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 30
@@ -16,29 +17,22 @@ WWI_OTTO_AA:
 		Dimensions: 1,1
 	Health:
 		HP: 300
-	Armor:
-		Type: def
 	RevealsShroud:
 		Range: 7c0
 	Bib:
 		HasMinibib: Yes
-	Turreted:
+	Turreted@PRIMARY:
 		TurnSpeed: 3
 		InitialFacing: 85
 	-WithSpriteBody:
-	WithTurretedSpriteBody:
 	WithAttackAnimation:
 		AttackSequence: shoot
-	Armament:
+	Armament@PRIMARY:
 		Weapon: wwi_otto_aa
 		LocalOffset: 500,0,800
-		MuzzleSequence: muzzle
-	AttackTurreted:
-	WithMuzzleOverlay:
 	Power:
 		Amount: -10
 	WithBuildingExplosion:
 		Sequences: building, building_napalm, large_explosion, self_destruct
-	BodyOrientation:
 	Selectable:
 		Bounds: 35,35,0,-10

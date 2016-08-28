@@ -12,8 +12,6 @@ WWI_TRENCH:
 		Description: Infantry have increased armor when in trench.\nCan be crushed by certain tanks.
 	Health:
 		HP: 200
-	Armor:
-		Type: def
 	LineBuild:
 		Range: 8
 		NodeTypes: trench

@@ -1,5 +1,6 @@
 WWI_SUB:
-	Inherits: ^CombatShip
+	Inherits@1: ^CombatShip
+	Inherits@2: ^Weapon1Frontal
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Boat
@@ -37,11 +38,11 @@ WWI_SUB:
 		UncloakSound: subshow1.aud
 		WhileCloakedUpgrades: underwater
 		Palette: submerged
-	Armament:
+	Armament@PRIMARY:
 		Weapon: wwi_sub
 		LocalOffset: 0,-171,0, 0,171,0
 		FireDelay: 2
-	AttackFrontal:
+		MuzzleSequence: muzzle
 	SelectionDecorations:
 		VisualBounds: 50,46
 	AutoTarget:

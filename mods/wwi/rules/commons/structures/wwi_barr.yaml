@@ -14,8 +14,6 @@ WWI_BARR:
 		Dimensions: 2,2
 	Health:
 		HP: 800
-	Armor:
-		Type: struct
 	RevealsShroud:
 		Range: 5c0
 	Bib:

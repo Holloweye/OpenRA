@@ -19,8 +19,6 @@ WWI_SHIPYARD:
 	-GivesBuildableArea:
 	Health:
 		HP: 1000
-	Armor:
-		Type: struct
 	RevealsShroud:
 		Range: 4c0
 	Exit@1:

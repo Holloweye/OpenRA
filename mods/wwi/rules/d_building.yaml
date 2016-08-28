@@ -33,6 +33,8 @@
 		Percentage: 100
 		Minimum: 500
 		Notification: CreditsStolen
+	Armor:
+		Type: struct
 
 ^Building:
 	Inherits: ^BasicBuilding
@@ -61,6 +63,8 @@
 	-AcceptsSupplies:
 	DrawLineToTarget:
 	RenderRangeCircle:
+	Armor:
+		Type: def
 
 ^Wall:
 	Inherits@1: ^ExistsInWorld
@@ -94,3 +98,5 @@
 		Shape: Rectangle
 			TopLeft: -512, -512
 			BottomRight: 512, 512
+	Armor:
+		Type: def

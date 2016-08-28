@@ -1,7 +1,6 @@
 ^Plane:
 	Inherits@1: ^ExistsInWorld
-	Inherits@2: ^GainsExperience
-	Inherits@3: ^UsableActor
+	Inherits@2: ^UsableActor
 	Aircraft:
 		RearmBuildings: wwi_airstrip
 		AirborneUpgrades: airborne

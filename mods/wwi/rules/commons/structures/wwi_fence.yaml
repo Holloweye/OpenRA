@@ -12,8 +12,6 @@ WWI_FENCE:
 		Description: Enemy infantry takes damage upon walked over.\nCan be crushed by certain tanks.
 	Health:
 		HP: 100
-	Armor:
-		Type: def
 	LineBuild:
 		Range: 8
 		NodeTypes: fence

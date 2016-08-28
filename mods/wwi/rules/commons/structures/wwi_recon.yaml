@@ -14,8 +14,6 @@ WWI_RECON:
 		Dimensions: 2,2
 	Health:
 		HP: 500
-	Armor:
-		Type: struct
 	RevealsShroud:
 		Range: 4c0
 	Bib:

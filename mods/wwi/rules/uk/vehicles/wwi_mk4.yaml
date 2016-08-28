@@ -1,5 +1,6 @@
 WWI_MK4:
-	Inherits: ^HeavyTank
+	Inherits@1: ^HeavyTank
+	Inherits@2: ^Weapon2Frontal
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 50
@@ -14,16 +15,11 @@ WWI_MK4:
 		Description: Heavy tank.\n  Strong vs Light & Medium tanks\n  Weak vs Field guns
 	Health:
 		HP: 270
-	AttackFrontal:
 	Armament@PRIMARY:
 		Weapon: wwi_mk4
 		LocalOffset: 600,400,150
-		MuzzleSequence: muzzle
 	Armament@SECONDARY:
 		Weapon: wwi_mk4
 		LocalOffset: 600,-400,150
-		MuzzleSequence: muzzle
-	WithMuzzleOverlay:
-	AutoTarget:
 	SelectionDecorations:
 		VisualBounds: 35,30,0,-5

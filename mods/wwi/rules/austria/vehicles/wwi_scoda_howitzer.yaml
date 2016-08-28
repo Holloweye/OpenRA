@@ -14,9 +14,8 @@ WWI_SCODA_HOWITZER:
 		Description: Long-range artillery.\nStrong vs obstacles, buildings and infantry.
 	Health:
 		HP: 150
-	Armament:
+	Armament@PRIMARY:
 		Weapon: wwi_scoda_howitzer
 		LocalOffset: 624,0,800
-		MuzzleSequence: muzzle
 	SelectionDecorations:
 		VisualBounds: 38,38,0,-4

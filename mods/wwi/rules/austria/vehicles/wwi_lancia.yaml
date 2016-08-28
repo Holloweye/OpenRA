@@ -1,5 +1,6 @@
 WWI_LANCIA:
-	Inherits: ^HeavyTank
+	Inherits@1: ^HeavyTank
+	Inherits@2: ^1Turret
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 60
@@ -14,16 +15,11 @@ WWI_LANCIA:
 		Amount: -6
 	Health:
 		HP: 330
-	Turreted:
+	Turreted@PRIMARY:
 		TurnSpeed: 6
 		Offset: -290,0,350
-	AttackTurreted:
 	Armament@PRIMARY:
 		Weapon: wwi_lancia
 		LocalOffset: 380,0,0
-		MuzzleSequence: muzzle
-	WithMuzzleOverlay:
-	WithSpriteTurret:
-	AutoTarget:
 	SelectionDecorations:
 		VisualBounds: 30,30,0,-4

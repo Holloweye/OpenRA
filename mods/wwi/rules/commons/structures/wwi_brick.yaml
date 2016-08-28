@@ -16,8 +16,6 @@ WWI_BRICK:
 		DestroyedSounds: kaboom30.aud
 	Health:
 		HP: 300
-	Armor:
-		Type: def
 	Passable:
 		CrushesClasses: crush_wall
 	BlocksProjectiles:

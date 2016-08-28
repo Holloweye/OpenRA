@@ -16,7 +16,8 @@ WWI_PANZERZUG2_BUILD:
 		Actor: WWI_PANZERZUG2
 
 WWI_PANZERZUG2:
-	Inherits: ^CombatTrain
+	Inherits@1: ^CombatTrain
+	Inherits@2: ^1Turret
 	Tooltip:
 		Name: Panzerzug II
 		Description: Armored train.\n Must be deployed on rails.
@@ -32,17 +33,12 @@ WWI_PANZERZUG2:
 		Speed: 20
 		Crushes: mine, infantry, crush_fench
 		InitialFacing: 70
-	Turreted:
+	Turreted@PRIMARY:
 		TurnSpeed: 2
 		Offset: 0,0,500
-	AttackTurreted:
 	Armament@PRIMARY:
 		Weapon: wwi_panzerzug2
 		LocalOffset: 500,0,150
-		MuzzleSequence: muzzle
-	WithMuzzleOverlay:
-	WithSpriteTurret:
-	AutoTarget:
 	SelectionDecorations:
 		VisualBounds: 35,30,0,-5
 	SelfHealing@HEAL:

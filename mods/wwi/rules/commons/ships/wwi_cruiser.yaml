@@ -1,5 +1,6 @@
 WWI_CRUISER:
-	Inherits: ^CombatShip
+	Inherits@1: ^CombatShip
+	Inherits@2: ^4Turret
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Boat
@@ -24,65 +25,37 @@ WWI_CRUISER:
 	SelectionDecorations:
 		VisualBounds: 50,46
 	Turreted@PRIMARY:
-		Turret: primary
 		Offset: -1364,0,140
 		TurnSpeed: 3
 	Turreted@SECONDARY:
-		Turret: secondary
 		Offset: 1268,0,140
 		TurnSpeed: 3
 	Turreted@THIRD:
-		Turret: third
 		Offset: 668,0,140
 		TurnSpeed: 3
 	Turreted@FORTH:
-		Turret: forth
 		Offset: -704,0,140
 		TurnSpeed: 3
 	Armament@PRIMARY:
-		Name: primary
-		Turret: primary
 		Weapon: wwi_cruiser
 		LocalOffset: 480,-100,60, 480,100,60
 		Recoil: 171
 		RecoilRecovery: 34
-		MuzzleSequence: muzzle
 	Armament@SECONDARY:
-		Name: secondary
-		Turret: secondary
 		Weapon: wwi_cruiser
 		LocalOffset: 480,-100,60, 480,100,60
 		Recoil: 171
 		RecoilRecovery: 34
-		MuzzleSequence: muzzle
 	Armament@THIRD:
-		Name: third
-		Turret: third
 		Weapon: wwi_cruiser
 		LocalOffset: 480,-100,60, 480,100,60
 		Recoil: 171
 		RecoilRecovery: 34
-		MuzzleSequence: muzzle
 	Armament@FORTH:
-		Name: forth
-		Turret: forth
 		Weapon: wwi_cruiser
 		LocalOffset: 480,-100,60, 480,100,60
 		Recoil: 171
 		RecoilRecovery: 34
-		MuzzleSequence: muzzle
-	AttackTurreted:
-		Armaments: primary, secondary, third, forth
-	WithMuzzleOverlay:
-	WithSpriteTurret@PRIMARY:
-		Turret: primary
-	WithSpriteTurret@SECONDARY:
-		Turret: secondary
-	WithSpriteTurret@THIRD:
-		Turret: third
-	WithSpriteTurret@FORTH:
-		Turret: forth
-	AutoTarget:
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 7c0

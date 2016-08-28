@@ -1,5 +1,6 @@
 WWI_HOTCH:
-	Inherits: ^ArmoredCar
+	Inherits@1: ^ArmoredCar
+	Inherits@2: ^1Turret
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
@@ -16,16 +17,11 @@ WWI_HOTCH:
 		HP: 100
 	Mobile:
 		Speed: 90
-	Turreted:
+	Turreted@PRIMARY:
 		TurnSpeed: 9
 		Offset: -450,0,250
-	AttackTurreted:
 	Armament@PRIMARY:
 		Weapon: wwi_hotch
 		LocalOffset: 380,0,150
-		MuzzleSequence: muzzle
-	WithMuzzleOverlay:
-	WithSpriteTurret:
-	AutoTarget:
 	SelectionDecorations:
 		VisualBounds: 30,30,0,-6

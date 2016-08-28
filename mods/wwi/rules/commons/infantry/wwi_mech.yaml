@@ -21,7 +21,7 @@ WWI_MECH:
 	Passenger:
 		PipType: Yellow
 		Voice: Move
-	Armament:
+	Armament@PRIMARY:
 		Weapon: wwi_mech
 		Cursor: repair
 		OutsideRangeCursor: repair

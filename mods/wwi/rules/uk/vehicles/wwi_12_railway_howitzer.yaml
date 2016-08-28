@@ -16,7 +16,8 @@ WWI_12_RAILWAY_HOWITZER_BUILD:
 		Actor: WWI_12_RAILWAY_HOWITZER
 
 WWI_12_RAILWAY_HOWITZER:
-	Inherits: ^CombatTrain
+	Inherits@1: ^CombatTrain
+	Inherits@2: ^1Turret
 	Tooltip:
 		Name: 12-inch Railway Howitzer
 		Description: Railway Howitzer.\n Must be deployed on rails.
@@ -32,16 +33,11 @@ WWI_12_RAILWAY_HOWITZER:
 		Speed: 20
 		Crushes: mine, infantry, crush_fench
 		InitialFacing: 70
-	Turreted:
+	Turreted@PRIMARY:
 		TurnSpeed: 2
 		Offset: 0,0,100
-	AttackTurreted:
 	Armament@PRIMARY:
 		Weapon: wwi_12_railway_howitzer
 		LocalOffset: 550,0,800
-		MuzzleSequence: muzzle
-	WithMuzzleOverlay:
-	WithSpriteTurret:
-	AutoTarget:
 	SelectionDecorations:
 		VisualBounds: 35,30,0,-5

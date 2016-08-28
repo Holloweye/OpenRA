@@ -1,5 +1,6 @@
 WWI_JPPA1:
-	Inherits: ^MediumTank
+	Inherits@1: ^MediumTank
+	Inherits@2: ^Weapon1Frontal
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 50
@@ -14,12 +15,8 @@ WWI_JPPA1:
 		Description: Medium tank.\n  Strong vs Light tanks\n  Weak vs Heavy tanks
 	Health:
 		HP: 270
-	AttackFrontal:
 	Armament@PRIMARY:
 		Weapon: wwi_jppa1
 		LocalOffset: 300,0,350
-		MuzzleSequence: muzzle
-	WithMuzzleOverlay:
-	AutoTarget:
 	SelectionDecorations:
 		VisualBounds: 35,30,0,-5

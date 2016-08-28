@@ -118,7 +118,8 @@
 	RenderSprites:
 
 ^UsableActor:
-	Inherits: ^SpriteActor
+	Inherits@1: ^SpriteActor
+	Inherits@2: ^GainsExperience
 	UpdatesPlayerStatistics:
 	AppearsOnRadar:
 		UseLocation: true
@@ -141,3 +142,85 @@
 	Inherits: ^UsableActor
 	AttackMove:
 	AutoTarget:
+
+^BodyTurret:
+	Turreted@PRIMARY:
+		Turret: primary
+	Armament@PRIMARY:
+		Name: primary
+		Turret: primary
+		MuzzleSequence: muzzle
+	WithMuzzleOverlay:
+	WithTurretedSpriteBody:
+	AttackTurreted:
+		Armaments: primary
+
+^1Turret:
+	Turreted@PRIMARY:
+		Turret: primary
+	Armament@PRIMARY:
+		Name: primary
+		Turret: primary
+		MuzzleSequence: muzzle
+	WithMuzzleOverlay:
+	WithSpriteTurret@PRIMARY:
+		Turret: primary
+	AttackTurreted:
+		Armaments: primary
+
+^2Turret:
+	Inherits: ^1Turret
+	Turreted@SECONDARY:
+		Turret: secondary
+	Armament@SECONDARY:
+		Name: secondary
+		Turret: secondary
+		MuzzleSequence: muzzle
+	WithSpriteTurret@SECONDARY:
+		Turret: secondary
+	AttackTurreted:
+		Armaments: primary, secondary
+
+^3Turret:
+	Inherits: ^2Turret
+	Turreted@THIRD:
+		Turret: third
+	Armament@THIRD:
+		Name: third
+		Turret: third
+		MuzzleSequence: muzzle
+	WithSpriteTurret@THIRD:
+		Turret: third
+	AttackTurreted:
+		Armaments: primary, secondary, third
+
+^4Turret:
+	Inherits: ^3Turret
+	Turreted@FORTH:
+		Turret: forth
+	Armament@FORTH:
+		Name: forth
+		Turret: forth
+		MuzzleSequence: muzzle
+	WithSpriteTurret@FORTH:
+		Turret: forth
+	AttackTurreted:
+		Armaments: primary, secondary, third, forth
+
+^Weapon1Frontal:
+	AttackFrontal:
+		Armaments: primary
+	Armament@PRIMARY:
+		Name: primary
+		Turret: primary
+		MuzzleSequence: muzzle
+	WithMuzzleOverlay:
+
+^Weapon2Frontal:
+	Inherits: ^Weapon1Frontal
+	AttackFrontal:
+		Armaments: primary, secondary
+	Armament@SECONDARY:
+		Name: secondary
+		Turret: secondary
+		MuzzleSequence: muzzle

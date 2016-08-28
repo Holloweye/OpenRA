@@ -5,8 +5,6 @@ WWI_SUPPLY_STATION:
 		Dimensions: 2,2
 	Health:
 		HP: 400
-	Armor:
-		Type: struct
 	RevealsShroud:
 		Range: 5c0
 	Bib:

@@ -1,5 +1,6 @@
 ^Artillery:
-	Inherits: ^CombatVehicle
+	Inherits@1: ^CombatVehicle
+	Inherits@2: ^Weapon1Frontal
 	Targetable:
 		TargetTypes: Ground, C4, Repair, Artillery
 	Tooltip:
@@ -11,8 +12,6 @@
 	Mobile:
 		ROT: 4
 		Speed: 50
-	AttackFrontal:
-	WithMuzzleOverlay:
 	WithAttackAnimation:
 		AttackSequence: shoot
 	WithMoveAnimation:

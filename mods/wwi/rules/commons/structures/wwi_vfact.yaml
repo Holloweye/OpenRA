@@ -14,8 +14,6 @@ WWI_VFACT:
 		Dimensions: 3,2
 	Health:
 		HP: 1500
-	Armor:
-		Type: struct
 	RevealsShroud:
 		Range: 4c0
 	Bib:

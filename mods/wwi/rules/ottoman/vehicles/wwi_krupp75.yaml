@@ -14,9 +14,8 @@ WWI_KRUPP75:
 		Description: Short-range artillery.\n  Strong vs Medium / Heavy tanks and buildings.\n  Weak vs Infantry and Artillery
 	Health:
 		HP: 130
-	Armament:
+	Armament@PRIMARY:
 		Weapon: wwi_krupp75
 		LocalOffset: 724,0,358
-		MuzzleSequence: muzzle
 	SelectionDecorations:
 		VisualBounds: 30,30,0,-7
