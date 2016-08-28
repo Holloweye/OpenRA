@@ -27,7 +27,7 @@
 			m_ship: 60
 			h_tnk: 30
 			h_ship: 40
-			air: 0
+			air: 100
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater

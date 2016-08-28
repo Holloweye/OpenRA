@@ -24,7 +24,7 @@
 			m_ship: 20
 			h_tnk: 20
 			h_ship: 20
-			air: 0
+			air: 100
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -61,7 +61,7 @@
 			m_ship: 15
 			h_tnk: 15
 			h_ship: 15
-			air: 0
+			air: 100
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
@@ -141,7 +141,7 @@
 			m_ship: 0
 			h_tnk: 0
 			h_ship: 0
-			air: 0
+			air: 100
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 
 ^saber:
@@ -175,7 +175,7 @@
 			m_ship: 80
 			h_tnk: 80
 			h_ship: 80
-			air: 0
+			air: 100
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
