@@ -103,7 +103,6 @@ World:
 		Sequence: craters
 	ResourceLayer:
 	ResourceClaimLayer:
-	PathfinderDebugOverlay:
 	SpawnMapActors:
 	MapBuildRadius:
 		AllyBuildRadiusEnabled: false
