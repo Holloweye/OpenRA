@@ -1,5 +1,5 @@
 WWI_SUB:
-	Inherits: ^Ship
+	Inherits: ^CombatShip
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Boat

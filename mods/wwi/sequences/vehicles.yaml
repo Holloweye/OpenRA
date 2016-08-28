@@ -298,3 +298,15 @@ wwi_12_railway_howitzer:
 	muzzle: gunfire2
 		Length: 2
 	icon: wwi_12_railway_howitzer_icon
+
+wwi_mk4:
+	idle:
+		Facings: 16
+	muzzle: gunfire2
+		Length: 2
+	icon: wwi_hotch_icon
+	shoot:
+		Start: 16
+		Length: 5
+		Facings: 16
+		Tick: 130

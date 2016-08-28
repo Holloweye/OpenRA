@@ -20,7 +20,6 @@ WWI_BALLOON:
 		Range: 12c0
 		Type: CenterPosition
 	Aircraft:
-		RearmBuildings: wwi_airstrip
 		LandWhenIdle: false
 		InitialFacing: 20
 		TurnSpeed: 1

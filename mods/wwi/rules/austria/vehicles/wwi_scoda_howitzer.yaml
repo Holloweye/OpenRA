@@ -1,5 +1,5 @@
 WWI_SCODA_HOWITZER:
-	Inherits: ^Artillery
+	Inherits: ^Howitzer
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 30
@@ -14,23 +14,9 @@ WWI_SCODA_HOWITZER:
 		Description: Long-range artillery.\nStrong vs obstacles, buildings and infantry.
 	Health:
 		HP: 150
-	Armor:
-		Type: h_gun
-	Mobile:
-		ROT: 2
-		Speed: 30
-	RevealsShroud:
-		Range: 4c0
 	Armament:
 		Weapon: wwi_scoda_howitzer
 		LocalOffset: 624,0,800
 		MuzzleSequence: muzzle
-	AttackFrontal:
-	WithMuzzleOverlay:
-	AutoTarget:
-	WithAttackAnimation:
-		AttackSequence: shoot
-	WithMoveAnimation:
-		MoveSequence: run
 	SelectionDecorations:
 		VisualBounds: 38,38,0,-4

@@ -1,0 +1,43 @@
+^Tank:
+	Inherits: ^CombatVehicle
+	Mobile:
+		Crushes: mine, infantry
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 70
+			Road: 100
+			Bridge: 100
+			Ore: 70
+			Gems: 70
+			Beach: 70
+			Rail: 70
+	TankArmor:
+		FrontalDamageModifier: 50
+		SideDamageModifier: 75
+	Targetable:
+		TargetTypes: Ground, C4, Repair, Tank
+	Tooltip:
+		GenericName: Tank
+	RevealsShroud:
+		Range: 4c0
+
+^LightTank:
+	Inherits: ^Tank
+	Armor:
+		Type: l_tnk
+
+^MediumTank:
+	Inherits: ^Tank
+	Armor:
+		Type: m_tnk
+	Mobile:
+		Speed: 60
+		Crushes: mine, infantry, crush_fench
+
+^HeavyTank:
+	Inherits: ^Tank
+	Armor:
+		Type: h_tnk
+	Mobile:
+		Speed: 30
+		Crushes: mine, infantry, crush_fench, crush_trench, crush_wall

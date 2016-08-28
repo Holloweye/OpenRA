@@ -1,0 +1,96 @@
+^BasicBuilding:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@3: ^Smokes
+	SelectionDecorations:
+	WithSpriteControlGroupDecoration:
+	Selectable:
+		Priority: 3
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure, TheifInfiltrate
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+		TerrainTypes: Clear,Road
+		RequiresBaseProvider: True
+	SoundOnDamageTransition:
+		DamagedSounds: kaboom1.aud
+		DestroyedSounds: kaboom22.aud
+	WithSpriteBody:
+	WithBuildingExplosion:
+		Sequences: building, building_napalm, large_explosion, self_destruct, large_napalm
+	CaptureNotification:
+	ShakeOnDeath:
+	ProximityCaptor:
+		Types: Building
+	GivesBounty:
+	Guardable:
+		Range: 3c0
+	FrozenUnderFog:
+	Tooltip:
+		GenericName: Structure
+	InfiltrateForCash:
+		Percentage: 100
+		Minimum: 500
+		Notification: CreditsStolen
+
+^Building:
+	Inherits: ^BasicBuilding
+	UpdatesPlayerStatistics:
+	GivesBuildableArea:
+	RepairableBuilding:
+		PlayerExperience: 25
+	EngineerRepairable:
+	AcceptsSupplies:
+	WithMakeAnimation:
+	ExternalCapturable:
+	ExternalCapturableBar:
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	Sellable:
+		SellSounds: cashturn.aud
+
+^Defense:
+	Inherits: ^Building
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure, Defense
+	MustBeDestroyed:
+		RequiredForShortGame: false
+	AutoTarget:
+	-GivesBuildableArea:
+	-AcceptsSupplies:
+	DrawLineToTarget:
+	RenderRangeCircle:
+
+^Wall:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+		BuildSounds: placbldg.aud
+		Adjacent: 7
+		TerrainTypes: Clear,Road
+	SoundOnDamageTransition:
+		DamagedSounds: sandbag2.aud
+		DestroyedSounds: sandbag2.aud
+	LineBuild:
+		Range: 8
+		NodeTypes: wall
+	LineBuildNode:
+		Types: wall
+	Targetable:
+		TargetTypes: Ground, DetonateAttack, Wall
+	RenderSprites:
+		Palette: effect
+	WithWallSpriteBody:
+	AutoTargetIgnore:
+	Sellable:
+		SellSounds: cashturn.aud
+	Guardable:
+	FrozenUnderFog:
+	Health:
+		HP: 100
+		Shape: Rectangle
+			TopLeft: -512, -512
+			BottomRight: 512, 512

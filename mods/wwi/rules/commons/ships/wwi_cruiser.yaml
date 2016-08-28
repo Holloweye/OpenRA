@@ -1,5 +1,5 @@
 WWI_CRUISER:
-	Inherits: ^Ship
+	Inherits: ^CombatShip
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Boat

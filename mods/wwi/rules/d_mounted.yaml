@@ -1,0 +1,22 @@
+^Mounted:
+	Inherits: ^Soldier
+	-TakeCover:
+	Mobile:
+		Crushes: mine
+	WithDeathAnimation:
+		DeathTypes:
+			DefaultDeath: 1
+			BulletDeath: 1
+			SmallExplosionDeath: 1
+			ExplosionDeath: 1
+			FireDeath: 1
+			ElectricityDeath: 1
+		CrushedSequence: die-crushed
+		FallbackSequence: die1
+		IdleSequences: idle1
+		StandSequences: stand
+	-Passable:
+	Voiced:
+		VoiceSet: HorseVoice
+	RevealsShroud:
+		Range: 5c0

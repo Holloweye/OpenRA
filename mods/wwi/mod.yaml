@@ -51,8 +51,18 @@ Rules:
 	wwi|rules/world.yaml
 	wwi|rules/player.yaml
 	wwi|rules/ai.yaml
+	wwi|rules/d.yaml
+	wwi|rules/d_husk.yaml
+	wwi|rules/d_air.yaml
+	wwi|rules/d_building.yaml
+	wwi|rules/d_infantry.yaml
+	wwi|rules/d_mounted.yaml
+	wwi|rules/d_ship.yaml
+	wwi|rules/d_vehicle.yaml
+	wwi|rules/d_artillery.yaml
+	wwi|rules/d_tank.yaml
+	wwi|rules/d_train.yaml
 	wwi|rules/misc.yaml
-	wwi|rules/defaults.yaml
 	wwi|rules/decoration.yaml
 	wwi|rules/civilian.yaml
 	wwi|rules/commons/infantry/wwi_rifle.yaml
@@ -106,6 +116,7 @@ Rules:
 	wwi|rules/uk/vehicles/wwi_ordnance15.yaml
 	wwi|rules/uk/vehicles/wwi_bl_60.yaml
 	wwi|rules/uk/vehicles/wwi_12_railway_howitzer.yaml
+	wwi|rules/uk/vehicles/wwi_mk4.yaml
 	wwi|rules/russia/structures/wwi_russia_hq.yaml
 	wwi|rules/germany/structures/wwi_germany_hq.yaml
 	wwi|rules/france/structures/wwi_france_hq.yaml
@@ -204,6 +215,7 @@ Weapons:
 	wwi|weapons/artillery.yaml
 	wwi|weapons/small_arms.yaml
 	wwi|weapons/large_guns.yaml
+	wwi|weapons/tank.yaml
 	wwi|weapons/commons/infantry/wwi_rifle.yaml
 	wwi|weapons/commons/infantry/wwi_grenadier.yaml
 	wwi|weapons/commons/infantry/wwi_machinegunner.yaml
@@ -235,6 +247,7 @@ Weapons:
 	wwi|weapons/uk/vehicles/wwi_ordnance15.yaml
 	wwi|weapons/uk/vehicles/wwi_bl_60.yaml
 	wwi|weapons/uk/vehicles/wwi_12_railway_howitzer.yaml
+	wwi|weapons/uk/vehicles/wwi_mk4.yaml
 
 Voices:
 	wwi|audio/voices.yaml

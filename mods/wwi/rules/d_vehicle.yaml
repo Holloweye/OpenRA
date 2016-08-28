@@ -1,0 +1,52 @@
+^Vehicle:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^GainsExperience
+	Inherits@3: ^UsableActor
+	Mobile:
+		Crushes: mine
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 40
+			Road: 100
+			Bridge: 100
+			Ore: 70
+			Gems: 70
+			Beach: 40
+			Rail: 40
+		TurnSpeed: 5
+	Selectable:
+		Bounds: 24, 24
+	Targetable:
+		TargetTypes: Ground, Repair, Vehicle
+		UpgradeMaxEnabledLevel: 0
+	Repairable:
+	Passenger:
+		CargoType: Vehicle
+	ProximityCaptor:
+		Types: Vehicle
+	WithDamageOverlay:
+	Tooltip:
+		GenericName: Vehicle
+	Voiced:
+		VoiceSet: VehicleVoice
+	Explodes:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+	WithFacingSpriteBody:
+	BodyOrientation:
+		UseClassicFacingFudge: True
+	RevealsShroud:
+		Range: 5c0
+	Armor:
+		Type: veh
+
+^CombatVehicle:
+	Inherits@1: ^Vehicle
+	Inherits@2: ^CombatantActor
+
+^ArmoredCar:
+	Inherits: ^CombatVehicle
+	Mobile:
+		Crushes: mine, infantry
+	Armor:
+		Type: l_tnk

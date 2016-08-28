@@ -1,0 +1,38 @@
+^Artillery:
+	Inherits: ^CombatVehicle
+	Targetable:
+		TargetTypes: Ground, C4, Repair, Artillery
+	Tooltip:
+		GenericName: Artillery
+	RevealsShroud:
+		Range: 5c0
+	Armor:
+		Type: f_gun
+	Mobile:
+		ROT: 4
+		Speed: 50
+	AttackFrontal:
+	WithMuzzleOverlay:
+	WithAttackAnimation:
+		AttackSequence: shoot
+	WithMoveAnimation:
+		MoveSequence: run
+
+^ShieldedArtillery:
+	Inherits: ^Artillery
+	TankArmor:
+		FrontalDamageModifier: 50
+	RevealsShroud:
+		Range: 4c0
+
+^Howitzer:
+	Inherits: ^Artillery
+	Targetable:
+		TargetTypes: Ground, C4, Repair, Howitzer
+	Tooltip:
+		GenericName: Howitzer
+	Armor:
+		Type: h_gun
+	Mobile:
+		ROT: 2
+		Speed: 30

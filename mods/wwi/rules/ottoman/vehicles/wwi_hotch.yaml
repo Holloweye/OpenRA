@@ -1,5 +1,5 @@
 WWI_HOTCH:
-	Inherits: ^Vehicle
+	Inherits: ^ArmoredCar
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
@@ -14,13 +14,8 @@ WWI_HOTCH:
 		Description: Light armored car.\n  Strong vs Infantry and Artillery\n  Weak vs Medium & Heavy tanks
 	Health:
 		HP: 100
-	Armor:
-		Type: l_tnk
 	Mobile:
 		Speed: 90
-		Crushes: mine, infantry
-	RevealsShroud:
-		Range: 5c0
 	Turreted:
 		TurnSpeed: 9
 		Offset: -450,0,250

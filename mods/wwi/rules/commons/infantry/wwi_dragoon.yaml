@@ -14,8 +14,6 @@ WWI_DRAGOON:
 		Description: Equiped with a rifle.\n  Strong vs Infantry\n  Weak vs Vehicles
 	Mobile:
 		Speed: 90
-	RevealsShroud:
-		Range: 5c0
 	Health:
 		HP: 80
 	Armament@PRIMARY:

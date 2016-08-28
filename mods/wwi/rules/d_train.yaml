@@ -1,0 +1,51 @@
+^Train:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^GainsExperience
+	Inherits@3: ^UsableActor
+	Mobile:
+		Crushes: mine, infantry
+		TerrainSpeeds:
+			Rail: 100
+			TurnSpeed: 9999
+	Selectable:
+		Bounds: 24, 24
+	Targetable:
+		TargetTypes: Ground, C4, Repair, Train
+		UpgradeMaxEnabledLevel: 0
+	Repairable:
+	ProximityCaptor:
+		Types: Vehicle
+	WithDamageOverlay:
+	Tooltip:
+		GenericName: Train
+	Voiced:
+		VoiceSet: VehicleVoice
+	Explodes:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+	WithFacingSpriteBody:
+	BodyOrientation:
+		UseClassicFacingFudge: True
+
+^CombatTrain:
+	Inherits@1: ^Train
+	Inherits@2: ^CombatantActor
+
+^TrainBuild:
+	Inherits@1: ^BasicBuilding
+	Building:
+		Footprint: x
+		Dimensions: 1,1
+		TerrainTypes: Rail
+	Health:
+		HP: 1
+	SelfHealing@REMOVE:
+		Step: -1000
+		Ticks: 0
+		HealIfBelow: 1000
+		DamageCooldown: 0
+	-WithBuildingExplosion:
+	-ShakeOnDeath:
+	-SoundOnDamageTransition:
+	RevealsShroud:
+		Range: 4c0

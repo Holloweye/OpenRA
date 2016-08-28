@@ -1,5 +1,5 @@
 WWI_PLANE:
-	Inherits: ^Plane
+	Inherits: ^CombatPlane
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Aircraft
@@ -16,9 +16,6 @@ WWI_PLANE:
 		HP: 60
 	Armor:
 		Type: air
-	RevealsShroud:
-		Range: 4c0
-		Type: CenterPosition
 	Armament@PRIMARY:
 		Weapon: wwi_plane
 		LocalOffset: 256,-213,0
@@ -32,7 +29,6 @@ WWI_PLANE:
 		FacingTolerance: 20
 	Aircraft:
 		CruiseAltitude: 2560
-		RearmBuildings: wwi_airstrip
 		InitialFacing: 150
 		TurnSpeed: 2
 		Speed: 100

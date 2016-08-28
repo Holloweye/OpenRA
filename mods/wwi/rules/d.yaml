@@ -1,0 +1,143 @@
+^Smokes:
+	ParticleEmitter@1:
+		UpgradeTypes: heavly_damaged, critical_damaged
+		UpgradeMinEnabledLevel: 1
+		Sprite: smokey
+		Sequence: idle
+		Palette: effect
+		SpawnFrequency: 1,5,0
+		GravityMin: -20,-200,0
+		GravityMax: 20,-50,0
+		OffsetMin: -600,-600,100
+		OffsetMax: 600,600,100
+	ParticleEmitter@2:
+		UpgradeTypes: heavly_damaged, critical_damaged
+		UpgradeMinEnabledLevel: 1
+		Sprite: smokey
+		Sequence: idle
+		Palette: effect
+		SpawnFrequency: 1,5,0
+		GravityMin: -20,-200,0
+		GravityMax: 20,-50,0
+		OffsetMin: -600,-600,100
+		OffsetMax: 600,600,100
+	ParticleEmitter@3:
+		UpgradeTypes: heavly_damaged, critical_damaged
+		UpgradeMinEnabledLevel: 1
+		Sprite: fire
+		Sequence: 2
+		Palette: effect
+		SpawnFrequency: 10,10,0
+		GravityMin: 0,0,0
+		GravityMax: 0,0,0
+		OffsetMin: -600,-600,0
+		OffsetMax: 600,600,0
+	ParticleEmitter@4:
+		UpgradeTypes: critical_damaged
+		UpgradeMinEnabledLevel: 1
+		Sprite: fire
+		Sequence: 2
+		Palette: effect
+		SpawnFrequency: 10,10,0
+		GravityMin: 0,0,0
+		GravityMax: 0,0,0
+		OffsetMin: -600,-600,0
+		OffsetMax: 600,600,0
+	ParticleEmitter@5:
+		UpgradeTypes: critical_damaged
+		UpgradeMinEnabledLevel: 1
+		Sprite: fire
+		Sequence: 2
+		Palette: effect
+		SpawnFrequency: 10,10,0
+		GravityMin: 0,0,0
+		GravityMax: 0,0,0
+		OffsetMin: -600,-600,0
+		OffsetMax: 600,600,0
+	UpgradeOnDamageState@heavly:
+		Upgrades: heavly_damaged
+		ValidDamageStates: Heavy
+	UpgradeOnDamageState@critical:
+		Upgrades: critical_damaged
+		ValidDamageStates: Critical
+
+^GainsExperience:
+	GainsExperience:
+		Upgrades:
+			200: firepower, damage, speed, reload, inaccuracy, rank
+			400: firepower, damage, speed, reload, inaccuracy, rank
+			800: firepower, damage, speed, reload, inaccuracy, rank
+			1600: firepower, damage, speed, reload, inaccuracy, rank, eliteweapon, selfheal
+	DamageMultiplier@EXPERIENCE:
+		UpgradeTypes: damage
+		Modifier: 91, 87, 83, 65
+	FirepowerMultiplier@EXPERIENCE:
+		UpgradeTypes: firepower
+		Modifier: 110, 115, 120, 130
+	SpeedMultiplier@EXPERIENCE:
+		UpgradeTypes: speed
+		Modifier: 110, 115, 120, 150
+	ReloadDelayMultiplier@EXPERIENCE:
+		UpgradeTypes: reload
+		Modifier: 95, 90, 85, 75
+	InaccuracyMultiplier@EXPERIENCE:
+		UpgradeTypes: inaccuracy
+		Modifier: 90, 80, 70, 50
+	SelfHealing@ELITE:
+		Step: 2
+		Ticks: 100
+		HealIfBelow: 1
+		DamageCooldown: 125
+		UpgradeTypes: selfheal
+		UpgradeMinEnabledLevel: 1
+	WithRankDecoration:
+		Image: rank
+		Sequence: rank
+		Palette: effect
+		ReferencePoint: Bottom, Right
+		Offset: 2, 2
+		UpgradeTypes: rank
+		ZOffset: 256
+		UpgradeMinEnabledLevel: 1
+		UpgradeMaxAcceptedLevel: 4
+
+^ExistsInWorld:
+	AppearsOnRadar:
+	CombatDebugOverlay:
+	GivesExperience:
+		PlayerExperienceModifier: 1
+	ScriptTriggers:
+	UpgradeManager:
+	Huntable:
+	RenderDebugState:
+
+^SpriteActor:
+	BodyOrientation:
+	QuantizeFacingsFromSequence:
+	AutoSelectionSize:
+	RenderSprites:
+
+^UsableActor:
+	Inherits: ^SpriteActor
+	UpdatesPlayerStatistics:
+	AppearsOnRadar:
+		UseLocation: true
+	SelectionDecorations:
+	WithSpriteControlGroupDecoration:
+	Selectable:
+	GivesBounty:
+	MustBeDestroyed:
+	Guard:
+	Guardable:
+	HiddenUnderFog:
+	ActorLostNotification:
+	Voiced:
+		VoiceSet: GenericVoice
+	RevealsShroud:
+		Range: 4c0
+	DrawLineToTarget:
+
+^CombatantActor:
+	Inherits: ^UsableActor
+	AttackMove:
+	AutoTarget:

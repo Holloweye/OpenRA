@@ -1,0 +1,32 @@
+^BasicHusk:
+	Inherits@1: ^SpriteActor
+	Health:
+		HP: 280
+	Armor:
+		Type: m_tnk
+	HiddenUnderFog:
+		Type: CenterPosition
+	AutoTargetIgnore:
+	ScriptTriggers:
+	WithFacingSpriteBody:
+
+^Husk:
+	Inherits: ^BasicHusk
+	Husk:
+		AllowedTerrain: Clear, Rough, Road, Ore, Gems, Beach
+	Burns:
+		Damage: 2
+	Capturable:
+		Type: husk
+		AllowAllies: true
+		CaptureThreshold: 100
+	TransformOnCapture:
+		ForceHealthPercentage: 25
+	DisabledOverlay:
+	Targetable:
+		TargetTypes: Ground, Husk
+		RequiresForceFire: true
+	Tooltip:
+		GenericName: Destroyed Vehicle
+	BodyOrientation:
+		UseClassicFacingFudge: True

@@ -1,5 +1,5 @@
 WWI_BOMBER:
-	Inherits: ^Plane
+	Inherits: ^CombatPlane
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Aircraft
@@ -26,7 +26,6 @@ WWI_BOMBER:
 		FacingTolerance: 20
 	Aircraft:
 		CruiseAltitude: 2560
-		RearmBuildings: wwi_airstrip
 		InitialFacing: 150
 		TurnSpeed: 1
 		Speed: 80

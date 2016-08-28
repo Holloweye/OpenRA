@@ -1,0 +1,68 @@
+^Infantry:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^GainsExperience
+	Inherits@3: ^UsableActor
+	Health:
+		HP: 25
+		Shape: Circle
+			Radius: 128
+	Armor:
+		Type: flesh
+	Mobile:
+		Speed: 56
+		Crushes: mine, pass_trench, pass_fence
+		SharesCell: true
+		TerrainSpeeds:
+			Clear: 90
+			Rough: 80
+			Road: 100
+			Bridge: 100
+			Ore: 80
+			Gems: 80
+			Beach: 80
+			Rail: 80
+			Swamp: 50
+	Selectable:
+		Bounds: 12,18,0,-8
+	Targetable:
+		TargetTypes: Ground, Infantry, Disguise
+		UpgradeMaxEnabledLevel: 0
+	QuantizeFacingsFromSequence:
+		Sequence: stand
+	WithInfantryBody:
+	WithDeathAnimation:
+		DeathTypes:
+			DefaultDeath: 1
+			BulletDeath: 2
+			SmallExplosionDeath: 3
+			ExplosionDeath: 4
+			FireDeath: 5
+			ElectricityDeath: 6
+		CrushedSequence: die-crushed
+	Passenger:
+		CargoType: Infantry
+	Tooltip:
+		GenericName: Soldier
+	DeathSounds@NORMAL:
+		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath
+	DeathSounds@BURNED:
+		Voice: Burned
+		DeathTypes: FireDeath
+	Passable:
+		CrushesClasses: infantry
+		CrushSound: squishy2.aud
+
+^Soldier:
+	Inherits@1: ^Infantry
+	Inherits@2: ^CombatantActor
+	ProximityCaptor:
+		Types: Infantry
+	TakeCover:
+		DamageModifiers:
+			Prone50Percent: 50
+		DamageTriggers: TriggerProne
+	WithInfantryBody:
+		IdleSequences: idle1,idle2
+		StandSequences: stand,stand2
+	DetectCloaked:
+		CloakTypes: Hijacker

@@ -14,13 +14,9 @@ WWI_FLAK:
 		Description: Mobile unit with mounted Flak Cannon.\nStrong vs Aircraft
 	Health:
 		HP: 150
-	Armor:
-		Type: veh
 	Mobile:
 		TurnSpeed: 2
 		Speed: 30
-	RevealsShroud:
-		Range: 5c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: -298,0,298

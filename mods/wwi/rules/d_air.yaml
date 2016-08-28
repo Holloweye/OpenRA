@@ -1,0 +1,80 @@
+^Plane:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^GainsExperience
+	Inherits@3: ^UsableActor
+	Aircraft:
+		RearmBuildings: wwi_airstrip
+		AirborneUpgrades: airborne
+		CruisingUpgrades: cruising
+	Targetable@GROUND:
+		TargetTypes: Ground, Repair, Vehicle
+		UpgradeTypes: airborne
+		UpgradeMaxEnabledLevel: 0
+	Targetable@AIRBORNE:
+		TargetTypes: Air
+		UpgradeTypes: airborne
+		UpgradeMinEnabledLevel: 1
+	HiddenUnderFog:
+		Type: CenterPosition
+	ActorLostNotification:
+		Notification: AirUnitLost
+	ProximityCaptor:
+		Types: Plane
+	Tooltip:
+		GenericName: Plane
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	WithFacingSpriteBody:
+	RevealsShroud:
+		Type: CenterPosition
+
+^CombatPlane:
+	Inherits@1: ^Plane
+	Inherits@2: ^CombatantActor
+
+^Helicopter:
+	Inherits: ^Plane
+	Tooltip:
+		GenericName: Helicopter
+	Aircraft:
+		CanHover: True
+	Hovers@CRUISING:
+		UpgradeTypes: cruising
+		UpgradeMinEnabledLevel: 1
+	BodyOrientation:
+		UseClassicFacingFudge: True
+
+^CombatHelicopter:
+	Inherits@1: ^Helicopter
+	Inherits@2: ^CombatantActor
+
+^PlaneHusk:
+	Inherits: ^BasicHusk
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	Tooltip:
+		GenericName: Destroyed Plane
+	Aircraft:
+		AirborneUpgrades: airborne
+		CruisingUpgrades: cruising
+	FallsToEarth:
+		Spins: False
+		Moves: True
+		Velocity: 86
+
+^HelicopterHusk:
+	Inherits: ^BasicHusk
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	Tooltip:
+		GenericName: Destroyed Helicopter
+	Aircraft:
+		AirborneUpgrades: airborne
+		CruisingUpgrades: cruising
+		CanHover: True
+	FallsToEarth:
+	BodyOrientation:
+		UseClassicFacingFudge: True

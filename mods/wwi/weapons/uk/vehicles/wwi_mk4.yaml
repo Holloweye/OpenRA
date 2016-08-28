@@ -1,0 +1,4 @@
+wwi_mk4:
+	Inherits: ^tank_gun
+	Warhead@1Dam: SpreadDamage
+		Damage: 80

@@ -14,12 +14,8 @@ WWI_TRADE_TRUCK:
 		Description: Trades with supply stations.\nMain source of income.
 	Health:
 		HP: 150
-	Armor:
-		Type: veh
 	Mobile:
 		Speed: 90
-	RevealsShroud:
-		Range: 5c0
 	Selectable:
 		Priority: 0
 	SelectionDecorations:

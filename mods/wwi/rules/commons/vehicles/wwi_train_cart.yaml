@@ -1,5 +1,5 @@
 WWI_TRAIN_CART_BUILD:
-	Inherits: ^Building
+	Inherits: ^TrainBuild
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 95
@@ -10,24 +10,8 @@ WWI_TRAIN_CART_BUILD:
 		Description: Personell train cart.\n Must be deployed on rails.
 	Valued:
 		Cost: 500
-	Building:
-		Footprint: x
-		Dimensions: 1,1
-		TerrainTypes: Rail
-	Health:
-		HP: 1
-	RevealsShroud:
-		Range: 4c0
 	SpawnActorOnDeath:
 		Actor: WWI_TRAIN_CART
-	SelfHealing@REMOVE:
-		Step: -1000
-		Ticks: 0
-		HealIfBelow: 1000
-		DamageCooldown: 0
-	-WithBuildingExplosion:
-	-ShakeOnDeath:
-	-SoundOnDamageTransition:
 
 WWI_TRAIN_CART:
 	Inherits: ^Train
@@ -46,8 +30,6 @@ WWI_TRAIN_CART:
 		InitialFacing: 70
 		UpgradeTypes: notmobile
 		UpgradeMaxEnabledLevel: 0
-	RevealsShroud:
-		Range: 4c0
 	SelectionDecorations:
 		VisualBounds: 35,30,0,-5
 	Cargo:

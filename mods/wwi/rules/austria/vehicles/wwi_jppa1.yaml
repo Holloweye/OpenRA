@@ -1,5 +1,5 @@
 WWI_JPPA1:
-	Inherits: ^Tank
+	Inherits: ^MediumTank
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 50
@@ -14,13 +14,6 @@ WWI_JPPA1:
 		Description: Medium tank.\n  Strong vs Light tanks\n  Weak vs Heavy tanks
 	Health:
 		HP: 270
-	Armor:
-		Type: m_tnk
-	Mobile:
-		Speed: 60
-		Crushes: mine, infantry, crush_fench
-	RevealsShroud:
-		Range: 4c0
 	AttackFrontal:
 	Armament@PRIMARY:
 		Weapon: wwi_jppa1

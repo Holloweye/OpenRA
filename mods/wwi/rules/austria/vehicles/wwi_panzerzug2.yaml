@@ -1,5 +1,5 @@
 WWI_PANZERZUG2_BUILD:
-	Inherits: ^Building
+	Inherits: ^TrainBuild
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 100
@@ -12,27 +12,11 @@ WWI_PANZERZUG2_BUILD:
 		Cost: 2550
 	Population:
 		Amount: -20
-	Building:
-		Footprint: x
-		Dimensions: 1,1
-		TerrainTypes: Rail
-	Health:
-		HP: 1
-	RevealsShroud:
-		Range: 4c0
 	SpawnActorOnDeath:
 		Actor: WWI_PANZERZUG2
-	SelfHealing@REMOVE:
-		Step: -1000
-		Ticks: 0
-		HealIfBelow: 1000
-		DamageCooldown: 0
-	-WithBuildingExplosion:
-	-ShakeOnDeath:
-	-SoundOnDamageTransition:
 
 WWI_PANZERZUG2:
-	Inherits: ^Train
+	Inherits: ^CombatTrain
 	Tooltip:
 		Name: Panzerzug II
 		Description: Armored train.\n Must be deployed on rails.
@@ -48,8 +32,6 @@ WWI_PANZERZUG2:
 		Speed: 20
 		Crushes: mine, infantry, crush_fench
 		InitialFacing: 70
-	RevealsShroud:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 2
 		Offset: 0,0,500
