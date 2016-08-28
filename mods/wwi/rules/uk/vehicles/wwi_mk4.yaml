@@ -11,7 +11,7 @@ WWI_MK4:
 	Population:
 		Amount: -5
 	Tooltip:
-		Name: MK IV
+		Name: Mark IV
 		Description: Heavy tank.\n  Strong vs Light & Medium tanks\n  Weak vs Field guns
 	Health:
 		HP: 270
@@ -23,3 +23,5 @@ WWI_MK4:
 		LocalOffset: 600,-400,150
 	SelectionDecorations:
 		VisualBounds: 35,30,0,-5
+	WithMoveAnimation:
+		MoveSequence: run

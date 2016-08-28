@@ -25,6 +25,9 @@
 	Inherits: ^Tank
 	Armor:
 		Type: l_tnk
+	Mobile:
+		Speed: 80
+		TurnSpeed: 4
 
 ^MediumTank:
 	Inherits: ^Tank
@@ -32,6 +35,7 @@
 		Type: m_tnk
 	Mobile:
 		Speed: 60
+		TurnSpeed: 3
 		Crushes: mine, infantry, crush_fench
 
 ^HeavyTank:
@@ -40,4 +44,5 @@
 		Type: h_tnk
 	Mobile:
 		Speed: 30
+		TurnSpeed: 2
 		Crushes: mine, infantry, crush_fench, crush_trench, crush_wall

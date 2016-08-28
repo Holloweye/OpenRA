@@ -304,8 +304,8 @@ wwi_mk4:
 		Facings: 16
 	muzzle: gunfire2
 		Length: 2
-	icon: wwi_hotch_icon
-	shoot:
+	icon: wwi_mk4_icon
+	run:
 		Start: 16
 		Length: 5
 		Facings: 16
