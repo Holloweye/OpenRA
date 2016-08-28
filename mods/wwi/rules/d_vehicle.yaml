@@ -2,6 +2,8 @@
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^UsableActor
 	Mobile:
+		Speed: 90
+		TurnSpeed: 5
 		Crushes: mine
 		TerrainSpeeds:
 			Clear: 80
@@ -12,12 +14,10 @@
 			Gems: 70
 			Beach: 40
 			Rail: 40
-		TurnSpeed: 5
 	Selectable:
 		Bounds: 24, 24
 	Targetable:
 		TargetTypes: Ground, Repair, Vehicle
-		UpgradeMaxEnabledLevel: 0
 	Repairable:
 	Passenger:
 		CargoType: Vehicle

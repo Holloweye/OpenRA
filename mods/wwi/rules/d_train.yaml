@@ -10,7 +10,6 @@
 		Bounds: 24, 24
 	Targetable:
 		TargetTypes: Ground, C4, Repair, Train
-		UpgradeMaxEnabledLevel: 0
 	Repairable:
 	ProximityCaptor:
 		Types: Vehicle

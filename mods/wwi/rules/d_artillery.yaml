@@ -23,6 +23,8 @@
 		FrontalDamageModifier: 50
 	RevealsShroud:
 		Range: 4c0
+	Mobile:
+		Speed: 45
 
 ^Howitzer:
 	Inherits: ^Artillery

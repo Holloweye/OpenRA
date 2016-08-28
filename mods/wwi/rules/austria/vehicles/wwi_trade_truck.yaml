@@ -14,8 +14,6 @@ WWI_TRADE_TRUCK:
 		Description: Trades with supply stations.\nMain source of income.
 	Health:
 		HP: 150
-	Mobile:
-		Speed: 90
 	Selectable:
 		Priority: 0
 	SelectionDecorations:

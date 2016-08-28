@@ -30,3 +30,33 @@
 		GenericName: Destroyed Vehicle
 	BodyOrientation:
 		UseClassicFacingFudge: True
+
+^PlaneHusk:
+	Inherits: ^BasicHusk
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	Tooltip:
+		GenericName: Destroyed Plane
+	Aircraft:
+		AirborneUpgrades: airborne
+		CruisingUpgrades: cruising
+	FallsToEarth:
+		Spins: False
+		Moves: True
+		Velocity: 86
+
+^HelicopterHusk:
+	Inherits: ^BasicHusk
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	Tooltip:
+		GenericName: Destroyed Helicopter
+	Aircraft:
+		AirborneUpgrades: airborne
+		CruisingUpgrades: cruising
+		CanHover: True
+	FallsToEarth:
+	BodyOrientation:
+		UseClassicFacingFudge: True

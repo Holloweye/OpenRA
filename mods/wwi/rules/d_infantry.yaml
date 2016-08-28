@@ -25,7 +25,6 @@
 		Bounds: 12,18,0,-8
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise
-		UpgradeMaxEnabledLevel: 0
 	QuantizeFacingsFromSequence:
 		Sequence: stand
 	WithInfantryBody:
