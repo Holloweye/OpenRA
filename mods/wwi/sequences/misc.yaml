@@ -461,14 +461,7 @@ gpsdot:
 		Start: 6
 
 icon:
-	abomb: atomicon
-	invuln: infxicon
-	chrono: warpicon
-	spyplane: smigicon
-	paratroopers: pinficon
-	gps: gpssicon
-	parabombs: pbmbicon
-	sonar: sonricon
+	instantveterancy: wwi_support_instant_veterancy
 
 quee:
 	idle:

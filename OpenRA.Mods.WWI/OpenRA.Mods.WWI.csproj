@@ -58,6 +58,7 @@
     <Compile Include="Traits\PopulationManager.cs" />
     <Compile Include="Traits\CellModifier.cs" />
     <Compile Include="Traits\SoundModifier.cs" />
+    <Compile Include="Traits\SupportPower\InstantVeterancyPower.cs" />
     <Compile Include="Traits\TankArmor.cs" />
     <Compile Include="Traits\TaxCollector.cs" />
     <Compile Include="Traits\Trader.cs" />
