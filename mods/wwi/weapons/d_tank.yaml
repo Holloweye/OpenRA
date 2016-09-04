@@ -1,6 +1,6 @@
 ^tank_gun:
 	Inherits@type: ^type_shell
-	Inherits@velocity: ^velocity_high
+	Inherits@velocity: ^velocity_high_trail
 	Inherits@accuracy: ^accuracy_single_target
 	Inherits@angle: ^angle_10
 	ReloadDelay: 65

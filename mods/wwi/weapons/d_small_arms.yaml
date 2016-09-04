@@ -16,8 +16,6 @@
 	Inherits@angle: ^angle_0
 	ReloadDelay: 50
 	Range: 5c0
-	Projectile: Bullet
-		ContrailLength: 0
 	Warhead@1Dam: SpreadDamage
 		Inherits@type: ^warhead_bullet
 
@@ -90,8 +88,6 @@
 	Range: 3c0
 	Burst: 15
 	BurstDelay: 1
-	Projectile: Bullet
-		ContrailLength: 0
 	Warhead@1Dam: SpreadDamage
 		Inherits@type: ^warhead_fire
 

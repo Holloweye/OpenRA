@@ -106,20 +106,37 @@
 		ImpactSounds: splash9.aud
 		ValidImpactTypes: Water
 
-^velocity_low:
+^velocity_low_trail:
 	Projectile: Bullet
 		Speed: 150
 		ContrailLength: 30
 
-^velocity_medium:
+^velocity_medium_trail:
 	Projectile: Bullet
 		Speed: 250
 		ContrailLength: 20
 
-^velocity_high:
+^velocity_high_trail:
 	Projectile: Bullet
 		Speed: 400
 		ContrailLength: 10
+
+^velocity_instant_trail:
+	Projectile: Bullet
+		Speed: 99c682
+		ContrailLength: 5
+
+^velocity_low:
+	Projectile: Bullet
+		Speed: 150
+
+^velocity_medium:
+	Projectile: Bullet
+		Speed: 250
+
+^velocity_high:
+	Projectile: Bullet
+		Speed: 400
 
 ^velocity_instant:
 	Projectile: Bullet

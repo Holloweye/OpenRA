@@ -1,6 +1,6 @@
 ^gun:
 	Inherits@type: ^type_shell
-	Inherits@velocity: ^velocity_medium
+	Inherits@velocity: ^velocity_medium_trail
 	Inherits@accuracy: ^accuracy_area
 	Inherits@angle: ^angle_45
 	ReloadDelay: 100
@@ -11,7 +11,7 @@
 
 ^large_gun:
 	Inherits@inherits: ^gun
-	Inherits@velocity: ^velocity_low
+	Inherits@velocity: ^velocity_low_trail
 	Inherits@accuracy: ^accuracy_bombardment
 	ReloadDelay: 250
 	Range: 16c0

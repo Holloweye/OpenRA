@@ -1,6 +1,6 @@
 ^field_artillery:
 	Inherits@type: ^type_shell
-	Inherits@velocity: ^velocity_high
+	Inherits@velocity: ^velocity_high_trail
 	Inherits@accuracy: ^accuracy_single_target
 	Inherits@angle: ^angle_10
 	ReloadDelay: 65
@@ -10,7 +10,7 @@
 
 ^howitzer:
 	Inherits@type: ^type_shell
-	Inherits@velocity: ^velocity_low
+	Inherits@velocity: ^velocity_low_trail
 	Inherits@accuracy: ^accuracy_area
 	Inherits@angle: ^angle_80
 	ReloadDelay: 90
