@@ -10,7 +10,7 @@
 
 ^howitzer:
 	Inherits@type: ^type_shell
-	Inherits@velocity: ^velocity_low_trail
+	Inherits@velocity: ^velocity_medium_trail
 	Inherits@accuracy: ^accuracy_area
 	Inherits@angle: ^angle_80
 	ReloadDelay: 90

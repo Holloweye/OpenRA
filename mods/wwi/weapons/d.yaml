@@ -203,8 +203,8 @@
 		struct: 15
 		def: 25
 		veh: 30
-		h_gun: 30
-		f_gun: 30
+		h_gun: 25
+		f_gun: 25
 		l_tnk: 15
 		m_tnk: 15
 		h_tnk: 15
@@ -299,12 +299,12 @@
 		veh: 20
 		h_gun: 50
 		f_gun: 20
-		l_tnk: 20
-		m_tnk: 20
-		h_tnk: 20
-		l_ship: 20
-		m_ship: 20
-		h_ship: 20
+		l_tnk: 40
+		m_tnk: 40
+		h_tnk: 40
+		l_ship: 40
+		m_ship: 40
+		h_ship: 40
 		air: 100
 
 ^warhead_melee:
