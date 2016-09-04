@@ -1,6 +1,5 @@
 wwi_plane:
 	Inherits: ^light_machine_gun
-	MinRange: 3c0
 	Report: gun13.aud
 	ValidTargets: Air, Ground
 	Projectile: Bullet
@@ -11,6 +10,4 @@ wwi_plane:
 	Warhead@1Dam: SpreadDamage
 		Damage: 25
 		Spread: 400
-		Versus:
-			air: 100
 		ValidTargets: Air, Ground

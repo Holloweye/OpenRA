@@ -1,4 +1,4 @@
 wwi_12_railway_howitzer:
 	Inherits: ^howitzer
 	Warhead@1Dam: SpreadDamage
-		Damage: 130
+		Damage: 200

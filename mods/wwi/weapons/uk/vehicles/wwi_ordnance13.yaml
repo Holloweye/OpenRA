@@ -1,4 +1,4 @@
 wwi_ordnance13:
 	Inherits: ^field_artillery
 	Warhead@1Dam: SpreadDamage
-		Damage: 120
+		Damage: 100

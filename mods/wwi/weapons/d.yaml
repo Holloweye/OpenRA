@@ -165,7 +165,7 @@
 		Blockable: true
 
 ^angle_10:
-	MinRange: 2c0
+	MinRange: 3c0
 	Projectile: Bullet
 		Angle: 10
 		Blockable: true
@@ -204,7 +204,7 @@
 		def: 25
 		veh: 30
 		h_gun: 30
-		f_gun: 15
+		f_gun: 30
 		l_tnk: 15
 		m_tnk: 15
 		h_tnk: 15
@@ -221,8 +221,8 @@
 		flesh: 15
 		struct: 40
 		def: 30
-		h_gun: 60
-		f_gun: 60
+		h_gun: 30
+		f_gun: 30
 		l_tnk: 80
 		m_tnk: 80
 		h_tnk: 80
@@ -300,10 +300,10 @@
 		h_gun: 50
 		f_gun: 20
 		l_tnk: 20
-		l_ship: 20
 		m_tnk: 20
-		m_ship: 20
 		h_tnk: 20
+		l_ship: 20
+		m_ship: 20
 		h_ship: 20
 		air: 100
 
@@ -320,10 +320,10 @@
 		h_gun: 8
 		f_gun: 8
 		l_tnk: 5
-		l_ship: 5
 		m_tnk: 0
-		m_ship: 0
 		h_tnk: 0
+		l_ship: 5
+		m_ship: 0
 		h_ship: 0
 		air: 100
 
@@ -339,10 +339,10 @@
 		h_gun: 80
 		f_gun: 80
 		l_tnk: 80
-		l_ship: 80
 		m_tnk: 80
-		m_ship: 80
 		h_tnk: 80
+		l_ship: 80
+		m_ship: 80
 		h_ship: 80
 		air: 100
 
@@ -359,9 +359,9 @@
 		h_gun: 0
 		f_gun: 0
 		l_tnk: 0
-		l_ship: 0
 		m_tnk: 0
-		m_ship: 0
 		h_tnk: 0
+		l_ship: 0
+		m_ship: 0
 		h_ship: 0
 		air: 100
