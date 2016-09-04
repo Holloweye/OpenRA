@@ -22,8 +22,8 @@
 
 ^TechBuilding:
 	Inherits: ^BasicBuilding
-	Health:
-		HP: 400
+	-UpgradeOnDamageState@heavly:
+	-UpgradeOnDamageState@critical:
 	Tooltip:
 		Name: Civilian Building
 		GenericVisibility: None
@@ -47,11 +47,17 @@
 		TargetTypes: Ground, DetonateAttack
 
 ^CivBuilding:
-	Inherits: ^TechBuilding
+	Inherits: ^BasicBuilding
+	Tooltip:
+		Name: Civilian Building
+		GenericVisibility: None
+	Health:
+		HP: 400
 	RenderSprites:
 		Palette: terrain
 	EditorTilesetFilter:
 		ExcludeTilesets: INTERIOR
+	FrozenUnderFog:
 
 ^CivField:
 	Inherits: ^CivBuilding
@@ -389,8 +395,6 @@ MISS:
 		Dimensions: 3,2
 	Valued:
 		Cost: 2000
-	Health:
-		HP: 400
 	RevealsShroud:
 		Range: 3c0
 	Armor:
@@ -398,11 +402,6 @@ MISS:
 	Tooltip:
 		Name: Technology Center
 	Bib:
-	WithDeathAnimation:
-		DeathSequence: dead
-		UseDeathTypeSuffix: false
-	WithBuildingExplosion:
-		Delay: 1
 	ProvidesPrerequisite@buildingname:
 
 BIO:
@@ -414,14 +413,8 @@ BIO:
 		Range: 3c0
 	ExternalCapturable:
 	ExternalCapturableBar:
-	EngineerRepairable:
 	Tooltip:
 		Name: Biological Lab
-	WithDeathAnimation:
-		DeathSequence: dead
-		UseDeathTypeSuffix: false
-	WithBuildingExplosion:
-		Delay: 1
 	ProvidesPrerequisite@buildingname:
 
 OILB:
@@ -431,21 +424,16 @@ OILB:
 	Building:
 		Footprint: xx xx
 		Dimensions: 2,2
-	Health:
-		HP: 1000
 	RevealsShroud:
 		Range: 3c0
 	ExternalCapturable:
 	ExternalCapturableBar:
-	EngineerRepairable:
 	CashTrickler:
 		Period: 375
 		Amount: 100
 		CaptureAmount: 100
 	Tooltip:
 		Name: Oil Derrick
-	Explodes:
-		Weapon: BarrelExplode
 
 BR1:
 	Inherits: ^Bridge

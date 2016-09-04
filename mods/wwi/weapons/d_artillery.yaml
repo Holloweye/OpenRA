@@ -1,0 +1,20 @@
+^field_artillery:
+	Inherits@type: ^type_shell
+	Inherits@velocity: ^velocity_high
+	Inherits@accuracy: ^accuracy_single_target
+	Inherits@angle: ^angle_10
+	ReloadDelay: 65
+	Range: 8c0
+	Warhead@1Dam: SpreadDamage
+		Inherits@type: ^warhead_anti_armor
+
+^howitzer:
+	Inherits@type: ^type_shell
+	Inherits@velocity: ^velocity_low
+	Inherits@accuracy: ^accuracy_area
+	Inherits@angle: ^angle_80
+	ReloadDelay: 90
+	Range: 15c0
+	Report: ArtShot1_1.aud, ArtShot2_1.aud
+	Warhead@1Dam: SpreadDamage
+		Inherits@type: ^warhead_anti_personnel

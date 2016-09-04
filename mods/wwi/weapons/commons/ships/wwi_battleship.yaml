@@ -1,4 +1,9 @@
 wwi_battleship:
 	Inherits: ^large_gun
+	Burst: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 30
+		Versus:
+			l_ship: 20
+			m_ship: 100
+			h_ship: 60

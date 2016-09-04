@@ -1,0 +1,30 @@
+UnitExplodeSmall:
+	Inherits@type: ^type_explosion_small
+	Warhead@1Dam: SpreadDamage
+		Inherits@type: ^warhead_explosion
+		Damage: 40
+
+UnitExplode:
+	Inherits@type: ^type_explosion_large
+	Warhead@1Dam: SpreadDamage
+		Inherits@type: ^warhead_explosion
+		Damage: 50
+
+UnitExplodeShip:
+	Inherits@type: ^type_explosion_large
+	Warhead@1Dam: SpreadDamage
+		Inherits@type: ^warhead_explosion
+		Damage: 50
+
+BarrelExplode:
+	Inherits@type: ^type_explosion_small
+	Warhead@1Dam: SpreadDamage
+		Inherits@type: ^warhead_explosion
+		Damage: 50
+
+Demolish:
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: DefaultDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: building
+		ImpactSounds: kaboom25.aud

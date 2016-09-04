@@ -1,0 +1,350 @@
+^type_shell:
+	Report: tank5.aud
+	Projectile: Bullet
+		Image: 120MM
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Tank, Structure, Wall, Husk, Trees
+	Warhead@3Eff: CreateEffect
+		Explosions: artillery_explosion
+		ImpactSounds: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosions: med_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water
+
+^type_bullet:
+	Report: rifle.aud
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidImpactTypes: Water
+
+^type_flak:
+	Report: aacanon3.aud
+	ValidTargets: Air
+	Warhead@2EffAir: CreateEffect
+		Explosions: small_explosion_air
+		ValidImpactTypes: Air, AirHit
+
+^type_fire:
+	Projectile: Bullet
+		Trail: fb4
+		Image: fb3
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
+		InvalidTargets: Vehicle, Tank, Structure, Wall, Husk, Trees
+	Warhead@3Eff: CreateEffect
+		Explosions: small_napalm
+		ImpactSounds: firebl3.aud
+
+^type_torpedo:
+	Report: torpedo1.aud
+	ValidTargets: Water, Underwater, Bridge
+	Projectile: Bullet
+		Image: torpedo
+		Arm: 3
+		TrailImage: bubbles
+		HorizontalRateOfTurn: 1
+		BoundToTerrainType: Water
+		Palette: shadow
+		RangeLimit: 10c819
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Water, Underwater, Bridge
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Tank, Structure, Wall, Husk, Trees
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: kaboom15.aud
+		InvalidImpactTypes: Water, WaterHit
+	Warhead@4EffWaterHit: CreateEffect
+		Explosions: artillery_explosion
+		ImpactSounds: kaboom15.aud
+		ValidImpactTypes: WaterHit
+	Warhead@5EffWater: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water
+
+^type_grenade:
+	Report: grenade1.aud
+	Projectile: Bullet
+		Image: BOMB
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Tank, Structure, Wall, Husk, Trees
+	Warhead@3Eff: CreateEffect
+		Explosions: med_explosion
+		ImpactSounds: kaboom25.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosions: small_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water
+
+^type_explosion_small:
+	Warhead@2Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water
+
+^type_explosion_large:
+	Warhead@2Eff: CreateEffect
+		Explosions: self_destruct
+		ImpactSounds: kaboom22.aud
+		InvalidImpactTypes: Water
+	Warhead@3EffWater: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water
+
+^velocity_low:
+	Projectile: Bullet
+		Speed: 150
+		ContrailLength: 30
+
+^velocity_medium:
+	Projectile: Bullet
+		Speed: 250
+		ContrailLength: 20
+
+^velocity_high:
+	Projectile: Bullet
+		Speed: 400
+		ContrailLength: 10
+
+^velocity_instant:
+	Projectile: Bullet
+		Speed: 99c682
+
+^accuracy_single_target:
+	Projectile: Bullet
+		Inaccuracy: 0c5
+
+^accuracy_multiple_targets:
+	Projectile: Bullet
+		Inaccuracy: 1c0
+
+^accuracy_area:
+	Projectile: Bullet
+		Inaccuracy: 2c0
+
+^accuracy_bombardment:
+	Projectile: Bullet
+		Inaccuracy: 4c0
+
+^angle_0:
+	MinRange: 2c0
+	Projectile: Bullet
+		Angle: 0
+		Blockable: true
+
+^angle_10:
+	MinRange: 2c0
+	Projectile: Bullet
+		Angle: 10
+		Blockable: true
+
+^angle_30:
+	MinRange: 3c0
+	Projectile: Bullet
+		Angle: 30
+		Blockable: true
+
+^angle_45:
+	MinRange: 4c0
+	Projectile: Bullet
+		Angle: 45
+		Blockable: false
+
+^angle_60:
+	MinRange: 5c0
+	Projectile: Bullet
+		Angle: 60
+		Blockable: false
+
+^angle_80:
+	MinRange: 6c0
+	Projectile: Bullet
+		Angle: 80
+		Blockable: false
+
+^warhead_bullet:
+	Spread: 0c128
+	Falloff: 100, 37, 14, 5, 0
+	DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Versus:
+		flesh: 100
+		struct: 15
+		def: 25
+		veh: 30
+		h_gun: 30
+		f_gun: 15
+		l_tnk: 15
+		m_tnk: 15
+		h_tnk: 15
+		l_ship: 15
+		m_ship: 15
+		h_ship: 15
+		air: 100
+
+^warhead_anti_armor:
+	Spread: 0c256
+	Falloff: 100, 37, 14, 5, 0
+	DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Versus:
+		flesh: 15
+		struct: 40
+		def: 30
+		h_gun: 60
+		f_gun: 60
+		l_tnk: 80
+		m_tnk: 80
+		h_tnk: 80
+		l_ship: 80
+		m_ship: 80
+		h_ship: 80
+		air: 100
+
+^warhead_anti_personnel:
+	Spread: 0c512
+	Falloff: 100, 70, 50, 30, 0
+	DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Versus:
+		flesh: 25
+		struct: 20
+		def: 10
+		veh: 40
+		f_gun: 50
+		h_gun: 50
+		l_tnk: 30
+		m_tnk: 20
+		h_tnk: 10
+		l_ship: 30
+		m_ship: 20
+		h_ship: 10
+		air: 100
+
+^warhead_high_explosive_anti_armor:
+	Spread: 0c512
+	Falloff: 100, 60, 40, 20, 0
+	DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Versus:
+		flesh: 15
+		struct: 100
+		def: 80
+		veh: 40
+		f_gun: 40
+		h_gun: 40
+		l_tnk: 60
+		m_tnk: 60
+		h_tnk: 60
+		l_ship: 60
+		m_ship: 60
+		h_ship: 60
+		air: 100
+
+^warhead_explosion:
+	Spread: 0c300
+	Falloff: 100, 70, 50, 30, 0
+	DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Versus:
+		flesh: 25
+		struct: 20
+		def: 10
+		veh: 40
+		f_gun: 50
+		h_gun: 50
+		l_tnk: 60
+		m_tnk: 60
+		h_tnk: 60
+		l_ship: 60
+		m_ship: 60
+		h_ship: 60
+		air: 100
+
+^warhead_grenade:
+	Spread: 0c256
+	Falloff: 100, 70, 50, 30, 0
+	DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Versus:
+		flesh: 90
+		def: 50
+		struct: 100
+		veh: 20
+		h_gun: 50
+		f_gun: 20
+		l_tnk: 20
+		l_ship: 20
+		m_tnk: 20
+		m_ship: 20
+		h_tnk: 20
+		h_ship: 20
+		air: 100
+
+^warhead_melee:
+	Spread: 0c60
+	Falloff: 100, 100, 50, 50, 0
+	InvalidTargets: Structure
+	DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Versus:
+		flesh: 100
+		struct: 0
+		def: 0
+		veh: 8
+		h_gun: 8
+		f_gun: 8
+		l_tnk: 5
+		l_ship: 5
+		m_tnk: 0
+		m_ship: 0
+		h_tnk: 0
+		h_ship: 0
+		air: 100
+
+^warhead_fire:
+	Spread: 0c384
+	Falloff: 100, 70, 50, 30, 0
+	DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Versus:
+		flesh: 100
+		struct: 30
+		def: 100
+		veh: 80
+		h_gun: 80
+		f_gun: 80
+		l_tnk: 80
+		l_ship: 80
+		m_tnk: 80
+		m_ship: 80
+		h_tnk: 80
+		h_ship: 80
+		air: 100
+
+^warhead_flak:
+	Spread: 0c128
+	Falloff: 100, 70, 50, 30, 0
+	DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+	ValidTargets: Air
+	Versus:
+		flesh: 0
+		def: 0
+		struct: 0
+		veh: 0
+		h_gun: 0
+		f_gun: 0
+		l_tnk: 0
+		l_ship: 0
+		m_tnk: 0
+		m_ship: 0
+		h_tnk: 0
+		h_ship: 0
+		air: 100

@@ -3,3 +3,6 @@ wwi_cruiser:
 	Warhead@1Dam: SpreadDamage
 		Damage: 25
 		ValidTargets: Underwater, Ground, Water
+			l_ship: 100
+			m_ship: 60
+			h_ship: 40

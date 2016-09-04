@@ -211,11 +211,12 @@ ChromeLayout:
 	wwi|chrome/layout/editor.yaml
 
 Weapons:
-	wwi|weapons/effects.yaml
-	wwi|weapons/artillery.yaml
-	wwi|weapons/small_arms.yaml
-	wwi|weapons/large_guns.yaml
-	wwi|weapons/tank.yaml
+	wwi|weapons/d.yaml
+	wwi|weapons/d_effects.yaml
+	wwi|weapons/d_artillery.yaml
+	wwi|weapons/d_small_arms.yaml
+	wwi|weapons/d_large_guns.yaml
+	wwi|weapons/d_tank.yaml
 	wwi|weapons/commons/infantry/wwi_rifle.yaml
 	wwi|weapons/commons/infantry/wwi_grenadier.yaml
 	wwi|weapons/commons/infantry/wwi_machinegunner.yaml

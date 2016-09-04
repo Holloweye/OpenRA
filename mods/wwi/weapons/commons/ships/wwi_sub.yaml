@@ -1,4 +1,10 @@
 wwi_sub:
 	Inherits: ^torpedo
+	Burst: 2
+	BurstDelay: 20
 	Warhead@1Dam: SpreadDamage
 		Damage: 180
+		Versus:
+			l_ship: 60
+			m_ship: 30
+			h_ship: 100

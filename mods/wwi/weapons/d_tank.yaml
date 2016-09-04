@@ -1,0 +1,9 @@
+^tank_gun:
+	Inherits@type: ^type_shell
+	Inherits@velocity: ^velocity_high
+	Inherits@accuracy: ^accuracy_single_target
+	Inherits@angle: ^angle_10
+	ReloadDelay: 65
+	Range: 6c0
+	Warhead@1Dam: SpreadDamage
+		Inherits@type: ^warhead_anti_armor

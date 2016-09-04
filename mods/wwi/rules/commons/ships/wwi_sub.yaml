@@ -52,6 +52,3 @@ WWI_SUB:
 		CloakTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
-	Explodes:
-		Weapon: UnitExplodeSubmarine
-		EmptyWeapon: UnitExplodeSubmarine
