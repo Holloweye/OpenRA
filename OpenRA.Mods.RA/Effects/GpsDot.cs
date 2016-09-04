@@ -111,7 +111,7 @@ namespace OpenRA.Mods.RA.Effects
 
 			shouldRenderIndicator = !f2.HasRenderables;
 
-			return f2.Visible && !f2.Shrouded;
+			return f2.Visible && !f2.Shrouded && !toPlayer.World.ShroudObscures(self.CenterPosition);
 		}
 
 		FrozenActor FrozenActorForPlayer(Player player)
@@ -124,16 +124,14 @@ namespace OpenRA.Mods.RA.Effects
 			if (self.Disposed)
 				world.AddFrameEndTask(w => w.Remove(this));
 
-			if (!self.IsInWorld || self.IsDead)
-				return;
-
 			for (var playerIndex = 0; playerIndex < dotStates.Count; playerIndex++)
 			{
 				var state = dotStates[playerIndex];
 				var shouldRender = false;
-				var targetable = (state.Gps.Granted || state.Gps.GrantedAllies) && IsTargetableBy(world.Players[playerIndex], out shouldRender);
-				state.IsTargetable = targetable;
-				state.ShouldRender = targetable && shouldRender;
+				if (self.IsInWorld && !self.IsDead)
+					state.IsTargetable = (state.Gps.Granted || state.Gps.GrantedAllies) && IsTargetableBy(world.Players[playerIndex], out shouldRender);
+
+				state.ShouldRender = state.IsTargetable && shouldRender;
 			}
 		}
 
