@@ -310,3 +310,15 @@ wwi_mk4:
 		Length: 5
 		Facings: 16
 		Tick: 130
+
+wwi_medium_mk_a:
+	idle:
+		Facings: 16
+	muzzle: gunfire2
+		Length: 2
+	icon: wwi_medium_mk_a_icon
+	run:
+		Start: 16
+		Length: 23
+		Facings: 16
+		Tick: 20

@@ -116,6 +116,7 @@ Rules:
 	wwi|rules/uk/vehicles/wwi_bl_60.yaml
 	wwi|rules/uk/vehicles/wwi_12_railway_howitzer.yaml
 	wwi|rules/uk/vehicles/wwi_mk4.yaml
+	wwi|rules/uk/vehicles/wwi_medium_mk_a.yaml
 	wwi|rules/russia/structures/wwi_russia_hq.yaml
 	wwi|rules/germany/structures/wwi_germany_hq.yaml
 	wwi|rules/france/structures/wwi_france_hq.yaml
@@ -248,6 +249,7 @@ Weapons:
 	wwi|weapons/uk/vehicles/wwi_bl_60.yaml
 	wwi|weapons/uk/vehicles/wwi_12_railway_howitzer.yaml
 	wwi|weapons/uk/vehicles/wwi_mk4.yaml
+	wwi|weapons/uk/vehicles/wwi_medium_mk_a.yaml
 
 Voices:
 	wwi|audio/voices.yaml

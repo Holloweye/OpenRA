@@ -1,0 +1,4 @@
+wwi_medium_mk_a:
+	Inherits: ^medium_machine_gun
+	Warhead@1Dam: SpreadDamage
+		Damage: 30

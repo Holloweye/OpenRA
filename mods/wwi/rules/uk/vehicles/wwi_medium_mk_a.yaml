@@ -1,0 +1,28 @@
+WWI_MEDIUM_MK_A:
+	Inherits@1: ^MediumTank
+	Inherits@2: ^1Turret
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 50
+		Prerequisites: tankfactory, Pop3, ~structures.uk
+		BuildAtProductionType: Tank
+	Valued:
+		Cost: 850
+	Population:
+		Amount: -3
+	Tooltip:
+		Name: Medium MK A
+		Description: Medium tank.\n  Strong vs Light tanks\n  Weak vs Field guns
+	Health:
+		HP: 200
+	Turreted@PRIMARY:
+		TurnSpeed: 255
+		Offset: -350,0,0
+	-WithSpriteTurret@PRIMARY:
+	Armament@PRIMARY:
+		Weapon: wwi_medium_mk_a
+		LocalOffset: 400,0,300
+	SelectionDecorations:
+		VisualBounds: 35,30,0,-5
+	WithMoveAnimation:
+		MoveSequence: run
