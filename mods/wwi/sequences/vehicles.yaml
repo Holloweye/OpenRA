@@ -322,3 +322,12 @@ wwi_medium_mk_a:
 		Length: 23
 		Facings: 16
 		Tick: 20
+
+wwi_rolls_car:
+	idle:
+		Facings: 16
+	turret: wwi_rolls_car_turret
+		Facings: 16
+	muzzle: gunfire2
+		Length: 2
+	icon: wwi_rolls_car_icon

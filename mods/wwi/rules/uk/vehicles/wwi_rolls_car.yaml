@@ -1,0 +1,27 @@
+WWI_ROLLS_CAR:
+	Inherits@1: ^ArmoredCar
+	Inherits@2: ^1Turret
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 40
+		Prerequisites: tankfactory, Pop5, ~structures.uk
+		BuildAtProductionType: Tank
+	Valued:
+		Cost: 700
+	Population:
+		Amount: -5
+	Tooltip:
+		Name: Rolls-Royce Armoured Car
+		Description: Armored Car.\n  Strong vs Infantry and Artillery\n  Weak vs Medium & Heavy tanks
+	Health:
+		HP: 200
+	Mobile:
+		Speed: 90
+	Turreted@PRIMARY:
+		TurnSpeed: 9
+		Offset: -300,0,350
+	Armament@PRIMARY:
+		Weapon: wwi_rolls_car
+		LocalOffset: 500,0,50
+	SelectionDecorations:
+		VisualBounds: 30,30,0,-6

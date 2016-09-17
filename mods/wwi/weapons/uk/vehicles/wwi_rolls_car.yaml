@@ -1,0 +1,4 @@
+wwi_rolls_car:
+	Inherits: ^light_machine_gun
+	Warhead@1Dam: SpreadDamage
+		Damage: 25
