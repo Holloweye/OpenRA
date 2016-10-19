@@ -18,6 +18,7 @@ using OpenRA.Primitives;
 
 namespace OpenRA.Network
 {
+	using System.Globalization;
 	using NamesValuesPair = Pair<string[], object[]>;
 
 	class SyncReport
@@ -92,11 +93,15 @@ namespace OpenRA.Network
 
 		internal void DumpSyncReport(int frame, IEnumerable<FrameData.ClientOrder> orders)
 		{
+			var reportName = "syncreport-" + DateTime.UtcNow.ToString("yyyy-MM-ddTHHmmssZ", CultureInfo.InvariantCulture) + ".log";
+			Log.AddChannel("sync", reportName);
+
 			foreach (var r in syncReports)
 			{
 				if (r.Frame == frame)
 				{
 					var mod = Game.ModData.Manifest.Metadata;
+					Log.AddChannel("sync", "syncreport.log");
 					Log.Write("sync", "Player: {0} ({1} {2} {3})", Game.Settings.Player.Name, Platform.CurrentPlatform, Environment.OSVersion, Platform.RuntimeVersion);
 					Log.Write("sync", "Game ID: {0} (Mod: {1} at Version {2})", orderManager.LobbyInfo.GlobalSettings.GameUid, mod.Title, mod.Version);
 					Log.Write("sync", "Sync for net frame {0} -------------", r.Frame);

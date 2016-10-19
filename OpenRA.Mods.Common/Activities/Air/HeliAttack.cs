@@ -60,14 +60,14 @@ namespace OpenRA.Mods.Common.Activities
 			{
 				var newTarget = Target.FromCell(self.World, self.World.Map.CellContaining(target.CenterPosition));
 
-				self.CancelActivity();
+				Cancel(self);
 				self.SetTargetLine(newTarget, Color.Green);
-				return ActivityUtils.SequenceActivities(new HeliFly(self, newTarget));
+				return new HeliFly(self, newTarget);
 			}
 
-			// If any AmmoPool is depleted and no weapon is valid against target, return to helipad to reload and then move to next activity
+			// If any AmmoPool is depleted and no weapon is valid against target, return to helipad to reload and then resume the activity
 			if (ammoPools.Any(x => !x.Info.SelfReloads && !x.HasAmmo()) && !attackHeli.HasAnyValidWeapons(target))
-				return ActivityUtils.SequenceActivities(new HeliReturnToBase(self), NextActivity);
+				return ActivityUtils.SequenceActivities(new HeliReturnToBase(self, helicopter.Info.AbortOnResupply), this);
 
 			var dist = target.CenterPosition - self.CenterPosition;
 

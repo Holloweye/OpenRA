@@ -152,6 +152,7 @@ namespace OpenRA.Server
 					Map = settings.Map,
 					ServerName = settings.Name,
 					EnableSingleplayer = settings.EnableSingleplayer || !dedicated,
+					GameUid = Guid.NewGuid().ToString()
 				}
 			};
 
@@ -185,17 +186,21 @@ namespace OpenRA.Server
 					foreach (var s in checkRead)
 					{
 						if (s == listener.Server)
+						{
 							AcceptConnection();
-						else if (PreConns.Count > 0)
-						{
-							var p = PreConns.SingleOrDefault(c => c.Socket == s);
-							if (p != null) p.ReadData(this);
+							continue;
 						}
-						else if (Conns.Count > 0)
+
+						var preConn = PreConns.SingleOrDefault(c => c.Socket == s);
+						if (preConn != null)
 						{
-							var conn = Conns.SingleOrDefault(c => c.Socket == s);
-							if (conn != null) conn.ReadData(this);
+							preConn.ReadData(this);
+							continue;
 						}
+
+						var conn = Conns.SingleOrDefault(c => c.Socket == s);
+						if (conn != null)
+							conn.ReadData(this);
 					}
 
 					foreach (var t in serverTraits.WithInterface<ITick>())
@@ -501,8 +506,8 @@ namespace OpenRA.Server
 					break;
 				case "Pong":
 					{
-						int pingSent;
-						if (!OpenRA.Exts.TryParseIntegerInvariant(so.Data, out pingSent))
+						long pingSent;
+						if (!OpenRA.Exts.TryParseInt64Invariant(so.Data, out pingSent))
 						{
 							Log.Write("server", "Invalid order pong payload: {0}", so.Data);
 							break;
@@ -563,6 +568,7 @@ namespace OpenRA.Server
 				DispatchOrdersToClients(toDrop, 0, new ServerOrder("Disconnected", "").Serialize());
 
 				LobbyInfo.Clients.RemoveAll(c => c.Index == toDrop.PlayerIndex);
+				LobbyInfo.ClientPings.RemoveAll(p => p.Index == toDrop.PlayerIndex);
 
 				// Client was the server admin
 				// TODO: Reassign admin for game in progress via an order

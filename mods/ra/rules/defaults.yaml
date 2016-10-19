@@ -191,7 +191,6 @@
 			Beach: 80
 	SelectionDecorations:
 	WithSpriteControlGroupDecoration:
-		ReferencePoint: Top
 	Selectable:
 		Bounds: 12,18,0,-8
 	Targetable:
@@ -583,9 +582,21 @@
 	-EmitInfantryOnSell:
 	-MustBeDestroyed:
 
+^InfiltratableFake:
+	Targetable:
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate
+	InfiltrateForDecoration:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-fake
+		ReferencePoint: Top
+		ZOffset: 256
+
 ^AmmoBox:
 	Inherits: ^TechBuilding
 	-Selectable:
+	SelectionDecorations:
+		RenderSelectionBars: False
 	CustomSelectionSize:
 		CustomBounds: 24,24
 	Health:
@@ -610,6 +621,7 @@
 ^CivField:
 	Inherits: ^CivBuilding
 	-Selectable:
+	-SelectionDecorations:
 	Tooltip:
 		Name: Field
 	-Targetable:

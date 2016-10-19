@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -71,9 +72,8 @@ namespace OpenRA
 
 		static string TimestampedFilename(bool includemilliseconds = false)
 		{
-			return includemilliseconds
-			? DateTime.UtcNow.ToString("OpenRA-yyyy-MM-ddTHHmmssfffZ")
-			: DateTime.UtcNow.ToString("OpenRA-yyyy-MM-ddTHHmmssZ");
+			var format = includemilliseconds ? "yyyy-MM-ddTHHmmssfffZ" : "yyyy-MM-ddTHHmmssZ";
+			return "OpenRA-" + DateTime.UtcNow.ToString(format, CultureInfo.InvariantCulture);
 		}
 
 		static void JoinInner(OrderManager om)
@@ -96,7 +96,7 @@ namespace OpenRA
 
 		// More accurate replacement for Environment.TickCount
 		static Stopwatch stopwatch = Stopwatch.StartNew();
-		public static int RunTime { get { return (int)stopwatch.ElapsedMilliseconds; } }
+		public static long RunTime { get { return stopwatch.ElapsedMilliseconds; } }
 
 		public static int RenderFrame = 0;
 		public static int NetFrameNumber { get { return OrderManager.NetFrameNumber; } }
@@ -260,7 +260,6 @@ namespace OpenRA
 
 			Log.AddChannel("perf", "perf.log");
 			Log.AddChannel("debug", "debug.log");
-			Log.AddChannel("sync", "syncreport.log");
 			Log.AddChannel("server", "server.log");
 			Log.AddChannel("sound", "sound.log");
 			Log.AddChannel("graphics", "graphics.log");
@@ -736,7 +735,7 @@ namespace OpenRA
 					}
 				}
 				else
-					Thread.Sleep(nextUpdate - now);
+					Thread.Sleep((int)(nextUpdate - now));
 			}
 		}
 

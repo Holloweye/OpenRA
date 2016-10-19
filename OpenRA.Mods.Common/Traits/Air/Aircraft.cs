@@ -69,6 +69,9 @@ namespace OpenRA.Mods.Common.Traits
 		[Desc("Does this actor need to turn before landing?")]
 		public readonly bool TurnToLand = false;
 
+		[Desc("Does this actor cancel its previous activity after resupplying?")]
+		public readonly bool AbortOnResupply = true;
+
 		public readonly WDist LandAltitude = WDist.Zero;
 
 		[Desc("How fast this actor ascends or descends when using horizontal take off/landing.")]
@@ -104,13 +107,14 @@ namespace OpenRA.Mods.Common.Traits
 
 		UpgradeManager um;
 		IDisposable reservation;
-		Actor reservedActor;
 		IEnumerable<int> speedModifiers;
 
 		[Sync] public int Facing { get; set; }
 		[Sync] public WPos CenterPosition { get; private set; }
 		public CPos TopLeft { get { return self.World.Map.CellContaining(CenterPosition); } }
 		public int TurnSpeed { get { return Info.TurnSpeed; } }
+		public Actor ReservedActor { get; private set; }
+		public bool MayYieldReservation { get; private set; }
 
 		bool airborne;
 		bool cruising;
@@ -190,7 +194,7 @@ namespace OpenRA.Mods.Common.Traits
 
 			if (reservation != null)
 			{
-				var distanceFromReservationActor = (reservedActor.CenterPosition - self.CenterPosition).HorizontalLength;
+				var distanceFromReservationActor = (ReservedActor.CenterPosition - self.CenterPosition).HorizontalLength;
 				if (distanceFromReservationActor < Info.WaitDistanceFromResupplyBase.Length)
 					return WVec.Zero;
 			}
@@ -277,8 +281,16 @@ namespace OpenRA.Mods.Common.Traits
 			if (reservable != null)
 			{
 				reservation = reservable.Reserve(target, self, this);
-				reservedActor = target;
+				ReservedActor = target;
 			}
+		}
+
+		public void AllowYieldingReservation()
+		{
+			if (reservation == null)
+				return;
+
+			MayYieldReservation = true;
 		}
 
 		public void UnReserve()
@@ -288,7 +300,8 @@ namespace OpenRA.Mods.Common.Traits
 
 			reservation.Dispose();
 			reservation = null;
-			reservedActor = null;
+			ReservedActor = null;
+			MayYieldReservation = false;
 
 			if (self.World.Map.DistanceAboveTerrain(CenterPosition).Length <= Info.LandAltitude.Length)
 				self.QueueActivity(new TakeOff(self));
@@ -339,7 +352,7 @@ namespace OpenRA.Mods.Common.Traits
 			if (Info.RearmBuildings.Contains(name))
 				yield return new Rearm(self);
 			if (Info.RepairBuildings.Contains(name))
-				yield return new Repair(a);
+				yield return new Repair(self, a);
 		}
 
 		public void ModifyDeathActorInit(Actor self, TypeDictionary init)
@@ -549,9 +562,9 @@ namespace OpenRA.Mods.Common.Traits
 				if (Reservable.IsReserved(order.TargetActor))
 				{
 					if (IsPlane)
-						self.QueueActivity(new ReturnToBase(self));
+						self.QueueActivity(new ReturnToBase(self, Info.AbortOnResupply));
 					else
-						self.QueueActivity(new HeliReturnToBase(self));
+						self.QueueActivity(new HeliReturnToBase(self, Info.AbortOnResupply));
 				}
 				else
 				{
@@ -560,7 +573,7 @@ namespace OpenRA.Mods.Common.Traits
 					if (IsPlane)
 					{
 						self.QueueActivity(order.Queued, ActivityUtils.SequenceActivities(
-							new ReturnToBase(self, order.TargetActor),
+							new ReturnToBase(self, Info.AbortOnResupply, order.TargetActor),
 							new ResupplyAircraft(self)));
 					}
 					else
@@ -608,14 +621,10 @@ namespace OpenRA.Mods.Common.Traits
 				UnReserve();
 				self.CancelActivity();
 				if (IsPlane)
-					self.QueueActivity(new ReturnToBase(self));
+					self.QueueActivity(new ReturnToBase(self, Info.AbortOnResupply, null, false));
 				else
-					self.QueueActivity(new HeliReturnToBase(self));
-
-				self.QueueActivity(new ResupplyAircraft(self));
+					self.QueueActivity(new HeliReturnToBase(self, Info.AbortOnResupply, false));
 			}
-			else
-				UnReserve();
 		}
 
 		#endregion

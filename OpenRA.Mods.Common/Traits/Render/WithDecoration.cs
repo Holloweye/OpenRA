@@ -55,7 +55,7 @@ namespace OpenRA.Mods.Common.Traits.Render
 		public override object Create(ActorInitializer init) { return new WithDecoration(init.Self, this); }
 	}
 
-	public class WithDecoration : UpgradableTrait<WithDecorationInfo>, ITick, IRender, IRenderAboveShroudWhenSelected
+	public class WithDecoration : UpgradableTrait<WithDecorationInfo>, ITick, IRenderAboveShroud, IRenderAboveShroudWhenSelected
 	{
 		protected readonly Animation Anim;
 
@@ -69,9 +69,19 @@ namespace OpenRA.Mods.Common.Traits.Render
 			Anim.PlayRepeating(info.Sequence);
 		}
 
-		public virtual bool ShouldRender(Actor self) { return true; }
+		protected virtual bool ShouldRender(Actor self)
+		{
+			if (self.World.RenderPlayer != null)
+			{
+				var stance = self.Owner.Stances[self.World.RenderPlayer];
+				if (!Info.ValidStances.HasStance(stance))
+					return false;
+			}
 
-		IEnumerable<IRenderable> IRender.Render(Actor self, WorldRenderer wr)
+			return true;
+		}
+
+		IEnumerable<IRenderable> IRenderAboveShroud.RenderAboveShroud(Actor self, WorldRenderer wr)
 		{
 			return !Info.RequiresSelection ? RenderInner(self, wr) : SpriteRenderable.None;
 		}
@@ -85,13 +95,6 @@ namespace OpenRA.Mods.Common.Traits.Render
 		{
 			if (IsTraitDisabled || self.IsDead || !self.IsInWorld || Anim == null)
 				return Enumerable.Empty<IRenderable>();
-
-			if (self.World.RenderPlayer != null)
-			{
-				var stance = self.Owner.Stances[self.World.RenderPlayer];
-				if (!Info.ValidStances.HasStance(stance))
-					return Enumerable.Empty<IRenderable>();
-			}
 
 			if (!ShouldRender(self) || self.World.FogObscures(self))
 				return Enumerable.Empty<IRenderable>();
