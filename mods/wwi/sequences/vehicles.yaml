@@ -123,6 +123,8 @@ wwi_sub:
 	idle:
 		Facings: 16
 	icon: wwi_sub_icon
+	muzzle: gunfire2
+		Length: 5
 
 wwi_trans:
 	idle: lst
