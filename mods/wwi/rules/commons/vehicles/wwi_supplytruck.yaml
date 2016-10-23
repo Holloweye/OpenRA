@@ -13,5 +13,3 @@ WWI_SUPPLYTRUCK:
 	SupplyTruck:
 		Payload: 500
 		PlayerExperience: 50
-	SpawnActorOnDeath:
-		Actor: moneycrate
