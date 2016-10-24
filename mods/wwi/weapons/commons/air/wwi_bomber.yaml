@@ -1,9 +1,4 @@
 wwi_bomber:
-	Inherits: ^gun
-	Range: 1c0
-	Report: nosound.aud
-	Projectile: Bullet
-		Speed: 80
-		Inaccuracy: 0
+	Inherits: ^bomb
 	Warhead@1Dam: SpreadDamage
 		Damage: 100
