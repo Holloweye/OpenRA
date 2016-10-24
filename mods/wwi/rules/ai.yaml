@@ -3,7 +3,7 @@ Player:
 		Name: Normal AI
 		MinimumExcessPower: 30
 		BuildingCommonNames:
-			ConstructionYard: wwi_aus_hq, wwi_otto_hq
+			ConstructionYard: wwi_aus_hq, wwi_otto_hq, wwi_vfact, wwi_tfact, wwi_otto_vfact
 			Refinery: wwi_tax, wwi_trade, wwi_aus_hq
 			Power: wwi_pp, wwi_otto_pp
 			Barracks: wwi_barr, wwi_otto_barr
@@ -72,7 +72,7 @@ Player:
 		Name: Hard AI
 		MinimumExcessPower: 30
 		BuildingCommonNames:
-			ConstructionYard: wwi_aus_hq, wwi_otto_hq
+			ConstructionYard: wwi_aus_hq, wwi_otto_hq, wwi_vfact, wwi_tfact, wwi_otto_vfact
 			Refinery: wwi_tax, wwi_trade, wwi_aus_hq
 			Power: wwi_pp, wwi_otto_pp
 			Barracks: wwi_barr, wwi_otto_barr
