@@ -17,7 +17,7 @@ WWI_ENGI:
 	EngineerRepair:
 	RepairsBridges:
 	ExternalCaptures:
-		Type: building
+		CaptureTypes: building, Capture
 	-AutoTarget:
 	Voiced:
 		VoiceSet: EngineerVoice
