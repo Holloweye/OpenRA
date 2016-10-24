@@ -5,11 +5,11 @@ Player:
 		BuildingCommonNames:
 			ConstructionYard: wwi_aus_hq, wwi_otto_hq
 			Refinery: wwi_tax, wwi_trade, wwi_aus_hq
-			Power: wwi_pp
-			Barracks: wwi_barr
-			VehiclesFactory: wwi_vfact, wwi_tfact
-			Production: wwi_barr, wwi_vfact, wwi_tfact, wwi_airstrip, wwi_stable, wwi_shipyard
-			Silo: wwi_house
+			Power: wwi_pp, wwi_otto_pp
+			Barracks: wwi_barr, wwi_otto_barr
+			VehiclesFactory: wwi_vfact, wwi_tfact, wwi_otto_vfact
+			Production: wwi_barr, wwi_vfact, wwi_tfact, wwi_airstrip, wwi_stable, wwi_shipyard, wwi_otto_barr, wwi_otto_airstrip, wwi_otto_stable, wwi_otto_vfact
+			Silo: wwi_house, wwi_otto_house
 		UnitsCommonNames:
 			Mcv:
 			ExcludeFromSquads: wwi_trade
@@ -18,14 +18,21 @@ Player:
 			wwi_aus_hq: 5%
 			wwi_otto_hq: 5%
 			wwi_pp: 10%
+			wwi_otto_pp: 10%
 			wwi_house: 30%
+			wwi_otto_house: 30%
 			wwi_barr: 5%
+			wwi_otto_barr: 5%
 			wwi_stable: 5%
+			wwi_otto_stable: 5%
 			wwi_vfact: 5%
+			wwi_otto_vfact: 5%
 			wwi_tfact: 5%
 			wwi_airstrip: 5%
+			wwi_otto_airstrip: 5%
 			wwi_shipyard: 5%
 			wwi_recon: 5%
+			wwi_otto_recon: 5%
 			wwi_tax: 5%
 			wwi_krupp355: 5%
 			wwi_otto_aa: 5%
@@ -67,11 +74,11 @@ Player:
 		BuildingCommonNames:
 			ConstructionYard: wwi_aus_hq, wwi_otto_hq
 			Refinery: wwi_tax, wwi_trade, wwi_aus_hq
-			Power: wwi_pp
-			Barracks: wwi_barr
-			VehiclesFactory: wwi_vfact, wwi_tfact
-			Production: wwi_barr, wwi_vfact, wwi_tfact, wwi_airstrip, wwi_stable, wwi_shipyard
-			Silo: wwi_house
+			Power: wwi_pp, wwi_otto_pp
+			Barracks: wwi_barr, wwi_otto_barr
+			VehiclesFactory: wwi_vfact, wwi_tfact, wwi_otto_vfact
+			Production: wwi_barr, wwi_vfact, wwi_tfact, wwi_airstrip, wwi_stable, wwi_shipyard, wwi_otto_barr, wwi_otto_airstrip, wwi_otto_stable, wwi_otto_vfact
+			Silo: wwi_house, wwi_otto_house
 		UnitsCommonNames:
 			Mcv:
 			ExcludeFromSquads: wwi_trade
@@ -80,14 +87,21 @@ Player:
 			wwi_aus_hq: 5%
 			wwi_otto_hq: 5%
 			wwi_pp: 10%
+			wwi_otto_pp: 10%
 			wwi_house: 30%
+			wwi_otto_house: 30%
 			wwi_barr: 5%
+			wwi_otto_barr: 5%
 			wwi_stable: 5%
+			wwi_otto_stable: 5%
 			wwi_vfact: 5%
+			wwi_otto_vfact: 5%
 			wwi_tfact: 5%
 			wwi_airstrip: 5%
+			wwi_otto_airstrip: 5%
 			wwi_shipyard: 5%
 			wwi_recon: 5%
+			wwi_otto_recon: 5%
 			wwi_tax: 5%
 			wwi_krupp355: 5%
 			wwi_otto_aa: 5%
