@@ -28,5 +28,5 @@ WWI_TAX:
 	Selectable:
 		Bounds: 65,70,0,0
 	TaxCollector:
-		Buildings: wwi_house
+		Buildings: wwi_otto_house
 		MaxCredits: 1500
