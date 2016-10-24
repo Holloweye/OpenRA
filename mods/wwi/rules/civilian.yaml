@@ -419,6 +419,7 @@ BIO:
 
 OILB:
 	Inherits: ^TechBuilding
+	-Targetable:
 	Selectable:
 		Priority: 0
 	Building:
