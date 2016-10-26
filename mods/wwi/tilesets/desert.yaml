@@ -3,8 +3,9 @@ General:
 	Id: DESERT
 	Palette: desert.pal
 	PlayerPalette: temperat.pal
-	EditorTemplateOrder: Terrain, Debris, Road, Cliffs, Water Cliffs, Beach, River, Bridge
+	EditorTemplateOrder: Terrain, Debris, Road, Cliffs, Water Cliffs, Beach, River, Bridge, Rail
 	HeightDebugColors: 880000
+	SheetSize: 1024
 
 Terrain:
 	TerrainType@Beach:
@@ -71,6 +72,10 @@ Terrain:
 		IsWater: True
 		Color: 5DA5CE
 		RestrictPlayerColor: true
+	TerrainType@Rail:
+		Type: Rail
+		TargetTypes: Ground
+		Color: 606060
 
 Templates:
 	Template@255:
@@ -3123,3 +3128,101 @@ Templates:
 			12: Rock
 			13: Rock
 			14: Rock
+	Template@700:
+		Id: 700
+		Images: rail1.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@701:
+		Id: 701
+		Images: rail2.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@702:
+		Id: 702
+		Images: rail3.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@703:
+		Id: 703
+		Images: rail4.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@704:
+		Id: 704
+		Images: rail5.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@705:
+		Id: 705
+		Images: rail6.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@706:
+		Id: 706
+		Images: rail7.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@707:
+		Id: 707
+		Images: rail8.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@708:
+		Id: 708
+		Images: rail9.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@709:
+		Id: 709
+		Images: rail10.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Rail
+	Template@710:
+		Id: 710
+		Images: rail11.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Clear
+	Template@711:
+		Id: 711
+		Images: rail12.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Clear
+	Template@712:
+		Id: 712
+		Images: rail13.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Clear
+	Template@713:
+		Id: 713
+		Images: rail14.des
+		Size: 1,1
+		Category: Rail
+		Tiles:
+			0: Clear
