@@ -19,8 +19,6 @@
 		EmptyWeapon: UnitExplodeShip
 	Tooltip:
 		GenericName: Ship
-	EditorTilesetFilter:
-		ExcludeTilesets: INTERIOR
 	Voiced:
 		VoiceSet: VehicleVoice
 	WithFacingSpriteBody:

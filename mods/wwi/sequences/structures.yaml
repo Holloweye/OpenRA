@@ -15,7 +15,7 @@ wwi_aus_hq:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_aus_hq_icon
 
 wwi_otto_hq:
@@ -35,7 +35,7 @@ wwi_otto_hq:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_otto_hq_icon
 
 wwi_uk_hq:
@@ -55,7 +55,7 @@ wwi_uk_hq:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_uk_hq_icon
 
 wwi_russia_hq:
@@ -72,7 +72,7 @@ wwi_russia_hq:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_russia_hq_icon
 
 wwi_italy_hq:
@@ -92,7 +92,7 @@ wwi_italy_hq:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_italy_hq_icon
 
 wwi_germany_hq:
@@ -112,7 +112,7 @@ wwi_germany_hq:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_germany_hq_icon
 
 wwi_france_hq:
@@ -132,7 +132,7 @@ wwi_france_hq:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_france_hq_icon
 
 wwi_usa_hq:
@@ -152,7 +152,7 @@ wwi_usa_hq:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_usa_hq_icon
 
 wwi_pp:
@@ -169,7 +169,7 @@ wwi_pp:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_pp_icon
 
 wwi_recon:
@@ -186,7 +186,7 @@ wwi_recon:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_recon_icon
 
 wwi_house:
@@ -203,7 +203,7 @@ wwi_house:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_house_icon
 
 wwi_stable:
@@ -216,7 +216,7 @@ wwi_stable:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_stable_icon
 
 wwi_barr:
@@ -233,7 +233,7 @@ wwi_barr:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_barr_icon
 
 wwi_airstrip:
@@ -254,7 +254,7 @@ wwi_airstrip:
 		Offset: 0,-20
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_airstrip_icon
 
 wwi_vfact:
@@ -271,7 +271,7 @@ wwi_vfact:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_vfact_icon
 
 wwi_tfact:
@@ -288,7 +288,7 @@ wwi_tfact:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_tfact_icon
 
 wwi_supply_station:
@@ -303,7 +303,7 @@ wwi_supply_station:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_house_icon
 
 wwi_floating_supply_station:
@@ -354,7 +354,7 @@ wwi_tax:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_tax_icon
 
 wwi_krupp355:
@@ -378,7 +378,7 @@ wwi_krupp355:
 		Offset: 0, -10
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 	icon: wwi_krupp355_icon
 
 wwi_otto_aa:

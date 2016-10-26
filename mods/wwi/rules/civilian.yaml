@@ -56,7 +56,6 @@
 	RenderSprites:
 		Palette: terrain
 	EditorTilesetFilter:
-		ExcludeTilesets: INTERIOR
 	FrozenUnderFog:
 
 ^CivField:
@@ -66,7 +65,6 @@
 		Name: Field
 	-Targetable:
 	EditorTilesetFilter:
-		ExcludeTilesets: INTERIOR
 
 ^Bridge:
 	AlwaysVisible:
@@ -208,7 +206,7 @@ V01:
 	RevealsShroud:
 		Range: 10c0
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V02:
 	Inherits: ^CivBuilding
@@ -216,7 +214,7 @@ V02:
 		Footprint: xx xx
 		Dimensions: 2,2
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V03:
 	Inherits: ^CivBuilding
@@ -224,7 +222,7 @@ V03:
 		Footprint: xx xx
 		Dimensions: 2,2
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V04:
 	Inherits: ^CivBuilding
@@ -232,7 +230,7 @@ V04:
 		Footprint: xx xx
 		Dimensions: 2,2
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V05:
 	Inherits: ^CivBuilding
@@ -240,7 +238,7 @@ V05:
 		Footprint: xx
 		Dimensions: 2,1
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V06:
 	Inherits: ^CivBuilding
@@ -248,7 +246,7 @@ V06:
 		Footprint: xx
 		Dimensions: 2,1
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V07:
 	Inherits: ^CivBuilding
@@ -256,62 +254,62 @@ V07:
 		Footprint: xx
 		Dimensions: 2,1
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V08:
 	Inherits: ^CivBuilding
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V09:
 	Inherits: ^CivBuilding
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V10:
 	Inherits: ^CivBuilding
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V11:
 	Inherits: ^CivBuilding
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V12:
 	Inherits: ^CivBuilding
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V13:
 	Inherits: ^CivBuilding
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V14:
 	Inherits: ^CivField
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V15:
 	Inherits: ^CivField
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V16:
 	Inherits: ^CivField
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V17:
 	Inherits: ^CivField
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V18:
 	Inherits: ^CivField
 	EditorTilesetFilter:
-		ExcludeTilesets: DESERT, INTERIOR
+		ExcludeTilesets: DESERT
 
 V19:
 	Inherits: ^CivBuilding

@@ -72,7 +72,6 @@ WWI_SHIPYARD:
 		Factions: italy
 		Prerequisite: ships.italy
 	EditorTilesetFilter:
-		ExcludeTilesets: INTERIOR
 	WithDecoration@primary:
 		RequiresSelection: true
 		Image: pips

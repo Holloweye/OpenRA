@@ -65,7 +65,7 @@ wwi_rifle:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	die-crushed: corpse1
 		Length: 6
 		Tick: 1600
@@ -73,7 +73,7 @@ wwi_rifle:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	garrison-muzzle: minigun
 		Length: 3
 		Stride: 6
@@ -123,7 +123,7 @@ wwi_grenadier:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	die-crushed: corpse1
 		Length: 6
 		Tick: 1600
@@ -131,7 +131,7 @@ wwi_grenadier:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	prone-stand:e2
 		Start: 240
 		Stride: 4
@@ -218,7 +218,7 @@ wwi_machinegunner:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	die-crushed: corpse1
 		Length: *
 		Tick: 1600
@@ -226,7 +226,7 @@ wwi_machinegunner:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	garrison-muzzle: minigun
 		Length: 6
 		Facings: 8
@@ -275,7 +275,7 @@ wwi_flamethrower:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	die-crushed: corpse1
 		Length: 6
 		Tick: 1600
@@ -283,7 +283,7 @@ wwi_flamethrower:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	prone-stand:e4
 		Start: 208
 		Stride: 4
@@ -347,7 +347,7 @@ wwi_field_medic:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	die-crushed: corpse1
 		Length: 6
 		Tick: 1600
@@ -355,7 +355,7 @@ wwi_field_medic:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	prone-stand:medi
 		Start: 130
 		Stride: 4
@@ -406,7 +406,7 @@ wwi_engi:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	die-crushed: corpse1
 		Length: 6
 		Tick: 1600
@@ -414,7 +414,7 @@ wwi_engi:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	prone-stand:e6
 		Start: 82
 		Stride: 4
@@ -458,7 +458,7 @@ wwi_thief:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	die-crushed: corpse1
 		Length: 6
 		Tick: 1600
@@ -466,7 +466,7 @@ wwi_thief:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	prone-stand:thf
 		Start: 72
 		Stride: 4
@@ -522,7 +522,7 @@ wwi_mech:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	die-crushed: corpse1
 		Length: 6
 		Tick: 1600
@@ -530,7 +530,7 @@ wwi_mech:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	prone-stand:mech
 		Start: 130
 		Stride: 4
@@ -575,7 +575,7 @@ wwi_scout:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	icon:wwi_scout_icon
 
 wwi_dragoon:
@@ -612,7 +612,7 @@ wwi_dragoon:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	icon:wwi_dragoon_icon
 
 wwi_mount_grenadier:
@@ -649,7 +649,7 @@ wwi_mount_grenadier:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	icon:wwi_mount_grenadier_icon
 
 wwi_gas:
@@ -695,7 +695,7 @@ wwi_gas:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	die-crushed: corpse1
 		Length: 6
 		Tick: 1600
@@ -703,7 +703,7 @@ wwi_gas:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
+
 	prone-stand:e2
 		Start: 240
 		Stride: 4

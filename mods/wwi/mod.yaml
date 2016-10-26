@@ -30,7 +30,6 @@ Packages:
 	~russian.mix
 	~temperat.mix
 	~snow.mix
-	~interior.mix
 	~scores.mix
 	~expand2.mix
 	~desert.mix
@@ -147,7 +146,6 @@ Sequences:
 
 TileSets:
 	wwi|tilesets/snow.yaml
-	wwi|tilesets/interior.yaml
 	wwi|tilesets/temperat.yaml
 	wwi|tilesets/desert.yaml
 
@@ -322,7 +320,6 @@ SpriteSequenceFormat: TilesetSpecificSpriteSequence
 	TilesetExtensions:
 		TEMPERAT: .tem
 		SNOW: .sno
-		INTERIOR: .int
 		DESERT: .des
 
 GameSpeeds:

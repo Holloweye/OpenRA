@@ -8,7 +8,7 @@ fcom:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+
 
 hosp:
 	idle:
@@ -47,4 +47,3 @@ oilb:
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
