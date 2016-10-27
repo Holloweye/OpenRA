@@ -3,8 +3,8 @@ Player:
 		Name: Normal AI
 		MinimumExcessPower: 30
 		BuildingCommonNames:
-			ConstructionYard: wwi_aus_hq, wwi_otto_hq, wwi_vfact, wwi_tfact, wwi_otto_vfact
-			Refinery: wwi_tax, wwi_trade, wwi_aus_hq
+			ConstructionYard: wwi_aus_hq, wwi_otto_hq, wwi_uk_hq, wwi_vfact, wwi_tfact, wwi_otto_vfact
+			Refinery: wwi_tax, wwi_trade, wwi_aus_hq, wwi_trade_ship
 			Power: wwi_pp, wwi_otto_pp
 			Barracks: wwi_barr, wwi_otto_barr
 			VehiclesFactory: wwi_vfact, wwi_tfact, wwi_otto_vfact
@@ -12,11 +12,12 @@ Player:
 			Silo: wwi_house, wwi_otto_house
 		UnitsCommonNames:
 			Mcv:
-			ExcludeFromSquads: wwi_trade
+			ExcludeFromSquads: wwi_trade, wwi_trade_ship
 		BuildingLimits:
 		BuildingFractions:
 			wwi_aus_hq: 5%
 			wwi_otto_hq: 5%
+			wwi_uk_hq: 5%
 			wwi_pp: 10%
 			wwi_otto_pp: 10%
 			wwi_house: 30%
@@ -61,6 +62,13 @@ Player:
 			wwi_hotch: 20%
 			wwi_krupp75: 10%
 			wwi_krupp87: 10%
+			wwi_bl_60: 10%
+			wwi_medium_mk_a: 10%
+			wwi_mk4: 10%
+			wwi_ordnance13: 10%
+			wwi_ordnance15: 10%
+			wwi_rolls_car: 10%
+			wwi_trade_ship: 30%
 			wwi_trade: 30%
 		UnitLimits:
 			wwi_balloon: 1
@@ -72,8 +80,8 @@ Player:
 		Name: Hard AI
 		MinimumExcessPower: 30
 		BuildingCommonNames:
-			ConstructionYard: wwi_aus_hq, wwi_otto_hq, wwi_vfact, wwi_tfact, wwi_otto_vfact
-			Refinery: wwi_tax, wwi_trade, wwi_aus_hq
+			ConstructionYard: wwi_aus_hq, wwi_otto_hq, wwi_uk_hq, wwi_vfact, wwi_tfact, wwi_otto_vfact
+			Refinery: wwi_tax, wwi_trade, wwi_aus_hq, wwi_trade_ship
 			Power: wwi_pp, wwi_otto_pp
 			Barracks: wwi_barr, wwi_otto_barr
 			VehiclesFactory: wwi_vfact, wwi_tfact, wwi_otto_vfact
@@ -81,11 +89,12 @@ Player:
 			Silo: wwi_house, wwi_otto_house
 		UnitsCommonNames:
 			Mcv:
-			ExcludeFromSquads: wwi_trade
+			ExcludeFromSquads: wwi_trade, wwi_trade_ship
 		BuildingLimits:
 		BuildingFractions:
 			wwi_aus_hq: 5%
 			wwi_otto_hq: 5%
+			wwi_uk_hq: 5%
 			wwi_pp: 10%
 			wwi_otto_pp: 10%
 			wwi_house: 30%
@@ -130,6 +139,13 @@ Player:
 			wwi_hotch: 20%
 			wwi_krupp75: 10%
 			wwi_krupp87: 10%
+			wwi_bl_60: 10%
+			wwi_medium_mk_a: 10%
+			wwi_mk4: 10%
+			wwi_ordnance13: 10%
+			wwi_ordnance15: 10%
+			wwi_rolls_car: 10%
+			wwi_trade_ship: 30%
 			wwi_trade: 30%
 		UnitLimits:
 			wwi_balloon: 1
