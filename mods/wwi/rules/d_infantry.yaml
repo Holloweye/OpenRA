@@ -64,3 +64,5 @@
 		StandSequences: stand,stand2
 	DetectCloaked:
 		CloakTypes: Hijacker
+	ProducibleWithLevel:
+		Prerequisites: structures.uk

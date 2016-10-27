@@ -31,7 +31,7 @@
 		Name: United Kingdom
 		InternalName: uk
 		Side: Allies
-		Selectable: False
+		Selectable: True
 	Faction@4:
 		Name: France
 		InternalName: france
@@ -55,10 +55,10 @@
 	Faction@random:
 		Name: Any
 		InternalName: Random
-		RandomFactionMembers: austria, ottoman
+		RandomFactionMembers: austria, ottoman, uk
 		Side: Random
 		Description: A random country.
-		Selectable: False
+		Selectable: True
 	ResourceType@ore:
 		ResourceType: 1
 		Palette: player

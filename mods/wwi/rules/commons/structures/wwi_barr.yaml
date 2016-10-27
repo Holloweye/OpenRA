@@ -63,12 +63,3 @@ WWI_BARR:
 		ZOffset: 256
 		UpgradeTypes: primary
 		UpgradeMinEnabledLevel: 1
-	InstantVeterancyPower:
-		OrderName: InstantVeterancy
-		Prerequisites: structures.uk
-		Icon: instantveterancy
-		ChargeTime: 120
-		Description: Instant Veterancy
-		LongDesc: Increases rank of selected units.
-		SelectTargetSpeechNotification: SelectTarget
-		DisplayRadarPing: False
