@@ -27,8 +27,8 @@
 		Inherits@type: ^warhead_anti_armor
 
 ^bomb:
-	Inherits@type: ^type_shell
-	Inherits@velocity: ^velocity_very_slow_trail
+	Inherits@type: ^type_bomb
+	Inherits@velocity: ^velocity_very_slow
 	Inherits@accuracy: ^accuracy_single_target
 	ReloadDelay: 100
 	Range: 1c0

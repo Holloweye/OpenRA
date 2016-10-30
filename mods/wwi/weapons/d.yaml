@@ -14,6 +14,24 @@
 		ImpactSounds: splash9.aud
 		ValidImpactTypes: Water
 
+^type_bomb:
+	Report: chute1.aud
+	Projectile: Bullet
+		Image: PARABOMB
+		OpenSequence: open
+		Acceleration: 0
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Tank, Structure, Wall, Husk, Trees
+	Warhead@3Eff: CreateEffect
+		Explosions: artillery_explosion
+		ImpactSounds: kaboom15.aud
+		InvalidImpactTypes: Water
+	Warhead@4EffWater: CreateEffect
+		Explosions: med_splash
+		ImpactSounds: splash9.aud
+		ValidImpactTypes: Water
+
 ^type_bullet:
 	Report: rifle.aud
 	Warhead@2Eff: CreateEffect
