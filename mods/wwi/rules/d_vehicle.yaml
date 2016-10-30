@@ -42,6 +42,8 @@
 ^CombatVehicle:
 	Inherits@1: ^Vehicle
 	Inherits@2: ^CombatantActor
+	Voiced:
+		VoiceSet: VehicleVoice
 
 ^ArmoredCar:
 	Inherits: ^CombatVehicle

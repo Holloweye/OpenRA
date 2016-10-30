@@ -27,10 +27,14 @@
 	WithFacingSpriteBody:
 	RevealsShroud:
 		Type: CenterPosition
+	Voiced:
+		VoiceSet: VehicleVoice
 
 ^CombatPlane:
 	Inherits@1: ^Plane
 	Inherits@2: ^CombatantActor
+	Voiced:
+		VoiceSet: VehicleVoice
 
 ^Helicopter:
 	Inherits: ^Plane
@@ -47,3 +51,5 @@
 ^CombatHelicopter:
 	Inherits@1: ^Helicopter
 	Inherits@2: ^CombatantActor
+	Voiced:
+		VoiceSet: VehicleVoice

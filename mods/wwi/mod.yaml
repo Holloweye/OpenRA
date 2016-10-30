@@ -35,6 +35,8 @@ Packages:
 	~expand2.mix
 	~desert.mix
 	wwi|bits
+	wwi|bits/sound
+	wwi|bits/sound/voices
 	wwi|bits/terrain
 	wwi|bits/inherited
 	wwi|bits/inherited/desert

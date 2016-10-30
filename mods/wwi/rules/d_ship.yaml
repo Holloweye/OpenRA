@@ -26,3 +26,5 @@
 ^CombatShip:
 	Inherits@1: ^Ship
 	Inherits@2: ^CombatantActor
+	Voiced:
+		VoiceSet: VehicleVoice

@@ -1,6 +1,6 @@
 GenericVoice:
 	Variants:
-		austria: .v01,.v03
+		austria: .h01,.h03
 		france: .v01,.v03
 		germany: .v01,.v03
 		italy: .v01,.v03
@@ -18,7 +18,7 @@ GenericVoice:
 
 HorseVoice:
 	Variants:
-		austria: .v01,.v03
+		austria: .h01,.h03
 		france: .v01,.v03
 		germany: .v01,.v03
 		italy: .v01,.v03
@@ -36,7 +36,7 @@ HorseVoice:
 
 VehicleVoice:
 	Variants:
-		austria: .v00,.v02
+		austria: .h00,.h02
 		france: .v00,.v02
 		germany: .v00,.v02
 		italy: .v00,.v02
