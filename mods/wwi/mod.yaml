@@ -171,6 +171,8 @@ Assemblies:
 	wwi|OpenRA.Mods.WWI.dll
 
 ChromeLayout:
+	wwi|chrome/layout/ingame-player.yaml
+	wwi|chrome/layout/credits.yaml
 	ra|chrome/ingame.yaml
 	ra|chrome/ingame-chat.yaml
 	ra|chrome/ingame-fmvplayer.yaml
@@ -182,12 +184,10 @@ ChromeLayout:
 	ra|chrome/ingame-menu.yaml
 	ra|chrome/ingame-observer.yaml
 	ra|chrome/ingame-observerstats.yaml
-	wwi|chrome/layout/ingame-player.yaml
 	ra|chrome/ingame-perf.yaml
 	ra|chrome/ingame-debug.yaml
 	ra|chrome/mainmenu.yaml
 	ra|chrome/settings.yaml
-	ra|chrome/credits.yaml
 	ra|chrome/lobby.yaml
 	ra|chrome/lobby-mappreview.yaml
 	ra|chrome/lobby-players.yaml
