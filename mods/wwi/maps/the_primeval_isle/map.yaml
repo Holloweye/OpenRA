@@ -397,9 +397,6 @@ Actors:
 	Actor119: tc04
 		Owner: Neutral
 		Location: 51,50
-	Actor120: tc04
-		Owner: Neutral
-		Location: 46,56
 	Actor121: tc02
 		Owner: Neutral
 		Location: 43,42
@@ -424,15 +421,6 @@ Actors:
 	Actor128: tc04
 		Owner: Neutral
 		Location: 76,50
-	Actor129: tc04
-		Owner: Neutral
-		Location: 80,56
-	Actor130: tc03
-		Owner: Neutral
-		Location: 82,58
-	Actor131: t16
-		Owner: Neutral
-		Location: 83,56
 	Actor132: t16
 		Owner: Neutral
 		Location: 78,52
@@ -454,9 +442,6 @@ Actors:
 	Actor138: tc05
 		Owner: Neutral
 		Location: 48,85
-	Actor139: tc04
-		Owner: Neutral
-		Location: 45,74
 	Actor140: t16
 		Owner: Neutral
 		Location: 48,78
@@ -466,9 +451,6 @@ Actors:
 	Actor142: t16
 		Owner: Neutral
 		Location: 53,81
-	Actor143: t16
-		Owner: Neutral
-		Location: 54,86
 	Actor144: t16
 		Owner: Neutral
 		Location: 43,78
@@ -478,9 +460,6 @@ Actors:
 	Actor146: t16
 		Owner: Neutral
 		Location: 47,76
-	Actor147: t16
-		Owner: Neutral
-		Location: 45,71
 	Actor148: t16
 		Owner: Neutral
 		Location: 38,71
@@ -496,12 +475,6 @@ Actors:
 	Actor152: t16
 		Owner: Neutral
 		Location: 80,77
-	Actor153: t16
-		Owner: Neutral
-		Location: 82,73
-	Actor154: t16
-		Owner: Neutral
-		Location: 84,75
 	Actor155: t16
 		Owner: Neutral
 		Location: 76,82
@@ -520,9 +493,6 @@ Actors:
 	Actor160: tc01
 		Owner: Neutral
 		Location: 39,58
-	Actor161: t16
-		Owner: Neutral
-		Location: 44,63
 	Actor162: t16
 		Owner: Neutral
 		Location: 39,56
@@ -535,27 +505,9 @@ Actors:
 	Actor165: t16
 		Owner: Neutral
 		Location: 36,75
-	Actor166: t16
-		Owner: Neutral
-		Location: 64,82
-	Actor167: t16
-		Owner: Neutral
-		Location: 67,76
 	Actor169: t16
 		Owner: Neutral
 		Location: 57,78
-	Actor170: t16
-		Owner: Neutral
-		Location: 58,84
-	Actor171: t16
-		Owner: Neutral
-		Location: 72,88
-	Actor172: t16
-		Owner: Neutral
-		Location: 83,71
-	Actor173: t16
-		Owner: Neutral
-		Location: 82,62
 	Actor174: t16
 		Owner: Neutral
 		Location: 89,57
@@ -568,9 +520,6 @@ Actors:
 	Actor177: tc04
 		Owner: Neutral
 		Location: 60,38
-	Actor178: tc04
-		Owner: Neutral
-		Location: 64,48
 	Actor179: t16
 		Owner: Neutral
 		Location: 58,39
@@ -598,18 +547,6 @@ Actors:
 	Actor187: t16
 		Owner: Neutral
 		Location: 56,46
-	Actor188: t16
-		Owner: Neutral
-		Location: 63,49
-	Actor189: t16
-		Owner: Neutral
-		Location: 68,51
-	Actor190: t16
-		Owner: Neutral
-		Location: 61,52
-	Actor191: t16
-		Owner: Neutral
-		Location: 58,49
 	Actor194: t16
 		Owner: Neutral
 		Location: 54,59
@@ -880,63 +817,18 @@ Actors:
 	Actor297: wwi_supply_station
 		Owner: Neutral
 		Location: 105,63
-	Actor349: swamp_tree1
-		Owner: Neutral
-		Location: 52,69
-	Actor350: swamp_tree1
-		Owner: Neutral
-		Location: 50,63
-	Actor352: swamp_tree1
-		Owner: Neutral
-		Location: 72,63
-	Actor353: swamp_tree1
-		Owner: Neutral
-		Location: 72,69
-	Actor303: swamp_tree1
-		Owner: Neutral
-		Location: 64,66
-	Actor304: swamp_tree1
-		Owner: Neutral
-		Location: 62,69
-	Actor306: swamp_tree1
-		Owner: Neutral
-		Location: 67,60
-	Actor298: oilb
-		Owner: Neutral
-		Location: 59,59
-	Actor299: oilb
-		Owner: Neutral
-		Location: 58,72
-	Actor300: oilb
-		Owner: Neutral
-		Location: 71,59
-	Actor301: oilb
-		Owner: Neutral
-		Location: 69,72
 	Actor308: tc04
 		Owner: Neutral
 		Location: 73,74
-	Actor309: tc04
-		Owner: Neutral
-		Location: 70,77
 	Actor310: tc04
 		Owner: Neutral
 		Location: 54,73
-	Actor311: tc04
-		Owner: Neutral
-		Location: 56,75
 	Actor312: tc04
 		Owner: Neutral
 		Location: 55,57
 	Actor313: tc04
 		Owner: Neutral
 		Location: 73,58
-	Actor314: tc01
-		Owner: Neutral
-		Location: 70,56
-	Actor315: tc01
-		Owner: Neutral
-		Location: 58,56
 	Actor316: tc01
 		Owner: Neutral
 		Location: 53,72
@@ -955,108 +847,15 @@ Actors:
 	Actor321: t16
 		Owner: Neutral
 		Location: 58,77
-	Actor322: t16
-		Owner: Neutral
-		Location: 56,71
-	Actor323: t16
-		Owner: Neutral
-		Location: 62,74
 	Actor324: t16
 		Owner: Neutral
 		Location: 54,57
-	Actor325: t16
-		Owner: Neutral
-		Location: 58,54
 	Actor326: t16
 		Owner: Neutral
 		Location: 57,58
-	Actor327: t16
-		Owner: Neutral
-		Location: 62,56
 	Actor328: t16
 		Owner: Neutral
 		Location: 71,57
-	Actor329: t16
-		Owner: Neutral
-		Location: 71,54
-	Actor330: t16
-		Owner: Neutral
-		Location: 67,55
-	Actor331: swamp_tree2
-		Owner: Neutral
-		Location: 55,62
-	Actor332: swamp_tree2
-		Owner: Neutral
-		Location: 54,66
-	Actor333: swamp_tree2
-		Owner: Neutral
-		Location: 58,63
-	Actor334: swamp_tree2
-		Owner: Neutral
-		Location: 67,65
-	Actor335: swamp_tree2
-		Owner: Neutral
-		Location: 65,61
-	Actor336: swamp_tree2
-		Owner: Neutral
-		Location: 62,66
-	Actor337: swamp_tree2
-		Owner: Neutral
-		Location: 74,67
-	Actor338: swamp_tree2
-		Owner: Neutral
-		Location: 79,63
-	Actor339: swamp_tree2
-		Owner: Neutral
-		Location: 78,66
-	Actor340: swamp_tree2
-		Owner: Neutral
-		Location: 68,70
-	Actor341: swamp_tree1
-		Owner: Neutral
-		Location: 57,65
-	Actor342: swamp_tree1
-		Owner: Neutral
-		Location: 62,63
-	Actor343: swamp_tree1
-		Owner: Neutral
-		Location: 56,61
-	Actor344: swamp_tree1
-		Owner: Neutral
-		Location: 68,66
-	Actor345: swamp_tree1
-		Owner: Neutral
-		Location: 65,63
-	Actor346: swamp_tree2
-		Owner: Neutral
-		Location: 67,62
-	Actor347: swamp_tree2
-		Owner: Neutral
-		Location: 61,62
-	Actor348: swamp_tree2
-		Owner: Neutral
-		Location: 60,66
-	Actor351: swamp_tree2
-		Owner: Neutral
-		Location: 57,68
-	Actor354: swamp_tree2
-		Owner: Neutral
-		Location: 53,61
-	Actor355: swamp_tree2
-		Owner: Neutral
-		Location: 52,64
-	Actor356: swamp_tree2
-		Owner: Neutral
-		Location: 70,67
-	Actor357: swamp_tree2
-		Owner: Neutral
-		Location: 71,64
-	Actor358: swamp_tree2
-		Owner: Neutral
-		Location: 75,61
-	Actor359: swamp_tree2
-		Owner: Neutral
-		Location: 74,63
 	Actor360: wwi_floating_supply_station
 		Owner: Neutral
 		Location: 4,66
@@ -1069,3 +868,45 @@ Actors:
 	Actor361: wwi_floating_supply_station
 		Owner: Neutral
 		Location: 63,121
+	Actor298: oilb
+		Owner: Neutral
+		Location: 64,66
+	Actor301: wwi_brick
+		Owner: Neutral
+		Location: 67,65
+	Actor302: wwi_brick
+		Owner: Neutral
+		Location: 63,65
+	Actor303: wwi_brick
+		Owner: Neutral
+		Location: 63,65
+	Actor304: wwi_brick
+		Owner: Neutral
+		Location: 62,65
+	Actor305: wwi_brick
+		Owner: Neutral
+		Location: 62,66
+	Actor306: wwi_brick
+		Owner: Neutral
+		Location: 62,68
+	Actor307: wwi_brick
+		Owner: Neutral
+		Location: 62,69
+	Actor309: wwi_brick
+		Owner: Neutral
+		Location: 63,69
+	Actor311: wwi_brick
+		Owner: Neutral
+		Location: 66,69
+	Actor314: wwi_brick
+		Owner: Neutral
+		Location: 67,69
+	Actor315: wwi_brick
+		Owner: Neutral
+		Location: 67,68
+	Actor322: wwi_brick
+		Owner: Neutral
+		Location: 66,65
+	Actor323: wwi_brick
+		Owner: Neutral
+		Location: 67,66
