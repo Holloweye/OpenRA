@@ -7,6 +7,6 @@ wwi_mech:
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
 		Spread: 213
-		Damage: -20
+		Damage: -8
 		ValidTargets: Repair
 		DebugOverlayColor: 00FF00
