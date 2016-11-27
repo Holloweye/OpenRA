@@ -1,5 +1,5 @@
 wwi_plane:
-	Inherits: ^light_machine_gun
+	Inherits: ^medium_machine_gun
 	Report: gun13.aud
 	ValidTargets: Air, Ground
 	Projectile: Bullet
@@ -8,6 +8,6 @@ wwi_plane:
 		ContrailLength: 20
 		Inaccuracy: 1c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 25
+		Damage: 30
 		Spread: 400
 		ValidTargets: Air, Ground
