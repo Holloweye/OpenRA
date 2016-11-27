@@ -1,4 +1,4 @@
 wwi_bomber:
 	Inherits: ^bomb
 	Warhead@1Dam: SpreadDamage
-		Damage: 100
+		Damage: 150
