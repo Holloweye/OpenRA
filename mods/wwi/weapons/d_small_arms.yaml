@@ -93,7 +93,7 @@
 
 ^flak:
 	Inherits@type: ^type_flak
-	Inherits@velocity: ^velocity_high
+	Inherits@velocity: ^velocity_instant
 	Inherits@accuracy: ^accuracy_single_target
 	Inherits@angle: ^angle_80
 	ReloadDelay: 10
